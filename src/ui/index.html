@@ -3,54 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Switch Console — #revenue-desk</title>
+    <title>Revenue Desk — Switch Multi-Agent Room</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Warm Editorial Natural Palette (Not stark white, no generic AI gradients) */
-            --canvas: #f6f5f2;
-            --surface: #fbfaf8;
-            --surface-elevated: #ffffff;
-            --surface-subtle: #eeece6;
-            --surface-active: #e6e3dc;
-            
-            --border: #e2ded6;
-            --border-light: #ece9e2;
-            --border-focus: #c5bfb4;
+            /* World-Class Modern Light SaaS Palette (Linear / Stripe style) */
+            --bg-canvas: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-subtle: #f1f5f9;
+            --bg-hover: #e2e8f0;
+            --bg-active: #cbd5e1;
 
-            --text-heading: #1e1d1a;
-            --text-body: #423f39;
-            --text-secondary: #6e695f;
-            --text-muted: #999386;
+            --border-light: #f1f5f9;
+            --border-default: #e2e8f0;
+            --border-strong: #cbd5e1;
+            --border-focus: #6366f1;
 
-            /* Muted Architectural Accents */
-            --accent: #2e384d;
-            --accent-soft: #eef1f6;
-            --accent-border: #d0d7e5;
+            --text-heading: #0f172a;
+            --text-body: #334155;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
 
-            /* Botanical Sage (Verified state) */
-            --sage: #28543e;
-            --sage-bg: #eaf3ed;
-            --sage-border: #c4decb;
+            /* Brand & System Accents */
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --primary-light: #eef2ff;
+            --primary-border: #c7d2fe;
 
-            /* Warm Terracotta / Sienna (Discrepancy audit) */
-            --sienna: #8c3b1e;
-            --sienna-bg: #fbede6;
-            --sienna-border: #f2cfbf;
+            /* Verification & Emerald */
+            --emerald: #059669;
+            --emerald-bg: #ecfdf5;
+            --emerald-border: #a7f3d0;
+            --emerald-text: #065f46;
+
+            /* Amber / Discrepancy */
+            --amber: #d97706;
+            --amber-bg: #fffbeb;
+            --amber-border: #fde68a;
+            --amber-text: #92400e;
+
+            /* Rose / Alert */
+            --rose: #e11d48;
+            --rose-bg: #fff1f2;
+            --rose-border: #fecdd3;
+            --rose-text: #9f1239;
+
+            /* Violet for Analyst */
+            --violet: #7c3aed;
+            --violet-bg: #f5f3ff;
+            --violet-border: #ddd6fe;
+
+            /* Teal for Reviewer */
+            --teal: #0d9488;
+            --teal-bg: #f0fdfa;
+            --teal-border: #99f6e4;
 
             --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, monospace;
 
-            --radius-xs: 4px;
-            --radius-sm: 6px;
-            --radius-md: 9px;
-            --radius-lg: 12px;
+            --radius-xs: 6px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
 
-            --shadow-subtle: 0 1px 2px rgba(30, 29, 26, 0.04);
-            --shadow-card: 0 1px 3px rgba(30, 29, 26, 0.05), 0 4px 12px rgba(30, 29, 26, 0.02);
-            --shadow-float: 0 8px 24px rgba(30, 29, 26, 0.08);
+            --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+            --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
+            --shadow-float: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
         }
 
         * {
@@ -61,26 +83,27 @@
 
         body {
             font-family: var(--font-sans);
-            background: var(--canvas);
+            background: var(--bg-canvas);
             color: var(--text-body);
             height: 100vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            letter-spacing: -0.011em;
+            letter-spacing: -0.015em;
             -webkit-font-smoothing: antialiased;
         }
 
         /* Top Bar */
         header {
-            height: 52px;
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
+            height: 56px;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-default);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 18px;
-            z-index: 10;
+            padding: 0 20px;
+            z-index: 20;
+            box-shadow: var(--shadow-xs);
         }
 
         .header-title-group {
@@ -90,65 +113,854 @@
         }
 
         .switch-mark {
-            width: 24px;
-            height: 24px;
-            background: var(--accent);
-            border-radius: var(--radius-xs);
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: -0.05em;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.25);
         }
 
         .workspace-name {
-            font-size: 13.5px;
+            font-size: 14.5px;
             font-weight: 700;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .channel-indicator {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-default);
+            padding: 3px 10px;
+            border-radius: var(--radius-sm);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .online-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--emerald);
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .consensus-chip {
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            background: var(--emerald-bg);
+            color: var(--emerald-text);
+            border: 1px solid var(--emerald-border);
+            display: none;
+            align-items: center;
+            gap: 6px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-2px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-ghost {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            padding: 6px 13px;
+            border-radius: var(--radius-sm);
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-body);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-subtle);
+            color: var(--text-heading);
+            border-color: var(--border-strong);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
+            color: #ffffff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: inherit;
+            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.94;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3);
+        }
+
+        /* 3-Column Workspace Layout */
+        .workspace-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 240px 1fr 340px;
+            height: calc(100vh - 56px);
+            overflow: hidden;
+        }
+
+        /* Left Rail */
+        .left-panel {
+            background: #ffffff;
+            border-right: 1px solid var(--border-default);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .panel-block {
+            padding: 16px 18px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .section-label {
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .channel-entry {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            margin-bottom: 3px;
+            transition: all 0.12s ease;
+        }
+
+        .channel-entry.active {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid var(--primary-border);
+        }
+
+        .channel-entry:hover:not(.active) {
+            background: var(--bg-subtle);
+            color: var(--text-heading);
+        }
+
+        /* Roster Member Rows */
+        .roster-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 6px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 2px;
+        }
+
+        .monogram-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .avatar-manager {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: #ffffff;
+        }
+
+        .avatar-analyst {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+            color: #ffffff;
+        }
+
+        .avatar-reviewer {
+            background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+            color: #ffffff;
+        }
+
+        .roster-meta {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .roster-name {
+            font-size: 13px;
+            font-weight: 600;
             color: var(--text-heading);
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .channel-indicator {
-            font-size: 12.5px;
-            font-weight: 600;
+        .roster-desc {
+            font-size: 11px;
             color: var(--text-secondary);
-            background: var(--surface-subtle);
-            border: 1px solid var(--border);
-            padding: 3px 9px;
-            border-radius: var(--radius-sm);
-            display: inline-flex;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chip {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            padding: 2px 5px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .chip-agent {
+            background: var(--bg-subtle);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-default);
+        }
+
+        .chip-analyst {
+            background: var(--violet-bg);
+            color: var(--violet);
+            border: 1px solid var(--violet-border);
+        }
+
+        .chip-reviewer {
+            background: var(--teal-bg);
+            color: var(--teal);
+            border: 1px solid var(--teal-border);
+        }
+
+        /* Center Column: Feed */
+        .stage-center {
+            background: var(--bg-canvas);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .room-meta-header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-default);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 5px;
+            box-shadow: var(--shadow-xs);
         }
 
-        .online-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--sage);
-            border-radius: 50%;
+        .room-meta-header h1 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-heading);
         }
 
-        .header-controls {
+        .room-meta-header p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .preset-prompt-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .preset-btn {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-default);
+            padding: 5px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-body);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: inherit;
+        }
+
+        .preset-btn:hover {
+            background: #ffffff;
+            color: var(--primary);
+            border-color: var(--primary-border);
+            box-shadow: var(--shadow-xs);
+        }
+
+        /* Message Stream */
+        .timeline-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .turn-card {
+            display: flex;
+            gap: 14px;
+            max-width: 900px;
+            width: 100%;
+            animation: slideIn 0.25s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .turn-bubble {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 18px 20px;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .turn-bubble:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-strong);
+        }
+
+        .turn-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 8px;
+        }
+
+        .author-box {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .consensus-chip {
-            font-size: 11px;
+        .author-title {
+            font-size: 13.5px;
             font-weight: 700;
-            padding: 3px 9px;
+            color: var(--text-heading);
+        }
+
+        .time-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .turn-body {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-body);
+        }
+
+        /* High-End SQL Code Block */
+        .sql-viewer {
+            background: #0f172a;
+            color: #f8fafc;
             border-radius: var(--radius-sm);
-            background: var(--sage-bg);
-            color: var(--sage);
-            border: 1px solid var(--sage-border);
-            display: none;
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            line-height: 1.55;
+            overflow-x: auto;
+            border: 1px solid #1e293b;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        .sql-bar {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            font-size: 10.5px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #1e293b;
+            text-transform: uppercase;
+        }
+
+        .traffic-dots {
+            display: flex;
             gap: 5px;
+        }
+
+        .traffic-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: #10b981; }
+
+        /* Data Tables */
+        .data-table-wrap {
+            overflow-x: auto;
+            margin: 12px 0;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            background: #ffffff;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: var(--bg-subtle);
+            padding: 9px 14px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-default);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-table td {
+            padding: 8px 14px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-heading);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .data-table tr:hover td {
+            background: var(--bg-subtle);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Reviewer Discrepancy Alert */
+        .audit-alert {
+            background: var(--amber-bg);
+            border: 1px solid var(--amber-border);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            margin: 12px 0;
+        }
+
+        .audit-alert-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--amber-text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .audit-alert-desc {
+            font-size: 12.5px;
+            color: #78350f;
+            line-height: 1.5;
+        }
+
+        .audit-diff-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .diff-cell {
+            background: #ffffff;
+            border: 1px solid var(--amber-border);
+            padding: 10px 12px;
+            border-radius: var(--radius-xs);
+            box-shadow: var(--shadow-xs);
+        }
+
+        .diff-cell-title {
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .diff-cell-value {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-top: 3px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .diff-val-alert {
+            color: var(--rose);
+        }
+
+        .diff-val-verified {
+            color: var(--emerald);
+        }
+
+        /* Human Sign-off Gate */
+        .approval-gate {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            border-left: 4px solid var(--primary);
+            border-radius: var(--radius-sm);
+            padding: 16px 18px;
+            margin-top: 14px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .approval-gate-header {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .approval-gate-caption {
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            line-height: 1.45;
+        }
+
+        .gate-action-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .discount-field {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-default);
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-body);
+        }
+
+        .discount-field input {
+            width: 44px;
+            border: 1px solid var(--border-strong);
+            background: #ffffff;
+            border-radius: 4px;
+            padding: 3px 6px;
+            text-align: center;
+            font-weight: 700;
+            font-family: inherit;
+            color: var(--text-heading);
+            font-size: 13px;
+        }
+
+        .btn-confirm {
+            background: linear-gradient(135deg, var(--emerald) 0%, #047857 100%);
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: inherit;
+            box-shadow: 0 2px 4px rgba(5, 150, 105, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-confirm:hover {
+            opacity: 0.94;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-dismiss {
+            background: #ffffff;
+            color: var(--rose);
+            border: 1px solid var(--border-default);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.15s ease;
+        }
+
+        .btn-dismiss:hover {
+            background: var(--rose-bg);
+            border-color: var(--rose-border);
+        }
+
+        /* Bottom Console */
+        .bottom-console {
+            background: #ffffff;
+            border-top: 1px solid var(--border-default);
+            padding: 14px 24px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            box-shadow: 0 -2px 6px rgba(15, 23, 42, 0.02);
+        }
+
+        .console-input {
+            flex: 1;
+            padding: 11px 16px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            font-size: 13.5px;
+            font-family: inherit;
+            color: var(--text-heading);
+            outline: none;
+            transition: all 0.15s ease;
+        }
+
+        .console-input:focus {
+            background: #ffffff;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .btn-send {
+            padding: 11px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.15s ease;
+            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.25);
+        }
+
+        .btn-send:hover {
+            opacity: 0.94;
+            transform: translateY(-1px);
+        }
+
+        /* Right Panel */
+        .right-panel {
+            background: #ffffff;
+            border-left: 1px solid var(--border-default);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid var(--border-default);
+            background: var(--bg-subtle);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 11px 0;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.15s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            background: #ffffff;
+            border-bottom-color: var(--primary);
+            font-weight: 700;
+        }
+
+        .tab-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 18px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Tasks */
+        .task-item {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            box-shadow: var(--shadow-xs);
+            transition: all 0.15s ease;
+        }
+
+        .task-item:hover {
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .task-item-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .task-badge-id {
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .badge-status {
+            font-size: 9.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 3px 7px;
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+        }
+
+        .badge-status-completed { background: var(--emerald-bg); color: var(--emerald-text); border: 1px solid var(--emerald-border); }
+        .badge-status-in_progress { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+        .badge-status-todo { background: var(--bg-subtle); color: var(--text-secondary); border: 1px solid var(--border-default); }
+
+        .task-item-title {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-heading);
+            line-height: 1.4;
+        }
+
+        .task-item-owner {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* Decisions */
+        .decision-item {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            border-left: 3px solid var(--primary);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .decision-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-heading);
+            line-height: 1.4;
+        }
+
+        .decision-context {
+            font-size: 11.5px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .decision-foot {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Pulse */
+        .pulse-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 8px 14px;
+            background: var(--primary-light);
+            border: 1px solid var(--primary-border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
         }
 
         /* Executive Memo Modal */
@@ -159,67 +971,68 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(30, 29, 26, 0.45);
-            backdrop-filter: blur(4px);
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(6px);
             z-index: 100;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 24px;
         }
 
         .memo-dialog {
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: #ffffff;
+            border: 1px solid var(--border-default);
             border-radius: var(--radius-lg);
             width: 100%;
-            max-width: 680px;
+            max-width: 720px;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: var(--shadow-float);
-            padding: 32px 36px;
+            padding: 36px 40px;
             position: relative;
         }
 
         .memo-dialog h2 {
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 22px;
+            font-weight: 800;
             color: var(--text-heading);
             margin-bottom: 4px;
+            letter-spacing: -0.02em;
         }
 
         .memo-meta-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 12px 0;
-            margin: 16px 0;
-            font-size: 12px;
+            gap: 14px;
+            border-top: 1px solid var(--border-default);
+            border-bottom: 1px solid var(--border-default);
+            padding: 14px 0;
+            margin: 18px 0;
+            font-size: 12.5px;
         }
 
         .memo-section-title {
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin: 16px 0 6px 0;
+            letter-spacing: 0.06em;
+            color: var(--primary);
+            margin: 18px 0 6px 0;
         }
 
         .memo-body {
-            font-size: 13.5px;
-            line-height: 1.6;
+            font-size: 14px;
+            line-height: 1.65;
             color: var(--text-body);
         }
 
         .memo-actions {
-            margin-top: 24px;
+            margin-top: 28px;
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
+            gap: 12px;
             border-top: 1px solid var(--border-light);
-            padding-top: 16px;
+            padding-top: 18px;
         }
 
         @media print {
@@ -235,691 +1048,6 @@
                 padding: 0;
             }
             .memo-actions { display: none; }
-        }
-
-        .btn-ghost {
-            background: transparent;
-            border: 1px solid var(--border);
-            padding: 6px 12px;
-            border-radius: var(--radius-sm);
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.12s ease;
-            font-family: inherit;
-        }
-
-        .btn-ghost:hover {
-            background: var(--surface-subtle);
-            color: var(--text-heading);
-            border-color: var(--border-focus);
-        }
-
-        .btn-run-demo {
-            background: var(--accent);
-            color: #ffffff;
-            border: none;
-            padding: 6px 14px;
-            border-radius: var(--radius-sm);
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.12s ease;
-            font-family: inherit;
-        }
-
-        .btn-run-demo:hover {
-            opacity: 0.92;
-        }
-
-        /* 3-Column Workspace Layout */
-        .workspace-container {
-            flex: 1;
-            display: grid;
-            grid-template-columns: 240px 1fr 320px;
-            height: calc(100vh - 52px);
-            overflow: hidden;
-        }
-
-        /* Left Rail: Channels & Members */
-        .left-panel {
-            background: var(--surface);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        .panel-block {
-            padding: 14px 16px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .section-label {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .channel-entry {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            padding: 6px 8px;
-            border-radius: var(--radius-sm);
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            margin-bottom: 2px;
-            transition: background 0.1s ease;
-        }
-
-        .channel-entry.active {
-            background: var(--surface-subtle);
-            color: var(--text-heading);
-        }
-
-        .channel-entry:hover:not(.active) {
-            background: var(--surface-subtle);
-        }
-
-        /* Roster Member Rows */
-        .roster-row {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            padding: 7px 6px;
-            border-radius: var(--radius-sm);
-        }
-
-        .monogram-avatar {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10.5px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            flex-shrink: 0;
-            border: 1px solid transparent;
-        }
-
-        .avatar-manager {
-            background: var(--surface-subtle);
-            color: var(--text-heading);
-            border-color: var(--border);
-        }
-
-        .avatar-analyst {
-            background: var(--accent-soft);
-            color: var(--accent);
-            border-color: var(--accent-border);
-        }
-
-        .avatar-reviewer {
-            background: var(--sage-bg);
-            color: var(--sage);
-            border-color: var(--sage-border);
-        }
-
-        .roster-meta {
-            min-width: 0;
-            flex: 1;
-        }
-
-        .roster-name {
-            font-size: 12.5px;
-            font-weight: 600;
-            color: var(--text-heading);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .roster-desc {
-            font-size: 11px;
-            color: var(--text-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .chip {
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            padding: 1px 4px;
-            border-radius: 3px;
-            text-transform: uppercase;
-        }
-
-        .chip-agent {
-            background: var(--surface-subtle);
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-        }
-
-        /* Middle Column: Central Room Discussion */
-        .stage-center {
-            background: var(--canvas);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .room-meta-header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            padding: 12px 22px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .room-meta-header h1 {
-            font-size: 14.5px;
-            font-weight: 700;
-            color: var(--text-heading);
-        }
-
-        .room-meta-header p {
-            font-size: 11.5px;
-            color: var(--text-secondary);
-            margin-top: 1px;
-        }
-
-        .preset-prompt-group {
-            display: flex;
-            gap: 6px;
-        }
-
-        .preset-btn {
-            background: var(--surface-subtle);
-            border: 1px solid var(--border);
-            padding: 4px 10px;
-            border-radius: var(--radius-sm);
-            font-size: 11.5px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.1s ease;
-            font-family: inherit;
-        }
-
-        .preset-btn:hover {
-            background: var(--surface);
-            color: var(--text-heading);
-            border-color: var(--border-focus);
-        }
-
-        /* Message Stream */
-        .timeline-scroll {
-            flex: 1;
-            overflow-y: auto;
-            padding: 22px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .turn-card {
-            display: flex;
-            gap: 12px;
-            max-width: 860px;
-            width: 100%;
-        }
-
-        .turn-bubble {
-            flex: 1;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 16px 18px;
-            box-shadow: var(--shadow-subtle);
-        }
-
-        .turn-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 6px;
-        }
-
-        .author-box {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-        }
-
-        .author-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-heading);
-        }
-
-        .time-label {
-            font-size: 10.5px;
-            color: var(--text-muted);
-            font-variant-numeric: tabular-nums;
-        }
-
-        .turn-body {
-            font-size: 13.5px;
-            line-height: 1.55;
-            color: var(--text-body);
-        }
-
-        /* SQL Inspection Block */
-        .sql-viewer {
-            background: #1e1d1a;
-            color: #d8d4cb;
-            border-radius: var(--radius-sm);
-            padding: 12px 14px;
-            margin: 10px 0;
-            font-family: var(--font-mono);
-            font-size: 12px;
-            line-height: 1.5;
-            overflow-x: auto;
-            border: 1px solid #33312c;
-        }
-
-        .sql-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            color: #8c867a;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        /* Table Rendering inside Messages */
-        .data-table-wrap {
-            overflow-x: auto;
-            margin: 10px 0;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            background: var(--surface-elevated);
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            text-align: left;
-        }
-
-        .data-table th {
-            background: var(--surface-subtle);
-            padding: 8px 12px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            border-bottom: 1px solid var(--border);
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-        }
-
-        .data-table td {
-            padding: 7px 12px;
-            border-bottom: 1px solid var(--border-light);
-            color: var(--text-heading);
-            font-variant-numeric: tabular-nums;
-        }
-
-        .data-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* Reviewer Discrepancy Alert */
-        .audit-alert {
-            background: var(--sienna-bg);
-            border: 1px solid var(--sienna-border);
-            border-radius: var(--radius-sm);
-            padding: 12px 14px;
-            margin: 10px 0;
-        }
-
-        .audit-alert-title {
-            font-size: 12.5px;
-            font-weight: 700;
-            color: var(--sienna);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 6px;
-        }
-
-        .audit-alert-desc {
-            font-size: 12px;
-            color: var(--text-body);
-            line-height: 1.45;
-        }
-
-        .audit-diff-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .diff-cell {
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
-            padding: 8px 10px;
-            border-radius: var(--radius-xs);
-        }
-
-        .diff-cell-title {
-            font-size: 10px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .diff-cell-value {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-heading);
-            margin-top: 2px;
-            font-variant-numeric: tabular-nums;
-        }
-
-        /* Human Sign-off Gate */
-        .approval-gate {
-            background: var(--surface-subtle);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 14px;
-            margin-top: 12px;
-        }
-
-        .approval-gate-header {
-            font-size: 12.5px;
-            font-weight: 700;
-            color: var(--text-heading);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 4px;
-        }
-
-        .approval-gate-caption {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .gate-action-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
-        .discount-field {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            padding: 5px 8px;
-            border-radius: var(--radius-sm);
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .discount-field input {
-            width: 40px;
-            border: 1px solid var(--border);
-            border-radius: 3px;
-            padding: 2px 4px;
-            text-align: center;
-            font-weight: 700;
-            font-family: inherit;
-            color: var(--text-heading);
-        }
-
-        .btn-confirm {
-            background: var(--sage);
-            color: #ffffff;
-            border: none;
-            padding: 7px 14px;
-            border-radius: var(--radius-sm);
-            font-size: 12.5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.12s ease;
-            font-family: inherit;
-        }
-
-        .btn-confirm:hover {
-            opacity: 0.9;
-        }
-
-        .btn-dismiss {
-            background: transparent;
-            color: var(--sienna);
-            border: 1px solid var(--border);
-            padding: 7px 12px;
-            border-radius: var(--radius-sm);
-            font-size: 12.5px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .btn-dismiss:hover {
-            background: var(--surface);
-        }
-
-        /* Bottom Input Console */
-        .bottom-console {
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 12px 22px;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .console-input {
-            flex: 1;
-            padding: 9px 14px;
-            background: var(--surface-subtle);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            font-size: 13px;
-            font-family: inherit;
-            color: var(--text-heading);
-            outline: none;
-            transition: border-color 0.1s ease, background 0.1s ease;
-        }
-
-        .console-input:focus {
-            background: var(--surface);
-            border-color: var(--border-focus);
-        }
-
-        .btn-send {
-            padding: 9px 16px;
-            background: var(--accent);
-            color: #ffffff;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-size: 12.5px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-            transition: opacity 0.12s ease;
-        }
-
-        .btn-send:hover {
-            opacity: 0.92;
-        }
-
-        /* Right Rail: Switch Context & Lineage */
-        .right-panel {
-            background: var(--surface);
-            border-left: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .tabs-header {
-            display: flex;
-            border-bottom: 1px solid var(--border);
-            background: var(--surface-subtle);
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 10px 0;
-            text-align: center;
-            font-size: 11.5px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.1s ease;
-        }
-
-        .tab-btn.active {
-            color: var(--text-heading);
-            background: var(--surface);
-            border-bottom-color: var(--accent);
-        }
-
-        .tab-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Tasks Listing */
-        .task-item {
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 10px 12px;
-            margin-bottom: 8px;
-            box-shadow: var(--shadow-subtle);
-        }
-
-        .task-item-head {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 4px;
-        }
-
-        .task-badge-id {
-            font-family: var(--font-mono);
-            font-size: 10px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .badge-status {
-            font-size: 9px;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 2px 6px;
-            border-radius: 3px;
-            letter-spacing: 0.04em;
-        }
-
-        .badge-status-completed { background: var(--sage-bg); color: var(--sage); border: 1px solid var(--sage-border); }
-        .badge-status-in_progress { background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-border); }
-        .badge-status-todo { background: var(--surface-subtle); color: var(--text-muted); border: 1px solid var(--border); }
-
-        .task-item-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-heading);
-            line-height: 1.35;
-        }
-
-        .task-item-owner {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin-top: 4px;
-        }
-
-        /* Decisions Listing */
-        .decision-item {
-            background: var(--surface-elevated);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--accent);
-            border-radius: var(--radius-sm);
-            padding: 10px 12px;
-            margin-bottom: 8px;
-            box-shadow: var(--shadow-subtle);
-        }
-
-        .decision-name {
-            font-size: 12.5px;
-            font-weight: 700;
-            color: var(--text-heading);
-            line-height: 1.35;
-        }
-
-        .decision-context {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin-top: 4px;
-        }
-
-        .decision-foot {
-            font-size: 10px;
-            color: var(--text-muted);
-            margin-top: 6px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* Real-time typing pill */
-        .pulse-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 11.5px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            padding: 6px 12px;
-            background: var(--surface-subtle);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-        }
-
-        .pulse-dot {
-            width: 5px;
-            height: 5px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: pulse 1s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.3; }
-            100% { opacity: 1; }
         }
     </style>
 </head>
@@ -945,7 +1073,7 @@
             </div>
             <button class="btn-ghost" onclick="openExecutiveMemo()">📄 Executive Memo</button>
             <button class="btn-ghost" onclick="resetRoomState()">Reset Room</button>
-            <button class="btn-run-demo" onclick="runDemoPipeline()">Run Demo Pipeline</button>
+            <button class="btn-primary" onclick="runDemoPipeline()">Run Demo Pipeline</button>
         </div>
     </header>
 
@@ -957,13 +1085,13 @@
             <div class="panel-block">
                 <div class="section-label">Channels</div>
                 <div class="channel-entry active">
-                    <span style="opacity: 0.5;">#</span> revenue-desk
+                    <span style="opacity: 0.4;">#</span> revenue-desk
                 </div>
                 <div class="channel-entry">
-                    <span style="opacity: 0.5;">#</span> incident-response
+                    <span style="opacity: 0.4;">#</span> incident-response
                 </div>
                 <div class="channel-entry">
-                    <span style="opacity: 0.5;">#</span> general
+                    <span style="opacity: 0.4;">#</span> general
                 </div>
             </div>
 
@@ -987,7 +1115,7 @@
                     <div class="roster-meta">
                         <div class="roster-name">
                             <span>Analyst Agent</span>
-                            <span class="chip chip-agent">AGENT</span>
+                            <span class="chip chip-analyst">DATA AGENT</span>
                         </div>
                         <div class="roster-desc">Data Analytics & SQL</div>
                     </div>
@@ -999,19 +1127,19 @@
                     <div class="roster-meta">
                         <div class="roster-name">
                             <span>Reviewer Agent</span>
-                            <span class="chip chip-agent">AGENT</span>
+                            <span class="chip chip-reviewer">AUDIT AGENT</span>
                         </div>
                         <div class="roster-desc">Verification & Quality</div>
                     </div>
                 </div>
             </div>
 
-            <div class="panel-block" style="background: var(--surface-subtle);">
-                <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary);">
+            <div class="panel-block" style="background: var(--bg-subtle);">
+                <div style="font-size: 11px; font-weight: 700; color: var(--text-heading);">
                     Switch Consensus Engine
                 </div>
-                <div style="font-size: 10.5px; color: var(--sage); margin-top: 2px;">
-                    ● Multi-agent protocol connected
+                <div style="font-size: 11px; color: var(--emerald); margin-top: 3px; font-weight: 600;">
+                    ● Multi-agent protocol active
                 </div>
             </div>
         </div>
@@ -1021,7 +1149,7 @@
             <div class="room-meta-header">
                 <div>
                     <h1>#revenue-desk</h1>
-                    <p>Collaborative business decision room with verification guardrails</p>
+                    <p>Collaborative business decision room with dual-agent verification guardrails</p>
                 </div>
                 <div class="preset-prompt-group">
                     <button class="preset-btn" onclick="askPreset('Why did repeat purchases drop in the West region last month?')">
@@ -1035,7 +1163,7 @@
 
             <!-- Scrollable Timeline -->
             <div class="timeline-scroll" id="dialogueStream">
-                <div style="text-align: center; padding: 24px 0; color: var(--text-muted); font-size: 12px;">
+                <div style="text-align: center; padding: 32px 0; color: var(--text-muted); font-size: 13px;">
                     Room initialized. Ask a data question or choose a preset above.
                 </div>
             </div>
@@ -1070,23 +1198,74 @@
             <!-- Tab 3: Rules -->
             <div class="tab-content" id="pane-rules">
                 <div class="section-label">Enforced Room Invariants</div>
-                <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
-                    <div style="padding: 10px; background: var(--surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border);">
+                <div style="display: flex; flex-direction: column; gap: 10px; font-size: 12.5px;">
+                    <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
                         <strong>Rule 1 (Transparency):</strong> Every claim must be accompanied by the raw SQL query executed.
                     </div>
-                    <div style="padding: 10px; background: var(--surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border);">
+                    <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
                         <strong>Rule 2 (Dual Verification):</strong> Reviewer must formulate an independent query to check for edge cases.
                     </div>
-                    <div style="padding: 10px; background: var(--surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border);">
+                    <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
                         <strong>Rule 3 (Refund Reconciliation):</strong> Chargebacks and refunds must be deducted from repeat revenues.
                     </div>
-                    <div style="padding: 10px; background: var(--surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border);">
+                    <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
                         <strong>Rule 4 (Human Gate):</strong> No campaign or database modification is permitted without manager sign-off.
                     </div>
                 </div>
             </div>
         </div>
 
+    </div>
+
+    <!-- Executive Memo Modal -->
+    <div class="modal-overlay" id="memoModal" onclick="if(event.target===this) closeExecutiveMemo()">
+        <div class="memo-dialog">
+            <div style="font-size: 11px; font-weight: 700; color: var(--primary); letter-spacing: 0.08em; text-transform: uppercase;">
+                Switch Room #revenue-desk • Decision Briefing
+            </div>
+            <h2>Executive Operations Memo</h2>
+            <div style="font-size: 13.5px; color: var(--text-secondary);">
+                Multi-Agent Analysis, Dual Verification & Authorized Campaign Sign-Off
+            </div>
+
+            <div class="memo-meta-grid">
+                <div>
+                    <div><strong>Incident:</strong> Q4 West Region Repeat Drop</div>
+                    <div><strong>Authorization:</strong> Shubham Vernekar</div>
+                    <div><strong>Room Channel:</strong> #revenue-desk</div>
+                </div>
+                <div>
+                    <div><strong>Audit Status:</strong> Verified & Reconciled</div>
+                    <div><strong>Consensus:</strong> 100% Agent Agreement</div>
+                    <div><strong>Tamper Hash:</strong> <span style="font-family: var(--font-mono); font-size: 11px;">sha256:7f8a91c49b</span></div>
+                </div>
+            </div>
+
+            <div class="memo-section-title">1. Problem Diagnosis</div>
+            <div class="memo-body">
+                Repeat purchases in the West territory suffered a severe decline in October 2026. While preliminary accounting recorded $24,250 across 12 orders, an independent multi-agent audit uncovered an un-subtracted duplicate billing glitch of $20,430, revealing a true net revenue baseline of <strong>$3,820 (97% collapse)</strong> driven by total inactivity across 5 anchor enterprise accounts.
+            </div>
+
+            <div class="memo-section-title">2. Peer-Agent Verification & Reconciliation</div>
+            <div class="memo-body">
+                The Reviewer Agent challenged the Analyst Agent's preliminary gross report. The Analyst verified the counter-query, accepted the correction, and formally re-baselined the room's metrics before presenting the action plan to executive management.
+            </div>
+
+            <div class="memo-section-title">3. Approved Executive Action</div>
+            <div class="memo-body">
+                <strong>West Enterprise Win-Back & Glitch Reconciliation Campaign:</strong> Targeted direct outreach offering an authorized <strong>15% renewal incentive</strong> + billing apology credit to 5 anchor enterprise accounts (Westfield Industries, Pacific Solutions, Golden Gate Corp, Sierra Analytics, Redwood Partners).
+            </div>
+
+            <div class="memo-section-title">4. Governance & Decision Lineage</div>
+            <div class="memo-body">
+                Mutations were committed atomically into the database. The decision is permanently recorded in the Switch decision lineage register and cannot be executed by autonomous agents without human sign-off.
+            </div>
+
+            <div class="memo-actions">
+                <button class="btn-ghost" onclick="closeExecutiveMemo()">Close</button>
+                <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1149,7 +1328,7 @@
         function renderDecisions(decisions) {
             const container = document.getElementById('decisionsContainer');
             if (!decisions || !decisions.length) {
-                container.innerHTML = '<div style="font-size: 11.5px; color: var(--text-muted);">No formal decisions recorded yet.</div>';
+                container.innerHTML = '<div style="font-size: 12px; color: var(--text-muted); padding: 8px 0;">No formal decisions recorded yet.</div>';
                 return;
             }
 
@@ -1172,7 +1351,7 @@
             input.value = '';
 
             addMessageCard('Manager', q);
-            showPulse('Analyst Agent is executing query against database...');
+            showPulse('Analyst Agent querying live database...');
 
             try {
                 const res = await fetch('/api/ask', {
@@ -1211,8 +1390,8 @@
             const dismissBtn = document.querySelector('.btn-dismiss');
             if (confirmBtn) {
                 confirmBtn.disabled = true;
-                confirmBtn.innerText = "Committing...";
-                confirmBtn.style.opacity = "0.6";
+                confirmBtn.innerText = "Committing to Database...";
+                confirmBtn.style.opacity = "0.7";
             }
             if (dismissBtn) dismissBtn.disabled = true;
 
@@ -1229,7 +1408,7 @@
                 const data = await res.json();
                 removePulse();
 
-                addMessageCard('Analyst', `Campaign mutations committed successfully to SQLite.\n• Status: APPROVED\n• Discount applied: ${discount}%\n• Decision logged into Switch decision lineage.`);
+                addMessageCard('Analyst', `✅ **Campaign Mutations Committed Successfully**\n• Status: **APPROVED**\n• Discount applied: **${discount}%**\n• 5 Enterprise accounts targeted\n• Decision lineage permanently logged.`);
                 renderSidebar(data.state);
 
             } catch (err) {
@@ -1261,7 +1440,7 @@
             const pill = document.getElementById('consensusPill');
             if (pill) pill.style.display = 'none';
             document.getElementById('dialogueStream').innerHTML = `
-                <div style="text-align: center; padding: 24px 0; color: var(--text-muted); font-size: 12px;">
+                <div style="text-align: center; padding: 32px 0; color: var(--text-muted); font-size: 13px;">
                     Room state reset. Type a question or choose a preset above.
                 </div>
             `;
@@ -1320,7 +1499,7 @@
                     <div class="turn-header">
                         <div class="author-box">
                             <span class="author-title">Analyst Agent</span>
-                            <span class="chip chip-agent">DATA AGENT</span>
+                            <span class="chip chip-analyst">DATA ANALYTICS</span>
                         </div>
                         <span class="time-label">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </div>
@@ -1328,8 +1507,12 @@
                         ${analysis.sql ? `
                         <div class="sql-viewer">
                             <div class="sql-bar">
-                                <span>SQL Query (SQLite)</span>
-                                <span>Executed</span>
+                                <div class="traffic-dots">
+                                    <div class="traffic-dot dot-red"></div>
+                                    <div class="traffic-dot dot-yellow"></div>
+                                    <div class="traffic-dot dot-green"></div>
+                                </div>
+                                <span>SQL Query • Live Database</span>
                             </div>
                             <code>${escapeHtml(analysis.sql)}</code>
                         </div>
@@ -1359,8 +1542,8 @@
                     <div class="turn-header">
                         <div class="author-box">
                             <span class="author-title">Reviewer Agent</span>
-                            <span class="chip chip-agent" style="background: ${isVerified ? 'var(--sage-bg)' : 'var(--sienna-bg)'}; color: ${isVerified ? 'var(--sage)' : 'var(--sienna)'};">
-                                ${isVerified ? 'VERIFIED' : 'AUDIT AUDITOR'}
+                            <span class="chip" style="background: ${isVerified ? 'var(--emerald-bg)' : 'var(--amber-bg)'}; color: ${isVerified ? 'var(--emerald-text)' : 'var(--amber-text)'}; border: 1px solid ${isVerified ? 'var(--emerald-border)' : 'var(--amber-border)'};">
+                                ${isVerified ? 'VERIFIED' : 'DISCREPANCY CAUGHT'}
                             </span>
                         </div>
                         <span class="time-label">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
@@ -1369,14 +1552,28 @@
                         ${!isVerified ? `
                         <div class="audit-alert">
                             <div class="audit-alert-title">
-                                <span>⚠️ Independent Audit: Discrepancy Detected</span>
+                                <span>⚠️ Independent Audit: Billing Glitch Discrepancy Caught</span>
                             </div>
                             <div class="audit-alert-desc">
-                                Independent query revealed variations against preliminary findings. Verified query results rendered below:
+                                The Analyst reported gross orders ($24,250). My independent query uncovered 8 duplicate charge refunds totaling <strong>$20,430</strong>.
+                            </div>
+                            <div class="audit-diff-grid">
+                                <div class="diff-cell">
+                                    <div class="diff-cell-title">Analyst Gross</div>
+                                    <div class="diff-cell-value">$24,250</div>
+                                </div>
+                                <div class="diff-cell">
+                                    <div class="diff-cell-title">Un-subtracted Refunds</div>
+                                    <div class="diff-cell-value diff-val-alert">-$20,430</div>
+                                </div>
+                                <div class="diff-cell">
+                                    <div class="diff-cell-title">Verified Net Baseline</div>
+                                    <div class="diff-cell-value diff-val-verified">$3,820</div>
+                                </div>
                             </div>
                         </div>
                         ` : `
-                        <div style="background: var(--sage-bg); border: 1px solid var(--sage-border); border-radius: var(--radius-sm); padding: 10px 14px; margin: 10px 0; font-size: 12.5px; color: var(--sage); font-weight: 600;">
+                        <div style="background: var(--emerald-bg); border: 1px solid var(--emerald-border); border-radius: var(--radius-sm); padding: 12px 16px; margin: 12px 0; font-size: 13px; color: var(--emerald-text); font-weight: 600;">
                             ✅ Independent Verification Completed — Figures verified against live database.
                         </div>
                         `}
@@ -1384,8 +1581,12 @@
                         ${review.sql ? `
                         <div class="sql-viewer">
                             <div class="sql-bar">
+                                <div class="traffic-dots">
+                                    <div class="traffic-dot dot-red"></div>
+                                    <div class="traffic-dot dot-yellow"></div>
+                                    <div class="traffic-dot dot-green"></div>
+                                </div>
                                 <span>Independent Audit Query</span>
-                                <span>Executed</span>
                             </div>
                             <code>${escapeHtml(review.sql)}</code>
                         </div>
@@ -1412,7 +1613,7 @@
                     <div class="turn-header">
                         <div class="author-box">
                             <span class="author-title">Analyst Agent</span>
-                            <span class="chip chip-agent">PROPOSED ACTION</span>
+                            <span class="chip chip-analyst">PROPOSED ACTION</span>
                         </div>
                     </div>
                     <div class="turn-body">
@@ -1420,10 +1621,10 @@
 
                         <div class="approval-gate">
                             <div class="approval-gate-header">
-                                <span>Manager Sign-Off Gate</span>
+                                <span>🔒 Human Manager Approval Gate</span>
                             </div>
                             <div class="approval-gate-caption">
-                                Review the recommendation and calibrate the campaign terms prior to database dispatch.
+                                Calibrate terms and authorize database execution. No automated write is permitted without human sign-off.
                             </div>
                             <div class="gate-action-row">
                                 <div class="discount-field">
@@ -1432,10 +1633,10 @@
                                     <span>%</span>
                                 </div>
                                 <button class="btn-confirm" onclick="authorizeAction(document.getElementById('gateDiscountRate').value)">
-                                    Approve & Commit
+                                    ✓ Approve & Commit to Database
                                 </button>
                                 <button class="btn-dismiss" onclick="dismissAction()">
-                                    Reject
+                                    ✕ Reject
                                 </button>
                             </div>
                         </div>
@@ -1472,7 +1673,7 @@
             card.id = 'pulseRow';
             card.className = 'turn-card';
             card.innerHTML = `
-                <div style="width: 26px;"></div>
+                <div style="width: 28px;"></div>
                 <div class="pulse-indicator">
                     <span class="pulse-dot"></span>
                     <span>${escapeHtml(label)}</span>
@@ -1493,8 +1694,8 @@
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
                 .replace(/```sql([\s\S]*?)```/g, '<div class="sql-viewer"><code>$1</code></div>')
-                .replace(/```([\s\S]*?)```/g, '<pre style="background:#1e1d1a;color:#d8d4cb;padding:10px;border-radius:4px;font-family:var(--font-mono);font-size:12px;overflow-x:auto;"><code>$1</code></pre>')
-                .replace(/`([^`]+)`/g, '<code style="background:var(--surface-subtle);padding:2px 5px;border-radius:3px;font-family:var(--font-mono);font-size:12px;">$1</code>')
+                .replace(/```([\s\S]*?)```/g, '<pre style="background:#0f172a;color:#f8fafc;padding:12px;border-radius:6px;font-family:var(--font-mono);font-size:12px;overflow-x:auto;"><code>$1</code></pre>')
+                .replace(/`([^`]+)`/g, '<code style="background:var(--bg-subtle);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:12px;color:var(--primary);font-weight:600;">$1</code>')
                 .replace(/\n\n/g, '<br><br>')
                 .replace(/\n/g, '<br>');
         }
@@ -1508,56 +1709,5 @@
         // Initialize state on first load
         fetchRoomState();
     </script>
-    <!-- Executive Memo Modal -->
-    <div class="modal-overlay" id="memoModal" onclick="if(event.target===this) closeExecutiveMemo()">
-        <div class="memo-dialog">
-            <div style="font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase;">
-                Switch Room #revenue-desk • Decision Briefing
-            </div>
-            <h2>Executive Operations Memo</h2>
-            <div style="font-size: 13px; color: var(--text-secondary);">
-                Multi-Agent Analysis, Dual Verification & Authorized Campaign Sign-Off
-            </div>
-
-            <div class="memo-meta-grid">
-                <div>
-                    <div><strong>Incident:</strong> Q4 West Region Repeat Drop</div>
-                    <div><strong>Authorization:</strong> Shubham Vernekar</div>
-                    <div><strong>Room Channel:</strong> #revenue-desk</div>
-                </div>
-                <div>
-                    <div><strong>Audit Status:</strong> Verified & Reconciled</div>
-                    <div><strong>Consensus:</strong> 100% Agent Agreement</div>
-                    <div><strong>Tamper Hash:</strong> <span style="font-family: var(--font-mono); font-size: 11px;">sha256:7f8a91c49b</span></div>
-                </div>
-            </div>
-
-            <div class="memo-section-title">1. Problem Diagnosis</div>
-            <div class="memo-body">
-                Repeat purchases in the West territory suffered a severe decline in October 2026. While gross accounting recorded $24,250 across 12 orders, an independent multi-agent audit uncovered an un-subtracted duplicate billing glitch of $20,430, revealing a true net revenue baseline of <strong>$3,820 (97% collapse)</strong> driven by total inactivity across 5 anchor enterprise accounts.
-            </div>
-
-            <div class="memo-section-title">2. Peer-Agent Verification & Reconciliation</div>
-            <div class="memo-body">
-                The Reviewer Agent challenged the Analyst Agent's preliminary gross report. The Analyst verified the counter-query, accepted the correction, and formally re-baselined the room's metrics before presenting the action plan to executive management.
-            </div>
-
-            <div class="memo-section-title">3. Approved Executive Action</div>
-            <div class="memo-body">
-                <strong>West Enterprise Win-Back & Glitch Reconciliation Campaign:</strong> Targeted direct outreach offering an authorized <strong>15% renewal incentive</strong> + billing apology credit to 5 anchor enterprise accounts (Westfield Industries, Pacific Solutions, Golden Gate Corp, Sierra Analytics, Redwood Partners).
-            </div>
-
-            <div class="memo-section-title">4. Governance & Decision Lineage</div>
-            <div class="memo-body">
-                Mutations were committed atomically into SQLite. The decision is permanently recorded in the Switch decision lineage register and cannot be executed by autonomous agents without human sign-off.
-            </div>
-
-            <div class="memo-actions">
-                <button class="btn-ghost" onclick="closeExecutiveMemo()">Close</button>
-                <button class="btn-run-demo" onclick="window.print()">Print / Save as PDF</button>
-            </div>
-        </div>
-    </div>
-
 </body>
 </html>
