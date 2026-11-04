@@ -192,14 +192,21 @@ def run_server(port: int = PORT) -> None:
     
     # Try finding an open port if default is busy
     test_port = port
-    for p in [test_port, 8080, 8000, 3000, 8888, 9090]:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            if s.connect_ex(('127.0.0.1', p)) != 0:
-                port = p
-                break
+    httpd = None
+    for p in [test_port, 8000, 3000, 8080, 8888, 9090]:
+        try:
+            server_address = ("", p)
+            class ReuseHTTPServer(HTTPServer):
+                allow_reuse_address = True
+            httpd = ReuseHTTPServer(server_address, SwitchAppHandler)
+            port = p
+            break
+        except OSError:
+            continue
 
-    server_address = ("", port)
-    httpd = HTTPServer(server_address, SwitchAppHandler)
+    if not httpd:
+        print("[ERROR] Could not bind to any available port.")
+        return
     url = f"http://localhost:{port}"
     print(f"\n✨ Revenue Desk Light-Theme UI is live at: {url}")
     print(f"👉 Opening browser...\n")
