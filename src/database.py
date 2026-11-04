@@ -61,6 +61,20 @@ def run_write(sql: str, params: tuple[Any, ...] = (), db_path: str | None = None
         return cursor.lastrowid or 0
 
 
+def run_transaction(operations: list[tuple[str, tuple[Any, ...]]], db_path: str | None = None) -> int:
+    """Execute multiple SQL write statements inside an atomic transaction.
+    Returns the lastrowid of the first statement.
+    """
+    with get_connection(db_path) as conn:
+        last_id = 0
+        for i, (sql, params) in enumerate(operations):
+            cursor = conn.execute(sql, params)
+            if i == 0:
+                last_id = cursor.lastrowid or 0
+        conn.commit()
+        return last_id
+
+
 def get_schema_description() -> str:
     """Return a human-readable description of the database schema for LLM context."""
     return """

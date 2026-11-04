@@ -1091,6 +1091,15 @@
         }
 
         async function authorizeAction(discount = 15) {
+            const confirmBtn = document.querySelector('.btn-confirm');
+            const dismissBtn = document.querySelector('.btn-dismiss');
+            if (confirmBtn) {
+                confirmBtn.disabled = true;
+                confirmBtn.innerText = "Committing...";
+                confirmBtn.style.opacity = "0.6";
+            }
+            if (dismissBtn) dismissBtn.disabled = true;
+
             const approvalStr = `Approved. Change discount to ${discount}% and launch campaign.`;
             addMessageCard('Manager', approvalStr);
             showPulse('Analyst committing approved mutations to database...');
