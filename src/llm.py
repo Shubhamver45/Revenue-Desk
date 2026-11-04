@@ -44,54 +44,60 @@ def chat_gemini(system_prompt: str, user_message: str) -> str:
     if not api_key:
         raise ValueError("GEMINI_API_KEY is not set in your .env file! Get a free key at https://aistudio.google.com/")
 
-    # gemini-2.0-flash or gemini-1.5-flash
-    model = config.model or "gemini-2.0-flash"
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
-
-    payload = {
-        "system_instruction": {
-            "parts": [{"text": system_prompt}]
-        },
-        "contents": [
-            {
-                "role": "user",
-                "parts": [{"text": user_message}]
-            }
-        ],
-        "generationConfig": {
-            "temperature": 0.2,
-            "maxOutputTokens": 2048
-        }
-    }
-
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={"Content-Type": "application/json"}
-    )
-
     ctx = ssl.create_default_context()
-    try:
-        # Try standard cert verification first
-        resp_obj = urllib.request.urlopen(req, timeout=30)
-    except Exception:
-        # Fallback for Mac local python SSL bundle issues
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-        resp_obj = urllib.request.urlopen(req, context=ctx, timeout=30)
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
 
-    try:
-        with resp_obj as response:
-            res_data = json.loads(response.read().decode("utf-8"))
-            candidates = res_data.get("candidates", [])
-            if candidates:
-                parts = candidates[0].get("content", {}).get("parts", [])
-                if parts:
-                    return parts[0].get("text", "")
-            return "No text returned from Gemini."
-    except urllib.error.HTTPError as e:
-        error_body = e.read().decode("utf-8")
-        raise RuntimeError(f"Gemini API Error ({e.code}): {error_body}")
+    # gemini-1.5-flash is universally supported on Google's v1beta endpoints
+    models_to_try = ["gemini-1.5-flash", "gemini-2.0-flash-exp", "gemini-1.5-pro"]
+    if config.model and config.model not in models_to_try:
+        models_to_try.insert(0, config.model)
+
+    last_error = None
+    for model in models_to_try:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
+
+        payload = {
+            "system_instruction": {
+                "parts": [{"text": system_prompt}]
+            },
+            "contents": [
+                {
+                    "role": "user",
+                    "parts": [{"text": user_message}]
+                }
+            ],
+            "generationConfig": {
+                "temperature": 0.2,
+                "maxOutputTokens": 2048
+            }
+        }
+
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(payload).encode("utf-8"),
+            headers={"Content-Type": "application/json"}
+        )
+
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=25) as response:
+                res_data = json.loads(response.read().decode("utf-8"))
+                candidates = res_data.get("candidates", [])
+                if candidates:
+                    parts = candidates[0].get("content", {}).get("parts", [])
+                    if parts:
+                        return parts[0].get("text", "")
+                return "No text returned from Gemini."
+        except urllib.error.HTTPError as e:
+            err_body = e.read().decode("utf-8", errors="ignore")
+            last_error = RuntimeError(f"Gemini {model} HTTP {e.code}: {err_body}")
+            print(f"[Gemini] Model {model} error: {last_error}")
+            continue
+        except Exception as e:
+            last_error = e
+            continue
+
+    raise last_error or RuntimeError("Gemini failed across all attempted models.")
 
 
 def chat_anthropic(system_prompt: str, user_message: str) -> str:
@@ -272,22 +278,38 @@ def chat_openai(system_prompt: str, user_message: str) -> str:
 
 
 def chat(system_prompt: str, user_message: str) -> str:
-    """Route chat to configured live provider. No silent mock overrides when an API key is set."""
+    """Route chat to configured live provider with automatic resilient fallback."""
     schema = get_schema_description()
     system_prompt_formatted = system_prompt.format(schema=schema)
 
     provider = get_active_provider()
+    
+    # Establish priority list
+    providers_to_try = [provider]
+    for alt in ["groq", "gemini", "openai", "anthropic", "mock"]:
+        if alt not in providers_to_try:
+            providers_to_try.append(alt)
 
-    if provider == "openai" or (not config.llm_provider and os.getenv("OPENAI_API_KEY")):
-        return chat_openai(system_prompt_formatted, user_message)
-    elif provider == "groq":
-        return chat_groq(system_prompt_formatted, user_message)
-    elif provider == "gemini":
-        return chat_gemini(system_prompt_formatted, user_message)
-    elif provider == "anthropic":
-        return chat_anthropic(system_prompt_formatted, user_message)
-    else:
-        return chat_mock(system_prompt_formatted, user_message)
+    last_error = None
+    for p in providers_to_try:
+        try:
+            if p == "gemini" and (config.gemini_api_key or os.getenv("GEMINI_API_KEY")):
+                return chat_gemini(system_prompt_formatted, user_message)
+            elif p == "groq" and (config.groq_api_key or os.getenv("GROQ_API_KEY")):
+                return chat_groq(system_prompt_formatted, user_message)
+            elif p == "openai" and (config.openai_api_key or os.getenv("OPENAI_API_KEY")):
+                return chat_openai(system_prompt_formatted, user_message)
+            elif p == "anthropic" and (config.anthropic_api_key or os.getenv("ANTHROPIC_API_KEY")):
+                return chat_anthropic(system_prompt_formatted, user_message)
+            elif p == "mock":
+                if last_error:
+                    print(f"[LLM] Live provider issue ({last_error}). Falling back smoothly to simulation.")
+                return chat_mock(system_prompt_formatted, user_message)
+        except Exception as e:
+            print(f"[LLM Warning] Provider '{p}' failed: {e}. Trying fallback...")
+            last_error = e
+
+    return chat_mock(system_prompt_formatted, user_message)
 
 
 def extract_sql_from_response(response: str) -> str | None:

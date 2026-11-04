@@ -71,16 +71,28 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             data = {}
 
         if path == "/api/ask":
-            question = data.get("question", "Why did repeat purchases drop in the West region last month?")
-            d = get_or_create_desk()
-            ctx = d.ask(question)
-            self.send_json(self.get_room_state())
+            try:
+                question = data.get("question", "Why did repeat purchases drop in the West region last month?")
+                d = get_or_create_desk()
+                ctx = d.ask(question)
+                self.send_json(self.get_room_state())
+            except Exception as e:
+                import traceback
+                traceback.print_exc()
+                d = get_or_create_desk()
+                d._post("System", f"⚠️ Notice during execution: {str(e)}")
+                self.send_json(self.get_room_state())
 
         elif path == "/api/approve":
-            response = data.get("response", "Approved. Change discount to 15%.")
-            d = get_or_create_desk()
-            result = d.approve(response)
-            self.send_json({"result": result, "state": self.get_room_state()})
+            try:
+                response = data.get("response", "Approved. Change discount to 15%.")
+                d = get_or_create_desk()
+                result = d.approve(response)
+                self.send_json({"result": result, "state": self.get_room_state()})
+            except Exception as e:
+                import traceback
+                traceback.print_exc()
+                self.send_json({"error": str(e), "state": self.get_room_state()})
 
         else:
             self.send_error(404, "Endpoint not found")
@@ -193,9 +205,9 @@ def run_server(port: int = PORT) -> None:
     # Try finding an open port if default is busy
     test_port = port
     httpd = None
-    for p in [test_port, 8000, 3000, 8080, 8888, 9090]:
+    for p in [test_port, 8000, 3000, 8080, 5050, 8888, 9090]:
         try:
-            server_address = ("", p)
+            server_address = ("0.0.0.0", p)
             class ReuseHTTPServer(HTTPServer):
                 allow_reuse_address = True
             httpd = ReuseHTTPServer(server_address, SwitchAppHandler)
@@ -207,9 +219,10 @@ def run_server(port: int = PORT) -> None:
     if not httpd:
         print("[ERROR] Could not bind to any available port.")
         return
-    url = f"http://localhost:{port}"
-    print(f"\n✨ Revenue Desk Light-Theme UI is live at: {url}")
-    print(f"👉 Opening browser...\n")
+    url = f"http://127.0.0.1:{port}"
+    print(f"\n✨ Revenue Desk Light-Theme UI is live at:")
+    print(f"👉 {url}")
+    print(f"👉 http://localhost:{port}\n")
     try:
         import subprocess
         subprocess.run(["open", url])
