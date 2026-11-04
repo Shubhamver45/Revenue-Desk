@@ -19,6 +19,7 @@ class TestRevenueDeskWorkflow(unittest.TestCase):
 
     def setUp(self):
         os.environ["DB_PATH"] = TEST_DB
+        os.environ["LLM_PROVIDER"] = "mock"
         if os.path.exists(TEST_DB):
             os.remove(TEST_DB)
         init_database(TEST_DB)

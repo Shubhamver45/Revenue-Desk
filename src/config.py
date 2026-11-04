@@ -31,8 +31,9 @@ class Config:
     # Database
     db_path: str = field(default_factory=lambda: os.getenv("DB_PATH", "data/revenue_desk.db"))
 
-    # LLM Provider: 'gemini', 'anthropic', 'groq', or 'mock'
+    # LLM Provider: 'openai', 'gemini', 'anthropic', 'groq', or 'mock'
     llm_provider: str = field(default_factory=lambda: os.getenv("LLM_PROVIDER", "").lower())
+    openai_api_key: str = field(default_factory=lambda: os.getenv("OPENAI_API_KEY", ""))
     gemini_api_key: str = field(default_factory=lambda: os.getenv("GEMINI_API_KEY", ""))
     anthropic_api_key: str = field(default_factory=lambda: os.getenv("ANTHROPIC_API_KEY", ""))
     groq_api_key: str = field(default_factory=lambda: os.getenv("GROQ_API_KEY", ""))

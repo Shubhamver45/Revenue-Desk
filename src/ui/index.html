@@ -1351,6 +1351,7 @@
             card.className = 'turn-card';
 
             const rawTableHtml = buildTableFromRows(review.raw_data);
+            const isVerified = review.is_verified;
 
             card.innerHTML = `
                 <div class="monogram-avatar avatar-reviewer">RV</div>
@@ -1358,25 +1359,33 @@
                     <div class="turn-header">
                         <div class="author-box">
                             <span class="author-title">Reviewer Agent</span>
-                            <span class="chip chip-agent" style="background: var(--sage-bg); color: var(--sage);">AUDIT AGENT</span>
+                            <span class="chip chip-agent" style="background: ${isVerified ? 'var(--sage-bg)' : 'var(--sienna-bg)'}; color: ${isVerified ? 'var(--sage)' : 'var(--sienna)'};">
+                                ${isVerified ? 'VERIFIED' : 'AUDIT AUDITOR'}
+                            </span>
                         </div>
                         <span class="time-label">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </div>
                     <div class="turn-body">
+                        ${!isVerified ? `
                         <div class="audit-alert">
                             <div class="audit-alert-title">
-                                <span>Audit Alert: Discrepancy Found in Initial Calculation</span>
+                                <span>⚠️ Independent Audit: Discrepancy Detected</span>
                             </div>
                             <div class="audit-alert-desc">
-                                Independent query detected that October repeat volume included un-reconciled duplicate charges & refunds that inflate gross figures.
+                                Independent query revealed variations against preliminary findings. Verified query results rendered below:
                             </div>
                         </div>
+                        ` : `
+                        <div style="background: var(--sage-bg); border: 1px solid var(--sage-border); border-radius: var(--radius-sm); padding: 10px 14px; margin: 10px 0; font-size: 12.5px; color: var(--sage); font-weight: 600;">
+                            ✅ Independent Verification Completed — Figures verified against live database.
+                        </div>
+                        `}
 
                         ${review.sql ? `
                         <div class="sql-viewer">
                             <div class="sql-bar">
                                 <span>Independent Audit Query</span>
-                                <span>Verified</span>
+                                <span>Executed</span>
                             </div>
                             <code>${escapeHtml(review.sql)}</code>
                         </div>

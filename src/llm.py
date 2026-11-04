@@ -21,14 +21,19 @@ from src.database import get_schema_description
 
 def get_active_provider() -> str:
     """Determine which provider to use based on env config."""
+    env_provider = os.getenv("LLM_PROVIDER")
+    if env_provider:
+        return env_provider.lower().strip()
     if config.llm_provider:
         return config.llm_provider
-    if config.gemini_api_key or os.getenv("GEMINI_API_KEY"):
-        return "gemini"
-    if config.groq_api_key or os.getenv("GROQ_API_KEY"):
-        return "groq"
-    if config.anthropic_api_key or os.getenv("ANTHROPIC_API_KEY"):
+    if os.getenv("OPENAI_API_KEY") or config.openai_api_key:
+        return "openai"
+    if os.getenv("ANTHROPIC_API_KEY") or config.anthropic_api_key:
         return "anthropic"
+    if os.getenv("GROQ_API_KEY") or config.groq_api_key:
+        return "groq"
+    if os.getenv("GEMINI_API_KEY") or config.gemini_api_key:
+        return "gemini"
     return "mock"
 
 
@@ -224,25 +229,61 @@ def chat_groq(system_prompt: str, user_message: str) -> str:
         return "No text returned from Groq."
 
 
+def chat_openai(system_prompt: str, user_message: str) -> str:
+    """Call OpenAI API using standard library urllib."""
+    import ssl
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OPENAI_API_KEY is not set in .env!")
+
+    model = config.model or os.getenv("LLM_MODEL") or "gpt-4o-mini"
+    url = "https://api.openai.com/v1/chat/completions"
+
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_message}
+        ],
+        "temperature": 0.2,
+        "max_tokens": 2048
+    }
+
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "User-Agent": "Mozilla/5.0",
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}"
+        }
+    )
+
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
+    with urllib.request.urlopen(req, context=ctx, timeout=30) as response:
+        res_data = json.loads(response.read().decode("utf-8"))
+        choices = res_data.get("choices", [])
+        if choices:
+            return choices[0].get("message", {}).get("content", "")
+        return "No text returned from OpenAI."
+
+
 def chat(system_prompt: str, user_message: str) -> str:
-    """Route chat to configured provider."""
+    """Route chat to configured live provider. No silent mock overrides when an API key is set."""
     schema = get_schema_description()
     system_prompt_formatted = system_prompt.format(schema=schema)
 
     provider = get_active_provider()
 
-    if provider == "groq":
-        try:
-            return chat_groq(system_prompt_formatted, user_message)
-        except Exception as e:
-            print(f"\n⚠️ Groq call failed ({e}). Falling back to Mock Demo mode...")
-            return chat_mock(system_prompt_formatted, user_message)
+    if provider == "openai" or (not config.llm_provider and os.getenv("OPENAI_API_KEY")):
+        return chat_openai(system_prompt_formatted, user_message)
+    elif provider == "groq":
+        return chat_groq(system_prompt_formatted, user_message)
     elif provider == "gemini":
-        try:
-            return chat_gemini(system_prompt_formatted, user_message)
-        except Exception as e:
-            print(f"\n⚠️ Gemini call failed ({e}). Falling back to Mock Demo mode...")
-            return chat_mock(system_prompt_formatted, user_message)
+        return chat_gemini(system_prompt_formatted, user_message)
     elif provider == "anthropic":
         return chat_anthropic(system_prompt_formatted, user_message)
     else:

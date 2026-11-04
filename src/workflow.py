@@ -87,18 +87,28 @@ class RevenueDesk:
         self._post("Manager", question)
         self._post("System", "📊 Routing question to Analyst Agent...")
 
-        # Run analysis
+        # Run analysis (Phase 1: SQL generation -> Phase 2: Live SQLite execution -> Phase 3: Interpretation)
         analysis = analyst_agent.analyze(question)
         self.current.analysis = analysis
         self._post("Analyst", analysis.llm_response)
 
-        # Automatically trigger review
+        import time
+        time.sleep(1.2)  # Respect LLM token rate limits
+
+        # Automatically trigger review (Phase 1: Verification SQL -> Phase 2: Live execution -> Phase 3: Comparison)
         self.current.state = WorkflowState.REVIEWING
         self._post("System", "🔍 Reviewer Agent is independently verifying...")
 
-        review = reviewer_agent.verify(analysis.llm_response, analysis.sql_query)
+        review = reviewer_agent.verify(
+            analyst_finding=analysis.llm_response,
+            analyst_sql=analysis.sql_query,
+            analyst_raw_data=analysis.raw_data,
+            question=question,
+        )
         self.current.review = review
         self._post("Reviewer", review.llm_response)
+
+        time.sleep(1.2)  # Respect LLM token rate limits
 
         # Propose action
         self.current.state = WorkflowState.PROPOSING
