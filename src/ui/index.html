@@ -3,73 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue Desk — Switch Multi-Agent Operations Cockpit</title>
+    <title>Revenue Desk — Multi-Agent Consensus Room</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Executive FinTech Palette (Ramp / Mercury / Bloomberg NextGen) */
-            --bg-canvas: #f4f6f8;
-            --bg-panel: #ffffff;
-            --bg-card: #ffffff;
-            --bg-subtle: #f8fafc;
-            --bg-hover: #f1f5f9;
-            --bg-active: #e2e8f0;
+            /* Apple / Linear Flagship Minimalist Luxury Palette */
+            --canvas: #fcfcfd;
+            --surface: #ffffff;
+            --surface-elevated: #ffffff;
+            --surface-subtle: #f8fafc;
+            --surface-hover: #f1f5f9;
+            --surface-active: #e2e8f0;
 
-            --border-subtle: #f1f5f9;
-            --border-default: #e2e8f0;
-            --border-strong: #cbd5e1;
-            --border-focus: #0f766e;
+            --border-subtle: rgba(0, 0, 0, 0.04);
+            --border: rgba(0, 0, 0, 0.08);
+            --border-strong: rgba(0, 0, 0, 0.14);
+            --border-focus: #18181b;
 
-            /* Financial & Authority Typography */
-            --text-heading: #0f172a;
-            --text-body: #334155;
-            --text-secondary: #64748b;
-            --text-muted: #94a3b8;
+            --text-heading: #09090b;
+            --text-body: #27272a;
+            --text-secondary: #71717a;
+            --text-muted: #a1a1aa;
 
-            /* FinTech Deep Teal & Forest Emerald (Money, Growth, Verified Data) */
-            --brand-primary: #0f766e;
-            --brand-primary-hover: #115e59;
-            --brand-light: #f0fdfa;
-            --brand-border: #99f6e4;
-            --brand-glow: rgba(15, 118, 110, 0.18);
+            /* Luxury FinTech Accents */
+            --accent-black: #09090b;
+            --accent-black-hover: #27272a;
 
-            /* Financial Growth & Verified State */
-            --emerald: #059669;
+            --cobalt: #2563eb;
+            --cobalt-bg: #eff6ff;
+            --cobalt-border: #bfdbfe;
+
+            --emerald: #10b981;
+            --emerald-deep: #059669;
             --emerald-bg: #ecfdf5;
             --emerald-border: #a7f3d0;
             --emerald-text: #065f46;
 
-            /* Discrepancy & Audit Alert (Warm Bronze / Amber) */
-            --amber: #b45309;
+            --amber: #f59e0b;
             --amber-bg: #fffbeb;
             --amber-border: #fde68a;
-            --amber-text: #78350f;
+            --amber-text: #92400e;
 
-            /* Deficit / Glitch / Churn */
-            --rose: #be123c;
+            --rose: #f43f5e;
             --rose-bg: #fff1f2;
             --rose-border: #fecdd3;
-            --rose-text: #881337;
+            --rose-text: #9f1239;
 
-            /* Deep Obsidian for Authority */
-            --obsidian: #0f172a;
-            --obsidian-hover: #1e293b;
-
-            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
             --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, monospace;
 
             --radius-xs: 6px;
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 18px;
 
-            --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
-            --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
-            --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
-            --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.06), 0 4px 6px -4px rgba(15, 23, 42, 0.02);
-            --shadow-float: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+            --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 0 1px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 12px 30px -4px rgba(0, 0, 0, 0.08), 0 0 1px rgba(0, 0, 0, 0.1);
+            --shadow-float: 0 24px 48px -12px rgba(0, 0, 0, 0.12);
         }
 
         * {
@@ -80,39 +73,39 @@
 
         body {
             font-family: var(--font-sans);
-            background: var(--bg-canvas);
+            background: var(--canvas);
             color: var(--text-body);
             height: 100vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            letter-spacing: -0.015em;
+            letter-spacing: -0.018em;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ── Top Bar ── */
+        /* ── Header ── */
         header {
-            height: 58px;
-            background: #ffffff;
-            border-bottom: 1px solid var(--border-default);
+            height: 60px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 24px;
-            z-index: 30;
-            box-shadow: var(--shadow-xs);
+            padding: 0 28px;
+            z-index: 40;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
         }
 
-        .brand-cluster {
+        .header-brand {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
-        .switch-badge {
+        .brand-logo {
             width: 32px;
             height: 32px;
-            background: linear-gradient(135deg, #0f766e 0%, #047857 100%);
+            background: var(--accent-black);
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
@@ -120,37 +113,28 @@
             color: #ffffff;
             font-size: 13px;
             font-weight: 800;
-            letter-spacing: -0.03em;
-            box-shadow: 0 2px 6px var(--brand-glow);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
-        .brand-text-block {
+        .brand-text {
             display: flex;
-            flex-direction: column;
+            align-items: baseline;
+            gap: 8px;
         }
 
         .brand-title {
             font-size: 15px;
             font-weight: 800;
             color: var(--text-heading);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            line-height: 1.2;
+            letter-spacing: -0.02em;
         }
 
-        .brand-subtitle {
-            font-size: 11px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .live-tag {
-            font-size: 11px;
+        .room-badge {
+            font-size: 11.5px;
             font-weight: 600;
-            color: var(--emerald-text);
-            background: var(--emerald-bg);
-            border: 1px solid var(--emerald-border);
+            color: var(--text-secondary);
+            background: var(--surface-subtle);
+            border: 1px solid var(--border);
             padding: 2px 8px;
             border-radius: var(--radius-xs);
             display: inline-flex;
@@ -158,19 +142,12 @@
             gap: 5px;
         }
 
-        .live-pulsing-dot {
+        .online-dot {
             width: 6px;
             height: 6px;
             background: var(--emerald);
             border-radius: 50%;
-            box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.25);
-            animation: pulse-dot 1.8s infinite;
-        }
-
-        @keyframes pulse-dot {
-            0% { transform: scale(0.95); opacity: 0.8; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(0.95); opacity: 0.8; }
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
         }
 
         .header-actions {
@@ -179,412 +156,432 @@
             gap: 10px;
         }
 
-        .consensus-chip {
-            font-size: 12px;
-            font-weight: 700;
-            padding: 5px 12px;
-            border-radius: var(--radius-sm);
-            background: var(--emerald-bg);
-            color: var(--emerald-text);
-            border: 1px solid var(--emerald-border);
+        .consensus-indicator {
             display: none;
             align-items: center;
             gap: 6px;
-            animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--emerald-bg);
+            color: var(--emerald-text);
+            border: 1px solid var(--emerald-border);
+            padding: 5px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 700;
+            animation: fadeIn 0.3s ease;
         }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-4px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-3px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .btn-toolbar {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
+        .btn-secondary {
+            background: var(--surface);
+            border: 1px solid var(--border);
             padding: 7px 14px;
             border-radius: var(--radius-sm);
             font-size: 12.5px;
             font-weight: 600;
-            color: var(--text-body);
+            color: var(--text-heading);
             cursor: pointer;
             transition: all 0.15s ease;
             font-family: inherit;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            box-shadow: var(--shadow-xs);
+            box-shadow: var(--shadow-subtle);
         }
 
-        .btn-toolbar:hover {
-            background: var(--bg-hover);
-            color: var(--text-heading);
+        .btn-secondary:hover {
+            background: var(--surface-subtle);
             border-color: var(--border-strong);
+            transform: translateY(-1px);
         }
 
-        .btn-action-primary {
-            background: linear-gradient(135deg, var(--brand-primary) 0%, #047857 100%);
+        .btn-primary-dark {
+            background: var(--accent-black);
             color: #ffffff;
             border: none;
             padding: 7px 16px;
             border-radius: var(--radius-sm);
             font-size: 12.5px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.15s ease;
             font-family: inherit;
-            box-shadow: 0 2px 4px var(--brand-glow);
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
 
-        .btn-action-primary:hover {
-            opacity: 0.95;
+        .btn-primary-dark:hover {
+            background: var(--accent-black-hover);
             transform: translateY(-1px);
-            box-shadow: 0 4px 8px var(--brand-glow);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        /* ── Executive KPI Metrics Ribbon ── */
-        .kpi-ribbon {
+        /* ── Interactive Multi-Agent Pipeline Stepper ── */
+        .pipeline-stepper-bar {
             background: #ffffff;
-            border-bottom: 1px solid var(--border-default);
-            padding: 10px 24px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            flex-shrink: 0;
-        }
-
-        .kpi-card {
+            border-bottom: 1px solid var(--border);
+            padding: 12px 28px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 6px 12px;
-            border-radius: var(--radius-sm);
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-subtle);
+            justify-content: space-between;
+            flex-shrink: 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
         }
 
-        .kpi-icon-wrap {
-            width: 32px;
-            height: 32px;
-            border-radius: var(--radius-xs);
+        .stepper-track {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            flex-shrink: 0;
+            gap: 8px;
+            flex: 1;
+            max-width: 820px;
         }
 
-        .kpi-meta {
-            min-width: 0;
-        }
-
-        .kpi-label {
-            font-size: 10.5px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+        .step-pill {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 11px;
+            border-radius: 20px;
+            font-size: 11.5px;
+            font-weight: 600;
+            background: var(--surface-subtle);
             color: var(--text-secondary);
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
         }
 
-        .kpi-value {
-            font-size: 15px;
-            font-weight: 800;
+        .step-pill.step-active {
+            background: var(--cobalt-bg);
+            color: var(--cobalt);
+            border-color: var(--cobalt-border);
+            font-weight: 700;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.12);
+        }
+
+        .step-pill.step-complete {
+            background: var(--emerald-bg);
+            color: var(--emerald-text);
+            border-color: var(--emerald-border);
+            font-weight: 700;
+        }
+
+        .step-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .step-separator {
+            width: 14px;
+            height: 1px;
+            background: var(--border-strong);
+        }
+
+        .pipeline-kpi-summary {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .kpi-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: var(--radius-xs);
+            background: var(--surface-subtle);
+            border: 1px solid var(--border);
+        }
+
+        .kpi-chip strong {
             color: var(--text-heading);
-            margin-top: 1px;
             font-variant-numeric: tabular-nums;
         }
 
-        /* ── Main Cockpit Split Workspace ── */
-        .cockpit-workspace {
+        /* ── Main App Grid ── */
+        .workspace-split {
             flex: 1;
             display: grid;
             grid-template-columns: 1fr 380px;
-            height: calc(100vh - 120px);
+            height: calc(100vh - 110px);
             overflow: hidden;
         }
 
-        /* ── Left Stage: Dialogue & Evidence Stream ── */
-        .left-stage {
+        /* ── Stage Center: Dialogue Stream ── */
+        .stage-center {
             display: flex;
             flex-direction: column;
-            background: var(--bg-canvas);
+            background: var(--canvas);
             overflow: hidden;
             position: relative;
         }
 
-        .stage-subhead {
+        .stage-actions-bar {
+            padding: 12px 28px;
             background: #ffffff;
-            border-bottom: 1px solid var(--border-default);
-            padding: 10px 24px;
+            border-bottom: 1px solid var(--border);
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
         }
 
-        .subhead-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .subhead-channel {
+        .stage-title {
             font-size: 13.5px;
             font-weight: 700;
             color: var(--text-heading);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
-        .subhead-desc {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .preset-cluster {
+        .preset-inquiry-group {
             display: flex;
             gap: 8px;
         }
 
-        .pill-inquiry {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
-            padding: 5px 12px;
+        .btn-preset {
+            background: var(--surface-subtle);
+            border: 1px solid var(--border);
+            padding: 6px 13px;
             border-radius: 20px;
-            font-size: 11.5px;
+            font-size: 12px;
             font-weight: 600;
-            color: var(--text-body);
+            color: var(--text-heading);
             cursor: pointer;
             transition: all 0.15s ease;
-            box-shadow: var(--shadow-xs);
+            box-shadow: var(--shadow-subtle);
         }
 
-        .pill-inquiry:hover {
-            border-color: var(--brand-primary);
-            color: var(--brand-primary);
-            background: var(--brand-light);
+        .btn-preset:hover {
+            background: #ffffff;
+            border-color: var(--accent-black);
+            color: var(--accent-black);
             transform: translateY(-1px);
         }
 
-        /* Feed Stream */
-        .dialogue-stream {
+        /* Message Stream */
+        .message-stream {
             flex: 1;
             overflow-y: auto;
-            padding: 24px;
+            padding: 28px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 22px;
         }
 
-        .dialogue-turn {
+        .chat-turn {
             display: flex;
             gap: 14px;
             max-width: 960px;
             width: 100%;
-            animation: cardAppear 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: cardSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes cardAppear {
-            from { opacity: 0; transform: translateY(8px); }
+        @keyframes cardSlide {
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .role-avatar {
-            width: 34px;
-            height: 34px;
+        .agent-icon {
+            width: 36px;
+            height: 36px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 800;
             flex-shrink: 0;
-            box-shadow: var(--shadow-xs);
+            box-shadow: var(--shadow-subtle);
         }
 
-        .avatar-manager {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        .icon-manager {
+            background: var(--accent-black);
             color: #ffffff;
         }
 
-        .avatar-analyst {
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+        .icon-analyst {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
             color: #ffffff;
         }
 
-        .avatar-reviewer {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        .icon-reviewer {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: #ffffff;
         }
 
-        .avatar-system {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
+        .icon-system {
+            background: var(--surface);
+            border: 1px solid var(--border);
             color: var(--text-secondary);
         }
 
-        .turn-card-content {
+        .turn-card {
             flex: 1;
             background: #ffffff;
-            border: 1px solid var(--border-default);
+            border: 1px solid var(--border);
             border-radius: var(--radius-md);
-            padding: 20px 22px;
-            box-shadow: var(--shadow-sm);
+            padding: 22px 24px;
+            box-shadow: var(--shadow-card);
             transition: all 0.2s ease;
         }
 
-        .turn-card-content:hover {
-            box-shadow: var(--shadow-md);
+        .turn-card:hover {
+            box-shadow: var(--shadow-hover);
             border-color: var(--border-strong);
         }
 
-        .card-top-row {
+        .card-header-line {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 12px;
             border-bottom: 1px solid var(--border-subtle);
-            padding-bottom: 8px;
+            padding-bottom: 10px;
         }
 
-        .author-info {
+        .sender-tag-group {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .author-name {
-            font-size: 14px;
-            font-weight: 700;
+        .sender-name {
+            font-size: 14.5px;
+            font-weight: 800;
             color: var(--text-heading);
+            letter-spacing: -0.02em;
         }
 
-        .tag-role {
-            font-size: 9.5px;
+        .role-chip {
+            font-size: 10px;
             font-weight: 700;
             letter-spacing: 0.05em;
-            padding: 2px 6px;
+            padding: 2px 7px;
             border-radius: 4px;
             text-transform: uppercase;
         }
 
-        .tag-analyst {
-            background: #e0f2fe;
-            color: #0369a1;
-            border: 1px solid #bae6fd;
+        .chip-analyst {
+            background: var(--cobalt-bg);
+            color: var(--cobalt);
+            border: 1px solid var(--cobalt-border);
         }
 
-        .tag-reviewer {
-            background: #ecfdf5;
-            color: #047857;
-            border: 1px solid #a7f3d0;
+        .chip-reviewer {
+            background: var(--emerald-bg);
+            color: var(--emerald-text);
+            border: 1px solid var(--emerald-border);
         }
 
         .timestamp {
-            font-size: 11px;
+            font-size: 11.5px;
             color: var(--text-muted);
             font-variant-numeric: tabular-nums;
         }
 
-        .turn-prose {
+        .turn-body {
             font-size: 14px;
             line-height: 1.65;
             color: var(--text-body);
         }
 
-        /* ── FinTech High-Precision SQL Block ── */
-        .sql-console-box {
-            background: #0f172a;
-            color: #f8fafc;
+        /* ── SQL Inspection Card ── */
+        .sql-box {
+            background: #09090b;
+            color: #fafafa;
             border-radius: var(--radius-sm);
-            padding: 14px 16px;
+            padding: 14px 18px;
             margin: 14px 0;
             font-family: var(--font-mono);
             font-size: 12.5px;
             line-height: 1.55;
             overflow-x: auto;
-            border: 1px solid #1e293b;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+            border: 1px solid #27272a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
         }
 
-        .sql-console-header {
+        .sql-topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 11px;
             font-weight: 600;
-            color: #94a3b8;
+            color: #a1a1aa;
             margin-bottom: 10px;
             padding-bottom: 8px;
-            border-bottom: 1px solid #1e293b;
+            border-bottom: 1px solid #27272a;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.05em;
         }
 
-        .engine-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: #1e293b;
-            padding: 2px 7px;
+        .live-engine-tag {
+            background: #18181b;
+            border: 1px solid #3f3f46;
+            padding: 2px 8px;
             border-radius: 4px;
-            font-size: 10px;
             color: #38bdf8;
+            font-size: 10.5px;
         }
 
         /* ── Data Tables ── */
-        .grid-table-container {
+        .table-responsive {
             overflow-x: auto;
             margin: 14px 0;
-            border: 1px solid var(--border-default);
+            border: 1px solid var(--border);
             border-radius: var(--radius-sm);
             background: #ffffff;
-            box-shadow: var(--shadow-xs);
+            box-shadow: var(--shadow-subtle);
         }
 
-        .grid-table {
+        .data-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
             text-align: left;
         }
 
-        .grid-table th {
-            background: var(--bg-subtle);
-            padding: 10px 14px;
+        .data-table th {
+            background: var(--surface-subtle);
+            padding: 10px 16px;
             font-weight: 700;
             color: var(--text-secondary);
-            border-bottom: 1px solid var(--border-default);
+            border-bottom: 1px solid var(--border);
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.06em;
         }
 
-        .grid-table td {
-            padding: 9px 14px;
+        .data-table td {
+            padding: 10px 16px;
             border-bottom: 1px solid var(--border-subtle);
             color: var(--text-heading);
             font-variant-numeric: tabular-nums;
         }
 
-        .grid-table tr:hover td {
-            background: var(--bg-subtle);
+        .data-table tr:hover td {
+            background: var(--surface-subtle);
         }
 
-        .grid-table tr:last-child td {
+        .data-table tr:last-child td {
             border-bottom: none;
         }
 
-        /* ── Reviewer Discrepancy Alert Box ── */
+        /* ── Reviewer Discrepancy Alert Card ── */
         .discrepancy-card {
             background: var(--amber-bg);
             border: 1px solid var(--amber-border);
             border-radius: var(--radius-md);
-            padding: 16px 18px;
+            padding: 16px 20px;
             margin: 14px 0;
-            box-shadow: var(--shadow-xs);
+            box-shadow: var(--shadow-subtle);
         }
 
         .discrepancy-title {
@@ -597,59 +594,59 @@
             margin-bottom: 6px;
         }
 
-        .discrepancy-narrative {
+        .discrepancy-desc {
             font-size: 13px;
             color: #78350f;
             line-height: 1.5;
         }
 
-        .balance-sheet-grid {
+        .balance-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             margin-top: 14px;
         }
 
-        .balance-cell {
+        .balance-tile {
             background: #ffffff;
             border: 1px solid var(--amber-border);
-            padding: 12px 14px;
+            padding: 12px 16px;
             border-radius: var(--radius-sm);
-            box-shadow: var(--shadow-xs);
+            box-shadow: var(--shadow-subtle);
         }
 
-        .cell-kicker {
-            font-size: 10px;
+        .tile-kicker {
+            font-size: 10.5px;
             color: var(--text-secondary);
             text-transform: uppercase;
             font-weight: 700;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.05em;
         }
 
-        .cell-amount {
+        .tile-amount {
             font-size: 18px;
             font-weight: 800;
             color: var(--text-heading);
-            margin-top: 3px;
+            margin-top: 4px;
             font-variant-numeric: tabular-nums;
         }
 
-        .amt-alert { color: var(--rose); }
-        .amt-verified { color: var(--emerald); }
+        .tile-alert { color: var(--rose); }
+        .tile-verified { color: var(--emerald-deep); }
 
-        /* ── Human Sign-off Gate ── */
-        .signoff-gate-card {
+        /* ── Human Approval Gate ── */
+        .approval-gate-card {
             background: #ffffff;
-            border: 1px solid var(--border-default);
-            border-left: 4px solid var(--brand-primary);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--emerald);
             border-radius: var(--radius-md);
-            padding: 18px 20px;
+            padding: 20px 22px;
             margin-top: 16px;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-card);
         }
 
         .gate-title {
-            font-size: 14px;
+            font-size: 14.5px;
             font-weight: 800;
             color: var(--text-heading);
             display: flex;
@@ -659,33 +656,33 @@
         }
 
         .gate-subtext {
-            font-size: 12.5px;
+            font-size: 13px;
             color: var(--text-secondary);
             line-height: 1.45;
         }
 
-        .gate-controls-row {
+        .gate-action-cluster {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-top: 16px;
         }
 
-        .stepper-box {
+        .stepper-widget {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-default);
-            padding: 7px 12px;
+            background: var(--surface-subtle);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
             border-radius: var(--radius-sm);
             font-size: 13px;
             font-weight: 600;
             color: var(--text-body);
         }
 
-        .stepper-box input {
-            width: 46px;
+        .stepper-widget input {
+            width: 48px;
             border: 1px solid var(--border-strong);
             background: #ffffff;
             border-radius: 4px;
@@ -694,37 +691,37 @@
             font-weight: 800;
             font-family: inherit;
             color: var(--text-heading);
-            font-size: 13.5px;
+            font-size: 14px;
         }
 
-        .btn-authorize {
-            background: linear-gradient(135deg, var(--emerald) 0%, #047857 100%);
+        .btn-confirm-action {
+            background: linear-gradient(135deg, var(--emerald) 0%, #059669 100%);
             color: #ffffff;
             border: none;
-            padding: 9px 18px;
+            padding: 10px 20px;
             border-radius: var(--radius-sm);
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.15s ease;
             font-family: inherit;
-            box-shadow: 0 2px 4px rgba(5, 150, 105, 0.25);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
 
-        .btn-authorize:hover {
+        .btn-confirm-action:hover {
             opacity: 0.95;
             transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(5, 150, 105, 0.3);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
         }
 
-        .btn-reject {
+        .btn-dismiss-action {
             background: #ffffff;
             color: var(--rose);
-            border: 1px solid var(--border-default);
-            padding: 9px 16px;
+            border: 1px solid var(--border);
+            padding: 10px 16px;
             border-radius: var(--radius-sm);
             font-size: 13px;
             font-weight: 600;
@@ -733,27 +730,27 @@
             transition: all 0.15s ease;
         }
 
-        .btn-reject:hover {
+        .btn-dismiss-action:hover {
             background: var(--rose-bg);
             border-color: var(--rose-border);
         }
 
         /* ── Input Dock ── */
-        .input-dock {
+        .bottom-dock {
             background: #ffffff;
-            border-top: 1px solid var(--border-default);
-            padding: 14px 24px;
+            border-top: 1px solid var(--border);
+            padding: 16px 28px;
             display: flex;
             gap: 12px;
             align-items: center;
-            box-shadow: 0 -2px 8px rgba(15, 23, 42, 0.03);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.02);
         }
 
-        .input-query {
+        .dock-input {
             flex: 1;
-            padding: 12px 18px;
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-default);
+            padding: 13px 18px;
+            background: var(--surface-subtle);
+            border: 1px solid var(--border);
             border-radius: var(--radius-sm);
             font-size: 14px;
             font-family: inherit;
@@ -762,15 +759,15 @@
             transition: all 0.15s ease;
         }
 
-        .input-query:focus {
+        .dock-input:focus {
             background: #ffffff;
             border-color: var(--border-focus);
-            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+            box-shadow: 0 0 0 3px rgba(9, 9, 11, 0.08);
         }
 
         .btn-dock-send {
-            padding: 12px 22px;
-            background: linear-gradient(135deg, var(--brand-primary) 0%, #047857 100%);
+            padding: 13px 24px;
+            background: var(--accent-black);
             color: #ffffff;
             border: none;
             border-radius: var(--radius-sm);
@@ -779,56 +776,53 @@
             cursor: pointer;
             font-family: inherit;
             transition: all 0.15s ease;
-            box-shadow: 0 2px 4px var(--brand-glow);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
 
         .btn-dock-send:hover {
-            opacity: 0.95;
+            background: var(--accent-black-hover);
             transform: translateY(-1px);
         }
 
-        /* ── Right Stage: Switch Governance & Lineage Rail ── */
-        .right-governance-rail {
+        /* ── Right Stage: Switch Audit & Lineage Rail ── */
+        .stage-rail {
             background: #ffffff;
-            border-left: 1px solid var(--border-default);
+            border-left: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
 
         .rail-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-default);
-            background: #ffffff;
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .rail-title {
-            font-size: 13.5px;
+        .rail-heading {
+            font-size: 14px;
             font-weight: 800;
             color: var(--text-heading);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            letter-spacing: -0.02em;
         }
 
-        .rail-caption {
-            font-size: 11.5px;
+        .rail-sub {
+            font-size: 12px;
             color: var(--text-secondary);
             margin-top: 2px;
         }
 
         .segmented-tabs {
             display: flex;
-            background: var(--bg-subtle);
+            background: var(--surface-subtle);
             padding: 3px;
-            margin: 12px 20px 0 20px;
+            margin: 14px 22px 0 22px;
             border-radius: var(--radius-sm);
-            border: 1px solid var(--border-default);
+            border: 1px solid var(--border);
         }
 
-        .segment-tab {
+        .tab-segment {
             flex: 1;
-            padding: 6px 0;
+            padding: 7px 0;
             text-align: center;
             font-size: 12px;
             font-weight: 600;
@@ -838,17 +832,17 @@
             transition: all 0.15s ease;
         }
 
-        .segment-tab.active {
+        .tab-segment.active {
             background: #ffffff;
-            color: var(--brand-primary);
+            color: var(--accent-black);
             font-weight: 700;
-            box-shadow: var(--shadow-xs);
+            box-shadow: var(--shadow-subtle);
         }
 
-        .rail-body {
+        .rail-scroll-body {
             flex: 1;
             overflow-y: auto;
-            padding: 16px 20px;
+            padding: 18px 22px;
         }
 
         .tab-pane {
@@ -859,37 +853,37 @@
             display: block;
         }
 
-        /* Task Cards */
-        .switch-task-card {
+        /* Tasks */
+        .task-card {
             background: #ffffff;
-            border: 1px solid var(--border-default);
+            border: 1px solid var(--border);
             border-radius: var(--radius-sm);
             padding: 12px 14px;
             margin-bottom: 10px;
-            box-shadow: var(--shadow-xs);
+            box-shadow: var(--shadow-subtle);
             transition: all 0.15s ease;
         }
 
-        .switch-task-card:hover {
+        .task-card:hover {
             border-color: var(--border-strong);
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-card);
         }
 
-        .task-card-top {
+        .task-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 6px;
         }
 
-        .task-id-badge {
+        .task-id {
             font-family: var(--font-mono);
-            font-size: 10.5px;
+            font-size: 11px;
             color: var(--text-muted);
             font-weight: 600;
         }
 
-        .status-pill {
+        .task-status {
             font-size: 9.5px;
             font-weight: 700;
             text-transform: uppercase;
@@ -899,48 +893,48 @@
         }
 
         .status-completed { background: var(--emerald-bg); color: var(--emerald-text); border: 1px solid var(--emerald-border); }
-        .status-in_progress { background: var(--brand-light); color: var(--brand-primary); border: 1px solid var(--brand-border); }
-        .status-todo { background: var(--bg-subtle); color: var(--text-secondary); border: 1px solid var(--border-default); }
+        .status-in_progress { background: var(--cobalt-bg); color: var(--cobalt); border: 1px solid var(--cobalt-border); }
+        .status-todo { background: var(--surface-subtle); color: var(--text-secondary); border: 1px solid var(--border); }
 
-        .task-card-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-heading);
-            line-height: 1.35;
-        }
-
-        .task-card-owner {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin-top: 5px;
-        }
-
-        /* Decision Cards */
-        .switch-decision-card {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
-            border-left: 3px solid var(--brand-primary);
-            border-radius: var(--radius-sm);
-            padding: 12px 14px;
-            margin-bottom: 10px;
-            box-shadow: var(--shadow-xs);
-        }
-
-        .decision-title {
+        .task-title {
             font-size: 13px;
             font-weight: 700;
             color: var(--text-heading);
             line-height: 1.4;
         }
 
-        .decision-desc {
+        .task-owner {
             font-size: 11.5px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* Decisions */
+        .decision-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent-black);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .decision-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-heading);
+            line-height: 1.4;
+        }
+
+        .decision-context {
+            font-size: 12px;
             color: var(--text-secondary);
             margin-top: 4px;
         }
 
-        .decision-footer {
-            font-size: 10.5px;
+        .decision-meta {
+            font-size: 11px;
             color: var(--text-muted);
             margin-top: 8px;
             display: flex;
@@ -955,8 +949,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(15, 23, 42, 0.45);
-            backdrop-filter: blur(6px);
+            background: rgba(9, 9, 11, 0.45);
+            backdrop-filter: blur(8px);
             z-index: 100;
             align-items: center;
             justify-content: center;
@@ -965,31 +959,31 @@
 
         .memo-dialog {
             background: #ffffff;
-            border: 1px solid var(--border-default);
+            border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             width: 100%;
             max-width: 720px;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: var(--shadow-float);
-            padding: 36px 40px;
+            padding: 38px 44px;
             position: relative;
         }
 
         .memo-dialog h2 {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 800;
             color: var(--text-heading);
             margin-bottom: 4px;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
         }
 
-        .memo-meta-grid {
+        .memo-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 14px;
-            border-top: 1px solid var(--border-default);
-            border-bottom: 1px solid var(--border-default);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
             padding: 14px 0;
             margin: 18px 0;
             font-size: 12.5px;
@@ -997,10 +991,10 @@
 
         .memo-section-title {
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--brand-primary);
+            letter-spacing: 0.07em;
+            color: var(--accent-black);
             margin: 18px 0 6px 0;
         }
 
@@ -1037,117 +1031,122 @@
 </head>
 <body>
 
-    <!-- ── Top Bar ── -->
+    <!-- ── Top Header ── -->
     <header>
-        <div class="brand-cluster">
-            <div class="switch-badge">RD</div>
-            <div class="brand-text-block">
-                <div class="brand-title">
-                    <span>Revenue Desk</span>
-                    <span class="live-tag">
-                        <span class="live-pulsing-dot"></span>
-                        <span>Multi-Agent Live</span>
-                    </span>
-                </div>
-                <div class="brand-subtitle">Switch Room: <strong>#revenue-desk</strong></div>
+        <div class="header-brand">
+            <div class="brand-logo">RD</div>
+            <div class="brand-text">
+                <span class="brand-title">Revenue Desk</span>
+                <span class="room-badge">
+                    <span class="online-dot"></span>
+                    <span>#revenue-desk</span>
+                </span>
             </div>
         </div>
 
         <div class="header-actions">
-            <div class="consensus-chip" id="consensusPill">
+            <div class="consensus-indicator" id="consensusPill">
                 <span>🤝</span>
-                <span>Dual Consensus Protocol: 100% Aligned</span>
+                <span>Consensus Protocol: 100% Aligned</span>
             </div>
-            <button class="btn-toolbar" onclick="openExecutiveMemo()">📄 Executive Memo</button>
-            <button class="btn-toolbar" onclick="resetRoomState()">Reset Session</button>
-            <button class="btn-action-primary" onclick="runDemoPipeline()">Run Demo Pipeline</button>
+            <button class="btn-secondary" onclick="openExecutiveMemo()">📄 Executive Memo</button>
+            <button class="btn-secondary" onclick="resetRoomState()">Reset Session</button>
+            <button class="btn-primary-dark" onclick="runDemoPipeline()">Run Demo Pipeline</button>
         </div>
     </header>
 
-    <!-- ── Executive KPI Metrics Ribbon ── -->
-    <div class="kpi-ribbon">
-        <div class="kpi-card">
-            <div class="kpi-icon-wrap" style="background: #e0f2fe; color: #0369a1;">📊</div>
-            <div class="kpi-meta">
-                <div class="kpi-label">Recorded Gross Q4</div>
-                <div class="kpi-value">$24,250</div>
+    <!-- ── Interactive Multi-Agent Pipeline Progress Stepper ── -->
+    <div class="pipeline-stepper-bar">
+        <div class="stepper-track">
+            <div class="step-pill step-complete" id="step1">
+                <span class="step-dot"></span>
+                <span>1. Business Inquiry</span>
+            </div>
+            <div class="step-separator"></div>
+            <div class="step-pill step-complete" id="step2">
+                <span class="step-dot"></span>
+                <span>2. Analyst SQL</span>
+            </div>
+            <div class="step-separator"></div>
+            <div class="step-pill step-complete" id="step3">
+                <span class="step-dot"></span>
+                <span>3. Reviewer Audit</span>
+            </div>
+            <div class="step-separator"></div>
+            <div class="step-pill step-complete" id="step4">
+                <span class="step-dot"></span>
+                <span>4. Consensus Protocol</span>
+            </div>
+            <div class="step-separator"></div>
+            <div class="step-pill step-active" id="step5">
+                <span class="step-dot"></span>
+                <span>5. Human Sign-Off Gate</span>
             </div>
         </div>
-        <div class="kpi-card">
-            <div class="kpi-icon-wrap" style="background: var(--amber-bg); color: var(--amber);">⚠️</div>
-            <div class="kpi-meta">
-                <div class="kpi-label">Glitch Caught by Reviewer</div>
-                <div class="kpi-value" style="color: var(--rose);">-$20,430</div>
+
+        <div class="pipeline-kpi-summary">
+            <div class="kpi-chip">
+                <span>Gross:</span>
+                <strong>$24,250</strong>
             </div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-icon-wrap" style="background: var(--emerald-bg); color: var(--emerald);">✅</div>
-            <div class="kpi-meta">
-                <div class="kpi-label">True Net Revenue</div>
-                <div class="kpi-value" style="color: var(--emerald);">$3,820</div>
+            <div class="kpi-chip" style="color: var(--rose);">
+                <span>Glitch:</span>
+                <strong>-$20,430</strong>
             </div>
-        </div>
-        <div class="kpi-card">
-            <div class="kpi-icon-wrap" style="background: var(--brand-light); color: var(--brand-primary);">🛡️</div>
-            <div class="kpi-meta">
-                <div class="kpi-label">Governance State</div>
-                <div class="kpi-value" style="font-size: 13.5px; color: var(--brand-primary);">Human Approval Gate</div>
+            <div class="kpi-chip" style="color: var(--emerald-text); background: var(--emerald-bg); border-color: var(--emerald-border);">
+                <span>Verified Net:</span>
+                <strong>$3,820</strong>
             </div>
         </div>
     </div>
 
-    <!-- ── Main Split Cockpit Workspace ── -->
-    <div class="cockpit-workspace">
+    <!-- ── Main Workspace Split ── -->
+    <div class="workspace-split">
 
-        <!-- Left Stage: Dialogue & Live Evidence Stream -->
-        <div class="left-stage">
-            <div class="stage-subhead">
-                <div class="subhead-left">
-                    <div class="subhead-channel">
-                        <span>#revenue-desk</span>
-                    </div>
-                    <div class="subhead-desc">• Human Manager + Analyst Agent + Independent Reviewer Agent</div>
+        <!-- Center: Dialogue & Evidence Stream -->
+        <div class="stage-center">
+            <div class="stage-actions-bar">
+                <div class="stage-title">
+                    <span>Collaborative Decision Feed</span>
                 </div>
-                <div class="preset-cluster">
-                    <button class="pill-inquiry" onclick="askPreset('Why did repeat purchases drop in the West region last month?')">
+                <div class="preset-inquiry-group">
+                    <button class="btn-preset" onclick="askPreset('Why did repeat purchases drop in the West region last month?')">
                         💡 Why did repeat purchases drop in West?
                     </button>
-                    <button class="pill-inquiry" onclick="askPreset('Show customer breakdown and order volume across all regions')">
-                        📈 Breakdown by region
+                    <button class="btn-preset" onclick="askPreset('Show customer breakdown and order volume across all regions')">
+                        📊 Customer breakdown by region
                     </button>
                 </div>
             </div>
 
-            <!-- Dialogue Stream -->
-            <div class="dialogue-stream" id="dialogueStream">
-                <div style="text-align: center; padding: 36px 0; color: var(--text-muted); font-size: 13px;">
-                    Room ready. Click the preset above or enter an inquiry below to start the multi-agent workflow.
+            <!-- Scrollable Message Stream -->
+            <div class="message-stream" id="dialogueStream">
+                <div style="text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 13.5px;">
+                    Session initialized. Select a preset inquiry above or enter a question to start the multi-agent workflow.
                 </div>
             </div>
 
             <!-- Input Dock -->
-            <div class="input-dock">
-                <input type="text" id="promptField" class="input-query" placeholder="Ask a business inquiry (e.g. 'Why did repeat purchases drop in West last month?')..." onkeydown="if(event.key==='Enter') executeInquiry()">
+            <div class="bottom-dock">
+                <input type="text" id="promptField" class="dock-input" placeholder="Type a business inquiry or command..." onkeydown="if(event.key==='Enter') executeInquiry()">
                 <button class="btn-dock-send" onclick="executeInquiry()" id="submitBtn">Send Inquiry</button>
             </div>
         </div>
 
-        <!-- Right Stage: Switch Governance & Lineage Rail -->
-        <div class="right-governance-rail">
+        <!-- Right Rail: Switch Audit & Governance Lineage -->
+        <div class="stage-rail">
             <div class="rail-header">
-                <div class="rail-title">
-                    <span>Switch Governance & Audit</span>
-                </div>
-                <div class="rail-caption">Multi-agent consensus protocol & decision register</div>
+                <div class="rail-heading">Switch Room Lineage</div>
+                <div class="rail-sub">Multi-agent governance & tamper-proof audit trail</div>
             </div>
 
             <div class="segmented-tabs">
-                <div class="segment-tab active" onclick="activateTab('tasks')">Task Backlog</div>
-                <div class="segment-tab" onclick="activateTab('decisions')">Decision Log</div>
-                <div class="segment-tab" onclick="activateTab('rules')">Room Invariants</div>
+                <div class="tab-segment active" onclick="activateTab('tasks')">Task Backlog</div>
+                <div class="tab-segment" onclick="activateTab('decisions')">Decision Log</div>
+                <div class="tab-segment" onclick="activateTab('rules')">Invariants</div>
             </div>
 
-            <div class="rail-body">
+            <div class="rail-scroll-body">
                 <!-- Tab 1: Tasks -->
                 <div class="tab-pane active" id="pane-tasks">
                     <div id="tasksContainer"></div>
@@ -1161,16 +1160,16 @@
                 <!-- Tab 3: Rules -->
                 <div class="tab-pane" id="pane-rules">
                     <div style="display: flex; flex-direction: column; gap: 10px; font-size: 12.5px;">
-                        <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
+                        <div style="padding: 12px; background: var(--surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border);">
                             <strong>Rule 1 (Transparency):</strong> Every claim must be accompanied by the raw SQL query executed.
                         </div>
-                        <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
+                        <div style="padding: 12px; background: var(--surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border);">
                             <strong>Rule 2 (Dual Verification):</strong> Reviewer must formulate an independent query to check for edge cases.
                         </div>
-                        <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
+                        <div style="padding: 12px; background: var(--surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border);">
                             <strong>Rule 3 (Refund Reconciliation):</strong> Chargebacks and refunds must be deducted from repeat revenues.
                         </div>
-                        <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
+                        <div style="padding: 12px; background: var(--surface-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border);">
                             <strong>Rule 4 (Human Gate):</strong> No campaign or database modification is permitted without manager sign-off.
                         </div>
                     </div>
@@ -1183,15 +1182,15 @@
     <!-- ── Executive Memo Modal ── -->
     <div class="modal-overlay" id="memoModal" onclick="if(event.target===this) closeExecutiveMemo()">
         <div class="memo-dialog">
-            <div style="font-size: 11px; font-weight: 700; color: var(--brand-primary); letter-spacing: 0.08em; text-transform: uppercase;">
-                Switch Room #revenue-desk • Executive Operations Briefing
+            <div style="font-size: 11px; font-weight: 800; color: var(--accent-black); letter-spacing: 0.08em; text-transform: uppercase;">
+                Switch Room #revenue-desk • Decision Briefing
             </div>
             <h2>Executive Operations Memo</h2>
             <div style="font-size: 13.5px; color: var(--text-secondary);">
                 Multi-Agent Analysis, Dual Verification & Authorized Campaign Sign-Off
             </div>
 
-            <div class="memo-meta-grid">
+            <div class="memo-grid">
                 <div>
                     <div><strong>Incident:</strong> Q4 West Region Repeat Drop</div>
                     <div><strong>Authorization:</strong> Shubham Vernekar</div>
@@ -1225,8 +1224,8 @@
             </div>
 
             <div class="memo-actions">
-                <button class="btn-toolbar" onclick="closeExecutiveMemo()">Close</button>
-                <button class="btn-action-primary" onclick="window.print()">Print / Save as PDF</button>
+                <button class="btn-secondary" onclick="closeExecutiveMemo()">Close</button>
+                <button class="btn-primary-dark" onclick="window.print()">Print / Save as PDF</button>
             </div>
         </div>
     </div>
@@ -1234,7 +1233,7 @@
     <!-- ── JavaScript Engine ── -->
     <script>
         function activateTab(tabName) {
-            document.querySelectorAll('.segment-tab').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-segment').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
 
             event.target.classList.add('active');
@@ -1278,13 +1277,13 @@
             if (!tasks || !tasks.length) return;
 
             container.innerHTML = tasks.map(t => `
-                <div class="switch-task-card">
-                    <div class="task-card-top">
-                        <span class="task-id-badge">${t.id}</span>
-                        <span class="status-pill status-${t.status}">${t.status.replace('_', ' ')}</span>
+                <div class="task-card">
+                    <div class="task-top">
+                        <span class="task-id">${t.id}</span>
+                        <span class="task-status status-${t.status}">${t.status.replace('_', ' ')}</span>
                     </div>
-                    <div class="task-card-title">${escapeHtml(t.title)}</div>
-                    <div class="task-card-owner">Owner: ${escapeHtml(t.assigned_to)}</div>
+                    <div class="task-title">${escapeHtml(t.title)}</div>
+                    <div class="task-owner">Owner: ${escapeHtml(t.assigned_to)}</div>
                 </div>
             `).join('');
         }
@@ -1297,10 +1296,10 @@
             }
 
             container.innerHTML = decisions.map(d => `
-                <div class="switch-decision-card">
+                <div class="decision-card">
                     <div class="decision-title">${escapeHtml(d.decision)}</div>
-                    ${d.context ? `<div class="decision-desc">${escapeHtml(d.context)}</div>` : ''}
-                    <div class="decision-footer">
+                    ${d.context ? `<div class="decision-context">${escapeHtml(d.context)}</div>` : ''}
+                    <div class="decision-meta">
                         <span>Authorized by: <strong>${escapeHtml(d.made_by)}</strong></span>
                         <span>${d.created_at ? d.created_at.split(' ')[1] : ''}</span>
                     </div>
@@ -1350,8 +1349,8 @@
         }
 
         async function authorizeAction(discount = 15) {
-            const confirmBtn = document.querySelector('.btn-authorize');
-            const dismissBtn = document.querySelector('.btn-reject');
+            const confirmBtn = document.querySelector('.btn-confirm-action');
+            const dismissBtn = document.querySelector('.btn-dismiss-action');
             if (confirmBtn) {
                 confirmBtn.disabled = true;
                 confirmBtn.innerText = "Committing to Database...";
@@ -1404,7 +1403,7 @@
             const pill = document.getElementById('consensusPill');
             if (pill) pill.style.display = 'none';
             document.getElementById('dialogueStream').innerHTML = `
-                <div style="text-align: center; padding: 36px 0; color: var(--text-muted); font-size: 13px;">
+                <div style="text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 13.5px;">
                     Session reset. Click a preset inquiry above or enter a question to start.
                 </div>
             `;
@@ -1418,32 +1417,32 @@
         function addMessageCard(sender, text) {
             const stream = document.getElementById('dialogueStream');
             const card = document.createElement('div');
-            card.className = 'dialogue-turn';
+            card.className = 'chat-turn';
 
             let avatar = 'SV';
-            let avatarClass = 'avatar-manager';
+            let avatarClass = 'icon-manager';
 
             if (sender === 'Analyst') {
                 avatar = 'AN';
-                avatarClass = 'avatar-analyst';
+                avatarClass = 'icon-analyst';
             } else if (sender === 'Reviewer') {
                 avatar = 'RV';
-                avatarClass = 'avatar-reviewer';
+                avatarClass = 'icon-reviewer';
             } else if (sender === 'System') {
                 avatar = 'SW';
-                avatarClass = 'avatar-system';
+                avatarClass = 'icon-system';
             }
 
             card.innerHTML = `
-                <div class="role-avatar ${avatarClass}">${avatar}</div>
-                <div class="turn-card-content">
-                    <div class="card-top-row">
-                        <div class="author-info">
-                            <span class="author-name">${sender}</span>
+                <div class="agent-icon ${avatarClass}">${avatar}</div>
+                <div class="turn-card">
+                    <div class="card-header-line">
+                        <div class="sender-tag-group">
+                            <span class="sender-name">${sender}</span>
                         </div>
                         <span class="timestamp">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </div>
-                    <div class="turn-prose">${renderMarkdown(text)}</div>
+                    <div class="turn-body">${renderMarkdown(text)}</div>
                 </div>
             `;
             stream.appendChild(card);
@@ -1453,26 +1452,26 @@
         function addAnalystCard(analysis) {
             const stream = document.getElementById('dialogueStream');
             const card = document.createElement('div');
-            card.className = 'dialogue-turn';
+            card.className = 'chat-turn';
 
             const rawTableHtml = buildTableFromRows(analysis.raw_data);
 
             card.innerHTML = `
-                <div class="role-avatar avatar-analyst">AN</div>
-                <div class="turn-card-content">
-                    <div class="card-top-row">
-                        <div class="author-info">
-                            <span class="author-name">Analyst Agent</span>
-                            <span class="tag-role tag-analyst">DATA ANALYTICS</span>
+                <div class="agent-icon icon-analyst">AN</div>
+                <div class="turn-card">
+                    <div class="card-header-line">
+                        <div class="sender-tag-group">
+                            <span class="sender-name">Analyst Agent</span>
+                            <span class="role-chip chip-analyst">DATA ANALYTICS</span>
                         </div>
                         <span class="timestamp">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </div>
-                    <div class="turn-prose">
+                    <div class="turn-body">
                         ${analysis.sql ? `
-                        <div class="sql-console-box">
-                            <div class="sql-console-header">
-                                <span class="engine-badge">⚡ Live Database Query</span>
-                                <span>Execution Runtime: 14ms</span>
+                        <div class="sql-box">
+                            <div class="sql-topbar">
+                                <span class="live-engine-tag">⚡ Live Query Execution</span>
+                                <span>Runtime: 14ms</span>
                             </div>
                             <code>${escapeHtml(analysis.sql)}</code>
                         </div>
@@ -1491,44 +1490,44 @@
         function addReviewerCard(review) {
             const stream = document.getElementById('dialogueStream');
             const card = document.createElement('div');
-            card.className = 'dialogue-turn';
+            card.className = 'chat-turn';
 
             const rawTableHtml = buildTableFromRows(review.raw_data);
             const isVerified = review.is_verified;
 
             card.innerHTML = `
-                <div class="role-avatar avatar-reviewer">RV</div>
-                <div class="turn-card-content">
-                    <div class="card-top-row">
-                        <div class="author-info">
-                            <span class="author-name">Reviewer Agent</span>
-                            <span class="tag-role ${isVerified ? 'tag-reviewer' : ''}" style="${!isVerified ? 'background:var(--amber-bg);color:var(--amber-text);border:1px solid var(--amber-border);' : ''}">
+                <div class="agent-icon icon-reviewer">RV</div>
+                <div class="turn-card">
+                    <div class="card-header-line">
+                        <div class="sender-tag-group">
+                            <span class="sender-name">Reviewer Agent</span>
+                            <span class="role-chip" style="${!isVerified ? 'background:var(--amber-bg);color:var(--amber-text);border:1px solid var(--amber-border);' : 'background:var(--emerald-bg);color:var(--emerald-text);border:1px solid var(--emerald-border);'}">
                                 ${isVerified ? 'VERIFIED' : 'DISCREPANCY CAUGHT'}
                             </span>
                         </div>
                         <span class="timestamp">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </div>
-                    <div class="turn-prose">
+                    <div class="turn-body">
                         ${!isVerified ? `
                         <div class="discrepancy-card">
                             <div class="discrepancy-title">
                                 <span>⚠️ Independent Audit: Duplicate Billing Glitch Detected</span>
                             </div>
-                            <div class="discrepancy-narrative">
+                            <div class="discrepancy-desc">
                                 Preliminary figures recorded 12 orders totaling $24,250. My independent query uncovered 8 duplicate charge refunds totaling <strong>$20,430</strong> that artificially inflated repeat counts.
                             </div>
-                            <div class="balance-sheet-grid">
-                                <div class="balance-cell">
-                                    <div class="cell-kicker">Preliminary Gross</div>
-                                    <div class="cell-amount">$24,250</div>
+                            <div class="balance-grid">
+                                <div class="balance-tile">
+                                    <div class="tile-kicker">Preliminary Gross</div>
+                                    <div class="tile-amount">$24,250</div>
                                 </div>
-                                <div class="balance-cell">
-                                    <div class="cell-kicker">Un-subtracted Refunds</div>
-                                    <div class="cell-amount amt-alert">-$20,430</div>
+                                <div class="balance-tile">
+                                    <div class="tile-kicker">Un-subtracted Refunds</div>
+                                    <div class="tile-amount tile-alert">-$20,430</div>
                                 </div>
-                                <div class="balance-cell">
-                                    <div class="cell-kicker">Verified Net Baseline</div>
-                                    <div class="cell-amount amt-verified">$3,820</div>
+                                <div class="balance-tile">
+                                    <div class="tile-kicker">Verified Net Baseline</div>
+                                    <div class="tile-amount tile-verified">$3,820</div>
                                 </div>
                             </div>
                         </div>
@@ -1539,10 +1538,10 @@
                         `}
 
                         ${review.sql ? `
-                        <div class="sql-console-box">
-                            <div class="sql-console-header">
-                                <span class="engine-badge">🔍 Independent Verification Query</span>
-                                <span>Execution Runtime: 18ms</span>
+                        <div class="sql-box">
+                            <div class="sql-topbar">
+                                <span class="live-engine-tag">🔍 Independent Verification Query</span>
+                                <span>Runtime: 18ms</span>
                             </div>
                             <code>${escapeHtml(review.sql)}</code>
                         </div>
@@ -1561,37 +1560,37 @@
         function addGateCard(actionText) {
             const stream = document.getElementById('dialogueStream');
             const card = document.createElement('div');
-            card.className = 'dialogue-turn';
+            card.className = 'chat-turn';
 
             card.innerHTML = `
-                <div class="role-avatar avatar-analyst">AN</div>
-                <div class="turn-card-content">
-                    <div class="card-top-row">
-                        <div class="author-info">
-                            <span class="author-name">Analyst Agent</span>
-                            <span class="tag-role tag-analyst">PROPOSED ACTION</span>
+                <div class="agent-icon icon-analyst">AN</div>
+                <div class="turn-card">
+                    <div class="card-header-line">
+                        <div class="sender-tag-group">
+                            <span class="sender-name">Analyst Agent</span>
+                            <span class="role-chip chip-analyst">PROPOSED ACTION</span>
                         </div>
                     </div>
-                    <div class="turn-prose">
+                    <div class="turn-body">
                         <div>${renderMarkdown(actionText)}</div>
 
-                        <div class="signoff-gate-card">
+                        <div class="approval-gate-card">
                             <div class="gate-title">
                                 <span>🔒 Human Manager Approval Gate</span>
                             </div>
                             <div class="gate-subtext">
                                 Review the terms and authorize database execution. No automated campaign write is permitted without human sign-off.
                             </div>
-                            <div class="gate-controls-row">
-                                <div class="stepper-box">
+                            <div class="gate-action-cluster">
+                                <div class="stepper-widget">
                                     <span>Discount Credit:</span>
                                     <input type="number" id="gateDiscountRate" value="15" min="5" max="30">
                                     <span>%</span>
                                 </div>
-                                <button class="btn-authorize" onclick="authorizeAction(document.getElementById('gateDiscountRate').value)">
+                                <button class="btn-confirm-action" onclick="authorizeAction(document.getElementById('gateDiscountRate').value)">
                                     ✓ Approve & Commit to Database
                                 </button>
-                                <button class="btn-reject" onclick="dismissAction()">
+                                <button class="btn-dismiss-action" onclick="dismissAction()">
                                     ✕ Reject
                                 </button>
                             </div>
@@ -1613,8 +1612,8 @@
             }).join('');
 
             return `
-                <div class="grid-table-container">
-                    <table class="grid-table">
+                <div class="table-responsive">
+                    <table class="data-table">
                         <thead><tr>${headerHtml}</tr></thead>
                         <tbody>${bodyHtml}</tbody>
                     </table>
@@ -1627,11 +1626,11 @@
             const stream = document.getElementById('dialogueStream');
             const card = document.createElement('div');
             card.id = 'pulseRow';
-            card.className = 'dialogue-turn';
+            card.className = 'chat-turn';
             card.innerHTML = `
-                <div style="width: 34px;"></div>
-                <div style="display:inline-flex; align-items:center; gap:8px; font-size:12px; color:var(--brand-primary); font-weight:600; padding:8px 14px; background:var(--brand-light); border:1px solid var(--brand-border); border-radius:20px;">
-                    <span style="width:6px; height:6px; background:var(--brand-primary); border-radius:50%; animation:pulse-dot 1s infinite;"></span>
+                <div style="width: 36px;"></div>
+                <div style="display:inline-flex; align-items:center; gap:8px; font-size:12.5px; color:var(--text-heading); font-weight:600; padding:8px 16px; background:#ffffff; border:1px solid var(--border); border-radius:20px; box-shadow:var(--shadow-subtle);">
+                    <span style="width:6px; height:6px; background:var(--emerald); border-radius:50%; box-shadow:0 0 0 2px rgba(16,185,129,0.3);"></span>
                     <span>${escapeHtml(label)}</span>
                 </div>
             `;
@@ -1649,9 +1648,9 @@
             return md
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/```sql([\s\S]*?)```/g, '<div class="sql-console-box"><code>$1</code></div>')
-                .replace(/```([\s\S]*?)```/g, '<pre style="background:#0f172a;color:#f8fafc;padding:12px;border-radius:6px;font-family:var(--font-mono);font-size:12px;overflow-x:auto;"><code>$1</code></pre>')
-                .replace(/`([^`]+)`/g, '<code style="background:var(--bg-subtle);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:12px;color:var(--brand-primary);font-weight:700;">$1</code>')
+                .replace(/```sql([\s\S]*?)```/g, '<div class="sql-box"><code>$1</code></div>')
+                .replace(/```([\s\S]*?)```/g, '<pre style="background:#09090b;color:#fafafa;padding:14px;border-radius:8px;font-family:var(--font-mono);font-size:12.5px;overflow-x:auto;"><code>$1</code></pre>')
+                .replace(/`([^`]+)`/g, '<code style="background:var(--surface-subtle);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:12.5px;color:var(--text-heading);font-weight:700;">$1</code>')
                 .replace(/\n\n/g, '<br><br>')
                 .replace(/\n/g, '<br>');
         }
