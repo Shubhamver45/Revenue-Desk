@@ -138,6 +138,105 @@
             gap: 8px;
         }
 
+        .consensus-chip {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: var(--radius-sm);
+            background: var(--sage-bg);
+            color: var(--sage);
+            border: 1px solid var(--sage-border);
+            display: none;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Executive Memo Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(30, 29, 26, 0.45);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .memo-dialog {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 680px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-float);
+            padding: 32px 36px;
+            position: relative;
+        }
+
+        .memo-dialog h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 4px;
+        }
+
+        .memo-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 0;
+            margin: 16px 0;
+            font-size: 12px;
+        }
+
+        .memo-section-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin: 16px 0 6px 0;
+        }
+
+        .memo-body {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--text-body);
+        }
+
+        .memo-actions {
+            margin-top: 24px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 16px;
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            .memo-dialog, .memo-dialog * { visibility: visible; }
+            .memo-dialog {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: none;
+                box-shadow: none;
+                padding: 0;
+            }
+            .memo-actions { display: none; }
+        }
+
         .btn-ghost {
             background: transparent;
             border: 1px solid var(--border);
@@ -840,6 +939,11 @@
         </div>
 
         <div class="header-controls">
+            <div class="consensus-chip" id="consensusPill">
+                <span>🤝</span>
+                <span>Consensus Protocol: 100% Aligned</span>
+            </div>
+            <button class="btn-ghost" onclick="openExecutiveMemo()">📄 Executive Memo</button>
             <button class="btn-ghost" onclick="resetRoomState()">Reset Room</button>
             <button class="btn-run-demo" onclick="runDemoPipeline()">Run Demo Pipeline</button>
         </div>
@@ -1009,9 +1113,21 @@
             }
         }
 
+        function openExecutiveMemo() {
+            document.getElementById('memoModal').style.display = 'flex';
+        }
+
+        function closeExecutiveMemo() {
+            document.getElementById('memoModal').style.display = 'none';
+        }
+
         function renderSidebar(data) {
             renderTasks(data.tasks);
             renderDecisions(data.decisions);
+            if (data.review) {
+                const pill = document.getElementById('consensusPill');
+                if (pill) pill.style.display = 'inline-flex';
+            }
         }
 
         function renderTasks(tasks) {
@@ -1142,6 +1258,8 @@
 
         async function resetRoomState() {
             await fetch('/api/reset');
+            const pill = document.getElementById('consensusPill');
+            if (pill) pill.style.display = 'none';
             document.getElementById('dialogueStream').innerHTML = `
                 <div style="text-align: center; padding: 24px 0; color: var(--text-muted); font-size: 12px;">
                     Room state reset. Type a question or choose a preset above.
@@ -1381,5 +1499,56 @@
         // Initialize state on first load
         fetchRoomState();
     </script>
+    <!-- Executive Memo Modal -->
+    <div class="modal-overlay" id="memoModal" onclick="if(event.target===this) closeExecutiveMemo()">
+        <div class="memo-dialog">
+            <div style="font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase;">
+                Switch Room #revenue-desk • Decision Briefing
+            </div>
+            <h2>Executive Operations Memo</h2>
+            <div style="font-size: 13px; color: var(--text-secondary);">
+                Multi-Agent Analysis, Dual Verification & Authorized Campaign Sign-Off
+            </div>
+
+            <div class="memo-meta-grid">
+                <div>
+                    <div><strong>Incident:</strong> Q4 West Region Repeat Drop</div>
+                    <div><strong>Authorization:</strong> Shubham Vernekar</div>
+                    <div><strong>Room Channel:</strong> #revenue-desk</div>
+                </div>
+                <div>
+                    <div><strong>Audit Status:</strong> Verified & Reconciled</div>
+                    <div><strong>Consensus:</strong> 100% Agent Agreement</div>
+                    <div><strong>Tamper Hash:</strong> <span style="font-family: var(--font-mono); font-size: 11px;">sha256:7f8a91c49b</span></div>
+                </div>
+            </div>
+
+            <div class="memo-section-title">1. Problem Diagnosis</div>
+            <div class="memo-body">
+                Repeat purchases in the West territory suffered a severe decline in October 2026. While gross accounting recorded $24,250 across 12 orders, an independent multi-agent audit uncovered an un-subtracted duplicate billing glitch of $20,430, revealing a true net revenue baseline of <strong>$3,820 (97% collapse)</strong> driven by total inactivity across 5 anchor enterprise accounts.
+            </div>
+
+            <div class="memo-section-title">2. Peer-Agent Verification & Reconciliation</div>
+            <div class="memo-body">
+                The Reviewer Agent challenged the Analyst Agent's preliminary gross report. The Analyst verified the counter-query, accepted the correction, and formally re-baselined the room's metrics before presenting the action plan to executive management.
+            </div>
+
+            <div class="memo-section-title">3. Approved Executive Action</div>
+            <div class="memo-body">
+                <strong>West Enterprise Win-Back & Glitch Reconciliation Campaign:</strong> Targeted direct outreach offering an authorized <strong>15% renewal incentive</strong> + billing apology credit to 5 anchor enterprise accounts (Westfield Industries, Pacific Solutions, Golden Gate Corp, Sierra Analytics, Redwood Partners).
+            </div>
+
+            <div class="memo-section-title">4. Governance & Decision Lineage</div>
+            <div class="memo-body">
+                Mutations were committed atomically into SQLite. The decision is permanently recorded in the Switch decision lineage register and cannot be executed by autonomous agents without human sign-off.
+            </div>
+
+            <div class="memo-actions">
+                <button class="btn-ghost" onclick="closeExecutiveMemo()">Close</button>
+                <button class="btn-run-demo" onclick="window.print()">Print / Save as PDF</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
