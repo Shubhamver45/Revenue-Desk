@@ -7,6 +7,9 @@ setup:  ## Initialize database with seed data
 	@python -c "from src.database import init_database; init_database()"
 	@echo "✅ Database ready at data/revenue_desk.db"
 
+ui: setup  ## Run the modern Light-Theme Web UI
+	@python3 app.py
+
 run: setup  ## Run the interactive CLI demo
 	@MODE=cli python main.py
 

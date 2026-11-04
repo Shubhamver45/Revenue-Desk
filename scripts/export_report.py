@@ -316,3 +316,4 @@ def generate_html_report(output_path: str = "data/executive_report.html") -> str
 if __name__ == "__main__":
     path = generate_html_report()
     print(f"Open this file in your browser to view:\nfile://{path}")
+

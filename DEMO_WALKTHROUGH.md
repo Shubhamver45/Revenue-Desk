@@ -38,3 +38,4 @@ Approved. Change discount from 10% to 15%.
 python3 scripts/export_report.py
 ```
 Open `data/executive_report.html` in your browser to show the visual proof of decisions and campaigns!
+
