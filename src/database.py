@@ -49,8 +49,15 @@ def get_connection(db_path: str | None = None) -> Generator[sqlite3.Connection, 
         conn.close()
 
 
+_supabase_offline = False
+
+
 def run_supabase_sql(sql: str) -> list[dict[str, Any]]:
     """Execute raw SQL against Supabase over HTTPS via the exec_sql RPC function."""
+    global _supabase_offline
+    if _supabase_offline:
+        raise RuntimeError("Supabase marked offline due to previous network block")
+
     import json
     import ssl
     import urllib.request
@@ -75,11 +82,15 @@ def run_supabase_sql(sql: str) -> list[dict[str, Any]]:
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
 
-    with urllib.request.urlopen(req, context=ctx, timeout=15) as resp:
-        data = json.loads(resp.read().decode("utf-8"))
-        if isinstance(data, list):
-            return data
-        return [data] if data else []
+    try:
+        with urllib.request.urlopen(req, context=ctx, timeout=3) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            if isinstance(data, list):
+                return data
+            return [data] if data else []
+    except Exception as e:
+        _supabase_offline = True
+        raise e
 
 
 def run_query(sql: str, params: tuple[Any, ...] = (), db_path: str | None = None) -> list[dict[str, Any]]:

@@ -80,7 +80,7 @@ def chat_gemini(system_prompt: str, user_message: str) -> str:
         )
 
         try:
-            with urllib.request.urlopen(req, context=ctx, timeout=25) as response:
+            with urllib.request.urlopen(req, context=ctx, timeout=4) as response:
                 res_data = json.loads(response.read().decode("utf-8"))
                 candidates = res_data.get("candidates", [])
                 if candidates:
@@ -92,10 +92,13 @@ def chat_gemini(system_prompt: str, user_message: str) -> str:
             err_body = e.read().decode("utf-8", errors="ignore")
             last_error = RuntimeError(f"Gemini {model} HTTP {e.code}: {err_body}")
             print(f"[Gemini] Model {model} error: {last_error}")
+            if e.code in (401, 403):
+                # Policy or auth failure applies to all models for this key/network
+                break
             continue
         except Exception as e:
             last_error = e
-            continue
+            break
 
     raise last_error or RuntimeError("Gemini failed across all attempted models.")
 
@@ -227,7 +230,7 @@ def chat_groq(system_prompt: str, user_message: str) -> str:
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
 
-    with urllib.request.urlopen(req, context=ctx, timeout=30) as response:
+    with urllib.request.urlopen(req, context=ctx, timeout=4) as response:
         res_data = json.loads(response.read().decode("utf-8"))
         choices = res_data.get("choices", [])
         if choices:
@@ -269,7 +272,7 @@ def chat_openai(system_prompt: str, user_message: str) -> str:
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
 
-    with urllib.request.urlopen(req, context=ctx, timeout=30) as response:
+    with urllib.request.urlopen(req, context=ctx, timeout=4) as response:
         res_data = json.loads(response.read().decode("utf-8"))
         choices = res_data.get("choices", [])
         if choices:
@@ -277,8 +280,12 @@ def chat_openai(system_prompt: str, user_message: str) -> str:
         return "No text returned from OpenAI."
 
 
+_failed_providers = set()
+
+
 def chat(system_prompt: str, user_message: str) -> str:
     """Route chat to configured live provider with automatic resilient fallback."""
+    global _failed_providers
     schema = get_schema_description()
     system_prompt_formatted = system_prompt.format(schema=schema)
 
@@ -290,8 +297,13 @@ def chat(system_prompt: str, user_message: str) -> str:
         if alt not in providers_to_try:
             providers_to_try.append(alt)
 
+    # Filter out known failed providers for this session
+    active_candidates = [p for p in providers_to_try if p not in _failed_providers]
+    if "mock" not in active_candidates:
+        active_candidates.append("mock")
+
     last_error = None
-    for p in providers_to_try:
+    for p in active_candidates:
         try:
             if p == "gemini" and (config.gemini_api_key or os.getenv("GEMINI_API_KEY")):
                 return chat_gemini(system_prompt_formatted, user_message)
@@ -302,11 +314,10 @@ def chat(system_prompt: str, user_message: str) -> str:
             elif p == "anthropic" and (config.anthropic_api_key or os.getenv("ANTHROPIC_API_KEY")):
                 return chat_anthropic(system_prompt_formatted, user_message)
             elif p == "mock":
-                if last_error:
-                    print(f"[LLM] Live provider issue ({last_error}). Falling back smoothly to simulation.")
                 return chat_mock(system_prompt_formatted, user_message)
         except Exception as e:
-            print(f"[LLM Warning] Provider '{p}' failed: {e}. Trying fallback...")
+            print(f"[LLM Warning] Provider '{p}' failed: {e}. Marking offline for this session.")
+            _failed_providers.add(p)
             last_error = e
 
     return chat_mock(system_prompt_formatted, user_message)

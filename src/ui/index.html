@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revenue Desk — Multi-Agent Consensus Room</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             /* Apple / Linear Flagship Minimalist Luxury Palette */
@@ -634,6 +637,10 @@
         .tile-alert { color: var(--rose); }
         .tile-verified { color: var(--emerald-deep); }
 
+        .amt-verified {
+            color: var(--emerald);
+        }
+
         /* ── Human Approval Gate ── */
         .approval-gate-card {
             background: #ffffff;
@@ -896,6 +903,18 @@
         .status-in_progress { background: var(--cobalt-bg); color: var(--cobalt); border: 1px solid var(--cobalt-border); }
         .status-todo { background: var(--surface-subtle); color: var(--text-secondary); border: 1px solid var(--border); }
 
+        .status-in_progress {
+            background: var(--brand-light);
+            color: var(--brand-primary);
+            border: 1px solid var(--brand-border);
+        }
+
+        .status-todo {
+            background: var(--bg-subtle);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-default);
+        }
+
         .task-title {
             font-size: 13px;
             font-weight: 700;
@@ -1014,8 +1033,15 @@
         }
 
         @media print {
-            body * { visibility: hidden; }
-            .memo-dialog, .memo-dialog * { visibility: visible; }
+            body * {
+                visibility: hidden;
+            }
+
+            .memo-dialog,
+            .memo-dialog * {
+                visibility: visible;
+            }
+
             .memo-dialog {
                 position: absolute;
                 left: 0;
@@ -1025,10 +1051,14 @@
                 box-shadow: none;
                 padding: 0;
             }
-            .memo-actions { display: none; }
+
+            .memo-actions {
+                display: none;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <!-- ── Top Header ── -->
@@ -1199,28 +1229,38 @@
                 <div>
                     <div><strong>Audit Status:</strong> Verified & Reconciled</div>
                     <div><strong>Consensus:</strong> 100% Agent Agreement</div>
-                    <div><strong>Tamper Hash:</strong> <span style="font-family: var(--font-mono); font-size: 11px;">sha256:7f8a91c49b</span></div>
+                    <div><strong>Tamper Hash:</strong> <span
+                            style="font-family: var(--font-mono); font-size: 11px;">sha256:7f8a91c49b</span></div>
                 </div>
             </div>
 
             <div class="memo-section-title">1. Problem Diagnosis</div>
             <div class="memo-body">
-                Repeat purchases in the West territory suffered a severe decline in October 2026. While preliminary accounting recorded $24,250 across 12 orders, an independent multi-agent audit uncovered an un-subtracted duplicate billing glitch of $20,430, revealing a true net revenue baseline of <strong>$3,820 (97% collapse)</strong> driven by total inactivity across 5 anchor enterprise accounts.
+                Repeat purchases in the West territory suffered a severe decline in October 2026. While preliminary
+                accounting recorded $24,250 across 12 orders, an independent multi-agent audit uncovered an
+                un-subtracted duplicate billing glitch of $20,430, revealing a true net revenue baseline of
+                <strong>$3,820 (97% collapse)</strong> driven by total inactivity across 5 anchor enterprise accounts.
             </div>
 
             <div class="memo-section-title">2. Peer-Agent Verification & Reconciliation</div>
             <div class="memo-body">
-                The Reviewer Agent challenged the Analyst Agent's preliminary gross report. The Analyst verified the counter-query, accepted the correction, and formally re-baselined the room's metrics before presenting the action plan to executive management.
+                The Reviewer Agent challenged the Analyst Agent's preliminary gross report. The Analyst verified the
+                counter-query, accepted the correction, and formally re-baselined the room's metrics before presenting
+                the action plan to executive management.
             </div>
 
             <div class="memo-section-title">3. Approved Executive Action</div>
             <div class="memo-body">
-                <strong>West Enterprise Win-Back & Glitch Reconciliation Campaign:</strong> Targeted direct outreach offering an authorized <strong>15% renewal incentive</strong> + billing apology credit to 5 anchor enterprise accounts (Westfield Industries, Pacific Solutions, Golden Gate Corp, Sierra Analytics, Redwood Partners).
+                <strong>West Enterprise Win-Back & Glitch Reconciliation Campaign:</strong> Targeted direct outreach
+                offering an authorized <strong>15% renewal incentive</strong> + billing apology credit to 5 anchor
+                enterprise accounts (Westfield Industries, Pacific Solutions, Golden Gate Corp, Sierra Analytics,
+                Redwood Partners).
             </div>
 
             <div class="memo-section-title">4. Governance & Decision Lineage</div>
             <div class="memo-body">
-                Mutations were committed atomically into the database. The decision is permanently recorded in the Switch decision lineage register and cannot be executed by autonomous agents without human sign-off.
+                Mutations were committed atomically into the database. The decision is permanently recorded in the
+                Switch decision lineage register and cannot be executed by autonomous agents without human sign-off.
             </div>
 
             <div class="memo-actions">
@@ -1336,8 +1376,8 @@
                 }
 
                 // 3. Proposed Action with interactive gate
-                if (data.proposed_action) {
-                    addGateCard(data.proposed_action);
+                 if (data.proposed_action) {
+                     addGateCard(data.proposed_action);
                 }
 
                 renderSidebar(data);
@@ -1360,7 +1400,7 @@
 
             const approvalStr = `Approved. Change discount to ${discount}% and launch campaign.`;
             addMessageCard('Manager', approvalStr);
-            showPulse('Analyst committing approved mutations to database...');
+             showPulse('Analyst committin g approved mutations to database...');
 
             try {
                 const res = await fetch('/api/approve', {
@@ -1407,8 +1447,8 @@
                     Session reset. Click a preset inquiry above or enter a question to start.
                 </div>
             `;
-            fetchRoomState();
-        }
+             fetchRoomStat e();
+         }
 
         function runDemoPipeline() {
             askPreset('Why did repeat purchases drop in the West region last month?');
@@ -1584,8 +1624,8 @@
                             <div class="gate-action-cluster">
                                 <div class="stepper-widget">
                                     <span>Discount Credit:</span>
-                                    <input type="number" id="gateDiscountRate" value="15" min="5" max="30">
-                                    <span>%</span>
+                                    <input type="number" id="gateDiscountRate" value="15" min="5 " ma x="30">
+                                       <span>% </span> 
                                 </div>
                                 <button class="btn-confirm-action" onclick="authorizeAction(document.getElementById('gateDiscountRate').value)">
                                     ✓ Approve & Commit to Database
@@ -1665,4 +1705,5 @@
         fetchRoomState();
     </script>
 </body>
+
 </html>
