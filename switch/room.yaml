@@ -1,0 +1,55 @@
+# Switch Room Configuration — Revenue Desk
+# This template defines the #revenue-desk room in Switch.
+
+rooms:
+  - id: "revenue-desk"
+    name: "#revenue-desk"
+    description: >
+      Revenue analysis war room. Two AI agents (Analyst and Reviewer) work with
+      a human manager to investigate business questions, verify findings, and
+      execute approved actions. Every decision is logged.
+
+    participants:
+      # Humans
+      - type: human
+        role: manager
+        description: "Asks business questions, reviews findings, approves or rejects proposed actions."
+
+      # AI Agents
+      - type: agent
+        id: analyst
+        name: "Analyst Agent"
+        description: "Queries the sales database to answer business questions and proposes actions."
+        addressing: anyone
+        guardrails:
+          require_human_approval_for:
+            - execute_campaign
+            - write_to_database
+            - send_email
+          max_tokens_per_task: 8000
+
+      - type: agent
+        id: reviewer
+        name: "Reviewer Agent"
+        description: "Independently verifies the Analyst's findings. Flags discrepancies."
+        addressing: anyone
+        guardrails:
+          require_human_approval_for:
+            - write_to_database
+          max_tokens_per_task: 4000
+
+    # Room features (shown in the Switch Console sidebar)
+    features:
+      history: true      # Full conversation history
+      tasks: true        # Task tracking sidebar
+      decisions: true    # Decision audit log sidebar
+      rules: true        # Room rules visible to agents
+
+    rules:
+      - "The Analyst MUST show the SQL query used for every finding."
+      - "The Reviewer MUST run an independent query — never trust the Analyst's numbers without verification."
+      - "The Reviewer MUST check the refunds table for data completeness."
+      - "NO action can be executed without explicit human manager approval."
+      - "All approved actions MUST be logged as Decisions."
+      - "If the Analyst and Reviewer disagree, the workflow pauses for human review."
+

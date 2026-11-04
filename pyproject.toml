@@ -1,0 +1,20 @@
+[project]
+name = "revenue-desk"
+version = "1.0.0"
+description = "Revenue Desk — AI Analyst + Reviewer + Human Approval workflow for Switch"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.40.0",
+    "matrix-nio>=0.24.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+

@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  revenue-desk:
+    build: .
+    container_name: revenue-desk
+    env_file: .env
+    environment:
+      - MODE=${MODE:-cli}
+      - DB_PATH=/app/data/revenue_desk.db
+    volumes:
+      - ./data:/app/data
+    stdin_open: true   # For interactive CLI mode
+    tty: true          # For interactive CLI mode
+
+  # Uncomment when running with Switch bridge mode:
+  # revenue-desk-bridge:
+  #   build: .
+  #   container_name: revenue-desk-bridge
+  #   env_file: .env
+  #   environment:
+  #     - MODE=bridge
+  #     - DB_PATH=/app/data/revenue_desk.db
+  #   volumes:
+  #     - ./data:/app/data
+  #   restart: unless-stopped
+
