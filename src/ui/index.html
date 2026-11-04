@@ -3,62 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue Desk — Switch Multi-Agent Room</title>
+    <title>Revenue Desk — Switch Multi-Agent Operations Cockpit</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* World-Class Modern Light SaaS Palette (Linear / Stripe style) */
-            --bg-canvas: #f8fafc;
+            /* Executive FinTech Palette (Ramp / Mercury / Bloomberg NextGen) */
+            --bg-canvas: #f4f6f8;
+            --bg-panel: #ffffff;
             --bg-card: #ffffff;
-            --bg-subtle: #f1f5f9;
-            --bg-hover: #e2e8f0;
-            --bg-active: #cbd5e1;
+            --bg-subtle: #f8fafc;
+            --bg-hover: #f1f5f9;
+            --bg-active: #e2e8f0;
 
-            --border-light: #f1f5f9;
+            --border-subtle: #f1f5f9;
             --border-default: #e2e8f0;
             --border-strong: #cbd5e1;
-            --border-focus: #6366f1;
+            --border-focus: #0f766e;
 
+            /* Financial & Authority Typography */
             --text-heading: #0f172a;
             --text-body: #334155;
             --text-secondary: #64748b;
             --text-muted: #94a3b8;
 
-            /* Brand & System Accents */
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --primary-light: #eef2ff;
-            --primary-border: #c7d2fe;
+            /* FinTech Deep Teal & Forest Emerald (Money, Growth, Verified Data) */
+            --brand-primary: #0f766e;
+            --brand-primary-hover: #115e59;
+            --brand-light: #f0fdfa;
+            --brand-border: #99f6e4;
+            --brand-glow: rgba(15, 118, 110, 0.18);
 
-            /* Verification & Emerald */
+            /* Financial Growth & Verified State */
             --emerald: #059669;
             --emerald-bg: #ecfdf5;
             --emerald-border: #a7f3d0;
             --emerald-text: #065f46;
 
-            /* Amber / Discrepancy */
-            --amber: #d97706;
+            /* Discrepancy & Audit Alert (Warm Bronze / Amber) */
+            --amber: #b45309;
             --amber-bg: #fffbeb;
             --amber-border: #fde68a;
-            --amber-text: #92400e;
+            --amber-text: #78350f;
 
-            /* Rose / Alert */
-            --rose: #e11d48;
+            /* Deficit / Glitch / Churn */
+            --rose: #be123c;
             --rose-bg: #fff1f2;
             --rose-border: #fecdd3;
-            --rose-text: #9f1239;
+            --rose-text: #881337;
 
-            /* Violet for Analyst */
-            --violet: #7c3aed;
-            --violet-bg: #f5f3ff;
-            --violet-border: #ddd6fe;
-
-            /* Teal for Reviewer */
-            --teal: #0d9488;
-            --teal-bg: #f0fdfa;
-            --teal-border: #99f6e4;
+            /* Deep Obsidian for Authority */
+            --obsidian: #0f172a;
+            --obsidian-hover: #1e293b;
 
             --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, monospace;
@@ -70,9 +67,9 @@
 
             --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
             --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
-            --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
-            --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
-            --shadow-float: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.06), 0 4px 6px -4px rgba(15, 23, 42, 0.02);
+            --shadow-float: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
         }
 
         * {
@@ -93,80 +90,99 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Top Bar */
+        /* ── Top Bar ── */
         header {
-            height: 56px;
+            height: 58px;
             background: #ffffff;
             border-bottom: 1px solid var(--border-default);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px;
-            z-index: 20;
+            padding: 0 24px;
+            z-index: 30;
             box-shadow: var(--shadow-xs);
         }
 
-        .header-title-group {
+        .brand-cluster {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .switch-mark {
-            width: 28px;
-            height: 28px;
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        .switch-badge {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #0f766e 0%, #047857 100%);
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 800;
-            letter-spacing: -0.02em;
-            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.25);
+            letter-spacing: -0.03em;
+            box-shadow: 0 2px 6px var(--brand-glow);
         }
 
-        .workspace-name {
-            font-size: 14.5px;
-            font-weight: 700;
+        .brand-text-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-size: 15px;
+            font-weight: 800;
             color: var(--text-heading);
             display: flex;
             align-items: center;
             gap: 8px;
+            line-height: 1.2;
         }
 
-        .channel-indicator {
-            font-size: 12px;
-            font-weight: 600;
+        .brand-subtitle {
+            font-size: 11px;
             color: var(--text-secondary);
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-default);
-            padding: 3px 10px;
-            border-radius: var(--radius-sm);
+            font-weight: 500;
+        }
+
+        .live-tag {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--emerald-text);
+            background: var(--emerald-bg);
+            border: 1px solid var(--emerald-border);
+            padding: 2px 8px;
+            border-radius: var(--radius-xs);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
-        .online-dot {
+        .live-pulsing-dot {
             width: 6px;
             height: 6px;
             background: var(--emerald);
             border-radius: 50%;
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+            box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.25);
+            animation: pulse-dot 1.8s infinite;
         }
 
-        .header-controls {
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        .header-actions {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .consensus-chip {
-            font-size: 11.5px;
-            font-weight: 600;
-            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 12px;
             border-radius: var(--radius-sm);
             background: var(--emerald-bg);
             color: var(--emerald-text);
@@ -174,18 +190,18 @@
             display: none;
             align-items: center;
             gap: 6px;
-            animation: fadeIn 0.3s ease;
+            animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-2px); }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-4px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .btn-ghost {
+        .btn-toolbar {
             background: #ffffff;
             border: 1px solid var(--border-default);
-            padding: 6px 13px;
+            padding: 7px 14px;
             border-radius: var(--radius-sm);
             font-size: 12.5px;
             font-weight: 600;
@@ -199,407 +215,381 @@
             box-shadow: var(--shadow-xs);
         }
 
-        .btn-ghost:hover {
-            background: var(--bg-subtle);
+        .btn-toolbar:hover {
+            background: var(--bg-hover);
             color: var(--text-heading);
             border-color: var(--border-strong);
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
+        .btn-action-primary {
+            background: linear-gradient(135deg, var(--brand-primary) 0%, #047857 100%);
             color: #ffffff;
             border: none;
-            padding: 6px 14px;
+            padding: 7px 16px;
             border-radius: var(--radius-sm);
             font-size: 12.5px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.15s ease;
             font-family: inherit;
-            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.25);
+            box-shadow: 0 2px 4px var(--brand-glow);
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
 
-        .btn-primary:hover {
-            opacity: 0.94;
+        .btn-action-primary:hover {
+            opacity: 0.95;
             transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 4px 8px var(--brand-glow);
         }
 
-        /* 3-Column Workspace Layout */
-        .workspace-container {
-            flex: 1;
-            display: grid;
-            grid-template-columns: 240px 1fr 340px;
-            height: calc(100vh - 56px);
-            overflow: hidden;
-        }
-
-        /* Left Rail */
-        .left-panel {
+        /* ── Executive KPI Metrics Ribbon ── */
+        .kpi-ribbon {
             background: #ffffff;
-            border-right: 1px solid var(--border-default);
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
+            border-bottom: 1px solid var(--border-default);
+            padding: 10px 24px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            flex-shrink: 0;
         }
 
-        .panel-block {
-            padding: 16px 18px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .section-label {
-            font-size: 10.5px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.07em;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-        }
-
-        .channel-entry {
+        .kpi-card {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 7px 10px;
+            gap: 12px;
+            padding: 6px 12px;
             border-radius: var(--radius-sm);
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            margin-bottom: 3px;
-            transition: all 0.12s ease;
-        }
-
-        .channel-entry.active {
-            background: var(--primary-light);
-            color: var(--primary);
-            border: 1px solid var(--primary-border);
-        }
-
-        .channel-entry:hover:not(.active) {
             background: var(--bg-subtle);
-            color: var(--text-heading);
+            border: 1px solid var(--border-subtle);
         }
 
-        /* Roster Member Rows */
-        .roster-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 6px;
-            border-radius: var(--radius-sm);
-            margin-bottom: 2px;
-        }
-
-        .monogram-avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
+        .kpi-icon-wrap {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-xs);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            font-size: 14px;
             flex-shrink: 0;
-            box-shadow: var(--shadow-xs);
         }
 
-        .avatar-manager {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: #ffffff;
-        }
-
-        .avatar-analyst {
-            background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-            color: #ffffff;
-        }
-
-        .avatar-reviewer {
-            background: linear-gradient(135deg, #10b981 0%, #047857 100%);
-            color: #ffffff;
-        }
-
-        .roster-meta {
+        .kpi-meta {
             min-width: 0;
-            flex: 1;
         }
 
-        .roster-name {
-            font-size: 13px;
-            font-weight: 600;
+        .kpi-label {
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+
+        .kpi-value {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-top: 1px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ── Main Cockpit Split Workspace ── */
+        .cockpit-workspace {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            height: calc(100vh - 120px);
+            overflow: hidden;
+        }
+
+        /* ── Left Stage: Dialogue & Evidence Stream ── */
+        .left-stage {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-canvas);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .stage-subhead {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-default);
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .subhead-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subhead-channel {
+            font-size: 13.5px;
+            font-weight: 700;
             color: var(--text-heading);
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .roster-desc {
-            font-size: 11px;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .chip {
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            padding: 2px 5px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-
-        .chip-agent {
-            background: var(--bg-subtle);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-default);
-        }
-
-        .chip-analyst {
-            background: var(--violet-bg);
-            color: var(--violet);
-            border: 1px solid var(--violet-border);
-        }
-
-        .chip-reviewer {
-            background: var(--teal-bg);
-            color: var(--teal);
-            border: 1px solid var(--teal-border);
-        }
-
-        /* Center Column: Feed */
-        .stage-center {
-            background: var(--bg-canvas);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .room-meta-header {
-            background: #ffffff;
-            border-bottom: 1px solid var(--border-default);
-            padding: 12px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow-xs);
-        }
-
-        .room-meta-header h1 {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--text-heading);
-        }
-
-        .room-meta-header p {
+        .subhead-desc {
             font-size: 12px;
             color: var(--text-secondary);
-            margin-top: 2px;
         }
 
-        .preset-prompt-group {
+        .preset-cluster {
             display: flex;
             gap: 8px;
         }
 
-        .preset-btn {
-            background: var(--bg-subtle);
+        .pill-inquiry {
+            background: #ffffff;
             border: 1px solid var(--border-default);
             padding: 5px 12px;
-            border-radius: var(--radius-sm);
-            font-size: 12px;
+            border-radius: 20px;
+            font-size: 11.5px;
             font-weight: 600;
             color: var(--text-body);
             cursor: pointer;
             transition: all 0.15s ease;
-            font-family: inherit;
-        }
-
-        .preset-btn:hover {
-            background: #ffffff;
-            color: var(--primary);
-            border-color: var(--primary-border);
             box-shadow: var(--shadow-xs);
         }
 
-        /* Message Stream */
-        .timeline-scroll {
+        .pill-inquiry:hover {
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
+            background: var(--brand-light);
+            transform: translateY(-1px);
+        }
+
+        /* Feed Stream */
+        .dialogue-stream {
             flex: 1;
             overflow-y: auto;
             padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 20px;
         }
 
-        .turn-card {
+        .dialogue-turn {
             display: flex;
             gap: 14px;
-            max-width: 900px;
+            max-width: 960px;
             width: 100%;
-            animation: slideIn 0.25s ease;
+            animation: cardAppear 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(6px); }
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .turn-bubble {
+        .role-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .avatar-manager {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #ffffff;
+        }
+
+        .avatar-analyst {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: #ffffff;
+        }
+
+        .avatar-reviewer {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: #ffffff;
+        }
+
+        .avatar-system {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            color: var(--text-secondary);
+        }
+
+        .turn-card-content {
             flex: 1;
             background: #ffffff;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-md);
-            padding: 18px 20px;
+            padding: 20px 22px;
             box-shadow: var(--shadow-sm);
-            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+            transition: all 0.2s ease;
         }
 
-        .turn-bubble:hover {
+        .turn-card-content:hover {
             box-shadow: var(--shadow-md);
             border-color: var(--border-strong);
         }
 
-        .turn-header {
+        .card-top-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 10px;
-            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-subtle);
             padding-bottom: 8px;
         }
 
-        .author-box {
+        .author-info {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .author-title {
-            font-size: 13.5px;
+        .author-name {
+            font-size: 14px;
             font-weight: 700;
             color: var(--text-heading);
         }
 
-        .time-label {
+        .tag-role {
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .tag-analyst {
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+        }
+
+        .tag-reviewer {
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+
+        .timestamp {
             font-size: 11px;
             color: var(--text-muted);
             font-variant-numeric: tabular-nums;
         }
 
-        .turn-body {
+        .turn-prose {
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.65;
             color: var(--text-body);
         }
 
-        /* High-End SQL Code Block */
-        .sql-viewer {
+        /* ── FinTech High-Precision SQL Block ── */
+        .sql-console-box {
             background: #0f172a;
             color: #f8fafc;
             border-radius: var(--radius-sm);
-            padding: 12px 16px;
-            margin: 12px 0;
+            padding: 14px 16px;
+            margin: 14px 0;
             font-family: var(--font-mono);
-            font-size: 12px;
+            font-size: 12.5px;
             line-height: 1.55;
             overflow-x: auto;
             border: 1px solid #1e293b;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
-            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
         }
 
-        .sql-bar {
+        .sql-console-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 10.5px;
+            font-size: 11px;
             font-weight: 600;
-            letter-spacing: 0.05em;
             color: #94a3b8;
             margin-bottom: 10px;
-            padding-bottom: 6px;
+            padding-bottom: 8px;
             border-bottom: 1px solid #1e293b;
             text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
-        .traffic-dots {
-            display: flex;
+        .engine-badge {
+            display: inline-flex;
+            align-items: center;
             gap: 5px;
+            background: #1e293b;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: #38bdf8;
         }
 
-        .traffic-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .dot-red { background: #ef4444; }
-        .dot-yellow { background: #f59e0b; }
-        .dot-green { background: #10b981; }
-
-        /* Data Tables */
-        .data-table-wrap {
+        /* ── Data Tables ── */
+        .grid-table-container {
             overflow-x: auto;
-            margin: 12px 0;
+            margin: 14px 0;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
             background: #ffffff;
             box-shadow: var(--shadow-xs);
         }
 
-        .data-table {
+        .grid-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 12.5px;
+            font-size: 13px;
             text-align: left;
         }
 
-        .data-table th {
+        .grid-table th {
             background: var(--bg-subtle);
-            padding: 9px 14px;
+            padding: 10px 14px;
             font-weight: 700;
             color: var(--text-secondary);
             border-bottom: 1px solid var(--border-default);
             font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.06em;
         }
 
-        .data-table td {
-            padding: 8px 14px;
-            border-bottom: 1px solid var(--border-light);
+        .grid-table td {
+            padding: 9px 14px;
+            border-bottom: 1px solid var(--border-subtle);
             color: var(--text-heading);
             font-variant-numeric: tabular-nums;
         }
 
-        .data-table tr:hover td {
+        .grid-table tr:hover td {
             background: var(--bg-subtle);
         }
 
-        .data-table tr:last-child td {
+        .grid-table tr:last-child td {
             border-bottom: none;
         }
 
-        /* Reviewer Discrepancy Alert */
-        .audit-alert {
+        /* ── Reviewer Discrepancy Alert Box ── */
+        .discrepancy-card {
             background: var(--amber-bg);
             border: 1px solid var(--amber-border);
-            border-radius: var(--radius-sm);
-            padding: 14px 16px;
-            margin: 12px 0;
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+            margin: 14px 0;
+            box-shadow: var(--shadow-xs);
         }
 
-        .audit-alert-title {
-            font-size: 13px;
-            font-weight: 700;
+        .discrepancy-title {
+            font-size: 13.5px;
+            font-weight: 800;
             color: var(--amber-text);
             display: flex;
             align-items: center;
@@ -607,65 +597,60 @@
             margin-bottom: 6px;
         }
 
-        .audit-alert-desc {
-            font-size: 12.5px;
+        .discrepancy-narrative {
+            font-size: 13px;
             color: #78350f;
             line-height: 1.5;
         }
 
-        .audit-diff-grid {
+        .balance-sheet-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 12px;
+            gap: 12px;
+            margin-top: 14px;
         }
 
-        .diff-cell {
+        .balance-cell {
             background: #ffffff;
             border: 1px solid var(--amber-border);
-            padding: 10px 12px;
-            border-radius: var(--radius-xs);
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
             box-shadow: var(--shadow-xs);
         }
 
-        .diff-cell-title {
+        .cell-kicker {
             font-size: 10px;
             color: var(--text-secondary);
             text-transform: uppercase;
             font-weight: 700;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.06em;
         }
 
-        .diff-cell-value {
-            font-size: 16px;
+        .cell-amount {
+            font-size: 18px;
             font-weight: 800;
             color: var(--text-heading);
             margin-top: 3px;
             font-variant-numeric: tabular-nums;
         }
 
-        .diff-val-alert {
-            color: var(--rose);
-        }
+        .amt-alert { color: var(--rose); }
+        .amt-verified { color: var(--emerald); }
 
-        .diff-val-verified {
-            color: var(--emerald);
-        }
-
-        /* Human Sign-off Gate */
-        .approval-gate {
+        /* ── Human Sign-off Gate ── */
+        .signoff-gate-card {
             background: #ffffff;
             border: 1px solid var(--border-default);
-            border-left: 4px solid var(--primary);
-            border-radius: var(--radius-sm);
-            padding: 16px 18px;
-            margin-top: 14px;
+            border-left: 4px solid var(--brand-primary);
+            border-radius: var(--radius-md);
+            padding: 18px 20px;
+            margin-top: 16px;
             box-shadow: var(--shadow-sm);
         }
 
-        .approval-gate-header {
-            font-size: 13.5px;
-            font-weight: 700;
+        .gate-title {
+            font-size: 14px;
+            font-weight: 800;
             color: var(--text-heading);
             display: flex;
             align-items: center;
@@ -673,53 +658,53 @@
             margin-bottom: 4px;
         }
 
-        .approval-gate-caption {
+        .gate-subtext {
             font-size: 12.5px;
             color: var(--text-secondary);
             line-height: 1.45;
         }
 
-        .gate-action-row {
+        .gate-controls-row {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-top: 14px;
+            margin-top: 16px;
         }
 
-        .discount-field {
+        .stepper-box {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             background: var(--bg-subtle);
             border: 1px solid var(--border-default);
-            padding: 6px 10px;
+            padding: 7px 12px;
             border-radius: var(--radius-sm);
-            font-size: 12.5px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--text-body);
         }
 
-        .discount-field input {
-            width: 44px;
+        .stepper-box input {
+            width: 46px;
             border: 1px solid var(--border-strong);
             background: #ffffff;
             border-radius: 4px;
-            padding: 3px 6px;
+            padding: 4px 6px;
             text-align: center;
-            font-weight: 700;
+            font-weight: 800;
             font-family: inherit;
             color: var(--text-heading);
-            font-size: 13px;
+            font-size: 13.5px;
         }
 
-        .btn-confirm {
+        .btn-authorize {
             background: linear-gradient(135deg, var(--emerald) 0%, #047857 100%);
             color: #ffffff;
             border: none;
-            padding: 8px 16px;
+            padding: 9px 18px;
             border-radius: var(--radius-sm);
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.15s ease;
             font-family: inherit;
@@ -729,17 +714,17 @@
             gap: 6px;
         }
 
-        .btn-confirm:hover {
-            opacity: 0.94;
+        .btn-authorize:hover {
+            opacity: 0.95;
             transform: translateY(-1px);
             box-shadow: 0 4px 8px rgba(5, 150, 105, 0.3);
         }
 
-        .btn-dismiss {
+        .btn-reject {
             background: #ffffff;
             color: var(--rose);
             border: 1px solid var(--border-default);
-            padding: 8px 14px;
+            padding: 9px 16px;
             border-radius: var(--radius-sm);
             font-size: 13px;
             font-weight: 600;
@@ -748,62 +733,62 @@
             transition: all 0.15s ease;
         }
 
-        .btn-dismiss:hover {
+        .btn-reject:hover {
             background: var(--rose-bg);
             border-color: var(--rose-border);
         }
 
-        /* Bottom Console */
-        .bottom-console {
+        /* ── Input Dock ── */
+        .input-dock {
             background: #ffffff;
             border-top: 1px solid var(--border-default);
             padding: 14px 24px;
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
-            box-shadow: 0 -2px 6px rgba(15, 23, 42, 0.02);
+            box-shadow: 0 -2px 8px rgba(15, 23, 42, 0.03);
         }
 
-        .console-input {
+        .input-query {
             flex: 1;
-            padding: 11px 16px;
+            padding: 12px 18px;
             background: var(--bg-subtle);
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
-            font-size: 13.5px;
+            font-size: 14px;
             font-family: inherit;
             color: var(--text-heading);
             outline: none;
             transition: all 0.15s ease;
         }
 
-        .console-input:focus {
+        .input-query:focus {
             background: #ffffff;
             border-color: var(--border-focus);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
         }
 
-        .btn-send {
-            padding: 11px 20px;
-            background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
+        .btn-dock-send {
+            padding: 12px 22px;
+            background: linear-gradient(135deg, var(--brand-primary) 0%, #047857 100%);
             color: #ffffff;
             border: none;
             border-radius: var(--radius-sm);
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 13.5px;
+            font-weight: 700;
             cursor: pointer;
             font-family: inherit;
             transition: all 0.15s ease;
-            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.25);
+            box-shadow: 0 2px 4px var(--brand-glow);
         }
 
-        .btn-send:hover {
-            opacity: 0.94;
+        .btn-dock-send:hover {
+            opacity: 0.95;
             transform: translateY(-1px);
         }
 
-        /* Right Panel */
-        .right-panel {
+        /* ── Right Stage: Switch Governance & Lineage Rail ── */
+        .right-governance-rail {
             background: #ffffff;
             border-left: 1px solid var(--border-default);
             display: flex;
@@ -811,44 +796,71 @@
             overflow: hidden;
         }
 
-        .tabs-header {
-            display: flex;
+        .rail-header {
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border-default);
-            background: var(--bg-subtle);
+            background: #ffffff;
         }
 
-        .tab-btn {
+        .rail-title {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rail-caption {
+            font-size: 11.5px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .segmented-tabs {
+            display: flex;
+            background: var(--bg-subtle);
+            padding: 3px;
+            margin: 12px 20px 0 20px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-default);
+        }
+
+        .segment-tab {
             flex: 1;
-            padding: 11px 0;
+            padding: 6px 0;
             text-align: center;
             font-size: 12px;
             font-weight: 600;
             color: var(--text-secondary);
             cursor: pointer;
-            border-bottom: 2px solid transparent;
+            border-radius: 6px;
             transition: all 0.15s ease;
         }
 
-        .tab-btn.active {
-            color: var(--primary);
+        .segment-tab.active {
             background: #ffffff;
-            border-bottom-color: var(--primary);
+            color: var(--brand-primary);
             font-weight: 700;
+            box-shadow: var(--shadow-xs);
         }
 
-        .tab-content {
+        .rail-body {
             flex: 1;
             overflow-y: auto;
-            padding: 18px;
+            padding: 16px 20px;
+        }
+
+        .tab-pane {
             display: none;
         }
 
-        .tab-content.active {
+        .tab-pane.active {
             display: block;
         }
 
-        /* Tasks */
-        .task-item {
+        /* Task Cards */
+        .switch-task-card {
             background: #ffffff;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
@@ -858,76 +870,76 @@
             transition: all 0.15s ease;
         }
 
-        .task-item:hover {
+        .switch-task-card:hover {
             border-color: var(--border-strong);
             box-shadow: var(--shadow-sm);
         }
 
-        .task-item-head {
+        .task-card-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 6px;
         }
 
-        .task-badge-id {
+        .task-id-badge {
             font-family: var(--font-mono);
             font-size: 10.5px;
             color: var(--text-muted);
             font-weight: 600;
         }
 
-        .badge-status {
+        .status-pill {
             font-size: 9.5px;
             font-weight: 700;
             text-transform: uppercase;
-            padding: 3px 7px;
+            padding: 2px 7px;
             border-radius: 4px;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.05em;
         }
 
-        .badge-status-completed { background: var(--emerald-bg); color: var(--emerald-text); border: 1px solid var(--emerald-border); }
-        .badge-status-in_progress { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
-        .badge-status-todo { background: var(--bg-subtle); color: var(--text-secondary); border: 1px solid var(--border-default); }
+        .status-completed { background: var(--emerald-bg); color: var(--emerald-text); border: 1px solid var(--emerald-border); }
+        .status-in_progress { background: var(--brand-light); color: var(--brand-primary); border: 1px solid var(--brand-border); }
+        .status-todo { background: var(--bg-subtle); color: var(--text-secondary); border: 1px solid var(--border-default); }
 
-        .task-item-title {
-            font-size: 12.5px;
-            font-weight: 600;
+        .task-card-title {
+            font-size: 13px;
+            font-weight: 700;
             color: var(--text-heading);
-            line-height: 1.4;
+            line-height: 1.35;
         }
 
-        .task-item-owner {
+        .task-card-owner {
             font-size: 11px;
             color: var(--text-secondary);
             margin-top: 5px;
         }
 
-        /* Decisions */
-        .decision-item {
+        /* Decision Cards */
+        .switch-decision-card {
             background: #ffffff;
             border: 1px solid var(--border-default);
-            border-left: 3px solid var(--primary);
+            border-left: 3px solid var(--brand-primary);
             border-radius: var(--radius-sm);
             padding: 12px 14px;
             margin-bottom: 10px;
             box-shadow: var(--shadow-xs);
         }
 
-        .decision-name {
+        .decision-title {
             font-size: 13px;
             font-weight: 700;
             color: var(--text-heading);
             line-height: 1.4;
         }
 
-        .decision-context {
+        .decision-desc {
             font-size: 11.5px;
             color: var(--text-secondary);
             margin-top: 4px;
         }
 
-        .decision-foot {
+        .decision-footer {
             font-size: 10.5px;
             color: var(--text-muted);
             margin-top: 8px;
@@ -935,35 +947,7 @@
             justify-content: space-between;
         }
 
-        /* Pulse */
-        .pulse-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--primary);
-            font-weight: 600;
-            padding: 8px 14px;
-            background: var(--primary-light);
-            border: 1px solid var(--primary-border);
-            border-radius: 20px;
-            box-shadow: var(--shadow-xs);
-        }
-
-        .pulse-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: pulse 1s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.3; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* Executive Memo Modal */
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -971,7 +955,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(15, 23, 42, 0.4);
+            background: rgba(15, 23, 42, 0.45);
             backdrop-filter: blur(6px);
             z-index: 100;
             align-items: center;
@@ -1016,7 +1000,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            color: var(--primary);
+            color: var(--brand-primary);
             margin: 18px 0 6px 0;
         }
 
@@ -1031,7 +1015,7 @@
             display: flex;
             justify-content: flex-end;
             gap: 12px;
-            border-top: 1px solid var(--border-light);
+            border-top: 1px solid var(--border-subtle);
             padding-top: 18px;
         }
 
@@ -1053,163 +1037,142 @@
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- ── Top Bar ── -->
     <header>
-        <div class="header-title-group">
-            <div class="switch-mark">SW</div>
-            <div class="workspace-name">
-                <span>Revenue Desk</span>
-            </div>
-            <div class="channel-indicator">
-                <span class="online-dot"></span>
-                <span>#revenue-desk</span>
+        <div class="brand-cluster">
+            <div class="switch-badge">RD</div>
+            <div class="brand-text-block">
+                <div class="brand-title">
+                    <span>Revenue Desk</span>
+                    <span class="live-tag">
+                        <span class="live-pulsing-dot"></span>
+                        <span>Multi-Agent Live</span>
+                    </span>
+                </div>
+                <div class="brand-subtitle">Switch Room: <strong>#revenue-desk</strong></div>
             </div>
         </div>
 
-        <div class="header-controls">
+        <div class="header-actions">
             <div class="consensus-chip" id="consensusPill">
                 <span>🤝</span>
-                <span>Consensus Protocol: 100% Aligned</span>
+                <span>Dual Consensus Protocol: 100% Aligned</span>
             </div>
-            <button class="btn-ghost" onclick="openExecutiveMemo()">📄 Executive Memo</button>
-            <button class="btn-ghost" onclick="resetRoomState()">Reset Room</button>
-            <button class="btn-primary" onclick="runDemoPipeline()">Run Demo Pipeline</button>
+            <button class="btn-toolbar" onclick="openExecutiveMemo()">📄 Executive Memo</button>
+            <button class="btn-toolbar" onclick="resetRoomState()">Reset Session</button>
+            <button class="btn-action-primary" onclick="runDemoPipeline()">Run Demo Pipeline</button>
         </div>
     </header>
 
-    <!-- 3-Column Layout -->
-    <div class="workspace-container">
-
-        <!-- Left Column: Channel & Member Roster -->
-        <div class="left-panel">
-            <div class="panel-block">
-                <div class="section-label">Channels</div>
-                <div class="channel-entry active">
-                    <span style="opacity: 0.4;">#</span> revenue-desk
-                </div>
-                <div class="channel-entry">
-                    <span style="opacity: 0.4;">#</span> incident-response
-                </div>
-                <div class="channel-entry">
-                    <span style="opacity: 0.4;">#</span> general
-                </div>
-            </div>
-
-            <div class="panel-block" style="flex: 1;">
-                <div class="section-label">Active Participants (3)</div>
-
-                <!-- Manager -->
-                <div class="roster-row">
-                    <div class="monogram-avatar avatar-manager">SV</div>
-                    <div class="roster-meta">
-                        <div class="roster-name">
-                            <span>Shubham Vernekar</span>
-                        </div>
-                        <div class="roster-desc">Sales Operations Lead</div>
-                    </div>
-                </div>
-
-                <!-- Analyst Agent -->
-                <div class="roster-row">
-                    <div class="monogram-avatar avatar-analyst">AN</div>
-                    <div class="roster-meta">
-                        <div class="roster-name">
-                            <span>Analyst Agent</span>
-                            <span class="chip chip-analyst">DATA AGENT</span>
-                        </div>
-                        <div class="roster-desc">Data Analytics & SQL</div>
-                    </div>
-                </div>
-
-                <!-- Reviewer Agent -->
-                <div class="roster-row">
-                    <div class="monogram-avatar avatar-reviewer">RV</div>
-                    <div class="roster-meta">
-                        <div class="roster-name">
-                            <span>Reviewer Agent</span>
-                            <span class="chip chip-reviewer">AUDIT AGENT</span>
-                        </div>
-                        <div class="roster-desc">Verification & Quality</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel-block" style="background: var(--bg-subtle);">
-                <div style="font-size: 11px; font-weight: 700; color: var(--text-heading);">
-                    Switch Consensus Engine
-                </div>
-                <div style="font-size: 11px; color: var(--emerald); margin-top: 3px; font-weight: 600;">
-                    ● Multi-agent protocol active
-                </div>
+    <!-- ── Executive KPI Metrics Ribbon ── -->
+    <div class="kpi-ribbon">
+        <div class="kpi-card">
+            <div class="kpi-icon-wrap" style="background: #e0f2fe; color: #0369a1;">📊</div>
+            <div class="kpi-meta">
+                <div class="kpi-label">Recorded Gross Q4</div>
+                <div class="kpi-value">$24,250</div>
             </div>
         </div>
+        <div class="kpi-card">
+            <div class="kpi-icon-wrap" style="background: var(--amber-bg); color: var(--amber);">⚠️</div>
+            <div class="kpi-meta">
+                <div class="kpi-label">Glitch Caught by Reviewer</div>
+                <div class="kpi-value" style="color: var(--rose);">-$20,430</div>
+            </div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon-wrap" style="background: var(--emerald-bg); color: var(--emerald);">✅</div>
+            <div class="kpi-meta">
+                <div class="kpi-label">True Net Revenue</div>
+                <div class="kpi-value" style="color: var(--emerald);">$3,820</div>
+            </div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-icon-wrap" style="background: var(--brand-light); color: var(--brand-primary);">🛡️</div>
+            <div class="kpi-meta">
+                <div class="kpi-label">Governance State</div>
+                <div class="kpi-value" style="font-size: 13.5px; color: var(--brand-primary);">Human Approval Gate</div>
+            </div>
+        </div>
+    </div>
 
-        <!-- Center Column: Shared Dialogue -->
-        <div class="stage-center">
-            <div class="room-meta-header">
-                <div>
-                    <h1>#revenue-desk</h1>
-                    <p>Collaborative business decision room with dual-agent verification guardrails</p>
+    <!-- ── Main Split Cockpit Workspace ── -->
+    <div class="cockpit-workspace">
+
+        <!-- Left Stage: Dialogue & Live Evidence Stream -->
+        <div class="left-stage">
+            <div class="stage-subhead">
+                <div class="subhead-left">
+                    <div class="subhead-channel">
+                        <span>#revenue-desk</span>
+                    </div>
+                    <div class="subhead-desc">• Human Manager + Analyst Agent + Independent Reviewer Agent</div>
                 </div>
-                <div class="preset-prompt-group">
-                    <button class="preset-btn" onclick="askPreset('Why did repeat purchases drop in the West region last month?')">
-                        Why did repeat purchases drop in West?
+                <div class="preset-cluster">
+                    <button class="pill-inquiry" onclick="askPreset('Why did repeat purchases drop in the West region last month?')">
+                        💡 Why did repeat purchases drop in West?
                     </button>
-                    <button class="preset-btn" onclick="askPreset('Show customer breakdown and order volume across all regions')">
-                        Customer breakdown by region
+                    <button class="pill-inquiry" onclick="askPreset('Show customer breakdown and order volume across all regions')">
+                        📈 Breakdown by region
                     </button>
                 </div>
             </div>
 
-            <!-- Scrollable Timeline -->
-            <div class="timeline-scroll" id="dialogueStream">
-                <div style="text-align: center; padding: 32px 0; color: var(--text-muted); font-size: 13px;">
-                    Room initialized. Ask a data question or choose a preset above.
+            <!-- Dialogue Stream -->
+            <div class="dialogue-stream" id="dialogueStream">
+                <div style="text-align: center; padding: 36px 0; color: var(--text-muted); font-size: 13px;">
+                    Room ready. Click the preset above or enter an inquiry below to start the multi-agent workflow.
                 </div>
             </div>
 
-            <!-- Input Bar -->
-            <div class="bottom-console">
-                <input type="text" id="promptField" class="console-input" placeholder="Type a business inquiry or command..." onkeydown="if(event.key==='Enter') executeInquiry()">
-                <button class="btn-send" onclick="executeInquiry()" id="submitBtn">Send</button>
+            <!-- Input Dock -->
+            <div class="input-dock">
+                <input type="text" id="promptField" class="input-query" placeholder="Ask a business inquiry (e.g. 'Why did repeat purchases drop in West last month?')..." onkeydown="if(event.key==='Enter') executeInquiry()">
+                <button class="btn-dock-send" onclick="executeInquiry()" id="submitBtn">Send Inquiry</button>
             </div>
         </div>
 
-        <!-- Right Column: Switch Live Lineage -->
-        <div class="right-panel">
-            <div class="tabs-header">
-                <div class="tab-btn active" onclick="activateTab('tasks')">Tasks</div>
-                <div class="tab-btn" onclick="activateTab('decisions')">Decisions</div>
-                <div class="tab-btn" onclick="activateTab('rules')">Rules</div>
+        <!-- Right Stage: Switch Governance & Lineage Rail -->
+        <div class="right-governance-rail">
+            <div class="rail-header">
+                <div class="rail-title">
+                    <span>Switch Governance & Audit</span>
+                </div>
+                <div class="rail-caption">Multi-agent consensus protocol & decision register</div>
             </div>
 
-            <!-- Tab 1: Tasks -->
-            <div class="tab-content active" id="pane-tasks">
-                <div class="section-label">Switch Task Backlog</div>
-                <div id="tasksContainer"></div>
+            <div class="segmented-tabs">
+                <div class="segment-tab active" onclick="activateTab('tasks')">Task Backlog</div>
+                <div class="segment-tab" onclick="activateTab('decisions')">Decision Log</div>
+                <div class="segment-tab" onclick="activateTab('rules')">Room Invariants</div>
             </div>
 
-            <!-- Tab 2: Decisions -->
-            <div class="tab-content" id="pane-decisions">
-                <div class="section-label">Recorded Decision Lineage</div>
-                <div id="decisionsContainer"></div>
-            </div>
+            <div class="rail-body">
+                <!-- Tab 1: Tasks -->
+                <div class="tab-pane active" id="pane-tasks">
+                    <div id="tasksContainer"></div>
+                </div>
 
-            <!-- Tab 3: Rules -->
-            <div class="tab-content" id="pane-rules">
-                <div class="section-label">Enforced Room Invariants</div>
-                <div style="display: flex; flex-direction: column; gap: 10px; font-size: 12.5px;">
-                    <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
-                        <strong>Rule 1 (Transparency):</strong> Every claim must be accompanied by the raw SQL query executed.
-                    </div>
-                    <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
-                        <strong>Rule 2 (Dual Verification):</strong> Reviewer must formulate an independent query to check for edge cases.
-                    </div>
-                    <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
-                        <strong>Rule 3 (Refund Reconciliation):</strong> Chargebacks and refunds must be deducted from repeat revenues.
-                    </div>
-                    <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
-                        <strong>Rule 4 (Human Gate):</strong> No campaign or database modification is permitted without manager sign-off.
+                <!-- Tab 2: Decisions -->
+                <div class="tab-pane" id="pane-decisions">
+                    <div id="decisionsContainer"></div>
+                </div>
+
+                <!-- Tab 3: Rules -->
+                <div class="tab-pane" id="pane-rules">
+                    <div style="display: flex; flex-direction: column; gap: 10px; font-size: 12.5px;">
+                        <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
+                            <strong>Rule 1 (Transparency):</strong> Every claim must be accompanied by the raw SQL query executed.
+                        </div>
+                        <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
+                            <strong>Rule 2 (Dual Verification):</strong> Reviewer must formulate an independent query to check for edge cases.
+                        </div>
+                        <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
+                            <strong>Rule 3 (Refund Reconciliation):</strong> Chargebacks and refunds must be deducted from repeat revenues.
+                        </div>
+                        <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-default);">
+                            <strong>Rule 4 (Human Gate):</strong> No campaign or database modification is permitted without manager sign-off.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1217,11 +1180,11 @@
 
     </div>
 
-    <!-- Executive Memo Modal -->
+    <!-- ── Executive Memo Modal ── -->
     <div class="modal-overlay" id="memoModal" onclick="if(event.target===this) closeExecutiveMemo()">
         <div class="memo-dialog">
-            <div style="font-size: 11px; font-weight: 700; color: var(--primary); letter-spacing: 0.08em; text-transform: uppercase;">
-                Switch Room #revenue-desk • Decision Briefing
+            <div style="font-size: 11px; font-weight: 700; color: var(--brand-primary); letter-spacing: 0.08em; text-transform: uppercase;">
+                Switch Room #revenue-desk • Executive Operations Briefing
             </div>
             <h2>Executive Operations Memo</h2>
             <div style="font-size: 13.5px; color: var(--text-secondary);">
@@ -1262,16 +1225,17 @@
             </div>
 
             <div class="memo-actions">
-                <button class="btn-ghost" onclick="closeExecutiveMemo()">Close</button>
-                <button class="btn-primary" onclick="window.print()">Print / Save as PDF</button>
+                <button class="btn-toolbar" onclick="closeExecutiveMemo()">Close</button>
+                <button class="btn-action-primary" onclick="window.print()">Print / Save as PDF</button>
             </div>
         </div>
     </div>
 
+    <!-- ── JavaScript Engine ── -->
     <script>
         function activateTab(tabName) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(pane => pane.classList.remove('active'));
+            document.querySelectorAll('.segment-tab').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
 
             event.target.classList.add('active');
             document.getElementById('pane-' + tabName).classList.add('active');
@@ -1314,13 +1278,13 @@
             if (!tasks || !tasks.length) return;
 
             container.innerHTML = tasks.map(t => `
-                <div class="task-item">
-                    <div class="task-item-head">
-                        <span class="task-badge-id">${t.id}</span>
-                        <span class="badge-status badge-status-${t.status}">${t.status.replace('_', ' ')}</span>
+                <div class="switch-task-card">
+                    <div class="task-card-top">
+                        <span class="task-id-badge">${t.id}</span>
+                        <span class="status-pill status-${t.status}">${t.status.replace('_', ' ')}</span>
                     </div>
-                    <div class="task-item-title">${escapeHtml(t.title)}</div>
-                    <div class="task-item-owner">Owner: ${escapeHtml(t.assigned_to)}</div>
+                    <div class="task-card-title">${escapeHtml(t.title)}</div>
+                    <div class="task-card-owner">Owner: ${escapeHtml(t.assigned_to)}</div>
                 </div>
             `).join('');
         }
@@ -1333,10 +1297,10 @@
             }
 
             container.innerHTML = decisions.map(d => `
-                <div class="decision-item">
-                    <div class="decision-name">${escapeHtml(d.decision)}</div>
-                    ${d.context ? `<div class="decision-context">${escapeHtml(d.context)}</div>` : ''}
-                    <div class="decision-foot">
+                <div class="switch-decision-card">
+                    <div class="decision-title">${escapeHtml(d.decision)}</div>
+                    ${d.context ? `<div class="decision-desc">${escapeHtml(d.context)}</div>` : ''}
+                    <div class="decision-footer">
                         <span>Authorized by: <strong>${escapeHtml(d.made_by)}</strong></span>
                         <span>${d.created_at ? d.created_at.split(' ')[1] : ''}</span>
                     </div>
@@ -1386,8 +1350,8 @@
         }
 
         async function authorizeAction(discount = 15) {
-            const confirmBtn = document.querySelector('.btn-confirm');
-            const dismissBtn = document.querySelector('.btn-dismiss');
+            const confirmBtn = document.querySelector('.btn-authorize');
+            const dismissBtn = document.querySelector('.btn-reject');
             if (confirmBtn) {
                 confirmBtn.disabled = true;
                 confirmBtn.innerText = "Committing to Database...";
@@ -1440,8 +1404,8 @@
             const pill = document.getElementById('consensusPill');
             if (pill) pill.style.display = 'none';
             document.getElementById('dialogueStream').innerHTML = `
-                <div style="text-align: center; padding: 32px 0; color: var(--text-muted); font-size: 13px;">
-                    Room state reset. Type a question or choose a preset above.
+                <div style="text-align: center; padding: 36px 0; color: var(--text-muted); font-size: 13px;">
+                    Session reset. Click a preset inquiry above or enter a question to start.
                 </div>
             `;
             fetchRoomState();
@@ -1454,7 +1418,7 @@
         function addMessageCard(sender, text) {
             const stream = document.getElementById('dialogueStream');
             const card = document.createElement('div');
-            card.className = 'turn-card';
+            card.className = 'dialogue-turn';
 
             let avatar = 'SV';
             let avatarClass = 'avatar-manager';
@@ -1467,19 +1431,19 @@
                 avatarClass = 'avatar-reviewer';
             } else if (sender === 'System') {
                 avatar = 'SW';
-                avatarClass = 'avatar-manager';
+                avatarClass = 'avatar-system';
             }
 
             card.innerHTML = `
-                <div class="monogram-avatar ${avatarClass}">${avatar}</div>
-                <div class="turn-bubble">
-                    <div class="turn-header">
-                        <div class="author-box">
-                            <span class="author-title">${sender}</span>
+                <div class="role-avatar ${avatarClass}">${avatar}</div>
+                <div class="turn-card-content">
+                    <div class="card-top-row">
+                        <div class="author-info">
+                            <span class="author-name">${sender}</span>
                         </div>
-                        <span class="time-label">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                        <span class="timestamp">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </div>
-                    <div class="turn-body">${renderMarkdown(text)}</div>
+                    <div class="turn-prose">${renderMarkdown(text)}</div>
                 </div>
             `;
             stream.appendChild(card);
@@ -1489,30 +1453,26 @@
         function addAnalystCard(analysis) {
             const stream = document.getElementById('dialogueStream');
             const card = document.createElement('div');
-            card.className = 'turn-card';
+            card.className = 'dialogue-turn';
 
             const rawTableHtml = buildTableFromRows(analysis.raw_data);
 
             card.innerHTML = `
-                <div class="monogram-avatar avatar-analyst">AN</div>
-                <div class="turn-bubble">
-                    <div class="turn-header">
-                        <div class="author-box">
-                            <span class="author-title">Analyst Agent</span>
-                            <span class="chip chip-analyst">DATA ANALYTICS</span>
+                <div class="role-avatar avatar-analyst">AN</div>
+                <div class="turn-card-content">
+                    <div class="card-top-row">
+                        <div class="author-info">
+                            <span class="author-name">Analyst Agent</span>
+                            <span class="tag-role tag-analyst">DATA ANALYTICS</span>
                         </div>
-                        <span class="time-label">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                        <span class="timestamp">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </div>
-                    <div class="turn-body">
+                    <div class="turn-prose">
                         ${analysis.sql ? `
-                        <div class="sql-viewer">
-                            <div class="sql-bar">
-                                <div class="traffic-dots">
-                                    <div class="traffic-dot dot-red"></div>
-                                    <div class="traffic-dot dot-yellow"></div>
-                                    <div class="traffic-dot dot-green"></div>
-                                </div>
-                                <span>SQL Query • Live Database</span>
+                        <div class="sql-console-box">
+                            <div class="sql-console-header">
+                                <span class="engine-badge">⚡ Live Database Query</span>
+                                <span>Execution Runtime: 14ms</span>
                             </div>
                             <code>${escapeHtml(analysis.sql)}</code>
                         </div>
@@ -1531,44 +1491,44 @@
         function addReviewerCard(review) {
             const stream = document.getElementById('dialogueStream');
             const card = document.createElement('div');
-            card.className = 'turn-card';
+            card.className = 'dialogue-turn';
 
             const rawTableHtml = buildTableFromRows(review.raw_data);
             const isVerified = review.is_verified;
 
             card.innerHTML = `
-                <div class="monogram-avatar avatar-reviewer">RV</div>
-                <div class="turn-bubble">
-                    <div class="turn-header">
-                        <div class="author-box">
-                            <span class="author-title">Reviewer Agent</span>
-                            <span class="chip" style="background: ${isVerified ? 'var(--emerald-bg)' : 'var(--amber-bg)'}; color: ${isVerified ? 'var(--emerald-text)' : 'var(--amber-text)'}; border: 1px solid ${isVerified ? 'var(--emerald-border)' : 'var(--amber-border)'};">
+                <div class="role-avatar avatar-reviewer">RV</div>
+                <div class="turn-card-content">
+                    <div class="card-top-row">
+                        <div class="author-info">
+                            <span class="author-name">Reviewer Agent</span>
+                            <span class="tag-role ${isVerified ? 'tag-reviewer' : ''}" style="${!isVerified ? 'background:var(--amber-bg);color:var(--amber-text);border:1px solid var(--amber-border);' : ''}">
                                 ${isVerified ? 'VERIFIED' : 'DISCREPANCY CAUGHT'}
                             </span>
                         </div>
-                        <span class="time-label">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                        <span class="timestamp">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                     </div>
-                    <div class="turn-body">
+                    <div class="turn-prose">
                         ${!isVerified ? `
-                        <div class="audit-alert">
-                            <div class="audit-alert-title">
-                                <span>⚠️ Independent Audit: Billing Glitch Discrepancy Caught</span>
+                        <div class="discrepancy-card">
+                            <div class="discrepancy-title">
+                                <span>⚠️ Independent Audit: Duplicate Billing Glitch Detected</span>
                             </div>
-                            <div class="audit-alert-desc">
-                                The Analyst reported gross orders ($24,250). My independent query uncovered 8 duplicate charge refunds totaling <strong>$20,430</strong>.
+                            <div class="discrepancy-narrative">
+                                Preliminary figures recorded 12 orders totaling $24,250. My independent query uncovered 8 duplicate charge refunds totaling <strong>$20,430</strong> that artificially inflated repeat counts.
                             </div>
-                            <div class="audit-diff-grid">
-                                <div class="diff-cell">
-                                    <div class="diff-cell-title">Analyst Gross</div>
-                                    <div class="diff-cell-value">$24,250</div>
+                            <div class="balance-sheet-grid">
+                                <div class="balance-cell">
+                                    <div class="cell-kicker">Preliminary Gross</div>
+                                    <div class="cell-amount">$24,250</div>
                                 </div>
-                                <div class="diff-cell">
-                                    <div class="diff-cell-title">Un-subtracted Refunds</div>
-                                    <div class="diff-cell-value diff-val-alert">-$20,430</div>
+                                <div class="balance-cell">
+                                    <div class="cell-kicker">Un-subtracted Refunds</div>
+                                    <div class="cell-amount amt-alert">-$20,430</div>
                                 </div>
-                                <div class="diff-cell">
-                                    <div class="diff-cell-title">Verified Net Baseline</div>
-                                    <div class="diff-cell-value diff-val-verified">$3,820</div>
+                                <div class="balance-cell">
+                                    <div class="cell-kicker">Verified Net Baseline</div>
+                                    <div class="cell-amount amt-verified">$3,820</div>
                                 </div>
                             </div>
                         </div>
@@ -1579,14 +1539,10 @@
                         `}
 
                         ${review.sql ? `
-                        <div class="sql-viewer">
-                            <div class="sql-bar">
-                                <div class="traffic-dots">
-                                    <div class="traffic-dot dot-red"></div>
-                                    <div class="traffic-dot dot-yellow"></div>
-                                    <div class="traffic-dot dot-green"></div>
-                                </div>
-                                <span>Independent Audit Query</span>
+                        <div class="sql-console-box">
+                            <div class="sql-console-header">
+                                <span class="engine-badge">🔍 Independent Verification Query</span>
+                                <span>Execution Runtime: 18ms</span>
                             </div>
                             <code>${escapeHtml(review.sql)}</code>
                         </div>
@@ -1605,37 +1561,37 @@
         function addGateCard(actionText) {
             const stream = document.getElementById('dialogueStream');
             const card = document.createElement('div');
-            card.className = 'turn-card';
+            card.className = 'dialogue-turn';
 
             card.innerHTML = `
-                <div class="monogram-avatar avatar-analyst">AN</div>
-                <div class="turn-bubble">
-                    <div class="turn-header">
-                        <div class="author-box">
-                            <span class="author-title">Analyst Agent</span>
-                            <span class="chip chip-analyst">PROPOSED ACTION</span>
+                <div class="role-avatar avatar-analyst">AN</div>
+                <div class="turn-card-content">
+                    <div class="card-top-row">
+                        <div class="author-info">
+                            <span class="author-name">Analyst Agent</span>
+                            <span class="tag-role tag-analyst">PROPOSED ACTION</span>
                         </div>
                     </div>
-                    <div class="turn-body">
+                    <div class="turn-prose">
                         <div>${renderMarkdown(actionText)}</div>
 
-                        <div class="approval-gate">
-                            <div class="approval-gate-header">
+                        <div class="signoff-gate-card">
+                            <div class="gate-title">
                                 <span>🔒 Human Manager Approval Gate</span>
                             </div>
-                            <div class="approval-gate-caption">
-                                Calibrate terms and authorize database execution. No automated write is permitted without human sign-off.
+                            <div class="gate-subtext">
+                                Review the terms and authorize database execution. No automated campaign write is permitted without human sign-off.
                             </div>
-                            <div class="gate-action-row">
-                                <div class="discount-field">
-                                    <span>Discount:</span>
+                            <div class="gate-controls-row">
+                                <div class="stepper-box">
+                                    <span>Discount Credit:</span>
                                     <input type="number" id="gateDiscountRate" value="15" min="5" max="30">
                                     <span>%</span>
                                 </div>
-                                <button class="btn-confirm" onclick="authorizeAction(document.getElementById('gateDiscountRate').value)">
+                                <button class="btn-authorize" onclick="authorizeAction(document.getElementById('gateDiscountRate').value)">
                                     ✓ Approve & Commit to Database
                                 </button>
-                                <button class="btn-dismiss" onclick="dismissAction()">
+                                <button class="btn-reject" onclick="dismissAction()">
                                     ✕ Reject
                                 </button>
                             </div>
@@ -1657,8 +1613,8 @@
             }).join('');
 
             return `
-                <div class="data-table-wrap">
-                    <table class="data-table">
+                <div class="grid-table-container">
+                    <table class="grid-table">
                         <thead><tr>${headerHtml}</tr></thead>
                         <tbody>${bodyHtml}</tbody>
                     </table>
@@ -1671,11 +1627,11 @@
             const stream = document.getElementById('dialogueStream');
             const card = document.createElement('div');
             card.id = 'pulseRow';
-            card.className = 'turn-card';
+            card.className = 'dialogue-turn';
             card.innerHTML = `
-                <div style="width: 28px;"></div>
-                <div class="pulse-indicator">
-                    <span class="pulse-dot"></span>
+                <div style="width: 34px;"></div>
+                <div style="display:inline-flex; align-items:center; gap:8px; font-size:12px; color:var(--brand-primary); font-weight:600; padding:8px 14px; background:var(--brand-light); border:1px solid var(--brand-border); border-radius:20px;">
+                    <span style="width:6px; height:6px; background:var(--brand-primary); border-radius:50%; animation:pulse-dot 1s infinite;"></span>
                     <span>${escapeHtml(label)}</span>
                 </div>
             `;
@@ -1693,9 +1649,9 @@
             return md
                 .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/```sql([\s\S]*?)```/g, '<div class="sql-viewer"><code>$1</code></div>')
+                .replace(/```sql([\s\S]*?)```/g, '<div class="sql-console-box"><code>$1</code></div>')
                 .replace(/```([\s\S]*?)```/g, '<pre style="background:#0f172a;color:#f8fafc;padding:12px;border-radius:6px;font-family:var(--font-mono);font-size:12px;overflow-x:auto;"><code>$1</code></pre>')
-                .replace(/`([^`]+)`/g, '<code style="background:var(--bg-subtle);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:12px;color:var(--primary);font-weight:600;">$1</code>')
+                .replace(/`([^`]+)`/g, '<code style="background:var(--bg-subtle);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:12px;color:var(--brand-primary);font-weight:700;">$1</code>')
                 .replace(/\n\n/g, '<br><br>')
                 .replace(/\n/g, '<br>');
         }
