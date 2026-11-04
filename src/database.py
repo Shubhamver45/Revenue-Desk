@@ -44,8 +44,48 @@ def get_connection(db_path: str | None = None) -> Generator[sqlite3.Connection, 
         conn.close()
 
 
+def run_supabase_sql(sql: str) -> list[dict[str, Any]]:
+    """Execute raw SQL against Supabase over HTTPS via the exec_sql RPC function."""
+    import json
+    import ssl
+    import urllib.request
+
+    url = os.getenv("SUPABASE_URL", "").rstrip("/")
+    key = os.getenv("SUPABASE_SECRET_KEY") or os.getenv("SUPABASE_PUBLISHABLE_KEY")
+    if not url or not key:
+        raise ValueError("SUPABASE_URL and SUPABASE_SECRET_KEY must be set in .env to use Supabase")
+
+    endpoint = f"{url}/rest/v1/rpc/exec_sql"
+    payload = json.dumps({"query": sql}).encode("utf-8")
+    req = urllib.request.Request(
+        endpoint,
+        data=payload,
+        headers={
+            "Content-Type": "application/json",
+            "apikey": key,
+            "Authorization": f"Bearer {key}"
+        }
+    )
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
+    with urllib.request.urlopen(req, context=ctx, timeout=15) as resp:
+        data = json.loads(resp.read().decode("utf-8"))
+        if isinstance(data, list):
+            return data
+        return [data] if data else []
+
+
 def run_query(sql: str, params: tuple[Any, ...] = (), db_path: str | None = None) -> list[dict[str, Any]]:
     """Execute a read-only SQL query and return results as list of dicts."""
+    if os.getenv("DB_ENGINE", "sqlite").lower() == "supabase":
+        final_sql = sql
+        for p in params:
+            val = f"'{p}'" if isinstance(p, str) else str(p)
+            final_sql = final_sql.replace("?", val, 1)
+        return run_supabase_sql(final_sql)
+
     with get_connection(db_path) as conn:
         cursor = conn.execute(sql, params)
         columns = [desc[0] for desc in cursor.description] if cursor.description else []
@@ -55,6 +95,14 @@ def run_query(sql: str, params: tuple[Any, ...] = (), db_path: str | None = None
 
 def run_write(sql: str, params: tuple[Any, ...] = (), db_path: str | None = None) -> int:
     """Execute a write SQL statement. Returns lastrowid."""
+    if os.getenv("DB_ENGINE", "sqlite").lower() == "supabase":
+        final_sql = sql
+        for p in params:
+            val = f"'{p}'" if isinstance(p, str) else str(p)
+            final_sql = final_sql.replace("?", val, 1)
+        res = run_supabase_sql(final_sql)
+        return 1
+
     with get_connection(db_path) as conn:
         cursor = conn.execute(sql, params)
         conn.commit()
@@ -65,6 +113,15 @@ def run_transaction(operations: list[tuple[str, tuple[Any, ...]]], db_path: str 
     """Execute multiple SQL write statements inside an atomic transaction.
     Returns the lastrowid of the first statement.
     """
+    if os.getenv("DB_ENGINE", "sqlite").lower() == "supabase":
+        for sql, params in operations:
+            final_sql = sql
+            for p in params:
+                val = f"'{p}'" if isinstance(p, str) else str(p)
+                final_sql = final_sql.replace("?", val, 1)
+            run_supabase_sql(final_sql)
+        return 1
+
     with get_connection(db_path) as conn:
         last_id = 0
         for i, (sql, params) in enumerate(operations):
