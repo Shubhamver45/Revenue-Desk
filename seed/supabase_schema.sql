@@ -1,8 +1,14 @@
 -- ============================================================
--- Revenue Desk — Seed Database
--- Realistic sales data with a built-in "West region drop" story
--- and a hidden refund discrepancy for the Reviewer to catch.
+-- Revenue Desk — Seed Database (PostgreSQL / Supabase)
 -- ============================================================
+
+-- Clean reset of existing tables
+DROP TABLE IF EXISTS decision_log CASCADE;
+DROP TABLE IF EXISTS campaign_targets CASCADE;
+DROP TABLE IF EXISTS campaigns CASCADE;
+DROP TABLE IF EXISTS refunds CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS customers CASCADE;
 
 -- ---- Schema ----
 
