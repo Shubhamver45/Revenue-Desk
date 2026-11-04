@@ -1400,7 +1400,7 @@
 
             const approvalStr = `Approved. Change discount to ${discount}% and launch campaign.`;
             addMessageCard('Manager', approvalStr);
-             showPulse('Analyst committin g approved mutations to database...');
+            showPulse('Analyst committing approved mutations to database...');
 
             try {
                 const res = await fetch('/api/approve', {
@@ -1447,8 +1447,8 @@
                     Session reset. Click a preset inquiry above or enter a question to start.
                 </div>
             `;
-             fetchRoomStat e();
-         }
+            fetchRoomState();
+        }
 
         function runDemoPipeline() {
             askPreset('Why did repeat purchases drop in the West region last month?');
