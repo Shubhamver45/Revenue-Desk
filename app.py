@@ -115,11 +115,13 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             "analysis": {
                 "sql": ctx.analysis.sql_query if ctx and ctx.analysis else None,
                 "response": ctx.analysis.llm_response if ctx and ctx.analysis else None,
+                "raw_data": ctx.analysis.raw_data if ctx and ctx.analysis else [],
             } if ctx and ctx.analysis else None,
             "review": {
                 "sql": ctx.review.reviewer_sql if ctx and ctx.review else None,
                 "response": ctx.review.llm_response if ctx and ctx.review else None,
                 "is_verified": ctx.review.is_verified if ctx and ctx.review else None,
+                "raw_data": ctx.review.reviewer_data if ctx and ctx.review else [],
             } if ctx and ctx.review else None,
             "proposed_action": ctx.proposed_action if ctx else None,
             "execution_result": ctx.execution_result if ctx else None,
