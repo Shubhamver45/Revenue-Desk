@@ -1347,6 +1347,14 @@
             `).join('');
         }
 
+        function updateStep(stepNum, status) {
+            const el = document.getElementById('step' + stepNum);
+            if (!el) return;
+            el.classList.remove('step-active', 'step-complete');
+            if (status === 'active') el.classList.add('step-active');
+            else if (status === 'complete') el.classList.add('step-complete');
+        }
+
         async function executeInquiry() {
             const input = document.getElementById('promptField');
             const q = input.value.trim();
@@ -1355,6 +1363,8 @@
 
             addMessageCard('Manager', q);
             showPulse('Analyst Agent querying live database...');
+            updateStep(1, 'complete');
+            updateStep(2, 'active');
 
             try {
                 const res = await fetch('/api/ask', {
@@ -1368,16 +1378,21 @@
                 // 1. Analyst response with real data
                 if (data.analysis) {
                     addAnalystCard(data.analysis);
+                    updateStep(2, 'complete');
+                    updateStep(3, 'active');
                 }
 
                 // 2. Reviewer card with dynamic audit
                 if (data.review) {
                     addReviewerCard(data.review);
+                    updateStep(3, 'complete');
+                    updateStep(4, 'complete');
                 }
 
                 // 3. Proposed Action with interactive gate
-                 if (data.proposed_action) {
-                     addGateCard(data.proposed_action);
+                if (data.proposed_action) {
+                    addGateCard(data.proposed_action);
+                    updateStep(5, 'active');
                 }
 
                 renderSidebar(data);
