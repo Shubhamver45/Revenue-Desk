@@ -1,4 +1,4 @@
-"""Revenue Desk — Database layer (SQLite)."""
+"""Revenue Desk — Database layer (SQLite & Supabase PostgreSQL)."""
 
 from __future__ import annotations
 
@@ -7,6 +7,11 @@ import os
 from pathlib import Path
 from contextlib import contextmanager
 from typing import Any, Generator
+
+try:
+    from src.config import config
+except ImportError:
+    pass
 
 SEED_SQL_PATH = Path(__file__).resolve().parent.parent / "seed" / "init.sql"
 
@@ -84,7 +89,10 @@ def run_query(sql: str, params: tuple[Any, ...] = (), db_path: str | None = None
         for p in params:
             val = f"'{p}'" if isinstance(p, str) else str(p)
             final_sql = final_sql.replace("?", val, 1)
-        return run_supabase_sql(final_sql)
+        try:
+            return run_supabase_sql(final_sql)
+        except Exception as e:
+            print(f"[DB Warning] Supabase live query failed: {e}. Falling back to local SQLite.")
 
     with get_connection(db_path) as conn:
         cursor = conn.execute(sql, params)
@@ -100,8 +108,11 @@ def run_write(sql: str, params: tuple[Any, ...] = (), db_path: str | None = None
         for p in params:
             val = f"'{p}'" if isinstance(p, str) else str(p)
             final_sql = final_sql.replace("?", val, 1)
-        res = run_supabase_sql(final_sql)
-        return 1
+        try:
+            res = run_supabase_sql(final_sql)
+            return 1
+        except Exception as e:
+            print(f"[DB Warning] Supabase live write failed: {e}. Falling back to SQLite.")
 
     with get_connection(db_path) as conn:
         cursor = conn.execute(sql, params)
@@ -114,13 +125,16 @@ def run_transaction(operations: list[tuple[str, tuple[Any, ...]]], db_path: str 
     Returns the lastrowid of the first statement.
     """
     if os.getenv("DB_ENGINE", "sqlite").lower() == "supabase":
-        for sql, params in operations:
-            final_sql = sql
-            for p in params:
-                val = f"'{p}'" if isinstance(p, str) else str(p)
-                final_sql = final_sql.replace("?", val, 1)
-            run_supabase_sql(final_sql)
-        return 1
+        try:
+            for sql, params in operations:
+                final_sql = sql
+                for p in params:
+                    val = f"'{p}'" if isinstance(p, str) else str(p)
+                    final_sql = final_sql.replace("?", val, 1)
+                run_supabase_sql(final_sql)
+            return 1
+        except Exception as e:
+            print(f"[DB Warning] Supabase live transaction failed: {e}. Falling back to SQLite.")
 
     with get_connection(db_path) as conn:
         last_id = 0
