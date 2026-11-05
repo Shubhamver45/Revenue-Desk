@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Revenue Desk — Autonomous Financial Governance | Sign In</title>
+    <title>Revenue Desk — Autonomous Financial Intelligence & Governance</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* ── Modern Clean 2026 SaaS Light Theme (Exact Match with Project) ── */
+            /* ── Haute Horlogerie / Modern Luxe SaaS Light Theme ── */
             --bg-page: #F8FAFC;
             --bg-card: #FFFFFF;
             --bg-subtle: #F1F5F9;
-            --bg-hover: #F8FAFC;
-
+            --bg-glass: rgba(255, 255, 255, 0.88);
+            
             --border-default: #E2E8F0;
             --border-subtle: #F1F5F9;
+            --border-luxe: rgba(226, 232, 240, 0.85);
             --border-focus: #0D9488;
 
             --brand-primary: #0D9488;
@@ -26,30 +27,33 @@
             --color-blue: #2563EB;
             --color-blue-bg: #EFF6FF;
 
-            --color-green: #10B981;
+            --color-gold: #D97706;
+            --color-gold-light: #F59E0B;
+            --color-gold-bg: #FFFBEB;
+
+            --color-green: #059669;
             --color-green-bg: #ECFDF5;
 
-            --color-red: #EF4444;
-            --color-red-bg: #FEF2F2;
-
-            --color-amber: #F59E0B;
-            --color-amber-bg: #FFFBEB;
+            --color-red: #E11D48;
+            --color-red-bg: #FFF1F2;
 
             --text-heading: #0F172A;
             --text-body: #334155;
             --text-secondary: #64748B;
             --text-muted: #94A3B8;
 
-            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
 
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
+            --radius-xs: 6px;
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
 
-            --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.03), 0 6px 18px -2px rgba(15, 23, 42, 0.04);
-            --shadow-hover: 0 8px 24px -4px rgba(15, 23, 42, 0.08);
-            --shadow-modal: 0 24px 48px -12px rgba(15, 23, 42, 0.18);
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.03), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+            --shadow-float: 0 12px 36px -8px rgba(15, 23, 42, 0.08), 0 4px 16px -2px rgba(13, 148, 136, 0.06);
+            --shadow-luxe: 0 24px 60px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
@@ -60,37 +64,43 @@
             width: 100vw;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Zero page scroll */
+            overflow: hidden; /* Strict Zero Scroll */
             font-family: var(--font-sans);
             background: var(--bg-page);
             color: var(--text-body);
         }
 
-        /* ── Fullscreen 50/50 Split Layout ── */
+        /* ── Fullscreen 50/50 Split Container ── */
         .split-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.05fr 0.95fr;
             width: 100vw;
             height: 100vh;
             height: 100dvh;
             overflow: hidden;
+            position: relative;
         }
 
         /* ══════════════════════════════════════════════════════════════
-           ── LEFT HALF: CRAZY 3D ANIMATION STAGE (MATCHES LIGHT THEME) ──
+           ── LEFT 50%: GENERATIVE 3D QUANTUM CORE (MESMERIZING & FAB) ──
            ══════════════════════════════════════════════════════════════ */
-        .split-left-3d {
+        .stage-3d-pane {
             position: relative;
-            background: radial-gradient(circle at 20% 20%, rgba(13, 148, 136, 0.08) 0%, rgba(37, 99, 235, 0.05) 50%, #F1F5F9 100%);
+            background: radial-gradient(circle at 15% 15%, rgba(13, 148, 136, 0.09) 0%, transparent 45%),
+                        radial-gradient(circle at 85% 85%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.03) 0%, transparent 60%),
+                        #F8FAFC;
             border-right: 1px solid var(--border-default);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 32px clamp(24px, 3.5vw, 44px);
+            padding: clamp(24px, 3vh, 36px) clamp(28px, 3.5vw, 48px);
             overflow: hidden;
+            user-select: none;
         }
 
-        canvas#split3DCanvas {
+        /* Canvas with glowing depth */
+        canvas#quantum3DCanvas {
             position: absolute;
             inset: 0;
             width: 100%;
@@ -100,8 +110,29 @@
             pointer-events: none;
         }
 
-        /* Top HUD on 3D Stage */
-        .stage-top-hud {
+        /* Ambient subtle light orb */
+        .ambient-glow-orb {
+            position: absolute;
+            width: 480px;
+            height: 480px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(13, 148, 136, 0.12) 0%, rgba(37, 99, 235, 0.05) 50%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+            animation: breathe 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes breathe {
+            0% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+        }
+
+        /* Top HUD */
+        .hud-top-bar {
             position: relative;
             z-index: 10;
             display: flex;
@@ -112,206 +143,295 @@
         .hud-brand {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 15px;
-            font-weight: 800;
-            color: var(--text-heading);
-            letter-spacing: -0.3px;
+            gap: 12px;
+            text-decoration: none;
         }
 
-        .hud-icon {
-            width: 32px;
-            height: 32px;
+        .hud-brand-mark {
+            width: 36px;
+            height: 36px;
             background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 10px rgba(13, 148, 136, 0.35);
+            box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
         }
 
-        .hud-icon svg { width: 17px; height: 17px; stroke: #fff; stroke-width: 2.4; fill: none; }
+        .hud-brand-mark svg { width: 19px; height: 19px; stroke: #FFFFFF; stroke-width: 2.3; fill: none; }
 
-        .hud-status-pill {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--color-green-bg);
-            border: 1px solid #D1FAE5;
-            padding: 4px 11px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            color: #047857;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-        }
-
-        .hud-dot {
-            width: 6px;
-            height: 6px;
-            background: #10B981;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.8); }
-        }
-
-        /* Center Headline & Live Ticker */
-        .stage-center-hud {
-            position: relative;
-            z-index: 10;
-            max-width: 480px;
+        .hud-brand-text {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-top: auto;
-            margin-bottom: auto;
         }
 
-        .stage-tag {
+        .hud-brand-title {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            color: var(--text-heading);
+            line-height: 1.2;
+        }
+
+        .hud-brand-sub {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--brand-primary);
+            font-family: var(--font-mono);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .hud-telemetry-pill {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(209, 250, 229, 0.8);
+            padding: 5px 12px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--color-green);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
+        }
+
+        .pulse-beacon {
+            width: 7px;
+            height: 7px;
+            background: #10B981;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulseWave 1.8s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+
+        @keyframes pulseWave {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Center Editorial Hero Overlay */
+        .stage-center-content {
+            position: relative;
+            z-index: 10;
+            max-width: 520px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: auto;
+            margin-bottom: auto;
+            padding-top: 10px;
+        }
+
+        .eyebrow-chip {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            background: var(--brand-primary-bg);
-            border: 1px solid #CCFBF1;
+            gap: 7px;
+            background: linear-gradient(90deg, #F0FDFA 0%, #EFF6FF 100%);
+            border: 1px solid rgba(204, 251, 241, 0.8);
             color: var(--brand-primary);
-            padding: 3px 10px;
-            border-radius: 14px;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
             font-size: 11px;
             font-weight: 700;
             font-family: var(--font-mono);
+            letter-spacing: 0.5px;
             width: fit-content;
+            box-shadow: 0 2px 6px rgba(13, 148, 136, 0.08);
         }
 
-        .stage-heading {
-            font-size: clamp(24px, 2.6vw, 36px);
+        .stage-hero-heading {
+            font-size: clamp(28px, 3vw, 42px);
             font-weight: 900;
-            letter-spacing: -1px;
-            line-height: 1.15;
+            letter-spacing: -1.2px;
+            line-height: 1.12;
             color: var(--text-heading);
         }
 
-        .stage-heading span {
-            background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
+        .stage-hero-heading .gradient-word {
+            background: linear-gradient(135deg, #0D9488 0%, #2563EB 70%, #7C3AED 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .stage-sub {
-            font-size: 13px;
+        .stage-hero-desc {
+            font-size: 13.5px;
             color: var(--text-secondary);
             line-height: 1.6;
+            font-weight: 500;
         }
 
-        /* 3D Interactive Mode Selector on Left */
-        .stage-mode-bar {
+        /* Glassmorphic 3D Mode Switcher (Haute Horlogerie Style) */
+        .mode-segmented-dock {
             display: flex;
-            background: #FFFFFF;
-            border: 1px solid var(--border-default);
-            border-radius: 20px;
-            padding: 3px;
-            gap: 3px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-radius: var(--radius-full);
+            padding: 4px;
+            gap: 4px;
             width: fit-content;
-            box-shadow: var(--shadow-card);
+            box-shadow: var(--shadow-float);
+            margin-top: 4px;
         }
 
-        .stage-mode-btn {
+        .mode-tab-pill {
             background: transparent;
             border: none;
             color: var(--text-secondary);
-            padding: 5px 12px;
-            border-radius: 14px;
+            padding: 7px 16px;
+            border-radius: var(--radius-full);
             font-size: 11.5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .stage-mode-btn:hover { color: var(--text-heading); }
-        .stage-mode-btn.active {
-            background: var(--brand-primary);
-            color: #FFFFFF;
             font-weight: 700;
-            box-shadow: 0 2px 6px rgba(13, 148, 136, 0.3);
-        }
-
-        /* Bottom Telemetry Capsule */
-        .stage-bottom-hud {
-            position: relative;
-            z-index: 10;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 6px;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            font-family: var(--font-sans);
+        }
+
+        .mode-tab-pill:hover {
+            color: var(--text-heading);
+            background: rgba(241, 245, 249, 0.8);
+        }
+
+        .mode-tab-pill.active {
+            background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.32);
+        }
+
+        /* Bottom Floating Capsule HUD */
+        .hud-telemetry-capsule {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--border-default);
-            border-radius: var(--radius-sm);
-            padding: 10px 14px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-radius: var(--radius-md);
+            padding: 12px 18px;
+            box-shadow: var(--shadow-luxe);
+            gap: 16px;
+        }
+
+        .telemetry-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .telemetry-cell:not(:first-child) {
+            border-left: 1px solid var(--border-default);
+            padding-left: 16px;
+        }
+
+        .telemetry-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
             font-family: var(--font-mono);
-            font-size: 11px;
-            box-shadow: var(--shadow-card);
+        }
+
+        .telemetry-val {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--text-heading);
+            font-family: var(--font-mono);
         }
 
         /* ══════════════════════════════════════════════════════════════
-           ── RIGHT HALF: MULTI-PERSONA LOGIN PORTAL ──
+           ── RIGHT 50%: HAUTE HORLOGERIE / LUXURY ACCESS PORTAL ──
            ══════════════════════════════════════════════════════════════ */
-        .split-right-auth {
+        .stage-auth-pane {
             background: #FFFFFF;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 32px clamp(24px, 4vw, 56px);
-            overflow-y: auto;
+            padding: clamp(24px, 4vh, 48px) clamp(28px, 4.5vw, 64px);
             position: relative;
+            overflow-y: auto;
+            border-left: 1px solid rgba(226, 232, 240, 0.4);
         }
 
-        .auth-container {
+        /* Subtle luxury background radial accent */
+        .stage-auth-pane::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, rgba(13, 148, 136, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .auth-luxe-card {
             max-width: 440px;
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: clamp(16px, 2.2vh, 22px);
+            position: relative;
+            z-index: 5;
         }
 
-        .auth-head {
+        .card-header-suite {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
         }
 
-        .auth-title {
-            font-size: clamp(22px, 2.2vw, 28px);
+        .badge-private-access {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10.5px;
             font-weight: 800;
-            color: var(--text-heading);
-            letter-spacing: -0.6px;
+            color: var(--color-gold);
+            font-family: var(--font-mono);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
         }
 
-        .auth-desc {
-            font-size: 12.5px;
+        .auth-main-title {
+            font-size: clamp(24px, 2.4vw, 30px);
+            font-weight: 900;
+            letter-spacing: -0.8px;
+            color: var(--text-heading);
+            line-height: 1.15;
+        }
+
+        .auth-main-subtitle {
+            font-size: 13px;
             color: var(--text-secondary);
             line-height: 1.5;
         }
 
-        /* 4 Login Types Navigation Tabs */
-        .login-tabs-row {
+        /* Segmented Luxe Tabs */
+        .luxe-tabs-dock {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             background: var(--bg-subtle);
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
             padding: 3px;
-            gap: 2px;
+            gap: 3px;
         }
 
-        .tab-btn {
+        .luxe-tab-btn {
             background: transparent;
             border: none;
-            padding: 7px 4px;
-            border-radius: 6px;
+            padding: 8px 4px;
+            border-radius: var(--radius-xs);
             font-size: 11px;
             font-weight: 700;
             color: var(--text-secondary);
@@ -319,129 +439,164 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 3px;
-            transition: all 0.12s ease;
+            gap: 4px;
+            transition: all 0.16s ease;
+            font-family: var(--font-sans);
         }
 
-        .tab-btn:hover { color: var(--text-heading); }
-        .tab-btn.active {
+        .luxe-tab-btn:hover { color: var(--text-heading); }
+        .luxe-tab-btn.active {
             background: #FFFFFF;
             color: var(--brand-primary);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(13, 148, 136, 0.15);
         }
 
-        .tab-icon { font-size: 14px; }
-
-        /* Panels */
-        .panel-box {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
+        .tab-glyph {
+            font-size: 15px;
         }
 
-        .login-panel {
+        /* Panels Container */
+        .auth-panels-wrapper {
+            position: relative;
+            min-height: 220px;
+        }
+
+        .panel-rail {
             display: none;
             flex-direction: column;
             gap: 12px;
-            animation: fadeIn 0.2s ease-out;
+            animation: luxeFade 0.22s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .login-panel.active { display: flex; }
+        .panel-rail.active { display: flex; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
+        @keyframes luxeFade {
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Role Quick Pick */
-        .role-cards-list {
+        /* ── RAIL 1: VIP ROLE TIERS ── */
+        .vip-card-deck {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 9px;
         }
 
-        .role-pill-card {
+        .vip-role-card {
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
-            padding: 10px 14px;
+            padding: 11px 14px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: all 0.12s ease;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            transition: all 0.16s ease;
+            box-shadow: var(--shadow-subtle);
         }
 
-        .role-pill-card:hover, .role-pill-card.selected {
+        .vip-role-card:hover {
+            border-color: #94A3B8;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-float);
+        }
+
+        .vip-role-card.selected {
             border-color: var(--brand-primary);
-            background: var(--brand-primary-bg);
-            transform: translateX(2px);
+            background: linear-gradient(90deg, #F0FDFA 0%, #FFFFFF 100%);
+            box-shadow: 0 4px 14px rgba(13, 148, 136, 0.12), 0 0 0 1px var(--brand-primary);
         }
 
-        .role-left-info { display: flex; flex-direction: column; }
-        .role-badge-text { font-size: 12px; font-weight: 700; color: var(--text-heading); }
-        .role-sub-text { font-size: 10.5px; color: var(--text-secondary); }
+        .vip-left-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-        .role-select-indicator {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            border: 1px solid var(--border-default);
+        .vip-avatar-badge {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 800;
+            color: #FFFFFF;
+            flex-shrink: 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .vip-name { font-size: 12.5px; font-weight: 800; color: var(--text-heading); }
+        .vip-role-title { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+
+        .vip-status-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1.5px solid var(--border-default);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: transparent;
+            transition: all 0.15s ease;
+        }
+
+        .vip-role-card.selected .vip-status-check {
+            background: var(--brand-primary);
+            border-color: var(--brand-primary);
             color: #FFFFFF;
         }
 
-        .role-pill-card.selected .role-select-indicator {
-            background: var(--brand-primary);
-            border-color: var(--brand-primary);
-        }
-
-        /* SSO Provider Grid */
-        .sso-providers-grid {
+        /* ── RAIL 2: ENTERPRISE SSO ── */
+        .sso-grid-deck {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 9px;
         }
 
-        .sso-provider-btn {
+        .sso-luxe-btn {
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
             padding: 10px 14px;
             font-size: 12.5px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-heading);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: all 0.12s ease;
+            transition: all 0.16s ease;
+            box-shadow: var(--shadow-subtle);
         }
 
-        .sso-provider-btn:hover { background: var(--bg-subtle); border-color: #CBD5E1; }
+        .sso-luxe-btn:hover {
+            border-color: #94A3B8;
+            background: var(--bg-subtle);
+            transform: translateY(-1px);
+        }
 
-        /* Biometric WebAuthn Sensor */
-        .biometric-wrap {
+        /* ── RAIL 3: BIOMETRIC WEBAUTHN / APPLE SCANNER ── */
+        .biometric-halo-stage {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 16px 0;
-            gap: 12px;
-            background: var(--bg-subtle);
+            padding: 22px 14px;
+            gap: 14px;
+            background: radial-gradient(circle at 50% 50%, rgba(13, 148, 136, 0.05) 0%, transparent 70%), var(--bg-subtle);
             border: 1px solid var(--border-default);
-            border-radius: var(--radius-sm);
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
         }
 
-        .touch-ring {
-            width: 64px;
-            height: 64px;
+        .touch-sensor-orb {
+            width: 72px;
+            height: 72px;
             border-radius: 50%;
             background: #FFFFFF;
             border: 2px solid var(--brand-primary);
@@ -449,93 +604,166 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 0 16px rgba(13, 148, 136, 0.25);
-            transition: transform 0.15s ease;
+            box-shadow: 0 6px 20px rgba(13, 148, 136, 0.22);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
-        .touch-ring:hover { transform: scale(1.08); box-shadow: 0 0 24px rgba(13, 148, 136, 0.45); }
-        .touch-ring svg { width: 34px; height: 34px; stroke: var(--brand-primary); fill: none; stroke-width: 1.8; }
+        .touch-sensor-orb:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 28px rgba(13, 148, 136, 0.35);
+        }
 
-        /* DB Direct Inputs */
-        .field-group { display: flex; flex-direction: column; gap: 5px; }
-        .field-group label { font-size: 11.5px; font-weight: 700; color: var(--text-heading); }
-        .light-input {
-            background: var(--bg-subtle);
+        .touch-sensor-orb svg {
+            width: 36px;
+            height: 36px;
+            stroke: var(--brand-primary);
+            stroke-width: 1.8;
+            fill: none;
+            transition: stroke 0.2s;
+        }
+
+        .biometric-sonar-ring {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(13, 148, 136, 0.4);
+            pointer-events: none;
+            animation: sonarPulse 2s infinite cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes sonarPulse {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            100% { transform: scale(1.45); opacity: 0; }
+        }
+
+        /* ── RAIL 4: DATABASE & STRIPE VAULT KEYS ── */
+        .vault-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .vault-input-group label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .vault-input {
+            width: 100%;
+            background: #FFFFFF;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
-            padding: 8px 12px;
-            font-size: 12px;
+            padding: 9px 12px;
             font-family: var(--font-mono);
+            font-size: 11.5px;
             color: var(--text-heading);
             outline: none;
+            transition: border-color 0.15s;
         }
-        .light-input:focus { border-color: var(--brand-primary); background: #fff; }
 
-        /* Primary Launch Button */
-        .btn-launch-cockpit {
-            background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
+        .vault-input:focus { border-color: var(--brand-primary); }
+
+        /* Primary Action Launch Button (Haute Grade) */
+        .btn-luxe-launch {
+            background: linear-gradient(135deg, #0D9488 0%, #059669 100%);
             border: none;
             color: #FFFFFF;
+            font-family: var(--font-sans);
+            font-weight: 800;
+            font-size: 13.5px;
+            padding: 12px 18px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 16px rgba(13, 148, 136, 0.35);
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: -0.2px;
+            margin-top: 4px;
+        }
+
+        .btn-luxe-launch:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 22px rgba(13, 148, 136, 0.45);
+        }
+
+        .btn-luxe-launch:active { transform: translateY(0); }
+
+        /* Direct Bypass Pill */
+        .direct-bypass-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 11.5px;
             font-weight: 700;
-            font-size: 13px;
-            padding: 11px 16px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            box-shadow: 0 2px 10px rgba(13, 148, 136, 0.3);
-            transition: all 0.15s ease;
-            width: 100%;
-        }
-
-        .btn-launch-cockpit:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(37, 99, 235, 0.45); }
-
-        .btn-quick-skip {
-            background: transparent;
-            border: 1px solid var(--border-default);
             color: var(--text-secondary);
-            font-size: 12px;
-            font-weight: 600;
-            padding: 9px 14px;
+            text-decoration: none;
+            padding: 8px 12px;
             border-radius: var(--radius-sm);
-            cursor: pointer;
+            border: 1px dashed var(--border-default);
+            transition: all 0.15s ease;
+            background: transparent;
+        }
+
+        .direct-bypass-link:hover {
+            color: var(--text-heading);
+            border-color: #94A3B8;
+            background: var(--bg-subtle);
+        }
+
+        /* Compliance Trust Badge */
+        .trust-compliance-strip {
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
-            transition: all 0.12s;
+            gap: 14px;
+            padding-top: 4px;
+            font-size: 10.5px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            user-select: none;
         }
 
-        .btn-quick-skip:hover { background: var(--bg-subtle); color: var(--text-heading); }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
 
-        /* Authenticating Transition Screen */
-        .auth-loader-screen {
+        /* Authenticating Iris Overlay */
+        .luxe-iris-loader {
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 30px 10px;
-            gap: 12px;
+            padding: 36px 16px;
+            gap: 14px;
+            text-align: center;
         }
 
-        .auth-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #E2E8F0;
-            border-top-color: var(--brand-primary);
+        .iris-spinner-core {
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            animation: spin 0.7s linear infinite;
+            border: 3px solid rgba(13, 148, 136, 0.15);
+            border-top-color: var(--brand-primary);
+            border-right-color: var(--color-blue);
+            animation: irisSpin 0.7s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
         }
 
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes irisSpin { 100% { transform: rotate(360deg); } }
 
         /* Responsive Breakpoints */
-        @media (max-width: 900px) {
+        @media (max-width: 960px) {
             .split-container { grid-template-columns: 1fr; }
-            .split-left-3d { display: none; }
-            .split-right-auth { width: 100vw; height: 100vh; }
+            .stage-3d-pane { display: none; }
+            .stage-auth-pane { width: 100vw; height: 100vh; padding: 24px; }
         }
     </style>
 </head>
@@ -544,193 +772,248 @@
     <div class="split-container">
         
         <!-- ══════════════════════════════════════════════════════════════
-             ── LEFT 50%: CRAZY 3D ANIMATION STAGE (LIGHT THEME MATCH) ──
+             ── LEFT 50%: 3D QUANTUM REVENUE CORE (ORGANIC & FABULOUS) ──
              ══════════════════════════════════════════════════════════════ -->
-        <div class="split-left-3d">
-            <!-- 60FPS Perspective 3D WebGL / Canvas Stage -->
-            <canvas id="split3DCanvas"></canvas>
+        <div class="stage-3d-pane">
+            <div class="ambient-glow-orb"></div>
+            <canvas id="quantum3DCanvas"></canvas>
 
             <!-- Top HUD -->
-            <div class="stage-top-hud">
-                <div class="hud-brand">
-                    <div class="hud-icon">
+            <div class="hud-top-bar">
+                <a href="#" class="hud-brand" onclick="location.reload(); return false;">
+                    <div class="hud-brand-mark">
                         <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round"/></svg>
                     </div>
-                    <span>Revenue Desk</span>
-                </div>
+                    <div class="hud-brand-text">
+                        <span class="hud-brand-title">Revenue Desk</span>
+                        <span class="hud-brand-sub">Autonomous Governance</span>
+                    </div>
+                </a>
 
-                <div class="hud-status-pill">
-                    <span class="hud-dot"></span>
-                    <span>3D Real-Time Nexus</span>
+                <div class="hud-telemetry-pill">
+                    <span class="pulse-beacon"></span>
+                    <span>3D Real-Time Nexus Active</span>
                 </div>
             </div>
 
-            <!-- Center Headline & Floating 3D Mode Selector -->
-            <div class="stage-center-hud">
-                <div class="stage-tag">⚡ DUAL-AGENT FINANCIAL GOVERNANCE</div>
-                <h1 class="stage-heading">Reconcile Transaction Truth with <span>3D Autonomous Agents</span></h1>
-                <p class="stage-sub">Analyst & Reviewer cross-examine PostgreSQL, Stripe, Snowflake & Shopify ledgers to isolate duplicate billing loops before panic discounts occur.</p>
-                
-                <div class="stage-mode-bar">
-                    <button class="stage-mode-btn active" id="btnModeNexus" onclick="switch3DMode('nexus')">🌀 3D Core</button>
-                    <button class="stage-mode-btn" id="btnModeRadar" onclick="switch3DMode('radar')">📡 Conflict Radar</button>
-                    <button class="stage-mode-btn" id="btnModeConsensus" onclick="switch3DMode('consensus')">💎 Consensus</button>
+            <!-- Center Editorial Hero Overlay -->
+            <div class="stage-center-content">
+                <div class="eyebrow-chip">
+                    <span>✦</span>
+                    <span>AUTONOMOUS FINANCIAL RECONCILIATION</span>
+                </div>
+
+                <h1 class="stage-hero-heading">
+                    Turn Ledger Conflicts into <span class="gradient-word">Certified Revenue Truth.</span>
+                </h1>
+
+                <p class="stage-hero-desc">
+                    Dual AI agents interrogate PostgreSQL, Stripe, and Shopify pipelines in real time — isolating duplicate refund traps before human executives authorize campaigns.
+                </p>
+
+                <!-- Haute Horlogerie 3D Mode Switcher -->
+                <div class="mode-segmented-dock">
+                    <button class="mode-tab-pill active" id="btnModeSovereign" onclick="set3DMode('sovereign')">
+                        <span>✨</span>
+                        <span>Sovereign Core</span>
+                    </button>
+                    <button class="mode-tab-pill" id="btnModeRadar" onclick="set3DMode('radar')">
+                        <span>📡</span>
+                        <span>Conflict Radar</span>
+                    </button>
+                    <button class="mode-tab-pill" id="btnModeMatrix" onclick="set3DMode('matrix')">
+                        <span>💎</span>
+                        <span>Consensus Matrix</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Bottom Telemetry HUD -->
-            <div class="stage-bottom-hud">
-                <div>
-                    <span style="color:var(--text-muted); font-size:9.5px; text-transform:uppercase;">Throughput</span><br>
-                    <strong style="color:var(--brand-primary);" id="throughputCounter">2,480 txns/s</strong>
+            <!-- Bottom Floating Telemetry Capsule -->
+            <div class="hud-telemetry-capsule">
+                <div class="telemetry-cell">
+                    <span class="telemetry-label">Throughput</span>
+                    <span class="telemetry-val" style="color:var(--brand-primary);" id="liveThroughputVal">2,480 txns/s</span>
                 </div>
-                <div style="border-left:1px solid var(--border-default); padding-left:14px;">
-                    <span style="color:var(--text-muted); font-size:9.5px; text-transform:uppercase;">Active Anomaly</span><br>
-                    <strong style="color:var(--color-red);">-$20,430 Duplicate Loop</strong>
+                <div class="telemetry-cell">
+                    <span class="telemetry-label">Caught Glitch</span>
+                    <span class="telemetry-val" style="color:var(--color-red);">-$20,430 Loop</span>
                 </div>
-                <div style="border-left:1px solid var(--border-default); padding-left:14px;">
-                    <span style="color:var(--text-muted); font-size:9.5px; text-transform:uppercase;">Protected Margin</span><br>
-                    <strong style="color:var(--color-green);">+$32,470 Locked</strong>
+                <div class="telemetry-cell">
+                    <span class="telemetry-label">Protected Net</span>
+                    <span class="telemetry-val" style="color:var(--color-green);">+$32,470 Locked</span>
                 </div>
             </div>
         </div>
 
         <!-- ══════════════════════════════════════════════════════════════
-             ── RIGHT 50%: MULTI-PERSONA ENTERPRISE LOGIN PORTAL ──
+             ── RIGHT 50%: HAUTE ACCESS PORTAL (LUXURY FINTECH GRADE) ──
              ══════════════════════════════════════════════════════════════ -->
-        <div class="split-right-auth">
-            <div class="auth-container">
+        <div class="stage-auth-pane">
+            <div class="auth-luxe-card">
                 
-                <div class="auth-head">
-                    <div style="font-size:11px; font-weight:700; color:var(--brand-primary); font-family:var(--font-mono); text-transform:uppercase; letter-spacing:0.5px;">Corporate Access Control</div>
-                    <h2 class="auth-title">Sign In to Revenue Desk</h2>
-                    <p class="auth-desc">Choose your authentication rail to deploy directly into the live financial governance room:</p>
+                <div class="card-header-suite">
+                    <div class="badge-private-access">
+                        <span>✦</span>
+                        <span>Private Institutional Terminal &bull; 2026</span>
+                    </div>
+                    <h2 class="auth-main-title">Enter the Cockpit</h2>
+                    <p class="auth-main-subtitle">Select an authorized authentication rail to launch directly into the live multi-agent governance room:</p>
                 </div>
 
-                <!-- 4 Login Type Tabs -->
-                <div class="login-tabs-row">
-                    <button class="tab-btn active" id="tabBtnRole" onclick="switchTab('role')">
-                        <span class="tab-icon">👤</span>
-                        <span>1. Role</span>
+                <!-- 4 Luxury Access Tabs -->
+                <div class="luxe-tabs-dock">
+                    <button class="luxe-tab-btn active" id="tabRole" onclick="switchAuthTab('role')">
+                        <span class="tab-glyph">👔</span>
+                        <span>VIP Pass</span>
                     </button>
-                    <button class="tab-btn" id="tabBtnSso" onclick="switchTab('sso')">
-                        <span class="tab-icon">🏢</span>
-                        <span>2. SSO</span>
+                    <button class="luxe-tab-btn" id="tabSso" onclick="switchAuthTab('sso')">
+                        <span class="tab-glyph">🌐</span>
+                        <span>SSO Rail</span>
                     </button>
-                    <button class="tab-btn" id="tabBtnBiometric" onclick="switchTab('biometric')">
-                        <span class="tab-icon">⚡</span>
-                        <span>3. Passkey</span>
+                    <button class="luxe-tab-btn" id="tabBiometric" onclick="switchAuthTab('biometric')">
+                        <span class="tab-glyph">⚡</span>
+                        <span>Passkey</span>
                     </button>
-                    <button class="tab-btn" id="tabBtnDb" onclick="switchTab('db')">
-                        <span class="tab-icon">🔑</span>
-                        <span>4. DB Key</span>
+                    <button class="luxe-tab-btn" id="tabVault" onclick="switchAuthTab('vault')">
+                        <span class="tab-glyph">🔐</span>
+                        <span>DB Key</span>
                     </button>
                 </div>
 
-                <div class="panel-box">
+                <!-- Panels Wrapper -->
+                <div class="auth-panels-wrapper">
                     
-                    <!-- TYPE 1: Role-Based Quick Access -->
-                    <div class="login-panel active" id="panelRole">
-                        <div class="role-cards-list">
-                            <div class="role-pill-card selected" onclick="selectRole(this, 'Alex Rivera', 'Human Manager (VP Revenue Ops)')">
-                                <div class="role-left-info">
-                                    <span class="role-badge-text">Alex Rivera</span>
-                                    <span class="role-sub-text">Human Manager (VP Revenue Ops) — Full Sign-Off Authority</span>
+                    <!-- RAIL 1: VIP Executive Roles -->
+                    <div class="panel-rail active" id="railRole">
+                        <div class="vip-card-deck">
+                            <div class="vip-role-card selected" onclick="pickVipRole(this, 'Alex Rivera', 'VP Revenue Operations')">
+                                <div class="vip-left-meta">
+                                    <div class="vip-avatar-badge" style="background:linear-gradient(135deg, #0D9488, #059669);">AR</div>
+                                    <div>
+                                        <div class="vip-name">Alex Rivera</div>
+                                        <div class="vip-role-title">VP Revenue Ops — Full Campaign Sign-Off</div>
+                                    </div>
                                 </div>
-                                <div class="role-select-indicator">✓</div>
+                                <div class="vip-status-check">✓</div>
                             </div>
-                            <div class="role-pill-card" onclick="selectRole(this, 'Sarah Chen', 'Reviewer Auditor (Director of Risk)')">
-                                <div class="role-left-info">
-                                    <span class="role-badge-text">Sarah Chen</span>
-                                    <span class="role-sub-text">Reviewer Auditor — Reconciles Refunds & Gateway Loops</span>
+
+                            <div class="vip-role-card" onclick="pickVipRole(this, 'Sarah Chen', 'Lead Auditor & Risk')">
+                                <div class="vip-left-meta">
+                                    <div class="vip-avatar-badge" style="background:linear-gradient(135deg, #2563EB, #4F46E5);">SC</div>
+                                    <div>
+                                        <div class="vip-name">Sarah Chen</div>
+                                        <div class="vip-role-title">Lead Risk Auditor — Reconciles Loop Inconsistencies</div>
+                                    </div>
                                 </div>
-                                <div class="role-select-indicator"></div>
+                                <div class="vip-status-check"></div>
                             </div>
-                            <div class="role-pill-card" onclick="selectRole(this, 'Marcus Vance', 'Lead Financial Analyst')">
-                                <div class="role-left-info">
-                                    <span class="role-badge-text">Marcus Vance</span>
-                                    <span class="role-sub-text">Analyst Agent Supervisor — SQL Formulation & Pipeline</span>
+
+                            <div class="vip-role-card" onclick="pickVipRole(this, 'Marcus Vance', 'Principal Analyst')">
+                                <div class="vip-left-meta">
+                                    <div class="vip-avatar-badge" style="background:linear-gradient(135deg, #D97706, #B45309);">MV</div>
+                                    <div>
+                                        <div class="vip-name">Marcus Vance</div>
+                                        <div class="vip-role-title">Principal Analyst — Formulates Verified SQL Queries</div>
+                                    </div>
                                 </div>
-                                <div class="role-select-indicator"></div>
+                                <div class="vip-status-check"></div>
                             </div>
                         </div>
 
-                        <button class="btn-launch-cockpit" onclick="authenticateAndLaunch('Executive Role')">
+                        <button class="btn-luxe-launch" onclick="executeLuxeAuth('Executive Role Profile')">
                             <span>Launch Live Command Center</span>
-                            <span style="font-size:15px;">&rarr;</span>
+                            <span style="font-size:16px;">&rarr;</span>
                         </button>
                     </div>
 
-                    <!-- TYPE 2: Enterprise SSO -->
-                    <div class="login-panel" id="panelSso">
-                        <div class="sso-providers-grid">
-                            <button class="sso-provider-btn" onclick="authenticateAndLaunch('Google Workspace SAML')">
-                                <svg width="17" height="17" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.5 0 2.8.5 3.9 1.5l2.9-2.9C17.1 1.8 14.7 1 12 1 7.5 1 3.7 3.6 1.9 7.4l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.7c-.2-.7-.4-1.5-.4-2.3s.2-1.5.4-2.3L1.9 7.2C.7 9.6 0 12.2 0 15s.7 5.4 1.9 7.8l3.7-2.9c0-1.8 0-3.4 0-5.2z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 16.4C3.7 20.3 7.5 23 12 23z"/></svg>
+                    <!-- RAIL 2: Enterprise SSO -->
+                    <div class="panel-rail" id="railSso">
+                        <div class="sso-grid-deck">
+                            <button class="sso-luxe-btn" onclick="executeLuxeAuth('Google Workspace Enterprise')">
+                                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.5 0 2.8.5 3.9 1.5l2.9-2.9C17.1 1.8 14.7 1 12 1 7.5 1 3.7 3.6 1.9 7.4l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/><path fill="#FBBC05" d="M5.6 14.7c-.2-.7-.4-1.5-.4-2.3s.2-1.5.4-2.3L1.9 7.2C.7 9.6 0 12.2 0 15s.7 5.4 1.9 7.8l3.7-2.9c0-1.8 0-3.4 0-5.2z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 16.4C3.7 20.3 7.5 23 12 23z"/></svg>
                                 <span>Continue with Google Workspace</span>
                             </button>
-                            <button class="sso-provider-btn" onclick="authenticateAndLaunch('Okta SAML 2.0')">
-                                <span style="color:#007DC1; font-weight:800; font-size:14px;">okta</span>
+                            <button class="sso-luxe-btn" onclick="executeLuxeAuth('Okta SAML 2.0')">
+                                <span style="color:#007DC1; font-weight:900; font-size:14px; letter-spacing:-0.5px;">okta</span>
                                 <span>Sign In with Okta SSO</span>
                             </button>
-                            <button class="sso-provider-btn" onclick="authenticateAndLaunch('Microsoft Entra ID')">
-                                <span style="font-size:14px;">🪟</span>
+                            <button class="sso-luxe-btn" onclick="executeLuxeAuth('Microsoft Entra ID')">
+                                <span style="font-size:15px;">🪟</span>
                                 <span>Sign In with Microsoft Entra</span>
                             </button>
                         </div>
 
-                        <button class="btn-launch-cockpit" onclick="authenticateAndLaunch('Enterprise SSO')">
-                            <span>Authenticate via Corporate SAML &rarr;</span>
+                        <button class="btn-luxe-launch" onclick="executeLuxeAuth('Enterprise SAML Gateway')">
+                            <span>Authorize Corporate Identity &rarr;</span>
                         </button>
                     </div>
 
-                    <!-- TYPE 3: Biometric WebAuthn -->
-                    <div class="login-panel" id="panelBiometric">
-                        <div class="biometric-wrap">
-                            <div class="touch-ring" onclick="authenticateAndLaunch('Biometric Passkey')">
+                    <!-- RAIL 3: Biometric WebAuthn -->
+                    <div class="panel-rail" id="railBiometric">
+                        <div class="biometric-halo-stage">
+                            <div class="biometric-sonar-ring"></div>
+                            <div class="touch-sensor-orb" onclick="executeLuxeAuth('Biometric Passkey')">
                                 <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.5 15.3M12 22a10 10 0 0 0 8.5-15.3"/><path d="M12 6a6 6 0 0 0-5.1 9.2M12 18a6 6 0 0 0 5.1-9.2"/><circle cx="12" cy="12" r="2"/></svg>
                             </div>
                             <div style="text-align:center;">
-                                <div style="font-size:13px; font-weight:700; color:var(--text-heading);">Click Sensor for Touch ID / Face ID</div>
-                                <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">FIDO2 Cryptographic Enclave Verified</div>
+                                <div style="font-size:13px; font-weight:800; color:var(--text-heading);">Touch ID &bull; Face ID &bull; Windows Hello</div>
+                                <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">FIDO2 Cryptographic Enclave Hardware Verified</div>
                             </div>
                         </div>
 
-                        <button class="btn-launch-cockpit" onclick="authenticateAndLaunch('Biometric Passkey')">
-                            <span>Authorize with Passkey &rarr;</span>
+                        <button class="btn-luxe-launch" onclick="executeLuxeAuth('Biometric Passkey')">
+                            <span>Scan Passkey to Authorize &rarr;</span>
                         </button>
                     </div>
 
-                    <!-- TYPE 4: Database Direct Key -->
-                    <div class="login-panel" id="panelDb">
-                        <div class="field-group">
+                    <!-- RAIL 4: Database Vault Key -->
+                    <div class="panel-rail" id="railVault">
+                        <div class="vault-input-group">
                             <label>PostgreSQL / Supabase Connection URI</label>
-                            <input type="text" class="light-input" value="postgresql://postgres:••••••••@aws-0-us-west-1.pooler.supabase.com:6543/postgres" readonly>
+                            <input type="text" class="vault-input" value="postgresql://postgres:••••••••@aws-0-us-west-1.pooler.supabase.com:6543/postgres" readonly>
                         </div>
-                        <div class="field-group">
-                            <label>Stripe Live Secret Key</label>
-                            <input type="text" class="light-input" value="rk_live_51M89zK••••••••••••••••••••" readonly>
+                        <div class="vault-input-group">
+                            <label>Stripe Production Secret Key</label>
+                            <input type="text" class="vault-input" value="rk_live_51M89zK••••••••••••••••••••" readonly>
                         </div>
 
-                        <button class="btn-launch-cockpit" onclick="authenticateAndLaunch('Direct Database Rail')">
-                            <span>Connect Credentials & Enter &rarr;</span>
+                        <button class="btn-luxe-launch" onclick="executeLuxeAuth('Cryptographic Vault Rail')">
+                            <span>Verify Handshake & Enter &rarr;</span>
                         </button>
                     </div>
 
-                    <!-- Authenticating Loader -->
-                    <div class="auth-loader-screen" id="authLoader">
-                        <div class="auth-spinner"></div>
-                        <div style="font-size:13.5px; font-weight:800; color:var(--text-heading);" id="authLoaderText">Authenticating session...</div>
-                        <div style="font-size:11px; color:var(--brand-primary); font-family:var(--font-mono);">DEPLOYING TO REVENUE DESK COCKPIT</div>
+                    <!-- Luxe Iris Loader -->
+                    <div class="luxe-iris-loader" id="luxeLoader">
+                        <div class="iris-spinner-core"></div>
+                        <div>
+                            <div style="font-size:14px; font-weight:900; color:var(--text-heading);" id="luxeLoaderTitle">Securing Institutional Handshake...</div>
+                            <div style="font-size:11px; color:var(--brand-primary); font-family:var(--font-mono); margin-top:3px;">DEPLOYING MULTI-AGENT GOVERNANCE DESK</div>
+                        </div>
                     </div>
 
                 </div>
 
-                <div style="display:flex; flex-direction:column; gap:8px;">
-                    <a href="/" class="btn-quick-skip">
-                        <span>Direct Live Demo (Skip Sign-In) &rarr;</span>
+                <!-- Quick Bypass & Trust Footers -->
+                <div style="display:flex; flex-direction:column; gap:10px; margin-top:2px;">
+                    <a href="/" class="direct-bypass-link" onclick="playSoftChime()">
+                        <span>Direct Live Demo (Bypass Authentication) &rarr;</span>
                     </a>
-                    <div style="text-align:center; font-size:11px; color:var(--text-muted); font-family:var(--font-mono);">
-                        Flip the Switch 2026 &bull; Best Business Workflow Track
+
+                    <div class="trust-compliance-strip">
+                        <div class="trust-item">
+                            <span>🛡️</span>
+                            <span>SOC-2 TYPE II</span>
+                        </div>
+                        <div>&bull;</div>
+                        <div class="trust-item">
+                            <span>🔒</span>
+                            <span>256-BIT ENCRYPTION</span>
+                        </div>
+                        <div>&bull;</div>
+                        <div class="trust-item">
+                            <span>⚡</span>
+                            <span>BFT CONSENSUS</span>
+                        </div>
                     </div>
                 </div>
 
@@ -739,75 +1022,103 @@
 
     </div>
 
-    <!-- ── 60FPS 3D Vector Engine Script (Light-Palette Matching) ── -->
+    <!-- ── 60FPS GENERATIVE 3D QUANTUM CORE ENGINE SCRIPT ── -->
     <script>
-        let currentMode = 'nexus';
-        let animTime = 0.0;
+        let currentMode = 'sovereign';
+        let animClock = 0.0;
         let mouseX = 0, mouseY = 0;
-        let targetRotX = 0.42, targetRotY = 0.0;
-        let curRotX = 0.42, curRotY = 0.0;
+        let smoothRotX = 0.38, smoothRotY = 0.0;
+        let targetRotX = 0.38, targetRotY = 0.0;
 
-        const nodes3D = [
-            { name: 'PostgreSQL', icon: '🐘', angle: 0, dist: 260, y: -35, color: '#2563EB' },
-            { name: 'Stripe Billing', icon: '💳', angle: Math.PI * 0.5, dist: 260, y: 25, color: '#0D9488' },
-            { name: 'Snowflake', icon: '❄️', angle: Math.PI, dist: 260, y: -20, color: '#0284C7' },
-            { name: 'Shopify Store', icon: '🛒', angle: Math.PI * 1.5, dist: 260, y: 40, color: '#059669' }
+        // Subtle Audio Synth for tactile clicks
+        let audioCtx = null;
+        function playSoftChime() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1320, audioCtx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.12);
+            } catch (e) {}
+        }
+
+        // Live Nodes Array
+        const systemNodes = [
+            { name: 'PostgreSQL', icon: '🐘', angle: 0, dist: 250, y: -25, color: '#2563EB', val: 'Synchronized' },
+            { name: 'Stripe Billing', icon: '💳', angle: Math.PI * 0.5, dist: 250, y: 30, color: '#0D9488', val: '$112,450 / mo' },
+            { name: 'Snowflake', icon: '❄️', angle: Math.PI, dist: 250, y: -30, color: '#0284C7', val: '12ms Query Latency' },
+            { name: 'Shopify Core', icon: '🛒', angle: Math.PI * 1.5, dist: 250, y: 35, color: '#059669', val: 'Zero Drift' }
         ];
 
-        const particles3D = [];
-        for (let i = 0; i < 65; i++) {
-            particles3D.push({
-                x: (Math.random() - 0.5) * 800,
-                y: (Math.random() - 0.5) * 500,
-                z: (Math.random() - 0.5) * 800,
-                vx: (Math.random() - 0.5) * 0.35,
-                vy: (Math.random() - 0.5) * 0.35,
-                vz: (Math.random() - 0.5) * 0.35,
-                color: Math.random() > 0.5 ? 'rgba(13, 148, 136,' : 'rgba(37, 99, 235,'
+        // 3D Stardust Constellation Particles
+        const stardust = [];
+        for (let i = 0; i < 75; i++) {
+            stardust.push({
+                x: (Math.random() - 0.5) * 850,
+                y: (Math.random() - 0.5) * 550,
+                z: (Math.random() - 0.5) * 850,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                vz: (Math.random() - 0.5) * 0.3,
+                radius: Math.random() * 2 + 1,
+                colorType: i % 3
             });
         }
 
-        function init3D() {
-            const canvas = document.getElementById('split3DCanvas');
+        // Setup Canvas Resolution
+        function resizeCanvas() {
+            const canvas = document.getElementById('quantum3DCanvas');
             if (!canvas) return;
             const dpr = window.devicePixelRatio || 1;
             canvas.width = Math.round(canvas.offsetWidth * dpr);
             canvas.height = Math.round(canvas.offsetHeight * dpr);
         }
 
-        window.addEventListener('resize', init3D);
-        window.addEventListener('DOMContentLoaded', init3D);
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('DOMContentLoaded', resizeCanvas);
 
+        // Interactive Mouse Tracking with Fluid Easing
         window.addEventListener('mousemove', (e) => {
             mouseX = (e.clientX / window.innerWidth - 0.25) * 2;
             mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-            targetRotX = 0.42 + mouseY * 0.18;
-            targetRotY = mouseX * 0.35;
+            targetRotX = 0.38 + mouseY * 0.22;
+            targetRotY = mouseX * 0.42;
         });
 
-        function switch3DMode(mode) {
+        function set3DMode(mode) {
+            playSoftChime();
             currentMode = mode;
-            ['btnModeNexus', 'btnModeRadar', 'btnModeConsensus'].forEach(id => {
-                const b = document.getElementById(id);
-                if (b) b.className = 'stage-mode-btn' + (id.toLowerCase().includes(mode) ? ' active' : '');
+            ['btnModeSovereign', 'btnModeRadar', 'btnModeMatrix'].forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) btn.className = 'mode-tab-pill' + (id.toLowerCase().includes(mode) ? ' active' : '');
             });
         }
 
-        function project3D(x, y, z, rotX, rotY, cx, cy, f = 640) {
-            let x1 = x * Math.cos(rotY) + z * Math.sin(rotY);
-            let z1 = -x * Math.sin(rotY) + z * Math.cos(rotY);
-            let y1 = y * Math.cos(rotX) - z1 * Math.sin(rotX);
-            let z2 = y * Math.sin(rotX) + z1 * Math.cos(rotX);
+        // 3D Perspective Projection Function
+        function project(x, y, z, rx, ry, cx, cy, f = 660) {
+            let x1 = x * Math.cos(ry) + z * Math.sin(ry);
+            let z1 = -x * Math.sin(ry) + z * Math.cos(ry);
+            let y1 = y * Math.cos(rx) - z1 * Math.sin(rx);
+            let z2 = y * Math.sin(rx) + z1 * Math.cos(rx);
             const scale = f / (f + z2 + 820);
-            return { sx: cx + x1 * scale, sy: cy + y1 * scale, scale: scale, depth: z2 };
+            return { x: cx + x1 * scale, y: cy + y1 * scale, scale: scale, depth: z2 };
         }
 
-        function loop3D() {
-            animTime += 0.016;
-            curRotX += (targetRotX - curRotX) * 0.08;
-            curRotY += (targetRotY - curRotY) * 0.08;
+        // Main Render Loop
+        function render3D() {
+            animClock += 0.016;
+            smoothRotX += (targetRotX - smoothRotX) * 0.06;
+            smoothRotY += (targetRotY - smoothRotY) * 0.06;
 
-            const canvas = document.getElementById('split3DCanvas');
+            const canvas = document.getElementById('quantum3DCanvas');
             if (canvas) {
                 const ctx = canvas.getContext('2d');
                 const dpr = window.devicePixelRatio || 1;
@@ -819,169 +1130,244 @@
 
                 const cx = w * 0.52;
                 const cy = h * 0.48;
-                const rotX = curRotX;
-                const rotY = curRotY + animTime * 0.22;
+                const rx = smoothRotX;
+                const ry = smoothRotY + animClock * 0.25;
 
-                // 1. Perspective Light Cyber-Grid
-                const gridY = 160;
-                ctx.strokeStyle = 'rgba(203, 213, 225, 0.45)';
+                // 1. Perspective Light Ground Horizon Plane
+                const groundY = 175;
+                ctx.strokeStyle = 'rgba(226, 232, 240, 0.65)';
                 ctx.lineWidth = 1;
-                for (let gx = -560; gx <= 560; gx += 70) {
-                    const p1 = project3D(gx, gridY, -560, rotX, rotY, cx, cy);
-                    const p2 = project3D(gx, gridY, 560, rotX, rotY, cx, cy);
+                for (let gx = -560; gx <= 560; gx += 80) {
+                    const p1 = project(gx, groundY, -560, rx, ry, cx, cy);
+                    const p2 = project(gx, groundY, 560, rx, ry, cx, cy);
                     if (p1.scale > 0 && p2.scale > 0) {
-                        ctx.beginPath(); ctx.moveTo(p1.sx, p1.sy); ctx.lineTo(p2.sx, p2.sy); ctx.stroke();
+                        ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
                     }
                 }
-                for (let gz = -560; gz <= 560; gz += 70) {
-                    const p1 = project3D(-560, gridY, gz, rotX, rotY, cx, cy);
-                    const p2 = project3D(560, gridY, gz, rotX, rotY, cx, cy);
+                for (let gz = -560; gz <= 560; gz += 80) {
+                    const p1 = project(-560, groundY, gz, rx, ry, cx, cy);
+                    const p2 = project(560, groundY, gz, rx, ry, cx, cy);
                     if (p1.scale > 0 && p2.scale > 0) {
-                        ctx.beginPath(); ctx.moveTo(p1.sx, p1.sy); ctx.lineTo(p2.sx, p2.sy); ctx.stroke();
+                        ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
                     }
                 }
 
-                // 2. Starfield Floating Particles (Teal & Blue)
-                particles3D.forEach(p => {
+                // 2. Glowing Stardust Constellation Particles
+                stardust.forEach(p => {
                     p.x += p.vx; p.y += p.vy; p.z += p.vz;
-                    if (p.x > 400) p.x = -400; if (p.x < -400) p.x = 400;
-                    if (p.y > 250) p.y = -250; if (p.y < -250) p.y = 250;
-                    if (p.z > 400) p.z = -400; if (p.z < -400) p.z = 400;
-                    const proj = project3D(p.x, p.y, p.z, rotX, rotY, cx, cy);
-                    if (proj.scale > 0) {
-                        ctx.fillStyle = p.color + '0.45)';
+                    if (p.x > 425) p.x = -425; if (p.x < -425) p.x = 425;
+                    if (p.y > 275) p.y = -275; if (p.y < -275) p.y = 275;
+                    if (p.z > 425) p.z = -425; if (p.z < -425) p.z = 425;
+
+                    const pt = project(p.x, p.y, p.z, rx, ry, cx, cy);
+                    if (pt.scale > 0) {
+                        let fillStyle = 'rgba(13, 148, 136, 0.45)';
+                        if (p.colorType === 1) fillStyle = 'rgba(37, 99, 235, 0.38)';
+                        if (p.colorType === 2) fillStyle = 'rgba(245, 158, 11, 0.35)';
+                        ctx.fillStyle = fillStyle;
                         ctx.beginPath();
-                        ctx.arc(proj.sx, proj.sy, Math.max(1, 2.5 * proj.scale), 0, Math.PI * 2);
+                        ctx.arc(pt.x, pt.y, Math.max(1, p.radius * pt.scale), 0, Math.PI * 2);
                         ctx.fill();
                     }
                 });
 
-                // 3. Central 3D Concentric Gyro Rings
-                for (let r = 0; r < 3; r++) {
-                    const radius = 90 + r * 35;
-                    const rX = rotX + (r === 0 ? animTime * 0.8 : -animTime * 0.6);
-                    const rY = rotY + (r === 1 ? animTime * 0.9 : 0);
-                    ctx.strokeStyle = r === 0 ? 'rgba(13, 148, 136, 0.45)' : r === 1 ? 'rgba(37, 99, 235, 0.35)' : 'rgba(16, 185, 129, 0.28)';
-                    ctx.lineWidth = 2.2;
-                    ctx.beginPath();
-                    for (let s = 0; s <= 32; s++) {
-                        const theta = (s / 32) * Math.PI * 2;
-                        const proj = project3D(Math.cos(theta) * radius, 0, Math.sin(theta) * radius, rX, rY, cx, cy);
-                        if (s === 0) ctx.moveTo(proj.sx, proj.sy);
-                        else ctx.lineTo(proj.sx, proj.sy);
+                // 3. Central Faceted Crystalline Jewel (Icosahedron / Crystal)
+                const crystalVerts = [
+                    { x: 0, y: -65, z: 0 },
+                    { x: 45, y: -15, z: 35 },
+                    { x: -45, y: -15, z: 35 },
+                    { x: 0, y: -15, z: -55 },
+                    { x: 35, y: 40, z: 25 },
+                    { x: -35, y: 40, z: 25 },
+                    { x: 0, y: 65, z: 0 }
+                ];
+                const crystalProjected = crystalVerts.map(v => 
+                    project(v.x, v.y + Math.sin(animClock * 2) * 6, v.z, rx, ry + animClock * 0.6, cx, cy)
+                );
+
+                const crystalEdges = [
+                    [0,1],[0,2],[0,3],[1,2],[2,3],[3,1],
+                    [1,4],[2,5],[3,4],[3,5],
+                    [4,6],[5,6],[4,5]
+                ];
+
+                ctx.strokeStyle = 'rgba(13, 148, 136, 0.6)';
+                ctx.lineWidth = 1.6;
+                crystalEdges.forEach(e => {
+                    const a = crystalProjected[e[0]], b = crystalProjected[e[1]];
+                    if (a.scale > 0 && b.scale > 0) {
+                        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
                     }
-                    ctx.stroke();
+                });
+
+                // Central Crystal Glowing Core Aura
+                const cCenter = project(0, Math.sin(animClock * 2) * 6, 0, rx, ry, cx, cy);
+                if (cCenter.scale > 0) {
+                    const rad = 28 * cCenter.scale;
+                    const grad = ctx.createRadialGradient(cCenter.x, cCenter.y, 2, cCenter.x, cCenter.y, rad);
+                    grad.addColorStop(0, 'rgba(13, 148, 136, 0.45)');
+                    grad.addColorStop(0.6, 'rgba(37, 99, 235, 0.25)');
+                    grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(cCenter.x, cCenter.y, rad, 0, Math.PI * 2);
+                    ctx.fill();
                 }
 
-                // 4. Mode 1: Nexus with Orbiting System Nodes
-                if (currentMode === 'nexus') {
-                    nodes3D.forEach((node, i) => {
-                        const curAngle = node.angle + animTime * 0.3;
-                        const nx = Math.cos(curAngle) * node.dist;
-                        const nz = Math.sin(curAngle) * node.dist;
-                        const ny = node.y + Math.sin(animTime * 2 + i) * 15;
-                        const pNode = project3D(nx, ny, nz, rotX, rotY, cx, cy);
-                        const pCenter = project3D(0, 0, 0, rotX, rotY, cx, cy);
+                // 4. Concentric Dual Gyroscope Orbits (Gold & Celestial Teal)
+                for (let r = 0; r < 2; r++) {
+                    const radius = 115 + r * 45;
+                    const orbitRx = rx + (r === 0 ? animClock * 0.75 : -animClock * 0.55);
+                    const orbitRy = ry + (r === 1 ? animClock * 0.85 : 0);
+                    ctx.strokeStyle = r === 0 ? 'rgba(13, 148, 136, 0.45)' : 'rgba(245, 158, 11, 0.35)';
+                    ctx.lineWidth = 2.2;
+                    ctx.beginPath();
+                    for (let s = 0; s <= 36; s++) {
+                        const theta = (s / 36) * Math.PI * 2;
+                        const pt = project(Math.cos(theta) * radius, 0, Math.sin(theta) * radius, orbitRx, orbitRy, cx, cy);
+                        if (s === 0) ctx.moveTo(pt.x, pt.y);
+                        else ctx.lineTo(pt.x, pt.y);
+                    }
+                    ctx.stroke();
 
-                        if (pNode.scale > 0 && pCenter.scale > 0) {
-                            // Conduit Line
+                    // Orbital Tracer Spark Bead
+                    const sparkTheta = animClock * (r === 0 ? 1.8 : -1.4);
+                    const sparkPt = project(Math.cos(sparkTheta) * radius, 0, Math.sin(sparkTheta) * radius, orbitRx, orbitRy, cx, cy);
+                    if (sparkPt.scale > 0) {
+                        ctx.fillStyle = r === 0 ? '#0D9488' : '#F59E0B';
+                        ctx.beginPath();
+                        ctx.arc(sparkPt.x, sparkPt.y, 4.5 * sparkPt.scale, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                // ── MODE 1: SOVEREIGN REVENUE CORE ──
+                if (currentMode === 'sovereign') {
+                    systemNodes.forEach((node, i) => {
+                        const angle = node.angle + animClock * 0.35;
+                        const nx = Math.cos(angle) * node.dist;
+                        const nz = Math.sin(angle) * node.dist;
+                        const ny = node.y + Math.sin(animClock * 2.5 + i) * 16;
+                        const pNode = project(nx, ny, nz, rx, ry, cx, cy);
+
+                        if (pNode.scale > 0 && cCenter.scale > 0) {
+                            // Fluid Luminous Data Conduits
                             ctx.beginPath();
-                            ctx.moveTo(pNode.sx, pNode.sy);
-                            ctx.lineTo(pCenter.sx, pCenter.sy);
-                            ctx.strokeStyle = 'rgba(13, 148, 136, 0.25)';
-                            ctx.lineWidth = 1.5;
+                            ctx.moveTo(pNode.x, pNode.y);
+                            ctx.lineTo(cCenter.x, cCenter.y);
+                            ctx.strokeStyle = 'rgba(13, 148, 136, 0.22)';
+                            ctx.lineWidth = 1.4;
                             ctx.stroke();
 
-                            // Packet
-                            const packetT = (animTime * 0.7 + i * 0.25) % 1;
-                            const px = nx * (1 - packetT), py = ny * (1 - packetT), pz = nz * (1 - packetT);
-                            const pPacket = project3D(px, py, pz, rotX, rotY, cx, cy);
+                            // Flowing Data Packet Packet
+                            const pkt = (animClock * 0.8 + i * 0.25) % 1;
+                            const pPacket = project(nx * (1 - pkt), ny * (1 - pkt), nz * (1 - pkt), rx, ry, cx, cy);
                             if (pPacket.scale > 0) {
                                 ctx.fillStyle = node.color;
                                 ctx.beginPath();
-                                ctx.arc(pPacket.sx, pPacket.sy, 3.2 * pPacket.scale, 0, Math.PI * 2);
+                                ctx.arc(pPacket.x, pPacket.y, 3.5 * pPacket.scale, 0, Math.PI * 2);
                                 ctx.fill();
                             }
 
-                            // Node Box
-                            const nodeSize = 32 * pNode.scale;
-                            ctx.fillStyle = '#FFFFFF';
+                            // Luxury Glassmorphic Node Card in 3D Space
+                            const cardW = 95 * pNode.scale;
+                            const cardH = 34 * pNode.scale;
+                            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                             ctx.strokeStyle = node.color;
-                            ctx.lineWidth = 2 * pNode.scale;
+                            ctx.lineWidth = 1.8 * pNode.scale;
                             ctx.beginPath();
-                            ctx.roundRect(pNode.sx - nodeSize, pNode.sy - nodeSize * 0.6, nodeSize * 2, nodeSize * 1.2, 6 * pNode.scale);
+                            ctx.roundRect(pNode.x - cardW * 0.5, pNode.y - cardH * 0.5, cardW, cardH, 7 * pNode.scale);
                             ctx.fill(); ctx.stroke();
 
                             ctx.fillStyle = '#0F172A';
-                            ctx.font = `bold ${Math.max(9, Math.round(10.5 * pNode.scale))}px "Plus Jakarta Sans"`;
+                            ctx.font = `800 ${Math.max(9, Math.round(10.5 * pNode.scale))}px "Plus Jakarta Sans"`;
                             ctx.textAlign = 'center';
-                            ctx.fillText(`${node.icon} ${node.name}`, pNode.sx, pNode.sy + 3.5 * pNode.scale);
+                            ctx.fillText(`${node.icon} ${node.name}`, pNode.x, pNode.y - 1 * pNode.scale);
+
+                            ctx.fillStyle = '#64748B';
+                            ctx.font = `600 ${Math.max(8, Math.round(8.5 * pNode.scale))}px "JetBrains Mono"`;
+                            ctx.fillText(node.val, pNode.x, pNode.y + 11 * pNode.scale);
                         }
                     });
                 }
 
-                // 5. Mode 2: Conflict Radar Scanning Duplicate Refund Loop
+                // ── MODE 2: CONFLICT RADAR SCANNING GLITCH ──
                 else if (currentMode === 'radar') {
-                    const rRadius = 190;
-                    ctx.strokeStyle = 'rgba(239, 68, 68, 0.35)';
+                    const radarRadius = 210;
+                    ctx.strokeStyle = 'rgba(225, 29, 72, 0.45)';
                     ctx.lineWidth = 2;
                     ctx.beginPath();
-                    for (let s = 0; s <= 32; s++) {
-                        const theta = (s / 32) * Math.PI * 2;
-                        const proj = project3D(Math.cos(theta) * rRadius, 40, Math.sin(theta) * rRadius, rotX, rotY, cx, cy);
-                        if (s === 0) ctx.moveTo(proj.sx, proj.sy);
-                        else ctx.lineTo(proj.sx, proj.sy);
+                    for (let s = 0; s <= 36; s++) {
+                        const theta = (s / 36) * Math.PI * 2;
+                        const pt = project(Math.cos(theta) * radarRadius, 35, Math.sin(theta) * radarRadius, rx, ry, cx, cy);
+                        if (s === 0) ctx.moveTo(pt.x, pt.y);
+                        else ctx.lineTo(pt.x, pt.y);
                     }
                     ctx.stroke();
 
-                    // Anomaly Target in 3D
-                    const pAnomaly = project3D(90, 20, 70, rotX, rotY, cx, cy);
-                    if (pAnomaly.scale > 0) {
-                        const pulseR = (animTime * 40 % 50) + 12;
-                        ctx.strokeStyle = `rgba(239, 68, 68, ${1 - pulseR / 62})`;
-                        ctx.lineWidth = 2.5;
+                    // Sweeping Conical Radar Beam
+                    const sweepAngle = animClock * 2.2;
+                    const pSweep = project(Math.cos(sweepAngle) * radarRadius, 35, Math.sin(sweepAngle) * radarRadius, rx, ry, cx, cy);
+                    if (pSweep.scale > 0 && cCenter.scale > 0) {
                         ctx.beginPath();
-                        ctx.arc(pAnomaly.sx, pAnomaly.sy, pulseR * pAnomaly.scale, 0, Math.PI * 2);
+                        ctx.moveTo(cCenter.x, cCenter.y);
+                        ctx.lineTo(pSweep.x, pSweep.y);
+                        ctx.strokeStyle = 'rgba(225, 29, 72, 0.85)';
+                        ctx.lineWidth = 2.4;
+                        ctx.stroke();
+                    }
+
+                    // Anomaly Beacon Pill in 3D Space
+                    const pAnomaly = project(105, 10, 80, rx, ry, cx, cy);
+                    if (pAnomaly.scale > 0) {
+                        const pulseRad = (animClock * 42 % 55) + 12;
+                        ctx.strokeStyle = `rgba(225, 29, 72, ${1 - pulseRad / 68})`;
+                        ctx.lineWidth = 2.4;
+                        ctx.beginPath();
+                        ctx.arc(pAnomaly.x, pAnomaly.y, pulseRad * pAnomaly.scale, 0, Math.PI * 2);
                         ctx.stroke();
 
-                        ctx.fillStyle = '#FEF2F2';
-                        ctx.strokeStyle = '#EF4444';
+                        ctx.fillStyle = '#FFF1F2';
+                        ctx.strokeStyle = '#E11D48';
                         ctx.lineWidth = 2;
                         ctx.beginPath();
-                        ctx.roundRect(pAnomaly.sx - 85 * pAnomaly.scale, pAnomaly.sy - 16 * pAnomaly.scale, 170 * pAnomaly.scale, 32 * pAnomaly.scale, 6);
+                        ctx.roundRect(pAnomaly.x - 90 * pAnomaly.scale, pAnomaly.y - 18 * pAnomaly.scale, 180 * pAnomaly.scale, 36 * pAnomaly.scale, 8);
                         ctx.fill(); ctx.stroke();
 
-                        ctx.fillStyle = '#DC2626';
-                        ctx.font = `bold ${Math.max(9, Math.round(10.5 * pAnomaly.scale))}px "JetBrains Mono"`;
+                        ctx.fillStyle = '#E11D48';
+                        ctx.font = `800 ${Math.max(9, Math.round(11 * pAnomaly.scale))}px "JetBrains Mono"`;
                         ctx.textAlign = 'center';
-                        ctx.fillText('⚠️ -$20,430 REFUND LOOP', pAnomaly.sx, pAnomaly.sy + 3.5 * pAnomaly.scale);
+                        ctx.fillText('⚠️ -$20,430 DUPLICATE LOOP', pAnomaly.x, pAnomaly.y + 4 * pAnomaly.scale);
                     }
                 }
 
-                // 6. Mode 3: Consensus Emerald Diamond Shield
-                else if (currentMode === 'consensus') {
-                    const diamondH = 75, diamondW = 48;
-                    const vertices = [
-                        { x: 0, y: -diamondH, z: 0 },
-                        { x: diamondW, y: 0, z: 0 },
-                        { x: 0, y: 0, z: diamondW },
-                        { x: -diamondW, y: 0, z: 0 },
-                        { x: 0, y: 0, z: -diamondW },
-                        { x: 0, y: diamondH, z: 0 }
+                // ── MODE 3: BFT CONSENSUS MATRIX DOME ──
+                else if (currentMode === 'matrix') {
+                    const domeH = 85, domeW = 56;
+                    const diamondVerts = [
+                        { x: 0, y: -domeH, z: 0 },
+                        { x: domeW, y: 0, z: 0 },
+                        { x: 0, y: 0, z: domeW },
+                        { x: -domeW, y: 0, z: 0 },
+                        { x: 0, y: 0, z: -domeW },
+                        { x: 0, y: domeH, z: 0 }
                     ];
-                    const pVerts = vertices.map(v => project3D(v.x, v.y + Math.sin(animTime * 3) * 8, v.z, rotX, rotY + animTime * 1.5, cx, cy));
+                    const pDome = diamondVerts.map(v => 
+                        project(v.x, v.y + Math.sin(animClock * 3) * 8, v.z, rx, ry + animClock * 1.4, cx, cy)
+                    );
                     ctx.strokeStyle = '#059669';
                     ctx.lineWidth = 2.4;
-                    const edges = [[0,1],[0,2],[0,3],[0,4],[5,1],[5,2],[5,3],[5,4],[1,2],[2,3],[3,4],[4,1]];
-                    edges.forEach(e => {
-                        const vA = pVerts[e[0]], vB = pVerts[e[1]];
-                        if (vA.scale > 0 && vB.scale > 0) {
-                            ctx.beginPath(); ctx.moveTo(vA.sx, vA.sy); ctx.lineTo(vB.sx, vB.sy); ctx.stroke();
+                    const dEdges = [[0,1],[0,2],[0,3],[0,4],[5,1],[5,2],[5,3],[5,4],[1,2],[2,3],[3,4],[4,1]];
+                    dEdges.forEach(e => {
+                        const a = pDome[e[0]], b = pDome[e[1]];
+                        if (a.scale > 0 && b.scale > 0) {
+                            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
                         }
                     });
 
-                    const waveR = (animTime * 50 % 90) + 20;
-                    ctx.strokeStyle = `rgba(16, 185, 129, ${1 - waveR / 110})`;
+                    // Expanding Green Harmonic Ring
+                    const waveR = (animClock * 55 % 95) + 22;
+                    ctx.strokeStyle = `rgba(5, 150, 105, ${1 - waveR / 115})`;
                     ctx.lineWidth = 3;
                     ctx.beginPath();
                     ctx.arc(cx, cy, waveR, 0, Math.PI * 2);
@@ -989,42 +1375,45 @@
                 }
             }
 
-            requestAnimationFrame(loop3D);
+            requestAnimationFrame(render3D);
         }
 
-        requestAnimationFrame(loop3D);
+        requestAnimationFrame(render3D);
 
-        /* ── Tabs & Authentication ── */
-        function switchTab(type) {
-            ['role', 'sso', 'biometric', 'db'].forEach(t => {
-                const btn = document.getElementById('tabBtn' + capitalize(t));
-                const panel = document.getElementById('panel' + capitalize(t));
-                if (btn) btn.className = 'tab-btn' + (t === type ? ' active' : '');
-                if (panel) panel.className = 'login-panel' + (t === type ? ' active' : '');
+        // ── LUXE AUTHENTICATION HANDLERS ──
+        function switchAuthTab(type) {
+            playSoftChime();
+            ['role', 'sso', 'biometric', 'vault'].forEach(t => {
+                const btn = document.getElementById('tab' + capitalize(t));
+                const rail = document.getElementById('rail' + capitalize(t));
+                if (btn) btn.className = 'luxe-tab-btn' + (t === type ? ' active' : '');
+                if (rail) rail.className = 'panel-rail' + (t === type ? ' active' : '');
             });
         }
 
         function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
-        function selectRole(el, name, title) {
-            document.querySelectorAll('.role-pill-card').forEach(c => {
+        function pickVipRole(el, name, title) {
+            playSoftChime();
+            document.querySelectorAll('.vip-role-card').forEach(c => {
                 c.classList.remove('selected');
-                c.querySelector('.role-select-indicator').innerText = '';
+                c.querySelector('.vip-status-check').innerText = '';
             });
             el.classList.add('selected');
-            el.querySelector('.role-select-indicator').innerText = '✓';
+            el.querySelector('.vip-status-check').innerText = '✓';
         }
 
-        function authenticateAndLaunch(method) {
-            const panels = document.querySelectorAll('.login-panel');
-            panels.forEach(p => p.style.display = 'none');
-            const loader = document.getElementById('authLoader');
+        function executeLuxeAuth(method) {
+            playSoftChime();
+            const rails = document.querySelectorAll('.panel-rail');
+            rails.forEach(r => r.style.display = 'none');
+            const loader = document.getElementById('luxeLoader');
             loader.style.display = 'flex';
-            document.getElementById('authLoaderText').innerText = `Authenticating via ${method}...`;
+            document.getElementById('luxeLoaderTitle').innerText = `Authenticating via ${method}...`;
 
             setTimeout(() => {
                 window.location.href = '/';
-            }, 700);
+            }, 680);
         }
     </script>
 </body>
