@@ -176,12 +176,28 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
 
     def get_database_dump(self) -> dict[str, Any]:
         return {
-            "customers_count": run_query("SELECT COUNT(*) as c FROM customers")[0]["c"],
-            "orders_count": run_query("SELECT COUNT(*) as c FROM orders")[0]["c"],
-            "refunds_count": run_query("SELECT COUNT(*) as c FROM refunds")[0]["c"],
-            "refunds_total": run_query("SELECT SUM(amount) as s FROM refunds")[0]["s"],
-            "campaigns": run_query("SELECT * FROM campaigns ORDER BY id DESC"),
-            "recent_decisions": run_query("SELECT * FROM decision_log ORDER BY id DESC LIMIT 5"),
+            "customers": run_query("SELECT id, name, segment, region, created_at FROM customers ORDER BY id ASC LIMIT 80"),
+            "orders": run_query("""
+                SELECT o.id, c.name as customer_name, c.region, o.amount, o.order_date, o.is_repeat
+                FROM orders o
+                JOIN customers c ON o.customer_id = c.id
+                ORDER BY o.order_date DESC, o.id DESC LIMIT 60
+            """),
+            "refunds": run_query("""
+                SELECT r.id, r.order_id, c.name as customer_name, c.region, r.amount, r.reason, r.refund_date
+                FROM refunds r
+                JOIN orders o ON r.order_id = o.id
+                JOIN customers c ON o.customer_id = c.id
+                ORDER BY r.refund_date DESC, r.id DESC
+            """),
+            "campaigns": run_query("SELECT * FROM campaigns ORDER BY id DESC LIMIT 10"),
+            "decisions": run_query("SELECT * FROM decision_log ORDER BY id DESC LIMIT 20"),
+            "counts": {
+                "customers": run_query("SELECT COUNT(*) as c FROM customers")[0]["c"],
+                "orders": run_query("SELECT COUNT(*) as c FROM orders")[0]["c"],
+                "refunds": run_query("SELECT COUNT(*) as c FROM refunds")[0]["c"],
+                "refunds_total": run_query("SELECT SUM(amount) as s FROM refunds")[0]["s"],
+            }
         }
 
     def serve_ui(self) -> None:

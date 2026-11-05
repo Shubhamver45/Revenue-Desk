@@ -92,9 +92,6 @@ class RevenueDesk:
         self.current.analysis = analysis
         self._post("Analyst", analysis.llm_response)
 
-        import time
-        time.sleep(1.2)  # Respect LLM token rate limits
-
         # Automatically trigger review (Phase 1: Verification SQL -> Phase 2: Live execution -> Phase 3: Comparison)
         self.current.state = WorkflowState.REVIEWING
         self._post("System", "🔍 Reviewer Agent is independently verifying...")
@@ -107,8 +104,6 @@ class RevenueDesk:
         )
         self.current.review = review
         self._post("Reviewer", review.llm_response)
-
-        time.sleep(1.2)  # Respect LLM token rate limits
 
         # Propose action
         self.current.state = WorkflowState.PROPOSING

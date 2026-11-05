@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue Desk — Switch AI Multi-Agent Executive Cockpit (2026 Flagship)</title>
+    <title>Revenue Desk — Switch Multi-Agent Executive Cockpit (2026 Flagship)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
@@ -12,11 +12,11 @@
             /* 2026 Executive Cyber-Glass Palette (Vercel / Linear / Raycast Flagship) */
             --bg-void: #05070B;
             --bg-canvas: #090D16;
-            --bg-panel: rgba(13, 19, 32, 0.72);
+            --bg-panel: rgba(13, 19, 32, 0.75);
             --bg-card: rgba(18, 26, 44, 0.65);
-            --bg-card-hover: rgba(26, 37, 62, 0.75);
+            --bg-card-hover: rgba(26, 37, 62, 0.80);
             --bg-subtle: rgba(255, 255, 255, 0.03);
-            --bg-input: rgba(9, 13, 22, 0.85);
+            --bg-input: rgba(9, 13, 22, 0.88);
 
             --border-hairline: rgba(255, 255, 255, 0.06);
             --border-subtle: rgba(255, 255, 255, 0.10);
@@ -63,7 +63,6 @@
             --shadow-card: 0 12px 36px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
             --shadow-glow-cyan: 0 0 25px rgba(0, 240, 255, 0.25);
             --shadow-glow-emerald: 0 0 25px rgba(16, 185, 129, 0.25);
-            --shadow-glow-ruby: 0 0 25px rgba(239, 68, 68, 0.25);
         }
 
         * {
@@ -179,6 +178,21 @@
             100% { transform: scale(0.9); opacity: 0.7; }
         }
 
+        .consensus-badge-header {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            background: var(--emerald-dim);
+            border: 1px solid var(--emerald-border);
+            padding: 4px 10px;
+            border-radius: var(--radius-xs);
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--emerald-neon);
+            font-weight: 700;
+            animation: fadeIn 0.3s ease;
+        }
+
         .header-actions {
             display: flex;
             align-items: center;
@@ -224,7 +238,7 @@
             color: #000000;
         }
 
-        /* ── Hero Bento Grid Ribbon (Chart & Financial Metrics) ── */
+        /* ── Hero Bento Grid Ribbon (Chart & 4 Financial KPIs) ── */
         .bento-hero {
             padding: 20px 24px 10px;
             display: grid;
@@ -269,6 +283,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
+            position: relative;
         }
 
         .chart-header {
@@ -329,12 +344,31 @@
             width: 100%;
             height: 155px;
             position: relative;
+            cursor: crosshair;
         }
 
         canvas#trajectoryCanvas {
             width: 100%;
             height: 100%;
             display: block;
+        }
+
+        /* Chart Floating Hover Tooltip */
+        .chart-tooltip {
+            position: absolute;
+            background: rgba(9, 13, 22, 0.92);
+            border: 1px solid var(--cyan-border);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: #FFFFFF;
+            pointer-events: none;
+            display: none;
+            z-index: 50;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+            transform: translate(-50%, -120%);
+            white-space: nowrap;
         }
 
         /* 4-KPI Mini Bento Column */
@@ -756,6 +790,32 @@
             margin-bottom: 6px;
         }
 
+        /* Live ROI Matrix */
+        .roi-preview-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 12px;
+            background: rgba(9, 13, 22, 0.7);
+            border: 1px solid var(--border-hairline);
+            border-radius: var(--radius-sm);
+            padding: 10px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+        }
+
+        .roi-cell-label {
+            color: var(--text-muted);
+            font-size: 9.5px;
+            text-transform: uppercase;
+        }
+
+        .roi-cell-val {
+            font-weight: 700;
+            font-size: 13px;
+            margin-top: 2px;
+        }
+
         .gate-controls {
             display: flex;
             align-items: center;
@@ -1006,7 +1066,81 @@
             color: var(--text-muted);
         }
 
-        /* Modal Executive Memo */
+        /* Database Explorer Modal */
+        .db-modal-box {
+            max-width: 960px;
+            width: 100%;
+        }
+
+        .db-tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+            overflow-x: auto;
+        }
+
+        .db-tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            padding: 6px 14px;
+            border-radius: var(--radius-xs);
+            cursor: pointer;
+            font-family: var(--font-mono);
+            font-size: 12px;
+        }
+
+        .db-tab-btn.active {
+            background: var(--cyan-dim);
+            border-color: var(--cyan-border);
+            color: var(--cyan-glow);
+            font-weight: 700;
+        }
+
+        .db-table-scroll {
+            max-height: 480px;
+            overflow: auto;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: rgba(9, 13, 22, 0.95);
+            padding: 10px 12px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+
+        .data-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-hairline);
+            color: var(--text-primary);
+        }
+
+        .data-table tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .row-highlight-refund {
+            background: rgba(245, 158, 11, 0.12) !important;
+            color: #FCD34D !important;
+        }
+
+        /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -1026,7 +1160,7 @@
             background: #0B0F19;
             border: 1px solid var(--border-highlight);
             border-radius: var(--radius-xl);
-            max-width: 760px;
+            max-width: 780px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -1085,7 +1219,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Print styles for Executive Memo */
         @media print {
             body { background: #FFFFFF; color: #000000; }
             .header, .bento-hero, .stepper-container, .stream-panel, .rail-panel { display: none !important; }
@@ -1112,9 +1245,18 @@
                 <span style="color: var(--text-dim);">|</span>
                 <span style="color: var(--emerald-neon);">SUPABASE v16 PG + SQLITE</span>
             </div>
+            <div class="consensus-badge-header" id="consensusPill">
+                <span>🛡️</span> 100% MULTI-AGENT CONSENSUS
+            </div>
         </div>
 
         <div class="header-actions">
+            <button class="btn-header" onclick="toggleSoundFX()" id="sfxToggle">
+                <span>🔊</span> SFX: ON
+            </button>
+            <button class="btn-header" onclick="openDatabaseExplorer()">
+                <span>🔍</span> DB Explorer
+            </button>
             <button class="btn-header" onclick="openExecutiveMemo()">
                 <span>📄</span> Executive Memo
             </button>
@@ -1142,8 +1284,9 @@
                     <div class="legend-item"><span class="legend-dot" style="background: #10B981;"></span> Post-Winback Target</div>
                 </div>
             </div>
-            <div class="canvas-container">
+            <div class="canvas-container" id="canvasBox">
                 <canvas id="trajectoryCanvas"></canvas>
+                <div class="chart-tooltip" id="chartTooltip"></div>
             </div>
         </div>
 
@@ -1249,6 +1392,9 @@
                     <button class="preset-chip" onclick="askPreset('Why did repeat purchases drop in the West region last month?')">
                         West Drop Inquiry
                     </button>
+                    <button class="preset-chip" onclick="askPreset('Audit October revenue, refunds and billing anomalies')">
+                        October Refund Audit
+                    </button>
                     <button class="preset-chip" onclick="askPreset('Show customer breakdown by region and segment')">
                         Regional Breakdown
                     </button>
@@ -1348,6 +1494,35 @@
         </aside>
     </main>
 
+    <!-- ── Live DB Explorer Modal ── -->
+    <div class="modal-overlay" id="dbModal" onclick="if(event.target===this) closeDatabaseExplorer()">
+        <div class="modal-box db-modal-box">
+            <button class="modal-close" onclick="closeDatabaseExplorer()">✕</button>
+            <div style="border-bottom: 2px solid var(--cyan-glow); padding-bottom: 12px; margin-bottom: 16px;">
+                <div style="font-size: 11px; font-family: var(--font-mono); color: var(--cyan-glow); font-weight: 700; text-transform: uppercase;">
+                    Live Database Inspector • Supabase PostgreSQL & SQLite
+                </div>
+                <h2 style="font-size: 20px; font-weight: 800; color: #FFFFFF; margin-top: 4px;">
+                    Underlying Financial Schema & Transaction Records
+                </h2>
+            </div>
+
+            <div class="db-tabs">
+                <button class="db-tab-btn active" onclick="switchDbTab('customers')">Customers (80)</button>
+                <button class="db-tab-btn" onclick="switchDbTab('orders')">Orders (160)</button>
+                <button class="db-tab-btn" onclick="switchDbTab('refunds')">Refunds & Discrepancies (12)</button>
+                <button class="db-tab-btn" onclick="switchDbTab('campaigns')">Campaign Mutations</button>
+                <button class="db-tab-btn" onclick="switchDbTab('decisions')">Audit Decisions</button>
+            </div>
+
+            <div class="db-table-scroll" id="dbTableContainer">
+                <div style="padding: 24px; text-align: center; color: var(--text-muted); font-family: var(--font-mono);">
+                    Loading records from database...
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ── Executive Memo Modal ── -->
     <div class="modal-overlay" id="memoModal" onclick="if(event.target===this) closeExecutiveMemo()">
         <div class="modal-box">
@@ -1398,8 +1573,57 @@
     <script>
         let currentDiscount = 15;
         let isSimulating = false;
+        let sfxEnabled = true;
+        let dbDataCache = null;
 
-        // Retina-ready High-Tech Canvas Chart
+        // Native Web Audio Synthesizer (Zero 3rd-party dependencies, 100% offline!)
+        function playChime(type = 'click') {
+            if (!sfxEnabled) return;
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(800, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.05);
+                    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.05);
+                } else if (type === 'success') {
+                    // Ascending harmonious chord
+                    [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                        const o = ctx.createOscillator();
+                        const g = ctx.createGain();
+                        o.connect(g);
+                        g.connect(ctx.destination);
+                        o.type = 'triangle';
+                        o.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08);
+                        g.gain.setValueAtTime(0.08, ctx.currentTime + i * 0.08);
+                        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.08 + 0.35);
+                        o.start(ctx.currentTime + i * 0.08);
+                        o.stop(ctx.currentTime + i * 0.08 + 0.35);
+                    });
+                }
+            } catch (e) {}
+        }
+
+        function toggleSoundFX() {
+            sfxEnabled = !sfxEnabled;
+            const btn = document.getElementById('sfxToggle');
+            if (btn) btn.innerHTML = sfxEnabled ? '<span>🔊</span> SFX: ON' : '<span>🔇</span> SFX: OFF';
+            if (sfxEnabled) playChime('click');
+        }
+
+        // Retina-ready High-Tech Canvas Chart with Interactive Crosshair & Tooltip
+        let chartDataPoints = [];
+
         function initChart() {
             const canvas = document.getElementById('trajectoryCanvas');
             if (!canvas) return;
@@ -1438,13 +1662,14 @@
 
             // 1. Gross Reported Line (Cyan Neon)
             const grossPts = [
-                {x: 35, y: 70},
-                {x: 35 + stepX, y: 55},
-                {x: 35 + stepX * 2, y: 45},
-                {x: 35 + stepX * 3, y: 110}, // Drop
-                {x: 35 + stepX * 4, y: 115},
-                {x: 35 + stepX * 5, y: 85}
+                {x: 35, y: 70, label: 'Jul 26', gross: '$28,400', net: '$28,400', glitch: '$0'},
+                {x: 35 + stepX, y: 55, label: 'Aug 26', gross: '$32,100', net: '$32,100', glitch: '$0'},
+                {x: 35 + stepX * 2, y: 45, label: 'Sep 26', gross: '$36,800', net: '$36,800', glitch: '$0'},
+                {x: 35 + stepX * 3, y: 110, label: 'Oct 26 (Drop)', gross: '$24,250', net: '$3,820', glitch: '-$20,430'},
+                {x: 35 + stepX * 4, y: 115, label: 'Nov 26 (Glitch)', gross: '$22,500', net: '$2,070', glitch: '-$20,430'},
+                {x: 35 + stepX * 5, y: 85, label: 'Dec 26 (Target)', gross: '$40,670', net: '$38,200', glitch: '$0'}
             ];
+            chartDataPoints = grossPts;
 
             // Area Gradient
             const gradCyan = ctx.createLinearGradient(0, 0, 0, h);
@@ -1518,11 +1743,53 @@
             ctx.stroke();
         }
 
+        // Interactive Canvas Crosshair Tooltip
+        const canvasContainer = document.getElementById('canvasBox');
+        if (canvasContainer) {
+            canvasContainer.addEventListener('mousemove', (e) => {
+                const rect = canvasContainer.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                if (!chartDataPoints || chartDataPoints.length === 0) return;
+
+                // Find closest point
+                let closest = chartDataPoints[0];
+                let minDiff = 9999;
+                chartDataPoints.forEach(pt => {
+                    const diff = Math.abs(pt.x - mouseX);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        closest = pt;
+                    }
+                });
+
+                const tooltip = document.getElementById('chartTooltip');
+                if (tooltip && minDiff < 45) {
+                    tooltip.style.display = 'block';
+                    tooltip.style.left = closest.x + 'px';
+                    tooltip.style.top = closest.y + 'px';
+                    tooltip.innerHTML = `
+                        <div style="color: var(--cyan-glow); font-weight: 700; margin-bottom: 2px;">${closest.label}</div>
+                        <div>Gross: <span style="color:#FFF;">${closest.gross}</span></div>
+                        ${closest.glitch !== '$0' ? `<div style="color: var(--amber-neon);">Phantom Glitch: ${closest.glitch}</div>` : ''}
+                        <div>Net Baseline: <span style="color: var(--emerald-neon); font-weight:700;">${closest.net}</span></div>
+                    `;
+                } else if (tooltip) {
+                    tooltip.style.display = 'none';
+                }
+            });
+
+            canvasContainer.addEventListener('mouseleave', () => {
+                const tooltip = document.getElementById('chartTooltip');
+                if (tooltip) tooltip.style.display = 'none';
+            });
+        }
+
         window.addEventListener('resize', initChart);
         window.addEventListener('DOMContentLoaded', initChart);
 
         // Dialogue Rendering Helpers
         function addMessageCard(sender, text) {
+            playChime('click');
             const stream = document.getElementById('dialogueStream');
             const turn = document.createElement('div');
             turn.className = 'turn-card';
@@ -1567,6 +1834,7 @@
         }
 
         function addAnalystCard(analysis) {
+            playChime('click');
             const stream = document.getElementById('dialogueStream');
             const turn = document.createElement('div');
             turn.className = 'turn-card';
@@ -1613,6 +1881,7 @@ GROUP BY c.id, c.name, c.segment;`;
         }
 
         function addReviewerCard(review) {
+            playChime('click');
             const stream = document.getElementById('dialogueStream');
             const turn = document.createElement('div');
             turn.className = 'turn-card';
@@ -1662,9 +1931,14 @@ GROUP BY c.id, c.name, c.segment;`;
             updateStep('step3', 'verified');
             updateStep('step4', 'active');
             markTaskDone('task-102');
+
+            // Show consensus indicator
+            const pill = document.getElementById('consensusPill');
+            if (pill) pill.style.display = 'inline-flex';
         }
 
         function addApprovalGateCard() {
+            playChime('click');
             const stream = document.getElementById('dialogueStream');
             const turn = document.createElement('div');
             turn.className = 'turn-card';
@@ -1687,6 +1961,26 @@ GROUP BY c.id, c.name, c.segment;`;
                             </div>
                             <div style="font-size: 12.5px; color: var(--text-secondary); margin-top: 4px;">
                                 Targeting 5 Tier-1 Enterprise Accounts with personalized account-recovery credits.
+                            </div>
+
+                            <!-- Live ROI Matrix -->
+                            <div class="roi-preview-row">
+                                <div>
+                                    <div class="roi-cell-label">Accounts</div>
+                                    <div class="roi-cell-val" style="color:#FFF;">5 Enterprise</div>
+                                </div>
+                                <div>
+                                    <div class="roi-cell-label">Win-Back ARR</div>
+                                    <div class="roi-cell-val" style="color: var(--cyan-glow);">$38,200</div>
+                                </div>
+                                <div>
+                                    <div class="roi-cell-label">Discount Cost</div>
+                                    <div class="roi-cell-val" id="roiCost" style="color: var(--amber-neon);">-$5,730</div>
+                                </div>
+                                <div>
+                                    <div class="roi-cell-label">Net Projected Gain</div>
+                                    <div class="roi-cell-val" id="roiGain" style="color: var(--emerald-neon);">+$32,470</div>
+                                </div>
                             </div>
 
                             <div class="gate-controls">
@@ -1717,12 +2011,24 @@ GROUP BY c.id, c.name, c.segment;`;
         }
 
         function adjustDiscount(delta) {
+            playChime('click');
             currentDiscount = Math.max(5, Math.min(30, currentDiscount + delta));
             const el = document.getElementById('discountValue');
             if (el) el.innerText = currentDiscount + '%';
+
+            // Dynamically recalculate ROI
+            const totalPipeline = 38200;
+            const cost = Math.round(totalPipeline * (currentDiscount / 100));
+            const gain = totalPipeline - cost;
+
+            const costEl = document.getElementById('roiCost');
+            const gainEl = document.getElementById('roiGain');
+            if (costEl) costEl.innerText = '-$' + cost.toLocaleString();
+            if (gainEl) gainEl.innerText = '+$' + gain.toLocaleString();
         }
 
         async function executeCampaignApproval() {
+            playChime('success');
             const card = document.getElementById('activeApprovalCard');
             if (card) {
                 const btn = card.querySelector('.btn-approve');
@@ -1766,6 +2072,7 @@ GROUP BY c.id, c.name, c.segment;`;
         }
 
         function rejectCampaign() {
+            playChime('click');
             addMessageCard('Manager', 'Campaign proposal rejected. Revising assumptions.');
             recordDecision('Campaign Rejected by Manager - Strategy Review');
         }
@@ -1817,6 +2124,7 @@ GROUP BY c.id, c.name, c.segment;`;
 
         // 1-Click Automated Flagship Demo
         async function runDemoPipeline() {
+            playChime('click');
             if (isSimulating) return;
             isSimulating = true;
 
@@ -1887,7 +2195,11 @@ GROUP BY c.id, c.name, c.segment;`;
         }
 
         async function resetRoomState() {
+            playChime('click');
             try { await fetch('/api/reset'); } catch (e) {}
+            const pill = document.getElementById('consensusPill');
+            if (pill) pill.style.display = 'none';
+
             const stream = document.getElementById('dialogueStream');
             stream.innerHTML = `
                 <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
@@ -1916,7 +2228,183 @@ GROUP BY c.id, c.name, c.segment;`;
             initChart();
         }
 
+        // Database Explorer Modal Logic
+        async function openDatabaseExplorer() {
+            playChime('click');
+            document.getElementById('dbModal').style.display = 'flex';
+            if (!dbDataCache) {
+                try {
+                    const res = await fetch('/api/database');
+                    dbDataCache = await res.json();
+                } catch (e) {
+                    console.log('Error fetching DB dump:', e);
+                }
+            }
+            switchDbTab('customers');
+        }
+
+        function closeDatabaseExplorer() {
+            document.getElementById('dbModal').style.display = 'none';
+        }
+
+        function switchDbTab(tabName) {
+            playChime('click');
+            document.querySelectorAll('.db-tab-btn').forEach(btn => {
+                btn.className = 'db-tab-btn' + (btn.innerText.toLowerCase().includes(tabName) ? ' active' : '');
+            });
+
+            const container = document.getElementById('dbTableContainer');
+            if (!dbDataCache) {
+                container.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--text-muted);">Loading database...</div>';
+                return;
+            }
+
+            if (tabName === 'customers') {
+                const rows = dbDataCache.customers || [];
+                container.innerHTML = `
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Company Name</th>
+                                <th>Segment</th>
+                                <th>Region</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows.map(r => `
+                                <tr>
+                                    <td>${r.id || r[0]}</td>
+                                    <td style="color:#FFF; font-weight:600;">${r.name || r[1]}</td>
+                                    <td><span style="color: var(--cyan-glow);">${r.segment || r[2]}</span></td>
+                                    <td>${r.region || r[3]}</td>
+                                    <td>${r.created_at || r[4]}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            } else if (tabName === 'orders') {
+                const rows = dbDataCache.orders || [];
+                container.innerHTML = `
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Region</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Repeat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows.map(r => `
+                                <tr>
+                                    <td>#${r.id || r[0]}</td>
+                                    <td style="color:#FFF;">${r.customer_name || r[1]}</td>
+                                    <td>${r.region || r[2]}</td>
+                                    <td style="color: var(--emerald-neon); font-weight:700;">$${parseFloat(r.amount || r[3]).toFixed(2)}</td>
+                                    <td>${r.order_date || r[4]}</td>
+                                    <td>${(r.is_repeat || r[5]) ? '🔁 Repeat' : '🆕 First'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            } else if (tabName === 'refunds') {
+                const rows = dbDataCache.refunds || [];
+                container.innerHTML = `
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Refund ID</th>
+                                <th>Order Ref</th>
+                                <th>Customer</th>
+                                <th>Region</th>
+                                <th>Refund Amount</th>
+                                <th>Reason / Discrepancy Flag</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows.map(r => {
+                                const isGlitch = (r.reason || r[4] || '').toLowerCase().includes('duplicate') || (r.refund_date || r[5] || '').includes('2026-10');
+                                return `
+                                    <tr class="${isGlitch ? 'row-highlight-refund' : ''}">
+                                        <td>#${r.id || r[0]}</td>
+                                        <td>Order #${r.order_id || r[1]}</td>
+                                        <td style="font-weight:700;">${r.customer_name || r[2]}</td>
+                                        <td>${r.region || r[3]}</td>
+                                        <td style="font-weight:800; color: ${isGlitch ? 'var(--amber-neon)' : 'var(--ruby-neon)'};">-$${parseFloat(r.amount || r[3] || 0).toFixed(2)}</td>
+                                        <td>${isGlitch ? '🚨 PHANTOM GLITCH: ' : ''}${r.reason || r[4]}</td>
+                                        <td>${r.refund_date || r[5]}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                `;
+            } else if (tabName === 'campaigns') {
+                const rows = dbDataCache.campaigns || [];
+                container.innerHTML = `
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Campaign Name</th>
+                                <th>Target Region</th>
+                                <th>Discount</th>
+                                <th>Status</th>
+                                <th>Created By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows.length === 0 ? '<tr><td colspan="6" style="text-align:center; padding:20px;">No campaigns executed yet. Run demo to mutate!</td></tr>' : rows.map(r => `
+                                <tr>
+                                    <td>#${r.id || r[0]}</td>
+                                    <td style="color:#FFF; font-weight:700;">${r.name || r[1]}</td>
+                                    <td>${r.target_region || r[3] || 'west'}</td>
+                                    <td style="color: var(--cyan-glow); font-weight:700;">${r.discount_pct || r[4] || 15}%</td>
+                                    <td><span style="color: var(--emerald-neon); font-weight:700;">● ${r.status || r[5]}</span></td>
+                                    <td>${r.created_by || r[6]}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            } else if (tabName === 'decisions') {
+                const rows = dbDataCache.decisions || [];
+                container.innerHTML = `
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Audit Decision</th>
+                                <th>Authorized By</th>
+                                <th>Context</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows.map(r => `
+                                <tr>
+                                    <td>#${r.id || r[0]}</td>
+                                    <td style="color:#FFF; font-weight:600;">${r.decision || r[1]}</td>
+                                    <td><span style="color: var(--cyan-glow);">${r.made_by || r[2]}</span></td>
+                                    <td>${r.context || r[3] || 'Governance Engine'}</td>
+                                    <td>${r.created_at || r[4]}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            }
+        }
+
         function openExecutiveMemo() {
+            playChime('click');
             document.getElementById('memoModal').style.display = 'flex';
         }
 
