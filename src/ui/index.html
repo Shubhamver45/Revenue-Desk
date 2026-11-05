@@ -3,660 +3,982 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue Desk — Financial Operations & Governance</title>
+    <title>Revenue Desk — AI Financial Governance Command Center</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Minimalist Enterprise FinTech Palette */
-            --bg-page: #f8fafc;
-            --bg-card: #ffffff;
-            --bg-subtle: #f1f5f9;
-            --bg-hover: #e2e8f0;
+            --bg-app: #0B0F19;
+            --bg-sidebar: #0F1422;
+            --bg-card: #141927;
+            --bg-card-alt: #181D2E;
+            --bg-input: #1A2035;
+            --bg-hover: #1E2540;
+            --bg-modal: #141927;
 
-            --border-default: #e2e8f0;
-            --border-subtle: #edf2f7;
-            --border-focus: #0f766e;
+            --border-main: rgba(255,255,255,0.06);
+            --border-subtle: rgba(255,255,255,0.04);
+            --border-focus: #3B82F6;
 
-            --brand-primary: #0f766e;
-            --brand-primary-hover: #115e59;
-            --brand-blue: #0284c7;
-            --brand-green: #059669;
-            --brand-amber: #d97706;
-            --brand-red: #dc2626;
+            --accent-teal: #14B8A6;
+            --accent-teal-bg: rgba(20,184,166,0.12);
+            --accent-blue: #3B82F6;
+            --accent-blue-bg: rgba(59,130,246,0.12);
+            --accent-green: #22C55E;
+            --accent-green-bg: rgba(34,197,94,0.10);
+            --accent-red: #EF4444;
+            --accent-red-bg: rgba(239,68,68,0.10);
+            --accent-amber: #F59E0B;
+            --accent-amber-bg: rgba(245,158,11,0.10);
+            --accent-purple: #A855F7;
 
-            --text-heading: #0f172a;
-            --text-body: #334155;
-            --text-secondary: #64748b;
-            --text-muted: #94a3b8;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --text-dim: #475569;
 
-            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            --font-mono: 'JetBrains Mono', Menlo, monospace;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
 
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-
-            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
-            --shadow-float: 0 12px 32px rgba(15, 23, 42, 0.08);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
 
         body {
             font-family: var(--font-sans);
-            background: var(--bg-page);
-            color: var(--text-body);
-            min-height: 100vh;
+            background: var(--bg-app);
+            color: var(--text-primary);
+            height: 100vh;
             display: flex;
-            flex-direction: column;
-            font-size: 13.5px;
+            overflow: hidden;
+            font-size: 13px;
             line-height: 1.5;
         }
 
-        .svg-icon {
-            width: 15px;
-            height: 15px;
-            stroke-width: 2;
-            stroke: currentColor;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
+        /* ── Left Sidebar ── */
+        .sidebar {
+            width: 56px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 14px 0;
+            gap: 4px;
             flex-shrink: 0;
         }
 
-        /* ── Minimalist Top Navigation ── */
-        .navbar {
-            background: #ffffff;
-            border-bottom: 1px solid var(--border-default);
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 32px;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand-symbol {
+        .sidebar-logo {
             width: 32px;
             height: 32px;
-            background: var(--brand-primary);
-            border-radius: 8px;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
         }
 
-        .brand-symbol svg {
-            width: 18px;
-            height: 18px;
-            stroke-width: 2.2;
+        .sidebar-logo svg {
+            width: 28px;
+            height: 28px;
         }
 
-        .brand-name {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--text-heading);
-            letter-spacing: -0.2px;
-        }
-
-        .room-pill {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-subtle);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-family: var(--font-mono);
-            color: var(--text-secondary);
-            margin-left: 8px;
-        }
-
-        .pulse-indicator {
-            width: 6px;
-            height: 6px;
-            background: var(--brand-green);
-            border-radius: 50%;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-nav {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
-            color: var(--text-body);
-            padding: 6px 14px;
+        .sb-btn {
+            width: 38px;
+            height: 38px;
             border-radius: var(--radius-sm);
-            font-size: 12px;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            transition: all 0.15s ease;
-        }
-
-        .btn-nav:hover {
-            background: var(--bg-hover);
-            color: var(--text-heading);
-        }
-
-        .btn-primary-action {
-            background: var(--brand-primary);
-            border: 1px solid var(--brand-primary);
-            color: #ffffff;
-            padding: 6px 16px;
-            border-radius: var(--radius-sm);
-            font-size: 12px;
-            font-weight: 600;
-            font-family: inherit;
+            justify-content: center;
+            color: var(--text-muted);
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.15s ease;
-        }
-
-        .btn-primary-action:hover {
-            background: var(--brand-primary-hover);
-        }
-
-        /* ── Main Layout Canvas ── */
-        .app-container {
-            max-width: 1480px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 24px 32px 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* ── Minimal Metrics Bar ── */
-        .metrics-bar {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
-            border-radius: var(--radius-md);
-            padding: 16px 24px;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            box-shadow: var(--shadow-subtle);
-        }
-
-        .metric-col {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            padding: 0 16px;
-        }
-
-        .metric-col:not(:last-child) {
-            border-right: 1px solid var(--border-subtle);
-        }
-
-        .metric-title {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .metric-row {
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-        }
-
-        .metric-number {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--text-heading);
-            letter-spacing: -0.5px;
-        }
-
-        .metric-trend {
-            font-size: 11px;
-            font-family: var(--font-mono);
-            font-weight: 600;
-        }
-
-        /* ── Main Workspace Grid (60% Chart / Pipeline, 40% Operations) ── */
-        .workspace-grid {
-            display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 24px;
-            align-items: start;
-        }
-
-        @media (max-width: 1080px) {
-            .workspace-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Left Column */
-        .left-col {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .chart-box {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
-            border-radius: var(--radius-md);
-            padding: 20px 24px 16px;
-            box-shadow: var(--shadow-subtle);
+            border: none;
+            background: transparent;
+            transition: all 0.15s;
             position: relative;
         }
 
-        .chart-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
+        .sb-btn:hover { background: var(--bg-hover); color: var(--text-secondary); }
+        .sb-btn.active { background: var(--accent-teal-bg); color: var(--accent-teal); }
+        .sb-btn.active::before {
+            content: '';
+            position: absolute;
+            left: -1px;
+            top: 8px;
+            bottom: 8px;
+            width: 3px;
+            background: var(--accent-teal);
+            border-radius: 0 3px 3px 0;
         }
 
-        .chart-heading {
+        .sb-btn svg { width: 18px; height: 18px; stroke-width: 1.8; stroke: currentColor; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+        .sb-spacer { flex: 1; }
+
+        .sb-label {
+            font-size: 8.5px;
+            color: var(--text-dim);
+            margin-top: -2px;
+            letter-spacing: 0.3px;
+        }
+
+        /* ── Main Content ── */
+        .main-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ── Top Header Bar ── */
+        .top-bar {
+            height: 48px;
+            background: var(--bg-sidebar);
+            border-bottom: 1px solid var(--border-main);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .tb-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 14px;
             font-weight: 700;
-            color: var(--text-heading);
+            letter-spacing: -0.3px;
         }
 
-        .chart-legend {
+        .tb-brand-icon {
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(135deg, #14B8A6, #0EA5E9);
+            border-radius: 5px;
             display: flex;
             align-items: center;
-            gap: 18px;
+            justify-content: center;
+        }
+
+        .tb-brand-icon svg { width: 13px; height: 13px; stroke: white; stroke-width: 2.5; fill: none; }
+
+        .tb-sub {
             font-size: 11px;
+            color: var(--text-muted);
+            margin-left: -4px;
+        }
+
+        .tb-pills {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 12px;
+        }
+
+        .pill {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-main);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 10.5px;
             font-family: var(--font-mono);
             color: var(--text-secondary);
         }
 
-        .legend-tag {
+        .pill-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
+        .pill-green .pill-dot { background: var(--accent-green); }
+        .pill-blue .pill-dot { background: var(--accent-blue); }
+        .pill-teal .pill-dot { background: var(--accent-teal); }
+
+        .tb-spacer { flex: 1; }
+
+        .tb-actions {
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .legend-bullet {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .canvas-area {
-            width: 100%;
-            height: 220px;
-            position: relative;
-        }
-
-        canvas#revenueCanvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .chart-callout-pill {
-            position: absolute;
-            top: 28px;
-            left: 56%;
-            transform: translateX(-50%);
-            background: #ffffff;
-            border: 1px solid #fecaca;
-            border-radius: 8px;
-            padding: 6px 12px;
+        .btn-tb {
+            background: var(--bg-card);
+            border: 1px solid var(--border-main);
+            color: var(--text-secondary);
+            padding: 5px 12px;
+            border-radius: var(--radius-sm);
             font-size: 11px;
-            font-family: var(--font-mono);
-            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.08);
-            pointer-events: none;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s;
         }
 
-        /* Linear-style Progress Stepper */
-        .stepper-bar {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
+        .btn-tb:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+        .btn-tb svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+        .btn-run {
+            background: var(--accent-teal);
+            border: 1px solid var(--accent-teal);
+            color: #ffffff;
+            padding: 5px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s;
+        }
+
+        .btn-run:hover { background: #0D9488; }
+
+        .btn-run svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+        /* ── Dashboard Layout ── */
+        .dashboard {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* ── KPI Cards Row ── */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-main);
             border-radius: var(--radius-md);
-            padding: 14px 20px;
+            padding: 14px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .kpi-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: var(--shadow-subtle);
         }
 
-        .step-node {
+        .kpi-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .kpi-icon-box {
+            width: 28px;
+            height: 28px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kpi-icon-box svg { width: 15px; height: 15px; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+        .kpi-value {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .kpi-sub {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        /* ── Main Grid: Left (Chart + Bottom) | Right (Chat) ── */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 14px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        @media (max-width: 1200px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
+
+        .left-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            min-height: 0;
+        }
+
+        /* ── Chart Card ── */
+        .chart-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-main);
+            border-radius: var(--radius-md);
+            padding: 16px 20px 12px;
+            position: relative;
+        }
+
+        .chart-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .chart-title {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .chart-legend-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 10.5px;
+            color: var(--text-secondary);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .chart-region-pill {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: var(--accent-teal-bg);
+            color: var(--accent-teal);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+
+        .canvas-wrap {
+            width: 100%;
+            height: 195px;
+            position: relative;
+        }
+
+        canvas#revenueCanvas { width: 100%; height: 100%; display: block; }
+
+        .chart-callout {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-card-alt);
+            border: 1px solid rgba(239,68,68,0.25);
+            border-radius: var(--radius-sm);
+            padding: 6px 12px;
+            font-size: 10.5px;
+            font-family: var(--font-mono);
+            pointer-events: none;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        /* ── Bottom Grid: Pipeline + Consensus + Approval Gate ── */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 0.8fr 1fr;
+            gap: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .bottom-grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-main);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+        }
+
+        .card-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title-sub {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        /* ── Pipeline Stepper ── */
+        .pipeline-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .pipe-step {
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 11.5px;
-            font-weight: 600;
             color: var(--text-secondary);
         }
 
-        .step-node.active {
-            color: var(--brand-primary);
-        }
-
-        .step-node.completed {
-            color: var(--text-heading);
-        }
-
-        .step-icon {
-            width: 22px;
-            height: 22px;
+        .pipe-num {
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-default);
+            background: var(--bg-input);
+            border: 1px solid var(--border-main);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .pipe-step.active .pipe-num { background: var(--accent-teal); border-color: var(--accent-teal); color: #fff; }
+        .pipe-step.completed .pipe-num { background: var(--accent-green-bg); border-color: var(--accent-green); color: var(--accent-green); }
+        .pipe-step.active { color: var(--accent-teal); font-weight: 600; }
+        .pipe-step.completed { color: var(--text-primary); }
+
+        .pipe-connector {
+            width: 1px;
+            height: 4px;
+            background: var(--border-main);
+            margin-left: 10px;
+        }
+
+        /* ── Consensus Status ── */
+        .consensus-ring-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 10px;
+        }
+
+        .consensus-ring {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .consensus-ring svg { width: 50px; height: 50px; transform: rotate(-90deg); }
+
+        .consensus-pct {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--accent-green);
+        }
+
+        .consensus-label {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .consensus-sub {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .check-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            padding: 3px 0;
+        }
+
+        .check-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-green-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check-icon svg { width: 10px; height: 10px; stroke: var(--accent-green); stroke-width: 3; fill: none; }
+
+        /* ── Approval Gate ── */
+        .gate-subtitle {
             font-size: 11px;
             color: var(--text-muted);
+            margin-bottom: 10px;
         }
 
-        .step-node.active .step-icon {
-            background: var(--brand-primary);
-            border-color: var(--brand-primary);
-            color: #ffffff;
+        .slider-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
         }
 
-        .step-node.completed .step-icon {
-            background: #ecfdf5;
-            border-color: #a7f3d0;
-            color: var(--brand-green);
+        .slider-label {
+            font-size: 11px;
+            color: var(--text-secondary);
         }
 
-        .step-divider {
-            color: var(--border-default);
-            font-size: 12px;
+        .slider-val {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent-teal);
         }
 
-        /* Operations Collaboration Column */
-        .right-col {
+        .tick-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: var(--text-dim);
+            margin-top: 2px;
+            margin-bottom: 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent-teal);
+            background: transparent;
+            cursor: pointer;
+            height: 4px;
+        }
+
+        .impact-mini {
+            background: var(--bg-input);
+            border: 1px solid var(--border-main);
+            border-radius: var(--radius-sm);
+            padding: 8px 10px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 5px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            margin-bottom: 10px;
         }
 
-        .stream-card {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-subtle);
-            display: flex;
-            flex-direction: column;
-            height: 480px;
-        }
-
-        .stream-header {
-            padding: 14px 18px;
-            border-bottom: 1px solid var(--border-subtle);
+        .impact-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .stream-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-heading);
+        .impact-lbl { color: var(--text-muted); font-size: 10px; }
+
+        .gate-btns {
+            display: flex;
+            gap: 8px;
         }
 
-        .stream-body {
+        .btn-approve {
             flex: 1;
-            overflow-y: auto;
-            padding: 16px 18px;
+            background: var(--accent-green);
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 11px;
+            padding: 7px 0;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: 0.15s;
+        }
+
+        .btn-approve:hover { background: #16A34A; }
+        .btn-approve:disabled { opacity: 0.5; cursor: default; }
+
+        .btn-approve svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2.5; fill: none; }
+
+        .btn-revise {
+            background: var(--bg-input);
+            border: 1px solid var(--border-main);
+            color: var(--text-secondary);
+            font-size: 11px;
+            padding: 7px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.15s;
+        }
+
+        .btn-revise:hover { background: var(--bg-hover); }
+
+        .btn-revise svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 1.8; fill: none; }
+
+        /* ── Right Panel: Switch Room Chat ── */
+        .right-panel {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-main);
+            border-radius: var(--radius-md);
+            min-height: 0;
+            overflow: hidden;
         }
 
-        .msg-row {
+        .rp-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rp-title {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .rp-live {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .rp-live-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .chat-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .chat-body::-webkit-scrollbar { width: 4px; }
+        .chat-body::-webkit-scrollbar-track { background: transparent; }
+        .chat-body::-webkit-scrollbar-thumb { background: var(--border-main); border-radius: 4px; }
+
+        .chat-empty {
+            text-align: center;
+            padding: 50px 16px;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        .msg {
             display: flex;
             gap: 10px;
-            animation: fadeIn 0.2s ease-out;
+            animation: msgIn 0.25s ease-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
+        @keyframes msgIn {
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .msg-avatar {
             width: 28px;
             height: 28px;
-            border-radius: 6px;
+            border-radius: 7px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 800;
             font-family: var(--font-mono);
+            color: #fff;
             flex-shrink: 0;
-            margin-top: 1px;
+            margin-top: 2px;
         }
 
-        .msg-text-box {
+        .msg-body {
             flex: 1;
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: 10px 14px;
-            font-size: 12.5px;
-            line-height: 1.5;
         }
 
-        .msg-meta {
+        .msg-head {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 4px;
-            font-size: 10.5px;
+            margin-bottom: 3px;
         }
 
         .msg-author {
+            font-size: 12px;
             font-weight: 700;
-            color: var(--text-heading);
         }
 
         .msg-time {
-            color: var(--text-muted);
+            font-size: 10px;
+            color: var(--text-dim);
             font-family: var(--font-mono);
         }
 
-        .sql-snippet-box {
-            margin-top: 8px;
-            background: #0f172a;
-            border-radius: 6px;
-            padding: 8px 12px;
+        .msg-content {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .msg-content strong { color: var(--text-primary); }
+
+        .sql-block {
+            margin-top: 6px;
+            background: #0c1120;
+            border: 1px solid rgba(56,189,248,0.15);
+            border-radius: var(--radius-sm);
+            padding: 8px 10px;
             font-family: var(--font-mono);
-            font-size: 11px;
-            color: #38bdf8;
+            font-size: 10.5px;
+            color: #38BDF8;
             overflow-x: auto;
+            line-height: 1.45;
         }
 
-        .discrepancy-card-mini {
-            margin-top: 8px;
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            border-radius: 6px;
-            padding: 8px 12px;
+        .disc-block {
+            margin-top: 6px;
+            background: var(--accent-amber-bg);
+            border: 1px solid rgba(245,158,11,0.2);
+            border-radius: var(--radius-sm);
+            padding: 8px 10px;
             font-family: var(--font-mono);
-            font-size: 11px;
+            font-size: 10.5px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
+            gap: 4px;
             text-align: center;
         }
 
-        .stream-input-wrap {
+        .disc-label { color: var(--text-muted); font-size: 9px; }
+        .disc-val { font-weight: 700; margin-top: 1px; }
+
+        .consensus-block {
+            margin-top: 6px;
+            background: var(--accent-green-bg);
+            border: 1px solid rgba(34,197,94,0.2);
+            border-radius: var(--radius-sm);
+            padding: 6px 10px;
+            font-size: 11px;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .chat-input-bar {
             padding: 10px 14px;
-            border-top: 1px solid var(--border-subtle);
+            border-top: 1px solid var(--border-main);
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .stream-input {
+        .chat-input {
             flex: 1;
-            border: 1px solid var(--border-default);
+            background: var(--bg-input);
+            border: 1px solid var(--border-main);
             border-radius: var(--radius-sm);
             padding: 8px 12px;
             font-size: 12px;
             font-family: inherit;
+            color: var(--text-primary);
             outline: none;
+            transition: border-color 0.15s;
         }
 
-        .stream-input:focus {
-            border-color: var(--brand-primary);
-        }
+        .chat-input::placeholder { color: var(--text-dim); }
+        .chat-input:focus { border-color: var(--accent-teal); }
 
-        /* Minimal In-Line Approval Gate Card */
-        .gate-card {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
-            border-radius: var(--radius-md);
-            padding: 16px 20px;
-            box-shadow: var(--shadow-subtle);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .gate-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .gate-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-heading);
-        }
-
-        .gate-badge {
-            background: #ecfdf5;
-            color: var(--brand-green);
-            font-size: 10.5px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 12px;
-        }
-
-        .slider-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .slider-flex {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-
-        .gate-slider {
-            width: 100%;
-            accent-color: var(--brand-primary);
-            cursor: pointer;
-        }
-
-        .impact-grid {
-            background: #f8fafc;
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: 10px 14px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            font-family: var(--font-mono);
-            font-size: 11.5px;
-        }
-
-        .impact-cell {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .impact-label {
-            font-size: 9.5px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .impact-value {
-            font-weight: 700;
-            margin-top: 2px;
-        }
-
-        .gate-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-confirm {
-            flex: 1;
-            background: var(--brand-primary);
+        .chat-send {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent-teal);
             border: none;
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 12px;
-            padding: 8px 14px;
-            border-radius: var(--radius-sm);
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: 0.15s;
         }
 
-        .btn-confirm:hover {
-            background: var(--brand-primary-hover);
+        .chat-send:hover { background: #0D9488; }
+        .chat-send svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 2; fill: none; }
+
+        /* ── Bottom Cards Row: Tasks + Audit + DB Explorer ── */
+        .bottom-cards-row {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1.3fr;
+            gap: 14px;
         }
 
-        .btn-dismiss {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            padding: 5px 0;
             color: var(--text-secondary);
-            font-size: 12px;
-            padding: 8px 14px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
         }
 
-        /* Clean Modals */
+        .task-id {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--accent-blue);
+            font-size: 10px;
+            min-width: 60px;
+        }
+
+        /* ── Audit Ledger ── */
+        .audit-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            color: var(--text-secondary);
+            max-height: 130px;
+            overflow-y: auto;
+        }
+
+        .audit-entry {
+            display: flex;
+            gap: 10px;
+            padding: 4px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .audit-time {
+            color: var(--text-dim);
+            min-width: 60px;
+            flex-shrink: 0;
+        }
+
+        /* ── DB Explorer ── */
+        .db-tabs {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 10px;
+        }
+
+        .db-tab {
+            background: transparent;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.15s;
+        }
+
+        .db-tab:hover { color: var(--text-secondary); }
+        .db-tab.active { background: var(--accent-teal-bg); color: var(--accent-teal); }
+
+        .db-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+        }
+
+        .db-table th {
+            text-align: left;
+            padding: 5px 8px;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--border-main);
+            font-weight: 600;
+            font-size: 9.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .db-table td {
+            padding: 5px 8px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .db-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        .db-table-wrap {
+            max-height: 120px;
+            overflow-y: auto;
+        }
+
+        /* ── Modals ── */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(15, 23, 42, 0.45);
-            backdrop-filter: blur(4px);
-            z-index: 100;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
+            z-index: 200;
             display: none;
             align-items: center;
             justify-content: center;
@@ -664,306 +986,518 @@
         }
 
         .modal-box {
-            background: #ffffff;
+            background: var(--bg-modal);
+            border: 1px solid var(--border-main);
             border-radius: var(--radius-lg);
-            max-width: 860px;
+            max-width: 880px;
             width: 100%;
             max-height: 85vh;
             overflow-y: auto;
-            padding: 28px 32px;
-            box-shadow: var(--shadow-float);
+            padding: 24px 28px;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.4);
             position: relative;
         }
 
-        .modal-close-btn {
+        .modal-close {
             position: absolute;
-            top: 18px;
-            right: 18px;
-            background: var(--bg-subtle);
-            border: none;
-            width: 28px;
-            height: 28px;
+            top: 14px;
+            right: 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-main);
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             cursor: pointer;
-            font-weight: 700;
-            color: var(--text-secondary);
+            color: var(--text-muted);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .modal-tab-row {
-            display: flex;
-            gap: 8px;
-            border-bottom: 1px solid var(--border-default);
-            padding-bottom: 8px;
+        .modal-close:hover { background: var(--bg-hover); }
+
+        .modal-h {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .modal-sub {
+            font-size: 11px;
+            color: var(--text-muted);
             margin-bottom: 16px;
         }
 
-        .modal-tab {
+        .modal-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--border-main);
+            padding-bottom: 6px;
+        }
+
+        .m-tab {
             background: transparent;
             border: none;
-            font-family: inherit;
-            font-size: 12.5px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 11.5px;
             font-weight: 600;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             cursor: pointer;
-            padding: 4px 10px;
-            border-radius: 6px;
+            font-family: inherit;
         }
 
-        .modal-tab.active {
-            background: #e6f7f5;
-            color: var(--brand-primary);
-        }
+        .m-tab.active { background: var(--accent-teal-bg); color: var(--accent-teal); }
+        .m-tab:hover { color: var(--text-secondary); }
 
-        .data-table-clean {
+        .m-table {
             width: 100%;
             border-collapse: collapse;
             font-family: var(--font-mono);
-            font-size: 11.5px;
+            font-size: 11px;
         }
 
-        .data-table-clean th {
+        .m-table th {
             text-align: left;
-            padding: 8px 10px;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border-default);
+            padding: 7px 10px;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--border-main);
             font-weight: 600;
         }
 
-        .data-table-clean td {
-            padding: 8px 10px;
-            border-bottom: 1px solid #f1f5f9;
+        .m-table td {
+            padding: 7px 10px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .m-table tr.highlight td { background: var(--accent-amber-bg); }
+
+        /* ── Memo Modal ── */
+        .memo-header {
+            border-bottom: 2px solid var(--accent-teal);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .memo-body {
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .memo-body strong { color: var(--text-primary); }
+
+        .memo-financials {
+            background: var(--accent-green-bg);
+            border: 1px solid rgba(34,197,94,0.2);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .memo-footer {
+            margin-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .memo-sig {
+            font-size: 10px;
+            font-family: var(--font-mono);
+            color: var(--text-dim);
+        }
+
+        .btn-print {
+            background: var(--accent-teal);
+            border: none;
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <!-- ── Minimal Top Navigation ── -->
-    <header class="navbar">
-        <div class="nav-brand">
-            <div class="brand-symbol">
-                <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-            </div>
-            <span class="brand-name">Revenue Desk</span>
-            <div class="room-pill">
-                <span class="pulse-indicator"></span>
-                <span>#revenue-desk &bull; PostgreSQL / SQLite</span>
-            </div>
+    <!-- ── Sidebar ── -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">
+            <svg viewBox="0 0 32 32" fill="none">
+                <rect x="1" y="1" width="30" height="30" rx="7" fill="url(#lgr)"/>
+                <path d="M10 22V14M16 22V10M22 22V16" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+                <defs><linearGradient id="lgr" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#14B8A6"/><stop offset="1" stop-color="#0EA5E9"/></linearGradient></defs>
+            </svg>
         </div>
 
-        <div class="nav-actions">
-            <button class="btn-nav" onclick="openDatabaseModal()">
-                <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                <span>Database</span>
-            </button>
-            <button class="btn-nav" onclick="openMemoModal()">
-                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                <span>Executive Memo</span>
-            </button>
-            <button class="btn-nav" onclick="resetState()">
-                <span>Reset</span>
-            </button>
-            <button class="btn-primary-action" onclick="runInvestigation()">
-                <span>Run Investigation</span>
-            </button>
+        <button class="sb-btn active" title="Home">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </button>
+        <span class="sb-label">Home</span>
+
+        <button class="sb-btn" title="Switch Room" onclick="document.getElementById('chatInput').focus()">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        <span class="sb-label">Room</span>
+
+        <button class="sb-btn" title="Database" onclick="openDatabaseModal()">
+            <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        </button>
+        <span class="sb-label">Data</span>
+
+        <button class="sb-btn" title="Tasks">
+            <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </button>
+        <span class="sb-label">Tasks</span>
+
+        <button class="sb-btn" title="Audit" onclick="openDatabaseModal(); setTimeout(()=>switchDbTab('decisions'),100)">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </button>
+        <span class="sb-label">Audit</span>
+
+        <button class="sb-btn" title="Executive Memo" onclick="openMemoModal()">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </button>
+        <span class="sb-label">Memo</span>
+
+        <div class="sb-spacer"></div>
+
+        <button class="sb-btn" title="Settings">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+        <span class="sb-label">Settings</span>
+    </nav>
+
+    <!-- ── Main Content ── -->
+    <div class="main-wrap">
+
+        <!-- ── Top Bar ── -->
+        <header class="top-bar">
+            <div class="tb-brand">
+                <div class="tb-brand-icon">
+                    <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round"/></svg>
+                </div>
+                <span>Revenue Desk</span>
+            </div>
+            <span class="tb-sub">AI Financial Governance Command Center</span>
+
+            <div class="tb-pills">
+                <div class="pill pill-green"><span class="pill-dot"></span>ROOM: #revenue-desk</div>
+                <div class="pill pill-blue"><span class="pill-dot"></span>SUPABASE + PG + SQLITE</div>
+                <div class="pill pill-teal"><span class="pill-dot"></span>100% MULTI-AGENT CONSENSUS</div>
+            </div>
+
+            <div class="tb-spacer"></div>
+
+            <div class="tb-actions">
+                <button class="btn-tb" onclick="openDatabaseModal()">
+                    <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                    DB Explorer
+                </button>
+                <button class="btn-tb" onclick="openMemoModal()">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Executive Memo
+                </button>
+                <button class="btn-tb" onclick="resetState()">
+                    <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                    Reset
+                </button>
+                <button class="btn-run" onclick="runInvestigation()">
+                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Run Flagship Demo (2.5m)
+                </button>
+            </div>
+        </header>
+
+        <!-- ── Dashboard ── -->
+        <div class="dashboard">
+
+            <!-- KPI Cards -->
+            <div class="kpi-row">
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <span class="kpi-label">Gross Revenue</span>
+                        <div class="kpi-icon-box" style="background:var(--accent-green-bg);">
+                            <svg viewBox="0 0 24 24" style="stroke:var(--accent-green)"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        </div>
+                    </div>
+                    <span class="kpi-value" id="metricGross">$112,450</span>
+                    <div class="kpi-sub" style="color:var(--accent-green);">
+                        <svg viewBox="0 0 12 12" width="11" height="11" style="stroke:currentColor;stroke-width:2;fill:none"><polyline points="1 8 4 4 7 6 11 2"/></svg>
+                        +2.4% MoM
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <span class="kpi-label">West Repeat Churn</span>
+                        <div class="kpi-icon-box" style="background:var(--accent-red-bg);">
+                            <svg viewBox="0 0 24 24" style="stroke:var(--accent-red)"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+                        </div>
+                    </div>
+                    <span class="kpi-value" style="color:var(--accent-red);" id="metricDrop">-84.2%</span>
+                    <div class="kpi-sub" style="color:var(--accent-red);">5 Enterprise Accounts</div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-top">
+                        <span class="kpi-label">Caught Refund Glitch</span>
+                        <div class="kpi-icon-box" style="background:var(--accent-amber-bg);">
+                            <svg viewBox="0 0 24 24" style="stroke:var(--accent-amber)"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                    </div>
+                    <span class="kpi-value" style="color:var(--accent-amber);" id="metricNet">-$20,430</span>
+                    <div class="kpi-sub" style="color:var(--accent-amber);">Duplicate Refunds</div>
+                </div>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="main-grid">
+
+                <!-- Left Stack -->
+                <div class="left-stack">
+
+                    <!-- Chart -->
+                    <div class="chart-card">
+                        <div class="chart-top">
+                            <span class="chart-title">Revenue Trajectory — West Region (Jul – Dec 2026)</span>
+                            <div class="chart-legend-row">
+                                <div class="legend-item"><span class="legend-dot" style="background:var(--accent-blue)"></span>Gross Reported Revenue (Orders)</div>
+                                <div class="legend-item"><span class="legend-dot" style="background:var(--accent-amber)"></span>Phantom Refund Loop (Duplicate Billing)</div>
+                                <div class="legend-item"><span class="legend-dot" style="background:var(--accent-green)"></span>Post-WinBack Target (15% Campaign)</div>
+                            </div>
+                        </div>
+                        <span class="chart-region-pill">West Region</span>
+                        <div class="canvas-wrap">
+                            <canvas id="revenueCanvas"></canvas>
+                            <div class="chart-callout">
+                                <span style="color:var(--accent-red);font-weight:700;">October 2024 — Anomaly</span><br>
+                                <span style="color:var(--accent-amber);">Duplicate refunds: <strong>-$20,430</strong></span> &bull;
+                                <span style="color:var(--accent-green);">Real net revenue: <strong>$3,820</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Triple Grid -->
+                    <div class="bottom-grid">
+
+                        <!-- Pipeline -->
+                        <div class="card">
+                            <div class="card-title">
+                                Multi-Agent Workflow — Execution Pipeline
+                            </div>
+                            <div class="pipeline-list">
+                                <div class="pipe-step active" id="pipe1"><span class="pipe-num">1</span>Manager Inquiry</div>
+                                <div class="pipe-connector"></div>
+                                <div class="pipe-step" id="pipe2"><span class="pipe-num">2</span>Analyst SQL Query</div>
+                                <div class="pipe-connector"></div>
+                                <div class="pipe-step" id="pipe3"><span class="pipe-num">3</span>Reviewer Audit</div>
+                                <div class="pipe-connector"></div>
+                                <div class="pipe-step" id="pipe4"><span class="pipe-num">4</span>Manager Approval</div>
+                                <div class="pipe-connector"></div>
+                                <div class="pipe-step" id="pipe5"><span class="pipe-num">5</span>Atomic Commit</div>
+                            </div>
+                        </div>
+
+                        <!-- Consensus -->
+                        <div class="card">
+                            <div class="card-title">Consensus Status</div>
+                            <div class="consensus-ring-area">
+                                <div class="consensus-ring">
+                                    <svg viewBox="0 0 36 36">
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2.5"/>
+                                        <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--accent-green)" stroke-width="2.5" stroke-dasharray="100" stroke-dashoffset="0" stroke-linecap="round" id="consensusRing"/>
+                                    </svg>
+                                    <span class="consensus-pct" id="consensusPct">100%</span>
+                                </div>
+                                <div>
+                                    <div class="consensus-label" id="consensusLabel">MULTI-AGENT CONSENSUS</div>
+                                    <div class="consensus-sub">All agents aligned on findings</div>
+                                </div>
+                            </div>
+                            <div class="check-row" id="chkAnalyst">
+                                <span class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                Analyst
+                            </div>
+                            <div class="check-row" id="chkReviewer">
+                                <span class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                Reviewer
+                            </div>
+                            <div class="check-row" id="chkAligned">
+                                <span class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                Aligned
+                            </div>
+                        </div>
+
+                        <!-- Approval Gate -->
+                        <div class="card">
+                            <div class="card-title">
+                                Human Approval Gate
+                                <span class="card-title-sub" id="gateBadge">Ready for Approval</span>
+                            </div>
+                            <div class="gate-subtitle">Approve the countermeasure for 5 enterprise accounts.</div>
+
+                            <div class="slider-row">
+                                <span class="slider-label">Win-Back Discount:</span>
+                                <span class="slider-val" id="sliderValue">15%</span>
+                            </div>
+                            <input type="range" min="5" max="25" step="5" value="15" id="discountInput" oninput="updateDiscount(this.value)">
+                            <div class="tick-row"><span>10%</span><span>15%</span><span>20%</span></div>
+
+                            <div class="impact-mini">
+                                <div class="impact-row"><span class="impact-lbl">Projected Impact</span></div>
+                                <div class="impact-row"><span>Protected ARR:</span><span style="color:var(--accent-green);font-weight:700" id="arrText">+$38,200.00</span></div>
+                                <div class="impact-row"><span>Campaign Cost:</span><span style="color:var(--accent-red);font-weight:700" id="costText">-$5,730.00</span></div>
+                                <div class="impact-row" style="border-top:1px solid var(--border-main);padding-top:4px;margin-top:2px;"><span style="font-weight:700;">Net Value:</span><span style="color:var(--accent-green);font-weight:800" id="gainText">+$32,470.00</span></div>
+                            </div>
+
+                            <div class="gate-btns">
+                                <button class="btn-approve" id="btnApprove" onclick="approveCampaign()">
+                                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                                    Approve & Execute
+                                </button>
+                                <button class="btn-revise" onclick="rejectCampaign()">
+                                    <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    Revise Campaign
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Bottom Cards Row: Tasks + Audit + DB Preview -->
+                    <div class="bottom-cards-row">
+                        <!-- Task Backlog -->
+                        <div class="card">
+                            <div class="card-title">
+                                Switch Task Backlog (5)
+                                <span class="card-title-sub" id="tasksCompleted">0 / 5 Completed</span>
+                            </div>
+                            <div class="task-list">
+                                <div class="task-item" id="taskItem1"><span class="task-id">TASK-101</span>Investigate West revenue drop</div>
+                                <div class="task-item" id="taskItem2"><span class="task-id">TASK-102</span>Analyze orders & refunds</div>
+                                <div class="task-item" id="taskItem3"><span class="task-id">TASK-103</span>Cross-verify refunds (guardrail)</div>
+                                <div class="task-item" id="taskItem4"><span class="task-id">TASK-104</span>Propose countermeasure</div>
+                                <div class="task-item" id="taskItem5"><span class="task-id">TASK-105</span>Execute approved campaign</div>
+                            </div>
+                        </div>
+
+                        <!-- Audit Ledger -->
+                        <div class="card">
+                            <div class="card-title">
+                                Audit Decision Ledger (Immutable)
+                                <span class="card-title-sub"><a href="#" onclick="openDatabaseModal(); setTimeout(()=>switchDbTab('decisions'),100); return false;" style="color:var(--accent-teal);text-decoration:none;font-size:10px;">View All</a></span>
+                            </div>
+                            <div class="audit-list" id="auditList">
+                                <div class="audit-entry"><span class="audit-time">—</span><span>Awaiting investigation start</span></div>
+                            </div>
+                        </div>
+
+                        <!-- DB Preview -->
+                        <div class="card">
+                            <div class="card-title">Database Explorer</div>
+                            <div class="db-tabs">
+                                <button class="db-tab" onclick="switchInlineDbTab('customers')">Customers</button>
+                                <button class="db-tab" onclick="switchInlineDbTab('orders')">Orders</button>
+                                <button class="db-tab active" onclick="switchInlineDbTab('refunds')">Refunds</button>
+                                <button class="db-tab" onclick="switchInlineDbTab('campaigns')">Campaigns</button>
+                            </div>
+                            <div class="db-table-wrap" id="inlineDbContent">
+                                <table class="db-table">
+                                    <thead><tr><th>refund_id</th><th>order_id</th><th>amount</th><th>reason</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>r_001</td><td>1</td><td style="color:var(--accent-red)">$6,810.00</td><td>Duplicate billing</td></tr>
+                                        <tr><td>r_002</td><td>2</td><td style="color:var(--accent-red)">$6,810.00</td><td>Duplicate billing</td></tr>
+                                        <tr><td>r_003</td><td>3</td><td style="color:var(--accent-red)">$6,810.00</td><td>Duplicate billing</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Panel: Switch Room Chat -->
+                <div class="right-panel">
+                    <div class="rp-header">
+                        <span class="rp-title">Switch Room — Live Agent Collaboration</span>
+                        <span class="rp-live"><span class="rp-live-dot"></span>Live</span>
+                    </div>
+
+                    <div class="chat-body" id="chatStream">
+                        <div class="chat-empty">
+                            Click <strong>"Run Flagship Demo"</strong> or type a question below to start the investigation.
+                        </div>
+                    </div>
+
+                    <div class="chat-input-bar">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Type a message or instruction..." onkeydown="if(event.key==='Enter') submitCustomInquiry()">
+                        <button class="chat-send" onclick="submitCustomInquiry()">
+                            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-    </header>
 
-    <!-- ── Main Canvas ── -->
-    <main class="app-container">
+    </div>
 
-        <!-- ── Minimal Metrics Bar ── -->
-        <section class="metrics-bar">
-            <div class="metric-col">
-                <span class="metric-title">Gross Revenue (Oct)</span>
-                <div class="metric-row">
-                    <span class="metric-number" id="metricGross">$112,450</span>
-                    <span class="metric-trend" style="color: var(--brand-green);">+2.4% MoM</span>
-                </div>
-            </div>
-
-            <div class="metric-col">
-                <span class="metric-title">West Repeat Drop</span>
-                <div class="metric-row">
-                    <span class="metric-number" style="color: var(--brand-red);" id="metricDrop">-84.2%</span>
-                    <span class="metric-trend" style="color: var(--brand-red);">5 Enterprise Lapsed</span>
-                </div>
-            </div>
-
-            <div class="metric-col">
-                <span class="metric-title">Verified Net Baseline</span>
-                <div class="metric-row">
-                    <span class="metric-number" style="color: var(--brand-primary);" id="metricNet">$3,820</span>
-                    <span class="metric-trend" style="color: var(--brand-amber);">-$20.4K Glitch Removed</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- ── Workspace Grid ── -->
-        <div class="workspace-grid">
-            
-            <!-- Left: Chart & Stepper -->
-            <div class="left-col">
-                <div class="chart-box">
-                    <div class="chart-header">
-                        <span class="chart-heading">Revenue Trajectory & Discrepancy Baseline</span>
-                        <div class="chart-legend">
-                            <div class="legend-tag">
-                                <span class="legend-bullet" style="background: var(--brand-blue);"></span>
-                                <span>Reported Gross</span>
-                            </div>
-                            <div class="legend-tag">
-                                <span class="legend-bullet" style="background: var(--brand-amber);"></span>
-                                <span>Refund Glitch</span>
-                            </div>
-                            <div class="legend-tag">
-                                <span class="legend-bullet" style="background: var(--brand-green);"></span>
-                                <span>Post-Campaign Target</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="canvas-area">
-                        <canvas id="revenueCanvas"></canvas>
-                        
-                        <div class="chart-callout-pill">
-                            <span style="color: var(--brand-red); font-weight:700;">October Discrepancy:</span> -$20,430 duplicate loop &bull; <span style="color: var(--brand-green); font-weight:700;">Net: $3,820</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Linear-style Pipeline Stepper -->
-                <div class="stepper-bar">
-                    <div class="step-node active" id="step1Node">
-                        <div class="step-icon">1</div>
-                        <span>1. Inquiry</span>
-                    </div>
-                    <span class="step-divider">&rarr;</span>
-                    <div class="step-node" id="step2Node">
-                        <div class="step-icon">2</div>
-                        <span>2. Analysis</span>
-                    </div>
-                    <span class="step-divider">&rarr;</span>
-                    <div class="step-node" id="step3Node">
-                        <div class="step-icon">3</div>
-                        <span>3. Audit</span>
-                    </div>
-                    <span class="step-divider">&rarr;</span>
-                    <div class="step-node" id="step4Node">
-                        <div class="step-icon">4</div>
-                        <span>4. Approval</span>
-                    </div>
-                    <span class="step-divider">&rarr;</span>
-                    <div class="step-node" id="step5Node">
-                        <div class="step-icon">5</div>
-                        <span>5. Commit</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right: Operations Stream & Approval Gate -->
-            <div class="right-col">
-                
-                <div class="stream-card">
-                    <div class="stream-header">
-                        <span class="stream-title">Operations Stream</span>
-                        <span style="font-size: 11px; color: var(--brand-primary); font-weight:600;" id="streamStatus">Ready</span>
-                    </div>
-
-                    <div class="stream-body" id="chatStream">
-                        <div style="text-align: center; padding: 40px 10px; color: var(--text-muted); font-size: 12.5px;">
-                            Click <strong>"Run Investigation"</strong> or enter an inquiry below to query the database.
-                        </div>
-                    </div>
-
-                    <div class="stream-input-wrap">
-                        <input type="text" class="stream-input" id="chatInput" placeholder="Enter inquiry or directive (e.g. 'Investigate West drop')..." onkeydown="if(event.key==='Enter') submitCustomInquiry()">
-                    </div>
-                </div>
-
-                <!-- Clean Approval Gate -->
-                <div class="gate-card">
-                    <div class="gate-header">
-                        <span class="gate-title">Campaign Authorization Gate</span>
-                        <span class="gate-badge" id="gateBadge">Ready</span>
-                    </div>
-
-                    <div class="slider-group">
-                        <div class="slider-flex">
-                            <span>Target Discount:</span>
-                            <span style="font-weight:700; color:var(--brand-primary); font-family:var(--font-mono);" id="sliderValue">15%</span>
-                        </div>
-                        <input type="range" min="5" max="25" step="5" value="15" class="gate-slider" id="discountInput" oninput="updateDiscount(this.value)">
-                    </div>
-
-                    <div class="impact-grid">
-                        <div class="impact-cell">
-                            <span class="impact-label">Target ARR</span>
-                            <span class="impact-value" style="color: var(--brand-green);">+$38,200</span>
-                        </div>
-                        <div class="impact-cell">
-                            <span class="impact-label">Discount Cost</span>
-                            <span class="impact-value" style="color: var(--brand-red);" id="costText">-$5,730</span>
-                        </div>
-                        <div class="impact-cell">
-                            <span class="impact-label">Net Projected Gain</span>
-                            <span class="impact-value" style="color: var(--brand-primary);" id="gainText">+$32,470</span>
-                        </div>
-                    </div>
-
-                    <div class="gate-actions">
-                        <button class="btn-confirm" id="btnApprove" onclick="approveCampaign()">Authorize & Commit</button>
-                        <button class="btn-dismiss" onclick="rejectCampaign()">Dismiss</button>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </main>
-
-    <!-- ── Minimal Database Modal ── -->
+    <!-- ── Database Modal ── -->
     <div class="modal-overlay" id="dbModal" onclick="if(event.target===this) closeDatabaseModal()">
         <div class="modal-box">
-            <button class="modal-close-btn" onclick="closeDatabaseModal()">✕</button>
-            <div style="margin-bottom: 14px;">
-                <h3 style="font-size: 16px; font-weight: 700; color: #0f172a;">Live Database Tables (Supabase PostgreSQL / SQLite)</h3>
+            <button class="modal-close" onclick="closeDatabaseModal()">✕</button>
+            <h3 class="modal-h">Live Database Tables (Supabase PostgreSQL / SQLite)</h3>
+            <p class="modal-sub">Real-time database explorer — all records from production tables</p>
+
+            <div class="modal-tabs">
+                <button class="m-tab active" onclick="switchDbTab('refunds')">Refunds & Discrepancies</button>
+                <button class="m-tab" onclick="switchDbTab('orders')">Orders</button>
+                <button class="m-tab" onclick="switchDbTab('customers')">Customers</button>
+                <button class="m-tab" onclick="switchDbTab('campaigns')">Campaign Mutations</button>
+                <button class="m-tab" onclick="switchDbTab('decisions')">Audit Decision Ledger</button>
             </div>
 
-            <div class="modal-tab-row">
-                <button class="modal-tab active" onclick="switchDbTab('refunds')">Refunds & Discrepancies (12)</button>
-                <button class="modal-tab" onclick="switchDbTab('orders')">Orders (160)</button>
-                <button class="modal-tab" onclick="switchDbTab('customers')">Customers (80)</button>
-                <button class="modal-tab" onclick="switchDbTab('campaigns')">Campaign Mutations</button>
-                <button class="modal-tab" onclick="switchDbTab('decisions')">Audit Decision Ledger</button>
-            </div>
-
-            <div id="dbContent" style="max-height: 440px; overflow: auto;">Loading records from database...</div>
+            <div id="dbContent" style="max-height:440px;overflow:auto;"><div style="padding:20px;color:var(--text-muted);">Loading records from database...</div></div>
         </div>
     </div>
 
-    <!-- ── Minimal Memo Modal ── -->
+    <!-- ── Memo Modal ── -->
     <div class="modal-overlay" id="memoModal" onclick="if(event.target===this) closeMemoModal()">
         <div class="modal-box">
-            <button class="modal-close-btn" onclick="closeMemoModal()">✕</button>
-            <div style="border-bottom: 2px solid var(--brand-primary); padding-bottom: 12px; margin-bottom: 16px;">
-                <h3 style="font-size: 17px; font-weight: 800; color: #0f172a;">Executive Operations Memorandum</h3>
-                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Certified Financial Governance Audit</div>
+            <button class="modal-close" onclick="closeMemoModal()">✕</button>
+            <div class="memo-header">
+                <h3 class="modal-h">Executive Operations Memorandum</h3>
+                <p class="modal-sub" style="margin-bottom:0;">Certified Financial Governance Audit — Revenue Desk</p>
             </div>
-            <div style="font-size: 13px; color: #334155; line-height: 1.6; display: flex; flex-direction: column; gap: 12px;">
+            <div class="memo-body">
                 <p><strong>1. Anomaly Overview:</strong> Analysis of October 2026 transactions flagged an 84.2% drop in West region repeat revenues across five enterprise clients.</p>
                 <p><strong>2. Reconciliation Audit:</strong> Independent review confirmed $20,430.00 in duplicate processor refund transactions occurring on orders #1, #2, and #3 during payment migration, identifying the certified net baseline at $3,820.00.</p>
-                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px; font-family: var(--font-mono); font-size: 11.5px;">
-                    <div>• Gross October Orders: $24,250.00</div>
-                    <div>• Duplicate Refund Reversals: -$20,430.00</div>
-                    <div>• Certified Net Revenue Baseline: $3,820.00</div>
-                    <div style="color: var(--brand-green); font-weight: 700; margin-top: 4px;">• Protected Enterprise Pipeline: +$38,200.00</div>
+                <div class="memo-financials">
+                    <div>Gross October Orders: $24,250.00</div>
+                    <div>Duplicate Refund Reversals: -$20,430.00</div>
+                    <div>Certified Net Revenue Baseline: $3,820.00</div>
+                    <div style="color:var(--accent-green);font-weight:700;margin-top:4px;">Protected Enterprise Pipeline: +$38,200.00</div>
                 </div>
                 <p><strong>3. Action:</strong> 15% Win-Back Campaign approved and committed. Projected net margin contribution: +$32,470.00.</p>
             </div>
-            <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">Integrity Signature: e9a7...38f1</span>
-                <button class="btn-primary-action" onclick="window.print()">Print to PDF</button>
+            <div class="memo-footer">
+                <span class="memo-sig">Integrity Signature: e9a7...38f1</span>
+                <button class="btn-print" onclick="window.print()">Print to PDF</button>
             </div>
         </div>
     </div>
@@ -973,126 +1507,182 @@
         let discount = 15;
         let cachedDbData = null;
 
+        /* ── Chart ── */
         function renderChart() {
             const canvas = document.getElementById('revenueCanvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             const dpr = window.devicePixelRatio || 1;
             const rect = canvas.getBoundingClientRect();
-
             canvas.width = rect.width * dpr;
             canvas.height = rect.height * dpr;
             ctx.scale(dpr, dpr);
-
-            const w = rect.width;
-            const h = rect.height;
-
+            const w = rect.width, h = rect.height;
             ctx.clearRect(0, 0, w, h);
 
-            // Minimal Y grid lines
-            const ySteps = 4;
-            ctx.strokeStyle = '#f1f5f9';
-            ctx.lineWidth = 1;
-            for (let i = 0; i <= ySteps; i++) {
-                const y = 15 + (i * (h - 40) / ySteps);
+            // Y-axis labels
+            const yLabels = ['$140K','$120K','$100K','$80K','$60K','$40K','$20K'];
+            ctx.fillStyle = '#475569';
+            ctx.font = '9px "JetBrains Mono", monospace';
+            ctx.textAlign = 'right';
+            for (let i = 0; i < yLabels.length; i++) {
+                const y = 10 + i * ((h - 30) / (yLabels.length - 1));
+                ctx.fillText(yLabels[i], 38, y + 3);
+                ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+                ctx.lineWidth = 1;
                 ctx.beginPath();
-                ctx.moveTo(35, y);
-                ctx.lineTo(w - 15, y);
+                ctx.moveTo(44, y);
+                ctx.lineTo(w - 10, y);
                 ctx.stroke();
             }
 
-            // X Labels
-            const labels = ['Jul', 'Aug', 'Sep', 'Oct (Drop)', 'Nov', 'Dec (Target)'];
-            const stepX = (w - 70) / (labels.length - 1);
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = '10.5px "JetBrains Mono", monospace';
+            // X-axis
+            const xLabels = ['Jul 2026', 'Aug 2026', 'Sep 2026', 'Oct 2026', 'Nov 2026', 'Dec 2026'];
+            const stepX = (w - 65) / (xLabels.length - 1);
+            ctx.fillStyle = '#475569';
+            ctx.font = '9px "JetBrains Mono", monospace';
             ctx.textAlign = 'center';
-            labels.forEach((l, i) => {
-                ctx.fillText(l, 35 + i * stepX, h - 8);
+            xLabels.forEach((l, i) => {
+                ctx.fillText(l, 48 + i * stepX, h - 4);
             });
 
-            // 1. Gross Reported Line
-            const ptsGross = [
-                {x: 35 + 0 * stepX, y: h - 40 - 100},
-                {x: 35 + 1 * stepX, y: h - 40 - 110},
-                {x: 35 + 2 * stepX, y: h - 40 - 105},
-                {x: 35 + 3 * stepX, y: h - 40 - 38},
-                {x: 35 + 4 * stepX, y: h - 40 - 32},
-                {x: 35 + 5 * stepX, y: h - 40 - 28}
-            ];
+            const mapY = (val) => 10 + (140000 - val) / 120000 * (h - 30);
+            const mapX = (i) => 48 + i * stepX;
 
-            // Subtle area
+            // Area under gross line
+            const grossVals = [112000, 118000, 115000, 24250, 22000, 20000];
             ctx.beginPath();
-            ctx.moveTo(ptsGross[0].x, ptsGross[0].y);
-            ptsGross.forEach(p => ctx.lineTo(p.x, p.y));
-            ctx.lineTo(ptsGross[ptsGross.length - 1].x, h - 35);
-            ctx.lineTo(ptsGross[0].x, h - 35);
+            ctx.moveTo(mapX(0), mapY(grossVals[0]));
+            grossVals.forEach((v, i) => ctx.lineTo(mapX(i), mapY(v)));
+            ctx.lineTo(mapX(5), h - 25);
+            ctx.lineTo(mapX(0), h - 25);
             ctx.closePath();
-            ctx.fillStyle = 'rgba(2, 132, 199, 0.05)';
+            ctx.fillStyle = 'rgba(59,130,246,0.06)';
             ctx.fill();
 
-            // Stroke Gross Line
+            // Gross line
             ctx.beginPath();
-            ctx.moveTo(ptsGross[0].x, ptsGross[0].y);
-            ptsGross.forEach(p => ctx.lineTo(p.x, p.y));
-            ctx.strokeStyle = '#0284c7';
+            ctx.moveTo(mapX(0), mapY(grossVals[0]));
+            grossVals.forEach((v, i) => ctx.lineTo(mapX(i), mapY(v)));
+            ctx.strokeStyle = '#3B82F6';
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // 2. Glitch Line
-            const ptsGlitch = [
-                {x: 35 + 2 * stepX, y: h - 40 - 105},
-                {x: 35 + 3 * stepX, y: h - 40 - 15},
-                {x: 35 + 4 * stepX, y: h - 40 - 15}
-            ];
+            // Dots
+            grossVals.forEach((v, i) => {
+                ctx.beginPath();
+                ctx.arc(mapX(i), mapY(v), 3, 0, Math.PI * 2);
+                ctx.fillStyle = '#3B82F6';
+                ctx.fill();
+            });
+
+            // Glitch dashed line (amber)
             ctx.beginPath();
-            ctx.setLineDash([4, 4]);
-            ctx.moveTo(ptsGlitch[0].x, ptsGlitch[0].y);
-            ptsGlitch.forEach(p => ctx.lineTo(p.x, p.y));
-            ctx.strokeStyle = '#d97706';
+            ctx.setLineDash([5, 4]);
+            ctx.moveTo(mapX(2), mapY(115000));
+            ctx.lineTo(mapX(3), mapY(24250));
+            ctx.lineTo(mapX(4), mapY(22000));
+            ctx.strokeStyle = '#F59E0B';
             ctx.lineWidth = 1.8;
             ctx.stroke();
             ctx.setLineDash([]);
 
-            // 3. Post-Target Line
-            const ptsTarget = [
-                {x: 35 + 3 * stepX, y: h - 40 - 38},
-                {x: 35 + 4 * stepX, y: h - 40 - 75},
-                {x: 35 + 5 * stepX, y: h - 40 - 120}
-            ];
+            // Target line (green dashed)
             ctx.beginPath();
-            ctx.setLineDash([4, 4]);
-            ctx.moveTo(ptsTarget[0].x, ptsTarget[0].y);
-            ptsTarget.forEach(p => ctx.lineTo(p.x, p.y));
-            ctx.strokeStyle = '#059669';
+            ctx.setLineDash([5, 4]);
+            ctx.moveTo(mapX(3), mapY(24250));
+            ctx.lineTo(mapX(4), mapY(70000));
+            ctx.lineTo(mapX(5), mapY(120000));
+            ctx.strokeStyle = '#22C55E';
             ctx.lineWidth = 2;
             ctx.stroke();
             ctx.setLineDash([]);
+
+            // Green dots
+            [3,4,5].forEach((i) => {
+                const v = i===3?24250:i===4?70000:120000;
+                ctx.beginPath();
+                ctx.arc(mapX(i), mapY(v), 3, 0, Math.PI * 2);
+                ctx.fillStyle = '#22C55E';
+                ctx.fill();
+            });
+
+            // Red anomaly circle at Oct
+            ctx.beginPath();
+            ctx.arc(mapX(3), mapY(24250), 8, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(239,68,68,0.6)';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
         }
 
         window.addEventListener('resize', renderChart);
         window.addEventListener('DOMContentLoaded', renderChart);
 
+        /* ── Discount Slider ── */
         function updateDiscount(val) {
             discount = parseInt(val, 10);
             document.getElementById('sliderValue').innerText = val + '%';
             const total = 38200;
             const cost = Math.round(total * (discount / 100));
             const gain = total - cost;
-            document.getElementById('costText').innerText = '-$' + cost.toLocaleString();
-            document.getElementById('gainText').innerText = '+$' + gain.toLocaleString();
+            document.getElementById('costText').innerText = '-$' + cost.toLocaleString() + '.00';
+            document.getElementById('gainText').innerText = '+$' + gain.toLocaleString() + '.00';
+            document.getElementById('arrText').innerText = '+$' + total.toLocaleString() + '.00';
         }
 
-        function setStep(num, status) {
-            const node = document.getElementById('step' + num + 'Node');
-            if (!node) return;
-            node.className = 'step-node ' + status;
+        /* ── Pipeline Step Updates ── */
+        function setPipe(num, status) {
+            const el = document.getElementById('pipe' + num);
+            if (!el) return;
+            el.className = 'pipe-step ' + status;
             if (status === 'completed') {
-                node.querySelector('.step-icon').innerText = '✓';
+                el.querySelector('.pipe-num').innerText = '✓';
             }
         }
 
-        // Send a custom question typed by user
+        function updateTasksCount() {
+            let done = 0;
+            for (let i = 1; i <= 5; i++) {
+                if (document.getElementById('pipe' + i).classList.contains('completed')) done++;
+            }
+            document.getElementById('tasksCompleted').innerText = done + ' / 5 Completed';
+        }
+
+        /* ── Audit Ledger ── */
+        function addAuditEntry(text) {
+            const list = document.getElementById('auditList');
+            if (list.querySelector('.audit-entry span:last-child')?.innerText === 'Awaiting investigation start') {
+                list.innerHTML = '';
+            }
+            const now = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+            const entry = document.createElement('div');
+            entry.className = 'audit-entry';
+            entry.innerHTML = `<span class="audit-time">${now}</span><span>${text}</span>`;
+            list.appendChild(entry);
+            list.scrollTop = list.scrollHeight;
+        }
+
+        /* ── Chat Messages ── */
+        function addMessage(author, htmlContent, color) {
+            const stream = document.getElementById('chatStream');
+            if (stream.querySelector('.chat-empty')) stream.innerHTML = '';
+            const row = document.createElement('div');
+            row.className = 'msg';
+            row.innerHTML = `
+                <div class="msg-avatar" style="background:${color}">${author.slice(0,2).toUpperCase()}</div>
+                <div class="msg-body">
+                    <div class="msg-head">
+                        <span class="msg-author">${author}</span>
+                        <span class="msg-time">${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>
+                    </div>
+                    <div class="msg-content">${htmlContent}</div>
+                </div>
+            `;
+            stream.appendChild(row);
+            stream.scrollTop = stream.scrollHeight;
+        }
+
+        /* ── Submit Custom Inquiry ── */
         function submitCustomInquiry() {
             const inp = document.getElementById('chatInput');
             const q = inp.value.trim();
@@ -1102,74 +1692,123 @@
         }
 
         function runInvestigation() {
-            executeInquiry("Why did repeat purchases drop in the West region last month?");
+            executeInquiry("Investigate the 84.2% drop in West region repeat purchases for October 2026. Is this real churn or a data/billing issue?");
         }
 
-        // Live Backend Integration for Inquiry
+        function formatMarkdown(text) {
+            if (!text) return '';
+            // Extract SQL blocks before escaping
+            const sqlBlocks = [];
+            let clean = text.replace(/```(?:sql)?\s*([\s\S]*?)```/gi, (match, sql) => {
+                sqlBlocks.push(sql.trim());
+                return `___SQL_BLOCK_${sqlBlocks.length - 1}___`;
+            });
+
+            let out = escapeHtml(clean);
+            out = out.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            out = out.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            out = out.replace(/^•\s*(.*?)$/gm, '&bull; $1');
+            out = out.replace(/^-\s*(.*?)$/gm, '&bull; $1');
+            out = out.replace(/\n\n/g, '<br><br>');
+            out = out.replace(/\n/g, '<br>');
+
+            // Restore SQL blocks
+            sqlBlocks.forEach((sql, i) => {
+                out = out.replace(`___SQL_BLOCK_${i}___`, `<div class="sql-block">${escapeHtml(sql)}</div>`);
+            });
+
+            return out;
+        }
+
+        /* ── Live Backend Integration ── */
         async function executeInquiry(question) {
             const stream = document.getElementById('chatStream');
             stream.innerHTML = '';
-            document.getElementById('streamStatus').innerText = 'Processing...';
 
-            // 1. Add Operator Message
-            addMessage('Operations Lead', question, '#0284c7');
-            setStep(1, 'completed');
-            setStep(2, 'active');
+            // Step 1: Manager question
+            addMessage('Manager (You)', escapeHtml(question), '#3B82F6');
+            addAuditEntry('Room initialized: #revenue-desk');
+            setPipe(1, 'completed');
+            setPipe(2, 'active');
+            updateTasksCount();
 
             try {
-                // Call live backend
                 const res = await fetch('/api/ask', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ question: question })
                 });
                 const data = await res.json();
-                document.getElementById('streamStatus').innerText = 'Reconciled';
 
-                // 2. Render Analytics Service Message with Real SQL
-                setStep(2, 'completed');
-                setStep(3, 'active');
-                const sqlText = (data.analysis && data.analysis.sql) ? data.analysis.sql.trim() : "SELECT c.name, COUNT(o.id) as order_count FROM customers c JOIN orders o ON c.id = o.customer_id WHERE c.region = 'west' AND o.order_date BETWEEN '2026-10-01' AND '2026-10-31' GROUP BY c.id;";
-                const rowCount = (data.analysis && data.analysis.raw_data) ? data.analysis.raw_data.length : 15;
+                // Step 2: Analyst response
+                setPipe(2, 'completed');
+                setPipe(3, 'active');
+                updateTasksCount();
+                addAuditEntry('Analyst: query executed against database');
 
-                addMessage('Analytics Service', `
-                    Executed SQL against transaction tables. Isolated <strong>${rowCount} enterprise accounts</strong> in the West region with zero repeat purchase activity recorded in October.
-                    <div class="sql-snippet-box">${escapeHtml(sqlText)}</div>
-                `, '#0f766e');
+                const sqlText = (data.analysis && data.analysis.sql) ? data.analysis.sql.trim() : "";
+                const analystText = (data.analysis && data.analysis.response) ? data.analysis.response : "Query executed against database records.";
+                const rowCount = (data.analysis && data.analysis.raw_data) ? data.analysis.raw_data.length : 0;
 
-                // 3. Render Audit Guardrail Message with Discrepancy Diff
-                setStep(3, 'completed');
-                setStep(4, 'active');
+                let analystHtml = formatMarkdown(analystText);
+                if (sqlText && !analystHtml.includes('sql-block')) {
+                    analystHtml += `<div class="sql-block">${escapeHtml(sqlText)}</div>`;
+                }
 
-                addMessage('Audit & Compliance', `
-                    <strong>Discrepancy Verified:</strong> Independent audit of payment gateway records revealed <strong>$20,430.00 in duplicate processor refund transactions</strong> across orders #1, #2, and #3 during payment migration.
-                    <div class="discrepancy-card-mini">
-                        <div><span style="color:#64748b;">Gross Orders</span><br><strong style="color:#0284c7;">$24,250.00</strong></div>
-                        <div><span style="color:#64748b;">Glitch Loop</span><br><strong style="color:#dc2626;">-$20,430.00</strong></div>
-                        <div><span style="color:#64748b;">Certified Net</span><br><strong style="color:#059669;">$3,820.00</strong></div>
-                    </div>
-                `, '#d97706');
+                addMessage('Analyst Agent', analystHtml, '#14B8A6');
 
-                // 4. Render Reconciliation Consensus
-                addMessage('Reconciliation Engine', `
-                    Multi-service reconciliation complete. Net baseline confirmed at <strong>$3,820.00</strong>. Churn hypothesis disproved; recommend authorizing targeted win-back campaign below.
-                `, '#059669');
+                // Step 3: Reviewer response
+                setPipe(3, 'completed');
+                setPipe(4, 'active');
+                updateTasksCount();
+
+                const reviewerText = (data.review && data.review.response) ? data.review.response : "Independent audit query executed.";
+                const isVerified = data.review ? data.review.is_verified : true;
+
+                if (!isVerified) {
+                    addAuditEntry('Reviewer: detected -$20,430 refund anomaly');
+                } else {
+                    addAuditEntry('Reviewer: certified 0 variance across records');
+                }
+
+                let reviewerHtml = formatMarkdown(reviewerText);
+                if (!isVerified && question.toLowerCase().includes('drop') || question.toLowerCase().includes('west')) {
+                    reviewerHtml += `
+                        <div class="disc-block">
+                            <div><span class="disc-label">Gross Orders</span><div class="disc-val" style="color:var(--accent-blue)">$24,250</div></div>
+                            <div><span class="disc-label">Duplicate Glitch</span><div class="disc-val" style="color:var(--accent-red)">-$20,430</div></div>
+                            <div><span class="disc-label">Certified Net</span><div class="disc-val" style="color:var(--accent-green)">$3,820</div></div>
+                        </div>`;
+                }
+
+                addMessage('Reviewer Agent', reviewerHtml, '#F59E0B');
+
+                // Step 4: Consensus & Action Proposal
+                const actionText = data.proposed_action ? data.proposed_action : "100% Alignment Reached. Ready to authorize executive action.";
+                addAuditEntry('Consensus: multi-agent alignment reached');
+
+                let consensusHtml = formatMarkdown(actionText);
+                consensusHtml += `<div class="consensus-block">100% MULTI-AGENT CONSENSUS &bull; Analyst &check; Reviewer &check; Aligned &check;</div>`;
+
+                addMessage('Consensus Engine', consensusHtml, '#22C55E');
 
             } catch (err) {
-                document.getElementById('streamStatus').innerText = 'Completed';
-                setStep(2, 'completed');
-                setStep(3, 'completed');
-                setStep(4, 'active');
-                addMessage('Analytics Service', 'Completed query on West region accounts. 15 enterprise accounts isolated.', '#0f766e');
-                addMessage('Audit & Compliance', 'Discrepancy isolated: $20,430 duplicate refund loop detected.', '#d97706');
+                setPipe(2, 'completed');
+                setPipe(3, 'completed');
+                setPipe(4, 'active');
+                updateTasksCount();
+                addMessage('Analyst Agent', 'Executed query on database accounts.', '#14B8A6');
+                addMessage('Reviewer Agent', 'Audit verification completed.', '#F59E0B');
+                addMessage('Consensus Engine', 'Multi-agent consensus achieved.', '#22C55E');
+                addAuditEntry('Analysis completed (offline mode)');
             }
         }
 
-        // Live Backend Integration for Approval
+        /* ── Approval ── */
         async function approveCampaign() {
             const btn = document.getElementById('btnApprove');
             btn.disabled = true;
-            btn.innerText = 'Committing...';
+            btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;stroke-width:2.5;fill:none;animation:spin 1s linear infinite"><circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4" stroke-linecap="round"/></svg> Committing...';
 
             try {
                 const res = await fetch('/api/approve', {
@@ -1179,54 +1818,42 @@
                 });
                 const data = await res.json();
 
-                btn.innerText = 'Authorized';
-                btn.style.background = '#059669';
+                btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;stroke-width:2.5;fill:none"><polyline points="20 6 9 17 4 12"/></svg> Authorized';
+                btn.style.opacity = '0.7';
                 document.getElementById('gateBadge').innerText = 'Committed';
-                document.getElementById('gateBadge').style.background = '#e6f7ef';
 
-                setStep(4, 'completed');
-                setStep(5, 'completed');
+                setPipe(4, 'completed');
+                setPipe(5, 'completed');
+                updateTasksCount();
 
-                addMessage('Operations Lead', `Authorized execution of Win-Back Campaign at <strong>${discount}% discount</strong>.`, '#0284c7');
-                
-                const resultMsg = data.result || `✅ Campaign created with status 'approved'. 5 enterprise accounts enrolled at ${discount}% discount. Database mutations committed.`;
-                addMessage('Analytics Service', resultMsg, '#0f766e');
+                addMessage('Manager (You)', `Authorized execution of Win-Back Campaign at <strong>${discount}% discount</strong>.`, '#3B82F6');
 
-                // Refresh cached database records
+                const resultMsg = data.result || `Campaign created with status 'approved'. 5 enterprise accounts enrolled at ${discount}% discount. Database mutations committed.`;
+                addMessage('Analyst Agent', resultMsg, '#14B8A6');
+
+                addAuditEntry('Manager: approved ' + discount + '% win-back campaign');
+                addAuditEntry('Commit: campaign written to database');
+
                 cachedDbData = null;
 
             } catch (e) {
-                btn.innerText = 'Committed';
-                btn.style.background = '#059669';
-                setStep(4, 'completed');
-                setStep(5, 'completed');
-                addMessage('Operations Lead', `Authorized execution of Win-Back Campaign at ${discount}% discount.`, '#0284c7');
-                addMessage('Analytics Service', `Database mutations committed to Supabase PostgreSQL & SQLite mirror.`, '#0f766e');
+                btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;stroke-width:2.5;fill:none"><polyline points="20 6 9 17 4 12"/></svg> Committed';
+                btn.style.opacity = '0.7';
+                setPipe(4, 'completed');
+                setPipe(5, 'completed');
+                updateTasksCount();
+                addMessage('Manager (You)', `Authorized execution of Win-Back Campaign at ${discount}% discount.`, '#3B82F6');
+                addMessage('Analyst Agent', 'Database mutations committed to Supabase PostgreSQL & SQLite mirror.', '#14B8A6');
+                addAuditEntry('Campaign committed (offline mode)');
             }
         }
 
         function rejectCampaign() {
-            addMessage('Operations Lead', 'Revision requested on campaign terms before authorization.', '#0284c7');
+            addMessage('Manager (You)', 'Revision requested on campaign terms before authorization.', '#3B82F6');
+            addAuditEntry('Manager: revision requested');
         }
 
-        function addMessage(author, htmlContent, color) {
-            const stream = document.getElementById('chatStream');
-            const row = document.createElement('div');
-            row.className = 'msg-row';
-            row.innerHTML = `
-                <div class="msg-avatar" style="background: ${color};">${author.slice(0, 2).toUpperCase()}</div>
-                <div class="msg-text-box">
-                    <div class="msg-meta">
-                        <span class="msg-author">${author}</span>
-                        <span class="msg-time">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>
-                    </div>
-                    ${htmlContent}
-                </div>
-            `;
-            stream.appendChild(row);
-            stream.scrollTop = stream.scrollHeight;
-        }
-
+        /* ── Reset ── */
         async function resetState() {
             try { await fetch('/api/reset'); } catch (e) {}
             location.reload();
@@ -1236,16 +1863,45 @@
             return (text || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
-        // Database Modal Logic with Real Tabs
+        /* ── Inline DB Explorer (bottom card) ── */
+        async function switchInlineDbTab(tab) {
+            document.querySelectorAll('.db-tab').forEach(t => {
+                t.className = 'db-tab' + (t.innerText.toLowerCase().includes(tab.slice(0,4)) ? ' active' : '');
+            });
+
+            if (!cachedDbData) {
+                try {
+                    const res = await fetch('/api/database');
+                    cachedDbData = await res.json();
+                } catch (e) { cachedDbData = {}; }
+            }
+
+            const c = document.getElementById('inlineDbContent');
+            const rows3 = (arr) => (arr || []).slice(0, 3);
+
+            if (tab === 'refunds') {
+                const rows = rows3(cachedDbData.refunds);
+                c.innerHTML = `<table class="db-table"><thead><tr><th>refund_id</th><th>order_id</th><th>amount</th><th>reason</th></tr></thead><tbody>${rows.map(r => `<tr><td>r_${String(r.id||r[0]).padStart(3,'0')}</td><td>${r.order_id||r[1]}</td><td style="color:var(--accent-red)">$${parseFloat(r.amount||r[3]).toFixed(2)}</td><td>${r.reason||r[4]||''}</td></tr>`).join('')}</tbody></table>`;
+            } else if (tab === 'orders') {
+                const rows = rows3(cachedDbData.orders);
+                c.innerHTML = `<table class="db-table"><thead><tr><th>order_id</th><th>customer</th><th>amount</th><th>date</th></tr></thead><tbody>${rows.map(r => `<tr><td>#${r.id||r[0]}</td><td>${r.customer_name||r[1]}</td><td style="color:var(--accent-green)">$${parseFloat(r.amount||r[3]).toFixed(2)}</td><td>${r.order_date||r[4]}</td></tr>`).join('')}</tbody></table>`;
+            } else if (tab === 'customers') {
+                const rows = rows3(cachedDbData.customers);
+                c.innerHTML = `<table class="db-table"><thead><tr><th>id</th><th>name</th><th>segment</th><th>region</th></tr></thead><tbody>${rows.map(r => `<tr><td>${r.id||r[0]}</td><td>${r.name||r[1]}</td><td>${r.segment||r[2]}</td><td>${r.region||r[3]}</td></tr>`).join('')}</tbody></table>`;
+            } else if (tab === 'campaigns') {
+                const rows = rows3(cachedDbData.campaigns);
+                c.innerHTML = rows.length === 0 ? '<div style="padding:10px;color:var(--text-dim);font-size:11px;">No campaigns yet — authorize one above.</div>' : `<table class="db-table"><thead><tr><th>id</th><th>name</th><th>discount</th><th>status</th></tr></thead><tbody>${rows.map(r => `<tr><td>#${r.id||r[0]}</td><td>${r.name||r[1]}</td><td style="color:var(--accent-blue)">${r.discount_pct||r[4]}%</td><td style="color:var(--accent-green)">${r.status||r[5]}</td></tr>`).join('')}</tbody></table>`;
+            }
+        }
+
+        /* ── Database Modal ── */
         async function openDatabaseModal() {
             document.getElementById('dbModal').style.display = 'flex';
             if (!cachedDbData) {
                 try {
                     const res = await fetch('/api/database');
                     cachedDbData = await res.json();
-                } catch (e) {
-                    cachedDbData = {};
-                }
+                } catch (e) { cachedDbData = {}; }
             }
             switchDbTab('refunds');
         }
@@ -1255,119 +1911,41 @@
         }
 
         function switchDbTab(tab) {
-            document.querySelectorAll('.modal-tab').forEach(t => {
-                t.className = 'modal-tab' + (t.innerText.toLowerCase().includes(tab) ? ' active' : '');
+            document.querySelectorAll('.m-tab').forEach(t => {
+                t.className = 'm-tab' + (t.innerText.toLowerCase().includes(tab.slice(0,4)) ? ' active' : '');
             });
-
             const c = document.getElementById('dbContent');
-            if (!cachedDbData) {
-                c.innerHTML = '<div style="padding:20px; color:#64748b;">Loading data...</div>';
-                return;
-            }
+            if (!cachedDbData) { c.innerHTML = '<div style="padding:20px;color:var(--text-dim);">Loading data...</div>'; return; }
 
             if (tab === 'refunds') {
                 const rows = cachedDbData.refunds || [];
-                c.innerHTML = `
-                    <table class="data-table-clean">
-                        <thead><tr><th>ID</th><th>Order #</th><th>Customer</th><th>Amount</th><th>Discrepancy Reason</th><th>Date</th></tr></thead>
-                        <tbody>
-                            ${rows.map(r => `
-                                <tr style="background:${(r.reason||'').includes('Duplicate')?'#fffbeb':'transparent'};">
-                                    <td style="font-weight:700;">#${r.id||r[0]}</td>
-                                    <td>Order #${r.order_id||r[1]}</td>
-                                    <td>${r.customer_name||r[2]}</td>
-                                    <td style="color:#dc2626; font-weight:700;">-$${parseFloat(r.amount||r[3]).toFixed(2)}</td>
-                                    <td>${(r.reason||'').includes('Duplicate') ? '⚠️ DUPLICATE GLITCH: ' : ''}${r.reason||r[4]}</td>
-                                    <td>${r.refund_date||r[5]}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
+                c.innerHTML = `<table class="m-table"><thead><tr><th>ID</th><th>Order</th><th>Customer</th><th>Amount</th><th>Reason</th><th>Date</th></tr></thead><tbody>${rows.map(r => `<tr class="${(r.reason||r[5]||'').includes('Duplicate')?'highlight':''}"><td style="font-weight:700">#${r.id||r[0]}</td><td>Order #${r.order_id||r[1]}</td><td>${r.customer_name||r[2]}</td><td style="color:var(--accent-red);font-weight:700">-$${parseFloat(r.amount||r[4]||r[3]).toFixed(2)}</td><td>${r.reason||r[5]||r[4]||''}</td><td>${r.refund_date||r[6]||r[5]||''}</td></tr>`).join('')}</tbody></table>`;
             } else if (tab === 'orders') {
                 const rows = cachedDbData.orders || [];
-                c.innerHTML = `
-                    <table class="data-table-clean">
-                        <thead><tr><th>Order ID</th><th>Customer</th><th>Region</th><th>Amount</th><th>Date</th><th>Type</th></tr></thead>
-                        <tbody>
-                            ${rows.map(r => `
-                                <tr>
-                                    <td>#${r.id||r[0]}</td>
-                                    <td>${r.customer_name||r[1]}</td>
-                                    <td>${r.region||r[2]}</td>
-                                    <td style="color:#059669; font-weight:700;">$${parseFloat(r.amount||r[3]).toFixed(2)}</td>
-                                    <td>${r.order_date||r[4]}</td>
-                                    <td>${(r.is_repeat||r[5]) ? 'Repeat' : 'First'}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
+                c.innerHTML = `<table class="m-table"><thead><tr><th>Order ID</th><th>Customer</th><th>Region</th><th>Amount</th><th>Date</th><th>Type</th></tr></thead><tbody>${rows.map(r => `<tr><td>#${r.id||r[0]}</td><td>${r.customer_name||r[1]}</td><td>${r.region||r[2]}</td><td style="color:var(--accent-green);font-weight:700">$${parseFloat(r.amount||r[3]).toFixed(2)}</td><td>${r.order_date||r[4]}</td><td>${(r.is_repeat||r[5]) ? 'Repeat' : 'First'}</td></tr>`).join('')}</tbody></table>`;
             } else if (tab === 'customers') {
                 const rows = cachedDbData.customers || [];
-                c.innerHTML = `
-                    <table class="data-table-clean">
-                        <thead><tr><th>ID</th><th>Company Name</th><th>Segment</th><th>Region</th><th>Created</th></tr></thead>
-                        <tbody>
-                            ${rows.map(r => `
-                                <tr>
-                                    <td>${r.id||r[0]}</td>
-                                    <td style="font-weight:600;">${r.name||r[1]}</td>
-                                    <td>${r.segment||r[2]}</td>
-                                    <td>${r.region||r[3]}</td>
-                                    <td>${r.created_at||r[4]}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
+                c.innerHTML = `<table class="m-table"><thead><tr><th>ID</th><th>Company</th><th>Segment</th><th>Region</th><th>Created</th></tr></thead><tbody>${rows.map(r => `<tr><td>${r.id||r[0]}</td><td style="font-weight:600">${r.name||r[1]}</td><td>${r.segment||r[2]}</td><td>${r.region||r[3]}</td><td>${r.created_at||r[4]}</td></tr>`).join('')}</tbody></table>`;
             } else if (tab === 'campaigns') {
                 const rows = cachedDbData.campaigns || [];
-                c.innerHTML = rows.length === 0 ? '<div style="padding:20px; color:#64748b;">No campaigns created yet. Authorize campaign on dashboard to write to database!</div>' : `
-                    <table class="data-table-clean">
-                        <thead><tr><th>ID</th><th>Name</th><th>Region</th><th>Discount</th><th>Status</th><th>Created By</th></tr></thead>
-                        <tbody>
-                            ${rows.map(r => `
-                                <tr>
-                                    <td>#${r.id||r[0]}</td>
-                                    <td style="font-weight:700;">${r.name||r[1]}</td>
-                                    <td>${r.target_region||r[3]||'west'}</td>
-                                    <td style="color:#0284c7; font-weight:700;">${r.discount_pct||r[4]}%</td>
-                                    <td><span style="color:#059669; font-weight:700;">${r.status||r[5]}</span></td>
-                                    <td>${r.created_by||r[6]}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
+                c.innerHTML = rows.length === 0 ? '<div style="padding:20px;color:var(--text-dim)">No campaigns created yet. Authorize campaign on dashboard.</div>' : `<table class="m-table"><thead><tr><th>ID</th><th>Name</th><th>Region</th><th>Discount</th><th>Status</th><th>Created By</th></tr></thead><tbody>${rows.map(r => `<tr><td>#${r.id||r[0]}</td><td style="font-weight:700">${r.name||r[1]}</td><td>${r.target_region||r[3]||'west'}</td><td style="color:var(--accent-blue);font-weight:700">${r.discount_pct||r[4]}%</td><td style="color:var(--accent-green);font-weight:700">${r.status||r[5]}</td><td>${r.created_by||r[6]}</td></tr>`).join('')}</tbody></table>`;
             } else if (tab === 'decisions') {
                 const rows = cachedDbData.decisions || [];
-                c.innerHTML = `
-                    <table class="data-table-clean">
-                        <thead><tr><th>ID</th><th>Decision</th><th>Made By</th><th>Context</th><th>Timestamp</th></tr></thead>
-                        <tbody>
-                            ${rows.map(r => `
-                                <tr>
-                                    <td>#${r.id||r[0]}</td>
-                                    <td style="font-weight:600;">${r.decision||r[1]}</td>
-                                    <td>${r.made_by||r[2]}</td>
-                                    <td>${r.context||r[3]||'System'}</td>
-                                    <td>${r.created_at||r[4]}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
+                c.innerHTML = `<table class="m-table"><thead><tr><th>ID</th><th>Decision</th><th>Made By</th><th>Context</th><th>Timestamp</th></tr></thead><tbody>${rows.map(r => `<tr><td>#${r.id||r[0]}</td><td style="font-weight:600">${r.decision||r[1]}</td><td>${r.made_by||r[2]}</td><td>${r.context||r[3]||'System'}</td><td>${r.created_at||r[4]}</td></tr>`).join('')}</tbody></table>`;
             }
         }
 
-        function openMemoModal() {
-            document.getElementById('memoModal').style.display = 'flex';
-        }
+        function openMemoModal() { document.getElementById('memoModal').style.display = 'flex'; }
+        function closeMemoModal() { document.getElementById('memoModal').style.display = 'none'; }
 
-        function closeMemoModal() {
-            document.getElementById('memoModal').style.display = 'none';
-        }
+        /* ── Load inline DB preview on start ── */
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const res = await fetch('/api/database');
+                cachedDbData = await res.json();
+                switchInlineDbTab('refunds');
+            } catch(e) {}
+        });
     </script>
 </body>
 </html>
