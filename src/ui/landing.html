@@ -220,7 +220,7 @@
             pointer-events: none;
         }
 
-        /* 3D Mode Selector Pill (Positioned above Telemetry) */
+        /* 3D Mode Selector Pill */
         .mode-segmented-dock {
             position: relative;
             z-index: 10;
@@ -295,7 +295,7 @@
         }
 
         /* ══════════════════════════════════════════════════════════════
-           ── RIGHT 50%: CLASSY AUTHENTICATION PORTAL (REAL GOOGLE + EMAIL) ──
+           ── RIGHT 50%: CLASSY AUTHENTICATION PORTAL (SIGN IN & NEW USER) ──
            ══════════════════════════════════════════════════════════════ */
         .stage-auth-pane {
             background: #FFFFFF;
@@ -303,18 +303,18 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: clamp(24px, 4vh, 48px) clamp(28px, 4.5vw, 64px);
+            padding: clamp(20px, 3vh, 40px) clamp(24px, 4vw, 56px);
             position: relative;
             overflow-y: auto;
             border-left: 1px solid var(--border-default);
         }
 
         .auth-clean-card {
-            max-width: 390px;
+            max-width: 400px;
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 16px;
             position: relative;
             z-index: 5;
         }
@@ -322,7 +322,7 @@
         .card-header-clean {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
         }
 
         .badge-portal {
@@ -338,7 +338,7 @@
         }
 
         .auth-title {
-            font-size: clamp(23px, 2.3vw, 27px);
+            font-size: clamp(22px, 2.2vw, 26px);
             font-weight: 800;
             letter-spacing: -0.6px;
             color: var(--text-heading);
@@ -346,7 +346,7 @@
         }
 
         .auth-subtitle {
-            font-size: 13px;
+            font-size: 12.5px;
             color: var(--text-secondary);
             line-height: 1.5;
         }
@@ -398,11 +398,11 @@
             background: var(--border-default);
         }
 
-        /* Normal Login Form */
+        /* Form Container */
         .auth-form {
             display: flex;
             flex-direction: column;
-            gap: 13px;
+            gap: 12px;
         }
 
         .form-group {
@@ -428,8 +428,8 @@
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
-            padding: 10px 14px;
-            font-size: 13px;
+            padding: 9px 13px;
+            font-size: 12.5px;
             font-family: var(--font-sans);
             color: var(--text-heading);
             outline: none;
@@ -492,14 +492,14 @@
             text-decoration: underline;
         }
 
-        /* Primary Sign In Button */
+        /* Primary Sign In / Sign Up Button */
         .btn-primary-signin {
             background: linear-gradient(135deg, #0D9488 0%, #059669 100%);
             border: none;
             color: #FFFFFF;
             font-family: var(--font-sans);
             font-weight: 800;
-            font-size: 13.5px;
+            font-size: 13px;
             padding: 11px 18px;
             border-radius: var(--radius-sm);
             cursor: pointer;
@@ -519,6 +519,28 @@
 
         .btn-primary-signin:active { transform: translateY(0); }
 
+        /* Mode Switch Link (New User vs Existing User) */
+        .auth-switch-box {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 4px 0;
+        }
+
+        .auth-switch-link {
+            color: var(--brand-primary);
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.15s;
+            margin-left: 4px;
+        }
+
+        .auth-switch-link:hover {
+            color: var(--brand-primary-hover);
+            text-decoration: underline;
+        }
+
         /* Direct Demo Link */
         .btn-explore-demo {
             display: flex;
@@ -529,7 +551,7 @@
             font-weight: 700;
             color: var(--text-secondary);
             text-decoration: none;
-            padding: 9px 12px;
+            padding: 8px 12px;
             border-radius: var(--radius-sm);
             border: 1px dashed var(--border-default);
             transition: all 0.15s ease;
@@ -548,7 +570,6 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            padding-top: 4px;
             font-size: 11px;
             color: var(--text-muted);
             user-select: none;
@@ -729,18 +750,18 @@
         </div>
 
         <!-- ══════════════════════════════════════════════════════════════
-             ── RIGHT 50%: CLEAN CLASSY SIGN IN (REAL GOOGLE + WORK EMAIL) ──
+             ── RIGHT 50%: CLEAN CLASSY SIGN IN & NEW USER ONBOARDING ──
              ══════════════════════════════════════════════════════════════ -->
         <div class="stage-auth-pane">
             <div class="auth-clean-card">
                 
                 <div class="card-header-clean">
-                    <div class="badge-portal">
+                    <div class="badge-portal" id="portalBadge">
                         <span>✦</span>
                         <span>ENTERPRISE FINANCIAL PORTAL</span>
                     </div>
-                    <h2 class="auth-title">Sign In to Revenue Desk</h2>
-                    <p class="auth-subtitle">Enter your credentials to access the verified revenue workspace.</p>
+                    <h2 class="auth-title" id="authTitle">Sign In to Revenue Desk</h2>
+                    <p class="auth-subtitle" id="authSubtitle">Enter your credentials to access the verified revenue workspace.</p>
                 </div>
 
                 <!-- Real Google Sign In -->
@@ -751,15 +772,15 @@
                         <path fill="#FBBC05" d="M5.6 14.7c-.2-.7-.4-1.5-.4-2.3s.2-1.5.4-2.3L1.9 7.2C.7 9.6 0 12.2 0 15s.7 5.4 1.9 7.8l3.7-2.9c0-1.8 0-3.4 0-5.2z"/>
                         <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 16.4C3.7 20.3 7.5 23 12 23z"/>
                     </svg>
-                    <span>Continue with Google</span>
+                    <span id="googleBtnText">Continue with Google</span>
                 </button>
 
                 <!-- Divider -->
                 <div class="auth-divider">
-                    <span>or sign in with email</span>
+                    <span id="dividerText">or sign in with email</span>
                 </div>
 
-                <!-- Real Work Email & Password Form -->
+                <!-- ── 1. SIGN IN FORM (Existing User) ── -->
                 <form class="auth-form" id="loginForm" onsubmit="event.preventDefault(); submitNormalLogin();">
                     <div class="form-group">
                         <label class="form-label" for="userEmail">Work Email</label>
@@ -770,7 +791,7 @@
                         <label class="form-label" for="userPassword">Password</label>
                         <div class="input-relative-wrap">
                             <input type="password" id="userPassword" class="form-input" placeholder="Password" value="RevenueOps2026!" required>
-                            <button type="button" class="btn-eye-toggle" onclick="togglePasswordVisibility()" title="Show/Hide Password">👁</button>
+                            <button type="button" class="btn-eye-toggle" onclick="togglePasswordVisibility('userPassword')" title="Show/Hide Password">👁</button>
                         </div>
                     </div>
 
@@ -788,6 +809,43 @@
                     </button>
                 </form>
 
+                <!-- ── 2. CREATE ACCOUNT FORM (New User) ── -->
+                <form class="auth-form" id="signupForm" style="display:none;" onsubmit="event.preventDefault(); submitNewUserSignup();">
+                    <div class="form-group">
+                        <label class="form-label" for="newUserName">Full Name</label>
+                        <input type="text" id="newUserName" class="form-input" placeholder="e.g. Alex Rivera or Sarah Jenkins" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="newUserEmail">Work Email</label>
+                        <input type="email" id="newUserEmail" class="form-input" placeholder="name@company.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="newUserCompany">Company Name</label>
+                        <input type="text" id="newUserCompany" class="form-input" placeholder="e.g. Acme Cloud Inc. or NextGen SaaS" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="newUserPassword">Create Password</label>
+                        <div class="input-relative-wrap">
+                            <input type="password" id="newUserPassword" class="form-input" placeholder="Choose a secure password" value="Revenue2026!" required>
+                            <button type="button" class="btn-eye-toggle" onclick="togglePasswordVisibility('newUserPassword')" title="Show/Hide Password">👁</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary-signin" id="btnSignupSubmit">
+                        <span>Create Free Workspace</span>
+                        <span style="font-size:15px;">&rarr;</span>
+                    </button>
+                </form>
+
+                <!-- Mode Switch Link (New User <-> Sign In) -->
+                <div class="auth-switch-box">
+                    <span id="switchPrompt">Don't have an account?</span>
+                    <a class="auth-switch-link" id="switchActionLink" onclick="toggleAuthMode()">Create an account</a>
+                </div>
+
                 <!-- Loading State Screen -->
                 <div class="auth-loader-screen" id="authLoader">
                     <div class="auth-spinner"></div>
@@ -798,7 +856,7 @@
                 </div>
 
                 <!-- Direct Demo Access & Trust Strip -->
-                <div style="display:flex; flex-direction:column; gap:10px; margin-top:2px;">
+                <div style="display:flex; flex-direction:column; gap:8px;">
                     <a href="/" class="btn-explore-demo">
                         <span>Explore Demo Environment (Direct Access) &rarr;</span>
                     </a>
@@ -817,7 +875,7 @@
 
     </div>
 
-    <!-- ── Real Google Account Chooser Modal ── -->
+    <!-- ── Real Google Account Chooser Modal (With New User Option) ── -->
     <div class="google-modal-overlay" id="googleModal" onclick="if(event.target === this) closeGoogleModal();">
         <div class="google-modal-card">
             <div class="google-modal-header">
@@ -835,7 +893,7 @@
 
             <div style="display:flex; flex-direction:column; gap:6px;">
                 <!-- Account 1: Alex Rivera (Acme Cloud Admin) -->
-                <div class="google-account-item" onclick="selectGoogleAccount('Alex Rivera', 'alex.rivera@acmecloud.com', 'VP Revenue Operations')">
+                <div class="google-account-item" onclick="selectGoogleAccount('Alex Rivera', 'alex.rivera@acmecloud.com', 'VP Revenue Operations', 'Acme Cloud Inc.')">
                     <div class="account-avatar" style="background:linear-gradient(135deg, #0D9488, #2563EB);">AR</div>
                     <div style="display:flex; flex-direction:column;">
                         <span style="font-size:13px; font-weight:700; color:var(--text-heading);">Alex Rivera</span>
@@ -844,11 +902,20 @@
                 </div>
 
                 <!-- Account 2: Shubham Vernekar -->
-                <div class="google-account-item" onclick="selectGoogleAccount('Shubham Vernekar', 'shubham@acmecloud.com', 'Revenue Director')">
+                <div class="google-account-item" onclick="selectGoogleAccount('Shubham Vernekar', 'shubham@acmecloud.com', 'Revenue Director', 'Acme Cloud Inc.')">
                     <div class="account-avatar" style="background:linear-gradient(135deg, #2563EB, #7C3AED);">SV</div>
                     <div style="display:flex; flex-direction:column;">
                         <span style="font-size:13px; font-weight:700; color:var(--text-heading);">Shubham Vernekar</span>
                         <span style="font-size:11px; color:var(--text-secondary);">shubham@acmecloud.com</span>
+                    </div>
+                </div>
+
+                <!-- Account 3: New User Custom Google Account -->
+                <div class="google-account-item" onclick="promptNewGoogleAccount()">
+                    <div class="account-avatar" style="background:var(--bg-subtle); border:1.5px dashed var(--border-default); color:var(--text-secondary); font-size:18px;">+</div>
+                    <div style="display:flex; flex-direction:column;">
+                        <span style="font-size:13px; font-weight:700; color:var(--brand-primary);">Use another Google account</span>
+                        <span style="font-size:11px; color:var(--text-muted);">Sign up or connect a new corporate account</span>
                     </div>
                 </div>
             </div>
@@ -862,6 +929,7 @@
     <!-- ── 60FPS 3D Vector Engine Script (Properly Positioned In Viewport) ── -->
     <script>
         let currentMode = 'revenue';
+        let isSignupMode = false;
         let animClock = 0.0;
         let mouseX = 0, mouseY = 0;
         let smoothRotX = 0.38, smoothRotY = 0.0;
@@ -941,7 +1009,6 @@
                 ctx.scale(dpr, dpr);
                 ctx.clearRect(0, 0, w, h);
 
-                // Dedicated Center within the canvas box
                 const cx = w * 0.5;
                 const cy = h * 0.5;
                 const rx = smoothRotX;
@@ -1186,9 +1253,45 @@
 
         requestAnimationFrame(render3D);
 
+        // ── TOGGLE BETWEEN SIGN IN & SIGN UP (NEW USER) ──
+        function toggleAuthMode() {
+            isSignupMode = !isSignupMode;
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const authTitle = document.getElementById('authTitle');
+            const authSubtitle = document.getElementById('authSubtitle');
+            const portalBadge = document.getElementById('portalBadge');
+            const googleBtnText = document.getElementById('googleBtnText');
+            const dividerText = document.getElementById('dividerText');
+            const switchPrompt = document.getElementById('switchPrompt');
+            const switchActionLink = document.getElementById('switchActionLink');
+
+            if (isSignupMode) {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'flex';
+                authTitle.innerText = 'Create your account';
+                authSubtitle.innerText = 'Start your enterprise trial. Set up your workspace in 30 seconds.';
+                portalBadge.innerHTML = '<span>✦</span><span>NEW WORKSPACE SETUP</span>';
+                googleBtnText.innerText = 'Sign up with Google';
+                dividerText.innerText = 'or sign up with work email';
+                switchPrompt.innerText = 'Already have an account?';
+                switchActionLink.innerText = 'Sign in';
+            } else {
+                loginForm.style.display = 'flex';
+                signupForm.style.display = 'none';
+                authTitle.innerText = 'Sign In to Revenue Desk';
+                authSubtitle.innerText = 'Enter your credentials to access the verified revenue workspace.';
+                portalBadge.innerHTML = '<span>✦</span><span>ENTERPRISE FINANCIAL PORTAL</span>';
+                googleBtnText.innerText = 'Continue with Google';
+                dividerText.innerText = 'or sign in with email';
+                switchPrompt.innerText = "Don't have an account?";
+                switchActionLink.innerText = 'Create an account';
+            }
+        }
+
         // ── PASSWORD VISIBILITY TOGGLE ──
-        function togglePasswordVisibility() {
-            const pwd = document.getElementById('userPassword');
+        function togglePasswordVisibility(fieldId) {
+            const pwd = document.getElementById(fieldId);
             if (pwd) {
                 pwd.type = pwd.type === 'password' ? 'text' : 'password';
             }
@@ -1203,15 +1306,23 @@
             document.getElementById('googleModal').style.display = 'none';
         }
 
-        async function selectGoogleAccount(name, email, role) {
+        function promptNewGoogleAccount() {
+            const newName = prompt('Enter your full name for Google Sign-In:', 'Jane Doe');
+            if (!newName) return;
+            const newEmail = prompt('Enter your Google email address:', newName.toLowerCase().replace(' ', '.') + '@company.com');
+            if (!newEmail) return;
+            selectGoogleAccount(newName, newEmail, 'Revenue Operations Lead', 'My Cloud Corp.');
+        }
+
+        async function selectGoogleAccount(name, email, role, company) {
             closeGoogleModal();
-            showAuthSpinner(`Signing in as ${name}...`);
+            showAuthSpinner(`Signing in with Google (${name})...`);
 
             try {
                 const res = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, provider: 'google' })
+                    body: JSON.stringify({ email: email, name: name, company: company || 'Acme Cloud Inc.', provider: 'google' })
                 });
                 const data = await res.json();
                 if (data.status === 'ok') {
@@ -1223,18 +1334,18 @@
                     resetAuthSpinner();
                 }
             } catch(e) {
-                // Client fallback
                 localStorage.setItem('revenueDeskUser', JSON.stringify({
                     name: name,
                     email: email,
                     role: role,
+                    company: company || 'Acme Cloud Inc.',
                     avatar: name.split(' ').map(p => p[0]).join('')
                 }));
                 setTimeout(() => { window.location.href = '/'; }, 500);
             }
         }
 
-        // ── NORMAL EMAIL & PASSWORD SUBMIT ──
+        // ── NORMAL EMAIL & PASSWORD SUBMIT (Existing User) ──
         async function submitNormalLogin() {
             const emailInput = document.getElementById('userEmail');
             const passwordInput = document.getElementById('userPassword');
@@ -1264,26 +1375,80 @@
                     resetAuthSpinner();
                 }
             } catch(e) {
-                // Client fallback
                 localStorage.setItem('revenueDeskUser', JSON.stringify({
                     name: 'Alex Rivera',
                     email: email,
                     role: 'VP Revenue Operations',
+                    company: 'Acme Cloud Inc.',
                     avatar: 'AR'
                 }));
                 setTimeout(() => { window.location.href = '/'; }, 500);
             }
         }
 
+        // ── NEW USER REGISTRATION (Create Account) ──
+        async function submitNewUserSignup() {
+            const nameInput = document.getElementById('newUserName');
+            const emailInput = document.getElementById('newUserEmail');
+            const companyInput = document.getElementById('newUserCompany');
+            const passwordInput = document.getElementById('newUserPassword');
+
+            const name = nameInput ? nameInput.value.trim() : '';
+            const email = emailInput ? emailInput.value.trim() : '';
+            const company = companyInput ? companyInput.value.trim() : '';
+            const password = passwordInput ? passwordInput.value.trim() : '';
+
+            if (!name || !email || !company) {
+                alert('Please fill out all required fields to create your account.');
+                return;
+            }
+
+            showAuthSpinner(`Setting up workspace for ${company}...`);
+
+            try {
+                const res = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        company: company,
+                        password: password,
+                        is_signup: true
+                    })
+                });
+                const data = await res.json();
+                if (data.status === 'ok') {
+                    localStorage.setItem('revenueDeskUser', JSON.stringify(data.user));
+                    localStorage.setItem('revenueDeskToken', data.token);
+                    setTimeout(() => { window.location.href = '/'; }, 550);
+                } else {
+                    alert(data.error || 'Registration failed');
+                    resetAuthSpinner();
+                }
+            } catch(e) {
+                localStorage.setItem('revenueDeskUser', JSON.stringify({
+                    name: name,
+                    email: email,
+                    company: company,
+                    role: 'Revenue Operations Lead',
+                    avatar: name.split(' ').map(p => p[0]).join('')
+                }));
+                setTimeout(() => { window.location.href = '/'; }, 550);
+            }
+        }
+
         function showAuthSpinner(text) {
-            const form = document.getElementById('loginForm');
+            const form = isSignupMode ? document.getElementById('signupForm') : document.getElementById('loginForm');
             const googleBtn = document.querySelector('.btn-google-signin');
             const divider = document.querySelector('.auth-divider');
+            const switchBox = document.querySelector('.auth-switch-box');
             const loader = document.getElementById('authLoader');
             
             if (form) form.style.display = 'none';
             if (googleBtn) googleBtn.style.display = 'none';
             if (divider) divider.style.display = 'none';
+            if (switchBox) switchBox.style.display = 'none';
             if (loader) {
                 loader.style.display = 'flex';
                 document.getElementById('authLoaderText').innerText = text;
@@ -1291,14 +1456,16 @@
         }
 
         function resetAuthSpinner() {
-            const form = document.getElementById('loginForm');
+            const form = isSignupMode ? document.getElementById('signupForm') : document.getElementById('loginForm');
             const googleBtn = document.querySelector('.btn-google-signin');
             const divider = document.querySelector('.auth-divider');
+            const switchBox = document.querySelector('.auth-switch-box');
             const loader = document.getElementById('authLoader');
             
             if (form) form.style.display = 'flex';
             if (googleBtn) googleBtn.style.display = 'flex';
             if (divider) divider.style.display = 'flex';
+            if (switchBox) switchBox.style.display = 'block';
             if (loader) loader.style.display = 'none';
         }
     </script>

@@ -1375,6 +1375,7 @@
                     const u = JSON.parse(savedUser);
                     if (u.name) document.getElementById('userNavName').innerText = u.name;
                     if (u.avatar) document.getElementById('userNavAvatar').innerText = u.avatar;
+                    if (u.company) document.getElementById('selectedCompanyName').innerText = u.company;
                 }
             } catch(e) {}
             renderChart();

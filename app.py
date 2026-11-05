@@ -77,31 +77,42 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
         except json.JSONDecodeError:
             data = {}
 
-        if path == "/api/auth/login":
+        if path in ("/api/auth/login", "/api/auth/register"):
             email = data.get("email", "").strip()
             password = data.get("password", "").strip()
+            name = data.get("name", "").strip()
+            company = data.get("company", "").strip()
             provider = data.get("provider", "credentials")
+            is_signup = path == "/api/auth/register" or data.get("is_signup", False)
 
             if not email and provider != "google":
                 self.send_json({"error": "Email address is required"}, status=400)
                 return
 
-            user_name = "Alex Rivera" if ("alex" in email.lower() or provider == "google" or not email) else email.split("@")[0].replace(".", " ").title()
-            user_role = "VP Revenue Operations"
-            company = "Acme Cloud Inc."
+            if is_signup:
+                user_name = name or email.split("@")[0].replace(".", " ").title()
+                company_name = company or "My SaaS Inc."
+                user_role = "Revenue Operations Lead"
+            else:
+                user_name = name or ("Alex Rivera" if ("alex" in email.lower() or provider == "google" or not email) else email.split("@")[0].replace(".", " ").title())
+                company_name = company or "Acme Cloud Inc."
+                user_role = "VP Revenue Operations"
+
+            avatar = "".join([p[0].upper() for p in user_name.split()[:2]]) or "U"
             seed_str = f"{email}:{password}:{time.time()}"
             token = f"rd_sess_{hashlib.sha256(seed_str.encode()).hexdigest()[:24]}"
 
             auth_response = {
                 "status": "ok",
                 "authenticated": True,
+                "is_new_user": is_signup,
                 "token": token,
                 "user": {
                     "name": user_name,
                     "email": email or "alex.rivera@acmecloud.com",
                     "role": user_role,
-                    "company": company,
-                    "avatar": "AR",
+                    "company": company_name,
+                    "avatar": avatar,
                     "provider": provider,
                     "login_time": datetime.datetime.now().isoformat()
                 }
