@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Revenue Desk — Autonomous Financial Governance & Multi-Company Operations</title>
+    <title>Revenue Desk — Financial Governance & Revenue Operations</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* ── Modern 2026 SaaS Light Theme (Dashboard) ── */
+            /* ── Modern Clean 2026 SaaS Light Theme ── */
             --bg-page: #F8FAFC;
             --bg-card: #FFFFFF;
             --bg-subtle: #F1F5F9;
@@ -59,340 +59,11 @@
             width: 100%;
             margin: 0;
             padding: 0;
-            font-family: var(--font-sans);
-        }
-
-        /* ══════════════════════════════════════════════════════════════
-           ── VIEW CONTAINER SWITCHING (Landing vs Dashboard) ──
-           ══════════════════════════════════════════════════════════════ */
-        .app-view-container {
-            display: none;
-            width: 100%;
-            min-height: 100vh;
-        }
-
-        .app-view-container.active {
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ══════════════════════════════════════════════════════════════
-           ── VIEW 1: 3D SCROLL ANIMATED LANDING PAGE ──
-           ══════════════════════════════════════════════════════════════ */
-        #landingView {
-            background: #090D16;
-            color: #E2E8F0;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Landing Top Navigation Bar */
-        .landing-navbar {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 clamp(16px, 3vw, 40px);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-        }
-
-        .brand-logo-dark {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: #FFFFFF;
-            font-weight: 800;
-            font-size: 15.5px;
-            letter-spacing: -0.3px;
-        }
-
-        .brand-icon-dark {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 16px rgba(13, 148, 136, 0.5);
-            flex-shrink: 0;
-        }
-
-        .brand-icon-dark svg { width: 17px; height: 17px; stroke: #fff; stroke-width: 2.4; fill: none; }
-
-        .landing-nav-links {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .landing-nav-link {
-            color: #94A3B8;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: color 0.15s;
-        }
-
-        .landing-nav-link:hover { color: #FFFFFF; }
-
-        .btn-landing-login {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #FFFFFF;
-            padding: 7px 16px;
-            border-radius: var(--radius-sm);
-            font-size: 12.5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-
-        .btn-landing-login:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-1px); }
-
-        .btn-landing-cta {
-            background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
-            border: none;
-            color: #FFFFFF;
-            padding: 8px 18px;
-            border-radius: var(--radius-sm);
-            font-size: 12.5px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            box-shadow: 0 0 20px rgba(13, 148, 136, 0.4);
-            transition: all 0.15s;
-        }
-
-        .btn-landing-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 25px rgba(37, 99, 235, 0.55); }
-
-        /* 3D Scroll Pin Track on Landing Page */
-        .landing-scroll-track {
-            position: relative;
-            height: 420vh;
-            background: radial-gradient(circle at 50% 20%, #0F172A 0%, #060911 100%);
-        }
-
-        .landing-sticky-viewport {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            height: 100dvh;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        canvas#landing3DCanvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* 3D Floating Narrative Cards */
-        .landing-card-layer {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 24px;
-        }
-
-        .landing-stage-card {
-            position: absolute;
-            max-width: 650px;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.78);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: var(--radius-lg);
-            padding: clamp(22px, 3vh, 36px) clamp(24px, 3vw, 40px);
-            box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.75), 0 0 30px rgba(13, 148, 136, 0.15);
-            opacity: 0;
-            transform: translateY(30px) scale(0.96);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            pointer-events: auto;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .landing-stage-card.visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .landing-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(13, 148, 136, 0.18);
-            border: 1px solid rgba(45, 212, 191, 0.35);
-            color: #2DD4BF;
-            padding: 3px 11px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            font-family: var(--font-mono);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .landing-title {
-            font-size: clamp(26px, 3.4vw, 40px);
-            font-weight: 900;
-            color: #FFFFFF;
-            letter-spacing: -1px;
-            line-height: 1.15;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-        }
-
-        .landing-title span {
-            background: linear-gradient(135deg, #2DD4BF 0%, #38BDF8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .landing-desc {
-            font-size: clamp(13px, 1.1vw, 15px);
-            color: #94A3B8;
-            line-height: 1.6;
-            max-width: 550px;
-        }
-
-        .landing-pills-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 4px;
-        }
-
-        .landing-metric-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 16px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-family: var(--font-mono);
-        }
-
-        .landing-metric-val { font-size: 16px; font-weight: 800; color: #FFFFFF; }
-        .landing-metric-lbl { font-size: 10px; color: #64748B; text-transform: uppercase; }
-
-        /* Floating Landing Scroll Indicator */
-        .landing-scroll-hint {
-            position: absolute;
-            bottom: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            color: #94A3B8;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            letter-spacing: 0.5px;
-            pointer-events: auto;
-            cursor: pointer;
-            animation: bounceHint 2s infinite ease-in-out;
-            z-index: 15;
-        }
-
-        @keyframes bounceHint {
-            0%, 100% { transform: translateY(0); opacity: 0.7; }
-            50% { transform: translateY(6px); opacity: 1; }
-        }
-
-        .hint-mouse {
-            width: 20px;
-            height: 32px;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            padding-top: 6px;
-        }
-
-        .hint-wheel {
-            width: 3px;
-            height: 6px;
-            background: #2DD4BF;
-            border-radius: 2px;
-            animation: wheelAnim 1.6s infinite;
-        }
-
-        @keyframes wheelAnim {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(10px); opacity: 0; }
-        }
-
-        /* ── Landing Bottom Section: Architecture & Testimonial ── */
-        .landing-footer-section {
-            background: #060911;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 80px 24px 100px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 32px;
-        }
-
-        .landing-grid-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            max-width: 1080px;
-            width: 100%;
-            margin-top: 16px;
-            text-align: left;
-        }
-
-        .l-card {
-            background: #0F172A;
-            border: 1px solid #1E293B;
-            border-radius: var(--radius-md);
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .l-card-icon { font-size: 24px; }
-        .l-card-title { font-size: 15px; font-weight: 700; color: #FFFFFF; }
-        .l-card-desc { font-size: 13px; color: #94A3B8; line-height: 1.6; }
-
-        /* ══════════════════════════════════════════════════════════════
-           ── VIEW 2: THE CLEAN LIVE OPERATIONS DASHBOARD COCKPIT ──
-           ══════════════════════════════════════════════════════════════ */
-        #appView {
+        body {
+            font-family: var(--font-sans);
             background: radial-gradient(circle at 10% 10%, rgba(13, 148, 136, 0.04) 0%, transparent 40%),
                         radial-gradient(circle at 90% 20%, rgba(37, 99, 235, 0.03) 0%, transparent 40%),
                         var(--bg-page);
@@ -405,8 +76,8 @@
             line-height: 1.5;
         }
 
-        /* Dashboard Light Navbar (Matches User's Screenshot Exactly) */
-        .dash-navbar {
+        /* ── Top Navigation Bar ── */
+        .navbar {
             background: #FFFFFF;
             border-bottom: 1px solid var(--border-default);
             height: clamp(52px, 6.5vh, 60px);
@@ -421,13 +92,13 @@
             flex-shrink: 0;
         }
 
-        .dash-nav-left {
+        .nav-left {
             display: flex;
             align-items: center;
             gap: clamp(10px, 1.2vw, 16px);
         }
 
-        .dash-brand-logo {
+        .brand-logo {
             display: flex;
             align-items: center;
             gap: 9px;
@@ -438,7 +109,7 @@
             letter-spacing: -0.3px;
         }
 
-        .dash-brand-icon {
+        .brand-icon {
             width: 28px;
             height: 28px;
             background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
@@ -450,7 +121,7 @@
             flex-shrink: 0;
         }
 
-        .dash-brand-icon svg { width: 16px; height: 16px; stroke: #fff; stroke-width: 2.4; fill: none; }
+        .brand-icon svg { width: 16px; height: 16px; stroke: #fff; stroke-width: 2.4; fill: none; }
 
         /* Company Switcher Pill */
         .company-select-wrap { position: relative; }
@@ -539,42 +210,24 @@
             50% { opacity: 0.4; transform: scale(0.85); }
         }
 
-        .dash-nav-right {
+        .nav-right {
             display: flex;
             align-items: center;
             gap: clamp(6px, 0.8vw, 10px);
         }
 
-        .btn-tour-light {
-            background: #EFF6FF;
-            border: 1px solid #BFDBFE;
-            color: #1D4ED8;
-            padding: 6px 12px;
-            border-radius: var(--radius-sm);
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.15s ease;
-            white-space: nowrap;
-        }
-
-        .btn-tour-light:hover { background: #DBEAFE; transform: translateY(-1px); }
-
         .btn-nav {
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             color: var(--text-body);
-            padding: 6px 11px;
+            padding: 6px 12px;
             border-radius: var(--radius-sm);
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             transition: all 0.15s ease;
             white-space: nowrap;
         }
@@ -585,7 +238,7 @@
             background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
             border: none;
             color: #FFFFFF;
-            padding: 6px 15px;
+            padding: 6px 16px;
             border-radius: var(--radius-sm);
             font-size: 12px;
             font-weight: 700;
@@ -600,8 +253,8 @@
 
         .btn-action-primary:hover { background: linear-gradient(135deg, #0F766E 0%, #115E59 100%); transform: translateY(-1px); }
 
-        /* Main Workspace Container (Clean Screen-Fitting) */
-        .dash-app-container {
+        /* ── Fluid Main App Workspace Container ── */
+        .app-container {
             max-width: 1520px;
             width: 100%;
             margin: 0 auto;
@@ -614,7 +267,7 @@
             box-sizing: border-box;
         }
 
-        /* ── 3 Focused KPI Cards (Screenshot Exact) ── */
+        /* ── 3 Focused KPI Cards ── */
         .kpi-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -709,7 +362,7 @@
             min-height: 0;
         }
 
-        /* ── Revenue Trajectory Chart Box ── */
+        /* ── Revenue Trajectory Chart ── */
         .chart-box {
             background: #FFFFFF;
             border: 1px solid var(--border-default);
@@ -825,6 +478,7 @@
             border-radius: 12px;
         }
 
+        /* Stepper bar inside gate */
         .stepper-row {
             display: flex;
             align-items: center;
@@ -1160,85 +814,11 @@
         .room-send-btn:hover { transform: scale(1.05); }
         .room-send-btn svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 2.2; fill: none; }
 
-        /* ── ENTERPRISE LOGIN MODAL (High-Tech Portal) ── */
-        .login-box {
-            max-width: 440px;
-            background: #FFFFFF;
-            border: 1px solid var(--border-default);
-            border-radius: var(--radius-lg);
-            padding: 32px 36px;
-            box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.25);
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            position: relative;
-        }
-
-        .login-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #F0FDFA;
-            border: 1px solid #CCFBF1;
-            color: #0D9488;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 20px;
-            width: fit-content;
-        }
-
-        .login-field {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .login-field label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-heading);
-        }
-
-        .login-field input {
-            border: 1px solid var(--border-default);
-            border-radius: var(--radius-sm);
-            padding: 9px 12px;
-            font-size: 13px;
-            color: var(--text-heading);
-            background: #F8FAFC;
-            outline: none;
-        }
-
-        .login-field input:focus { border-color: var(--brand-primary); background: #fff; }
-
-        .btn-instant-enter {
-            background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
-            border: none;
-            color: #FFFFFF;
-            font-weight: 700;
-            font-size: 13.5px;
-            padding: 12px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
-            transition: all 0.15s ease;
-        }
-
-        .btn-instant-enter:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
-        }
-
         /* ── Modals Base ── */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.65);
+            background: rgba(15, 23, 42, 0.55);
             backdrop-filter: blur(5px);
             z-index: 200;
             display: none;
@@ -1331,8 +911,8 @@
 
         /* Responsive Breakpoints */
         @media (max-height: 840px) {
-            .dash-navbar { height: 50px; padding: 0 16px; }
-            .dash-app-container { padding: 10px 16px; gap: 10px; }
+            .navbar { height: 50px; padding: 0 16px; }
+            .app-container { padding: 10px 16px; gap: 10px; }
             .kpi-card { padding: 9px 14px; }
             .kpi-num { font-size: 20px; }
             .canvas-area { min-height: 130px; }
@@ -1344,437 +924,244 @@
         @media (max-width: 1080px) {
             .workspace-grid { grid-template-columns: 1fr; }
             .room-card { height: 480px; max-height: none; }
-            .landing-grid-cards { grid-template-columns: 1fr; }
-            .landing-nav-links { display: none; }
         }
 
         @media (max-width: 768px) {
-            .dash-navbar { flex-wrap: wrap; height: auto; padding: 10px 14px; gap: 8px; }
+            .navbar { flex-wrap: wrap; height: auto; padding: 10px 14px; gap: 8px; }
             .kpi-row { grid-template-columns: 1fr; }
             .nav-status { display: none; }
-            .dash-nav-right { flex-wrap: wrap; }
+            .nav-right { flex-wrap: wrap; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ══════════════════════════════════════════════════════════════
-         ── VIEW 1: 3D SCROLL ANIMATED LANDING PAGE ──
-         ══════════════════════════════════════════════════════════════ -->
-    <div class="app-view-container active" id="landingView">
-        
-        <!-- Landing Navbar -->
-        <header class="landing-navbar">
-            <a href="#" class="brand-logo-dark" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">
-                <div class="brand-icon-dark">
+    <!-- ── Top Navigation Bar ── -->
+    <header class="navbar">
+        <div class="nav-left">
+            <a href="#" class="brand-logo" onclick="location.reload(); return false;">
+                <div class="brand-icon">
                     <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round"/></svg>
                 </div>
                 <span>Revenue Desk</span>
             </a>
 
-            <div class="landing-nav-links">
-                <a class="landing-nav-link" onclick="jumpToLandingStage(0)">3D Nexus</a>
-                <a class="landing-nav-link" onclick="jumpToLandingStage(1)">Ingestion</a>
-                <a class="landing-nav-link" onclick="jumpToLandingStage(2)">Conflict Radar</a>
-                <a class="landing-nav-link" onclick="jumpToLandingStage(3)">Consensus</a>
-            </div>
-
-            <div style="display:flex; align-items:center; gap:12px;">
-                <button class="btn-landing-login" onclick="openLoginModal()">Sign In</button>
-                <button class="btn-landing-cta" onclick="enterDashboard()">
-                    <span>Launch Live Deck</span>
-                    <span style="font-size:14px; line-height:1;">&rarr;</span>
+            <!-- Company Profile Switcher Dropdown -->
+            <div class="company-select-wrap">
+                <button class="company-btn" onclick="toggleCompanyDropdown()">
+                    <span id="selectedCompanyIcon">🏢</span>
+                    <span id="selectedCompanyName">Acme Cloud (B2B SaaS)</span>
+                    <span style="font-size:9px; color:var(--text-muted); margin-left:3px;">▼</span>
                 </button>
-            </div>
-        </header>
-
-        <!-- 3D Scroll Track (Continuous 420vh animation) -->
-        <section class="landing-scroll-track" id="landingScrollTrack">
-            <div class="landing-sticky-viewport">
-                
-                <!-- 60FPS Perspective 3D WebGL / Canvas Stage -->
-                <canvas id="landing3DCanvas"></canvas>
-
-                <!-- Floating 3D Narrative Cards (Fade in/out on scroll) -->
-                <div class="landing-card-layer">
-                    
-                    <!-- Card 0: Nexus & Vision -->
-                    <div class="landing-stage-card visible" id="lCard0">
-                        <div class="landing-badge">⚡ 3D AUTONOMOUS REVENUE NEXUS</div>
-                        <h1 class="landing-title">Autonomous Financial Governance for <span>Modern Enterprise</span></h1>
-                        <p class="landing-desc">Where humans and autonomous AI agents collaborate in real-time to catch billing discrepancies, reconcile multi-cloud ledgers, and secure enterprise capital.</p>
-                        
-                        <div class="landing-pills-row">
-                            <div class="landing-metric-box">
-                                <span class="landing-metric-val" style="color:#2DD4BF;">$112,450</span>
-                                <span class="landing-metric-lbl">Gross Revenue</span>
-                            </div>
-                            <div class="landing-metric-box">
-                                <span class="landing-metric-val" style="color:#F87171;">-84.2%</span>
-                                <span class="landing-metric-lbl">Drop Flagged</span>
-                            </div>
-                            <div class="landing-metric-box">
-                                <span class="landing-metric-val" style="color:#FBBF24;">-$20,430</span>
-                                <span class="landing-metric-lbl">Caught Glitch</span>
-                            </div>
-                        </div>
-
-                        <div style="margin-top:6px; display:flex; gap:10px;">
-                            <button class="btn-landing-cta" onclick="enterDashboard()" style="padding:10px 22px;">Launch Live Command Center &rarr;</button>
-                        </div>
+                <div class="company-dropdown" id="companyDropdown">
+                    <div style="font-size:10px; font-weight:700; color:var(--text-muted); padding:4px 8px; text-transform:uppercase;">Select Company Profile</div>
+                    <div class="company-opt active" onclick="selectCompany('Acme Cloud (B2B SaaS)', '🏢', '$112,450', '-84.2%', '-$20,430', 'West Region')">
+                        <span>🏢 Acme Cloud Inc.</span>
+                        <span class="company-tag">SaaS / Enterprise</span>
                     </div>
-
-                    <!-- Card 1: Multi-Cloud Streaming Ingestion -->
-                    <div class="landing-stage-card" id="lCard1">
-                        <div class="landing-badge">02 / ZERO-COPY INGESTION</div>
-                        <h2 class="landing-title">Streaming Ingestion Across <span>Multi-Cloud Ledgers</span></h2>
-                        <p class="landing-desc">Revenue Desk connects directly to read-only transaction streams from PostgreSQL, Stripe, Snowflake, and Shopify — processing 2,400+ transactions per second with zero schema migration.</p>
-                        <div class="landing-pills-row">
-                            <span class="landing-badge" style="background:rgba(59,130,246,0.15); border-color:#3B82F6; color:#60A5FA;">🐘 PostgreSQL</span>
-                            <span class="landing-badge" style="background:rgba(99,102,241,0.15); border-color:#6366F1; color:#818CF8;">💳 Stripe Billing</span>
-                            <span class="landing-badge" style="background:rgba(14,165,233,0.15); border-color:#0EA5E9; color:#38BDF8;">❄️ Snowflake</span>
-                            <span class="landing-badge" style="background:rgba(16,185,129,0.15); border-color:#10B981; color:#34D399;">🛒 Shopify</span>
-                        </div>
+                    <div class="company-opt" onclick="selectCompany('Nova Retail (E-Commerce)', '🛒', '$284,900', '-62.5%', '-$34,200', 'North Region')">
+                        <span>🛒 Nova Direct Retail</span>
+                        <span class="company-tag">E-Commerce / D2C</span>
                     </div>
-
-                    <!-- Card 2: AI Sentinel Conflict Radar -->
-                    <div class="landing-stage-card" id="lCard2">
-                        <div class="landing-badge" style="background:rgba(239,68,68,0.2); border-color:#EF4444; color:#F87171;">03 / DEEP-SCAN TACTICAL RADAR</div>
-                        <h2 class="landing-title">AI Sentinel Detects <span>-$20,430 Duplicate Loop</span></h2>
-                        <p class="landing-desc">A naive AI panics at the gross drop and offers 20% discounts. Revenue Desk's Reviewer Agent cross-checks refund ledgers to isolate duplicate processor charges — saving your business from margin dilution.</p>
-                        <div class="landing-pills-row">
-                            <div class="landing-metric-box" style="border-color:#EF4444;">
-                                <span class="landing-metric-val" style="color:#EF4444;">-$20,430.00</span>
-                                <span class="landing-metric-lbl">Duplicate Processor Reversals</span>
-                            </div>
-                            <div class="landing-metric-box" style="border-color:#10B981;">
-                                <span class="landing-metric-val" style="color:#10B981;">$3,820.00</span>
-                                <span class="landing-metric-lbl">Certified Net Baseline</span>
-                            </div>
-                        </div>
+                    <div class="company-opt" onclick="selectCompany('Starlight Pay (Fintech)', '💳', '$410,200', '-48.0%', '-$51,600', 'Global Merchant')">
+                        <span>💳 Starlight Payments</span>
+                        <span class="company-tag">FinTech / Gateway</span>
                     </div>
-
-                    <!-- Card 3: Consensus & Enterprise Launch -->
-                    <div class="landing-stage-card" id="lCard3">
-                        <div class="landing-badge" style="background:rgba(16,185,129,0.2); border-color:#10B981; color:#34D399;">04 / MULTI-AGENT CONSENSUS</div>
-                        <h2 class="landing-title">100% Agreement & <span>Policy Guardrails</span></h2>
-                        <p class="landing-desc">Analyst and Reviewer agents reconcile records to 100% mathematical consensus. The Human Manager authorizes a policy-safe 15% renewal incentive, locking +$32,470.00 in enterprise profit.</p>
-                        <div style="margin-top:6px;">
-                            <button class="btn-landing-cta" onclick="enterDashboard()" style="padding:11px 26px; font-size:13.5px;">
-                                <span>Enter Live Operations Deck</span>
-                                <span style="font-size:16px;">&rarr;</span>
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Animated Scroll Hint -->
-                <div class="landing-scroll-hint" onclick="jumpToLandingStage(1)">
-                    <span>SCROLL TO EXPLORE 3D PIPELINE</span>
-                    <div class="hint-mouse"><div class="hint-wheel"></div></div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Landing Footer Showcase -->
-        <section class="landing-footer-section">
-            <span class="landing-badge">ENTERPRISE COMPATIBILITY</span>
-            <h3 style="font-size:clamp(22px, 2.5vw, 32px); font-weight:800; color:#FFFFFF;">Built for Any Company & Business Model</h3>
-            <p style="color:#94A3B8; max-width:620px; font-size:14px;">Whether you run B2B SaaS, D2C E-Commerce, or a FinTech payments gateway, Revenue Desk reconciles transactional truth across systems.</p>
-
-            <div class="landing-grid-cards">
-                <div class="l-card">
-                    <span class="l-card-icon">🏢</span>
-                    <span class="l-card-title">B2B SaaS / Subscriptions</span>
-                    <span class="l-card-desc">Reconciles recurring Stripe invoices against PostgreSQL user tier entitlements, catching prorated churn errors.</span>
-                </div>
-                <div class="l-card">
-                    <span class="l-card-icon">🛒</span>
-                    <span class="l-card-title">E-Commerce / Retail</span>
-                    <span class="l-card-desc">Matches Shopify checkout webhooks with warehouse reverse-logistics RMA scans, eliminating duplicate return payouts.</span>
-                </div>
-                <div class="l-card">
-                    <span class="l-card-icon">💳</span>
-                    <span class="l-card-title">FinTech / Gateway Rails</span>
-                    <span class="l-card-desc">Bridges ACH Fedwire batch latency with real-time double-entry ledger accounts to halt settlement drift.</span>
                 </div>
             </div>
 
-            <button class="btn-landing-cta" onclick="enterDashboard()" style="padding:12px 30px; font-size:14px; margin-top:20px;">
-                <span>Sign In & Open Live Command Center</span>
-                <span style="font-size:16px;">&rarr;</span>
+            <div class="nav-status">
+                <span class="status-dot"></span>
+                <span>Active Multi-Agent Governance</span>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <button class="btn-nav" onclick="openDatabaseModal()">
+                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                Database
             </button>
-        </section>
-
-    </div>
-
-    <!-- ══════════════════════════════════════════════════════════════
-         ── VIEW 2: THE CLEAN LIVE OPERATIONS DASHBOARD COCKPIT ──
-         ══════════════════════════════════════════════════════════════ -->
-    <div class="app-view-container" id="appView">
-        
-        <!-- Top Navigation Bar (Exact Screenshot Design) -->
-        <header class="dash-navbar">
-            <div class="dash-nav-left">
-                <a href="#" class="dash-brand-logo" onclick="location.reload(); return false;">
-                    <div class="dash-brand-icon">
-                        <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round"/></svg>
-                    </div>
-                    <span>Revenue Desk</span>
-                </a>
-
-                <!-- Company Profile Switcher Dropdown -->
-                <div class="company-select-wrap">
-                    <button class="company-btn" onclick="toggleCompanyDropdown()">
-                        <span id="selectedCompanyIcon">🏢</span>
-                        <span id="selectedCompanyName">Acme Cloud (B2B SaaS)</span>
-                        <span style="font-size:9px; color:var(--text-muted); margin-left:3px;">▼</span>
-                    </button>
-                    <div class="company-dropdown" id="companyDropdown">
-                        <div style="font-size:10px; font-weight:700; color:var(--text-muted); padding:4px 8px; text-transform:uppercase;">Select Company Profile</div>
-                        <div class="company-opt active" onclick="selectCompany('Acme Cloud (B2B SaaS)', '🏢', '$112,450', '-84.2%', '-$20,430', 'West Region')">
-                            <span>🏢 Acme Cloud Inc.</span>
-                            <span class="company-tag">SaaS / Enterprise</span>
-                        </div>
-                        <div class="company-opt" onclick="selectCompany('Nova Retail (E-Commerce)', '🛒', '$284,900', '-62.5%', '-$34,200', 'North Region')">
-                            <span>🛒 Nova Direct Retail</span>
-                            <span class="company-tag">E-Commerce / D2C</span>
-                        </div>
-                        <div class="company-opt" onclick="selectCompany('Starlight Pay (Fintech)', '💳', '$410,200', '-48.0%', '-$51,600', 'Global Merchant')">
-                            <span>💳 Starlight Payments</span>
-                            <span class="company-tag">FinTech / Gateway</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="nav-status">
-                    <span class="status-dot"></span>
-                    <span>Active Multi-Agent Governance</span>
-                </div>
-            </div>
-
-            <div class="dash-nav-right">
-                <!-- Return to 3D Landing Page Switcher -->
-                <button class="btn-tour-light" onclick="exitToLanding()">
-                    <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><circle cx="12" cy="12" r="10"/><polygon points="12 8 8 12 12 16"/><line x1="16" y1="12" x2="8" y2="12"/></svg>
-                    3D Product Tour
-                </button>
-                <button class="btn-nav" onclick="openDatabaseModal()">
-                    <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-                    Database
-                </button>
-                <button class="btn-nav" onclick="openMemoModal()">
-                    <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    Audit Memo
-                </button>
-                <button class="btn-nav" onclick="resetState()">Reset</button>
-                <button class="btn-action-primary" onclick="runInvestigation()">
-                    <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    Run Live Investigation
-                </button>
-            </div>
-        </header>
-
-        <!-- Main Workspace (Screen-Fitting Dashboard) -->
-        <main class="dash-app-container">
-
-            <!-- ── 3 Focused KPI Cards ── -->
-            <section class="kpi-row">
-                <div class="kpi-card kpi-teal">
-                    <div class="kpi-top">
-                        <span class="kpi-label">Gross Revenue (October)</span>
-                        <div class="kpi-icon-pill" style="background:#ECFDF5;">
-                            <svg viewBox="0 0 24 24" style="stroke:#059669"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                        </div>
-                    </div>
-                    <span class="kpi-num" id="metricGross">$112,450</span>
-                    <div class="kpi-sub" style="color:#059669;">
-                        <svg viewBox="0 0 12 12" width="12" height="12" style="stroke:currentColor;stroke-width:2.4;fill:none"><polyline points="1 8 4 4 7 6 11 2"/></svg>
-                        +2.4% MoM Across Transactions
-                    </div>
-                </div>
-
-                <div class="kpi-card kpi-red">
-                    <div class="kpi-top">
-                        <span class="kpi-label">Repeat Purchase Drop</span>
-                        <div class="kpi-icon-pill" style="background:#FEF2F2;">
-                            <svg viewBox="0 0 24 24" style="stroke:#DC2626"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
-                        </div>
-                    </div>
-                    <span class="kpi-num" style="color:#DC2626;" id="metricDrop">-84.2%</span>
-                    <div class="kpi-sub" style="color:#DC2626;">5 Enterprise Accounts Flagged</div>
-                </div>
-
-                <div class="kpi-card kpi-amber">
-                    <div class="kpi-top">
-                        <span class="kpi-label">Caught Billing Glitch</span>
-                        <div class="kpi-icon-pill" style="background:#FFFBEB;">
-                            <svg viewBox="0 0 24 24" style="stroke:#D97706"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                        </div>
-                    </div>
-                    <span class="kpi-num" style="color:#D97706;" id="metricNet">-$20,430</span>
-                    <div class="kpi-sub" style="color:#D97706;">Duplicate Processor Refund Loop</div>
-                </div>
-            </section>
-
-            <!-- ── 2-Column Clean Workspace ── -->
-            <div class="workspace-grid">
-
-                <!-- Left: Trajectory Chart & Authorization Gate -->
-                <div class="col-left">
-
-                    <!-- Chart Card -->
-                    <div class="chart-box">
-                        <div class="chart-header">
-                            <div class="chart-title-area">
-                                <span class="chart-title" id="chartHeaderTitle">Revenue Trajectory & Anomaly Detection</span>
-                                <span class="chart-company-badge" id="chartBadge">West Region (Jul – Dec 2026)</span>
-                            </div>
-                            <div class="chart-legend">
-                                <div class="legend-tag"><span class="legend-bullet" style="background:#2563EB;"></span>Reported Orders</div>
-                                <div class="legend-tag"><span class="legend-bullet" style="background:#F59E0B;"></span>Glitch Loop</div>
-                                <div class="legend-tag"><span class="legend-bullet" style="background:#10B981;"></span>Win-Back Target</div>
-                            </div>
-                        </div>
-
-                        <div class="canvas-area" id="canvasAreaContainer">
-                            <canvas id="revenueCanvas"></canvas>
-                            <div class="chart-callout-pill" id="chartCallout">
-                                <span style="color:#DC2626; font-weight:800;">October Glitch:</span> -$20,430 duplicate refunds &bull; <span style="color:#059669; font-weight:800;">Real net revenue: $3,820</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Human Approval Gate -->
-                    <div class="approval-gate-card">
-                        <div class="gate-head">
-                            <div>
-                                <span class="gate-title">Human-in-the-Loop Campaign Authorization</span>
-                                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Protect revenue with policy-safe discount guardrails before writing to database.</div>
-                            </div>
-                            <span class="gate-status-pill" id="gateBadge">Ready for Review</span>
-                        </div>
-
-                        <!-- Clean Linear Stepper -->
-                        <div class="stepper-row">
-                            <div class="step-item active" id="pipe1"><span class="step-bubble">1</span><span>1. Inquiry</span></div>
-                            <span style="color:#CBD5E1;">&rarr;</span>
-                            <div class="step-item" id="pipe2"><span class="step-bubble">2</span><span>2. Analyst SQL</span></div>
-                            <span style="color:#CBD5E1;">&rarr;</span>
-                            <div class="step-item" id="pipe3"><span class="step-bubble">3</span><span>3. Auditor Check</span></div>
-                            <span style="color:#CBD5E1;">&rarr;</span>
-                            <div class="step-item" id="pipe4"><span class="step-bubble">4</span><span>4. Human Approval</span></div>
-                            <span style="color:#CBD5E1;">&rarr;</span>
-                            <div class="step-item" id="pipe5"><span class="step-bubble">5</span><span>5. Commit</span></div>
-                        </div>
-
-                        <!-- Discount Slider -->
-                        <div class="slider-wrap">
-                            <div class="slider-header">
-                                <span>Adjust Renewal Incentive:</span>
-                                <span class="slider-pct" id="sliderValue">15%</span>
-                            </div>
-                            <input type="range" min="5" max="25" step="5" value="15" id="discountInput" oninput="updateDiscount(this.value)">
-                        </div>
-
-                        <!-- Impact Calculation -->
-                        <div class="impact-grid">
-                            <div class="impact-col">
-                                <span class="impact-col-lbl">Protected Pipeline</span>
-                                <span class="impact-col-val" style="color:#059669;" id="arrText">+$38,200.00</span>
-                            </div>
-                            <div class="impact-col">
-                                <span class="impact-col-lbl">Campaign Cost</span>
-                                <span class="impact-col-val" style="color:#DC2626;" id="costText">-$5,730.00</span>
-                            </div>
-                            <div class="impact-col">
-                                <span class="impact-col-lbl">Net Projected Gain</span>
-                                <span class="impact-col-val" style="color:#0F766E;" id="gainText">+$32,470.00</span>
-                            </div>
-                        </div>
-
-                        <!-- Action Buttons -->
-                        <div class="gate-actions">
-                            <button class="btn-authorize" id="btnApprove" onclick="approveCampaign()">
-                                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.5" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
-                                Approve & Execute Campaign
-                            </button>
-                            <button class="btn-dismiss" onclick="rejectCampaign()">Dismiss</button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Right: Switch Room Live Agent Collaboration -->
-                <div class="col-right">
-
-                    <div class="room-card">
-                        <div class="room-header">
-                            <div class="room-title-box">
-                                <span class="room-title">Switch Room — Live Multi-Agent Governance</span>
-                                <span class="room-subtitle">Analyst Agent &bull; Reviewer Auditor &bull; Consensus Engine</span>
-                            </div>
-                            <span class="nav-status"><span class="status-dot"></span>Live Stream</span>
-                        </div>
-
-                        <!-- Quick Starter Prompts -->
-                        <div class="prompt-pills-bar">
-                            <button class="prompt-pill" onclick="executeInquiry('Why did repeat purchases drop in the West region last month?')">⚡ Investigate West Drop</button>
-                            <button class="prompt-pill" onclick="executeInquiry('Audit all duplicate billing refunds and gateway glitches')">🔍 Audit Billing Glitches</button>
-                            <button class="prompt-pill" onclick="executeInquiry('Show me all enterprise customers in West region')">👥 Show Enterprise Accounts</button>
-                            <button class="prompt-pill" onclick="executeInquiry('What is the revenue breakdown by region?')">📊 Regional Revenue</button>
-                        </div>
-
-                        <div class="room-body" id="chatStream">
-                            <div class="chat-empty">
-                                Ask a business question or click <strong>"Run Live Investigation"</strong> above to see the agents formulate SQL, audit records, and resolve financial discrepancies in real time.
-                            </div>
-                        </div>
-
-                        <div class="room-input-wrap">
-                            <input type="text" class="room-input" id="chatInput" placeholder="Ask a business question or instruction..." onkeydown="if(event.key==='Enter') submitCustomInquiry()">
-                            <button class="room-send-btn" onclick="submitCustomInquiry()" title="Send">
-                                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </main>
-    </div>
-
-    <!-- ── ENTERPRISE LOGIN MODAL ── -->
-    <div class="modal-overlay" id="loginModal" onclick="if(event.target===this) closeLoginModal()">
-        <div class="login-box">
-            <button class="modal-close-btn" onclick="closeLoginModal()">✕</button>
-            
-            <div style="display:flex; flex-direction:column; gap:4px;">
-                <span class="login-badge">SECURE ENTERPRISE PORTAL</span>
-                <h3 style="font-size:18px; font-weight:800; color:var(--text-heading); margin-top:4px;">Sign In to Revenue Desk</h3>
-                <span style="font-size:12px; color:var(--text-muted);">Enter your credentials or use 1-click instant demo sign-in:</span>
-            </div>
-
-            <div class="login-field">
-                <label>Work Email</label>
-                <input type="email" id="loginEmail" value="alex.rivera@acmecloud.io" readonly style="color:#64748B;">
-            </div>
-
-            <div class="login-field">
-                <label>Assigned Governance Role</label>
-                <input type="text" value="Human Manager (VP Revenue Operations)" readonly style="color:#0D9488; font-weight:700;">
-            </div>
-
-            <button class="btn-instant-enter" onclick="completeLogin()">
-                <span>Launch Live Command Center</span>
-                <span style="font-size:16px;">&rarr;</span>
+            <button class="btn-nav" onclick="openMemoModal()">
+                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Audit Memo
+            </button>
+            <button class="btn-nav" onclick="resetState()">Reset</button>
+            <button class="btn-action-primary" onclick="runInvestigation()">
+                <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Run Live Investigation
             </button>
         </div>
-    </div>
+    </header>
+
+    <!-- ── Main Workspace ── -->
+    <main class="app-container">
+
+        <!-- ── 3 Focused KPI Cards ── -->
+        <section class="kpi-row">
+            <div class="kpi-card kpi-teal">
+                <div class="kpi-top">
+                    <span class="kpi-label">Gross Revenue (October)</span>
+                    <div class="kpi-icon-pill" style="background:#ECFDF5;">
+                        <svg viewBox="0 0 24 24" style="stroke:#059669"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                </div>
+                <span class="kpi-num" id="metricGross">$112,450</span>
+                <div class="kpi-sub" style="color:#059669;">
+                    <svg viewBox="0 0 12 12" width="12" height="12" style="stroke:currentColor;stroke-width:2.4;fill:none"><polyline points="1 8 4 4 7 6 11 2"/></svg>
+                    +2.4% MoM Across Transactions
+                </div>
+            </div>
+
+            <div class="kpi-card kpi-red">
+                <div class="kpi-top">
+                    <span class="kpi-label">Repeat Purchase Drop</span>
+                    <div class="kpi-icon-pill" style="background:#FEF2F2;">
+                        <svg viewBox="0 0 24 24" style="stroke:#DC2626"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+                    </div>
+                </div>
+                <span class="kpi-num" style="color:#DC2626;" id="metricDrop">-84.2%</span>
+                <div class="kpi-sub" style="color:#DC2626;">5 Enterprise Accounts Flagged</div>
+            </div>
+
+            <div class="kpi-card kpi-amber">
+                <div class="kpi-top">
+                    <span class="kpi-label">Caught Billing Glitch</span>
+                    <div class="kpi-icon-pill" style="background:#FFFBEB;">
+                        <svg viewBox="0 0 24 24" style="stroke:#D97706"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                </div>
+                <span class="kpi-num" style="color:#D97706;" id="metricNet">-$20,430</span>
+                <div class="kpi-sub" style="color:#D97706;">Duplicate Processor Refund Loop</div>
+            </div>
+        </section>
+
+        <!-- ── 2-Column Clean Workspace ── -->
+        <div class="workspace-grid">
+
+            <!-- Left: Trajectory Chart & Authorization Gate -->
+            <div class="col-left">
+
+                <!-- Chart Card -->
+                <div class="chart-box">
+                    <div class="chart-header">
+                        <div class="chart-title-area">
+                            <span class="chart-title" id="chartHeaderTitle">Revenue Trajectory & Anomaly Detection</span>
+                            <span class="chart-company-badge" id="chartBadge">West Region (Jul – Dec 2026)</span>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-tag"><span class="legend-bullet" style="background:#2563EB;"></span>Reported Orders</div>
+                            <div class="legend-tag"><span class="legend-bullet" style="background:#F59E0B;"></span>Glitch Loop</div>
+                            <div class="legend-tag"><span class="legend-bullet" style="background:#10B981;"></span>Win-Back Target</div>
+                        </div>
+                    </div>
+
+                    <div class="canvas-area" id="canvasAreaContainer">
+                        <canvas id="revenueCanvas"></canvas>
+                        <div class="chart-callout-pill" id="chartCallout">
+                            <span style="color:#DC2626; font-weight:800;">October Glitch:</span> -$20,430 duplicate refunds &bull; <span style="color:#059669; font-weight:800;">Real net revenue: $3,820</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Human Approval Gate -->
+                <div class="approval-gate-card">
+                    <div class="gate-head">
+                        <div>
+                            <span class="gate-title">Human-in-the-Loop Campaign Authorization</span>
+                            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Protect revenue with policy-safe discount guardrails before writing to database.</div>
+                        </div>
+                        <span class="gate-status-pill" id="gateBadge">Ready for Review</span>
+                    </div>
+
+                    <!-- Clean Linear Stepper -->
+                    <div class="stepper-row">
+                        <div class="step-item active" id="pipe1"><span class="step-bubble">1</span><span>1. Inquiry</span></div>
+                        <span style="color:#CBD5E1;">&rarr;</span>
+                        <div class="step-item" id="pipe2"><span class="step-bubble">2</span><span>2. Analyst SQL</span></div>
+                        <span style="color:#CBD5E1;">&rarr;</span>
+                        <div class="step-item" id="pipe3"><span class="step-bubble">3</span><span>3. Auditor Check</span></div>
+                        <span style="color:#CBD5E1;">&rarr;</span>
+                        <div class="step-item" id="pipe4"><span class="step-bubble">4</span><span>4. Human Approval</span></div>
+                        <span style="color:#CBD5E1;">&rarr;</span>
+                        <div class="step-item" id="pipe5"><span class="step-bubble">5</span><span>5. Commit</span></div>
+                    </div>
+
+                    <!-- Discount Slider -->
+                    <div class="slider-wrap">
+                        <div class="slider-header">
+                            <span>Adjust Renewal Incentive:</span>
+                            <span class="slider-pct" id="sliderValue">15%</span>
+                        </div>
+                        <input type="range" min="5" max="25" step="5" value="15" id="discountInput" oninput="updateDiscount(this.value)">
+                    </div>
+
+                    <!-- Impact Calculation -->
+                    <div class="impact-grid">
+                        <div class="impact-col">
+                            <span class="impact-col-lbl">Protected Pipeline</span>
+                            <span class="impact-col-val" style="color:#059669;" id="arrText">+$38,200.00</span>
+                        </div>
+                        <div class="impact-col">
+                            <span class="impact-col-lbl">Campaign Cost</span>
+                            <span class="impact-col-val" style="color:#DC2626;" id="costText">-$5,730.00</span>
+                        </div>
+                        <div class="impact-col">
+                            <span class="impact-col-lbl">Net Projected Gain</span>
+                            <span class="impact-col-val" style="color:#0F766E;" id="gainText">+$32,470.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="gate-actions">
+                        <button class="btn-authorize" id="btnApprove" onclick="approveCampaign()">
+                            <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.5" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
+                            Approve & Execute Campaign
+                        </button>
+                        <button class="btn-dismiss" onclick="rejectCampaign()">Dismiss</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right: Switch Room Live Agent Collaboration -->
+            <div class="col-right">
+
+                <div class="room-card">
+                    <div class="room-header">
+                        <div class="room-title-box">
+                            <span class="room-title">Switch Room — Live Multi-Agent Governance</span>
+                            <span class="room-subtitle">Analyst Agent &bull; Reviewer Auditor &bull; Consensus Engine</span>
+                        </div>
+                        <span class="nav-status"><span class="status-dot"></span>Live Stream</span>
+                    </div>
+
+                    <!-- Quick Starter Prompts -->
+                    <div class="prompt-pills-bar">
+                        <button class="prompt-pill" onclick="executeInquiry('Why did repeat purchases drop in the West region last month?')">⚡ Investigate West Drop</button>
+                        <button class="prompt-pill" onclick="executeInquiry('Audit all duplicate billing refunds and gateway glitches')">🔍 Audit Billing Glitches</button>
+                        <button class="prompt-pill" onclick="executeInquiry('Show me all enterprise customers in West region')">👥 Show Enterprise Accounts</button>
+                        <button class="prompt-pill" onclick="executeInquiry('What is the revenue breakdown by region?')">📊 Regional Revenue</button>
+                    </div>
+
+                    <div class="room-body" id="chatStream">
+                        <div class="chat-empty">
+                            Ask a business question or click <strong>"Run Live Investigation"</strong> above to see the agents formulate SQL, audit records, and resolve financial discrepancies in real time.
+                        </div>
+                    </div>
+
+                    <div class="room-input-wrap">
+                        <input type="text" class="room-input" id="chatInput" placeholder="Ask a business question or instruction..." onkeydown="if(event.key==='Enter') submitCustomInquiry()">
+                        <button class="room-send-btn" onclick="submitCustomInquiry()" title="Send">
+                            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
 
     <!-- ── Database Explorer Modal ── -->
     <div class="modal-overlay" id="dbModal" onclick="if(event.target===this) closeDatabaseModal()">
@@ -1825,393 +1212,8 @@
     <script>
         let discount = 15;
         let cachedDbData = null;
-        let currentView = 'landing'; // 'landing' | 'app'
 
-        /* ── View Switcher Logic ── */
-        function showView(viewName) {
-            currentView = viewName;
-            const lView = document.getElementById('landingView');
-            const aView = document.getElementById('appView');
-
-            if (viewName === 'app') {
-                lView.classList.remove('active');
-                aView.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'instant' });
-                window.location.hash = 'app';
-                // Trigger chart rendering
-                setTimeout(renderChart, 50);
-            } else {
-                aView.classList.remove('active');
-                lView.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'instant' });
-                window.location.hash = 'landing';
-                initLanding3DCanvas();
-            }
-        }
-
-        function enterDashboard() {
-            showView('app');
-        }
-
-        function exitToLanding() {
-            showView('landing');
-        }
-
-        function openLoginModal() {
-            document.getElementById('loginModal').style.display = 'flex';
-        }
-
-        function closeLoginModal() {
-            document.getElementById('loginModal').style.display = 'none';
-        }
-
-        function completeLogin() {
-            closeLoginModal();
-            enterDashboard();
-        }
-
-        // Check URL Hash on load
-        window.addEventListener('DOMContentLoaded', () => {
-            if (window.location.hash === '#app') {
-                showView('app');
-            } else {
-                showView('landing');
-            }
-        });
-
-        /* ══════════════════════════════════════════════════════════════
-           ── 3D SCROLL ANIMATION ENGINE (Runs on Landing Page) ──
-           ══════════════════════════════════════════════════════════════ */
-        let lScrollProgress = 0.0;
-        let lTargetScroll = 0.0;
-        let lAnimTime = 0.0;
-
-        const lParticles3D = [];
-        for (let i = 0; i < 60; i++) {
-            lParticles3D.push({
-                x: (Math.random() - 0.5) * 800,
-                y: (Math.random() - 0.5) * 500,
-                z: (Math.random() - 0.5) * 800,
-                vx: (Math.random() - 0.5) * 0.4,
-                vy: (Math.random() - 0.5) * 0.4,
-                vz: (Math.random() - 0.5) * 0.4,
-                color: Math.random() > 0.5 ? 'rgba(45, 212, 191,' : 'rgba(56, 189, 248,'
-            });
-        }
-
-        const lSourceNodes3D = [
-            { name: 'PostgreSQL', icon: '🐘', angle: 0, dist: 280, y: -40, color: '#38BDF8' },
-            { name: 'Stripe Billing', icon: '💳', angle: Math.PI * 0.5, dist: 280, y: 30, color: '#818CF8' },
-            { name: 'Snowflake', icon: '❄️', angle: Math.PI, dist: 280, y: -20, color: '#38BDF8' },
-            { name: 'Shopify Store', icon: '🛒', angle: Math.PI * 1.5, dist: 280, y: 50, color: '#34D399' }
-        ];
-
-        function initLanding3DCanvas() {
-            const canvas = document.getElementById('landing3DCanvas');
-            if (!canvas) return;
-            const dpr = window.devicePixelRatio || 1;
-            canvas.width = Math.round(window.innerWidth * dpr);
-            canvas.height = Math.round(window.innerHeight * dpr);
-        }
-
-        window.addEventListener('resize', () => {
-            if (currentView === 'landing') initLanding3DCanvas();
-            else renderChart();
-        });
-
-        function updateLandingScroll() {
-            if (currentView !== 'landing') return;
-            const track = document.getElementById('landingScrollTrack');
-            if (!track) return;
-            const rect = track.getBoundingClientRect();
-            const totalDist = track.offsetHeight - window.innerHeight;
-            if (totalDist <= 0) return;
-            const currentDist = -rect.top;
-            const raw = Math.max(0, Math.min(1, currentDist / totalDist));
-            lTargetScroll = raw;
-        }
-
-        window.addEventListener('scroll', updateLandingScroll, { passive: true });
-
-        function jumpToLandingStage(idx) {
-            const track = document.getElementById('landingScrollTrack');
-            if (!track) return;
-            const totalDist = track.offsetHeight - window.innerHeight;
-            const checkpoints = [0.0, 0.28, 0.58, 0.85];
-            const targetY = track.offsetTop + checkpoints[idx] * totalDist;
-            window.scrollTo({ top: targetY, behavior: 'smooth' });
-        }
-
-        /* 3D Perspective Projection */
-        function project3D(x, y, z, rotX, rotY, rotZ, cx, cy, f = 650) {
-            let x1 = x * Math.cos(rotY) + z * Math.sin(rotY);
-            let z1 = -x * Math.sin(rotY) + z * Math.cos(rotY);
-
-            let y1 = y * Math.cos(rotX) - z1 * Math.sin(rotX);
-            let z2 = y * Math.sin(rotX) + z1 * Math.cos(rotX);
-
-            let x2 = x1 * Math.cos(rotZ) - y1 * Math.sin(rotZ);
-            let y2 = x1 * Math.sin(rotZ) + y1 * Math.cos(rotZ);
-
-            const cameraDist = 800;
-            const scale = f / (f + z2 + cameraDist);
-            return { sx: cx + x2 * scale, sy: cy + y2 * scale, scale: scale, depth: z2 };
-        }
-
-        /* 3D Landing Animation Loop */
-        function renderLanding3DLoop() {
-            if (currentView === 'landing') {
-                lAnimTime += 0.016;
-                lScrollProgress += (lTargetScroll - lScrollProgress) * 0.09;
-
-                const canvas = document.getElementById('landing3DCanvas');
-                if (canvas) {
-                    const ctx = canvas.getContext('2d');
-                    const dpr = window.devicePixelRatio || 1;
-                    const w = canvas.width / dpr;
-                    const h = canvas.height / dpr;
-                    ctx.resetTransform ? ctx.resetTransform() : ctx.setTransform(1, 0, 0, 1, 0, 0);
-                    ctx.scale(dpr, dpr);
-
-                    // Cyber space background
-                    const bgGrad = ctx.createRadialGradient(w / 2, h * 0.45, 50, w / 2, h * 0.5, Math.max(w, h));
-                    bgGrad.addColorStop(0, '#0F172A');
-                    bgGrad.addColorStop(0.6, '#080C14');
-                    bgGrad.addColorStop(1, '#030509');
-                    ctx.fillStyle = bgGrad;
-                    ctx.fillRect(0, 0, w, h);
-
-                    const cx = w * 0.5;
-                    const cy = h * 0.52;
-
-                    // Camera dynamic angles driven by scroll
-                    const camRotX = 0.42 + Math.sin(lScrollProgress * Math.PI) * 0.35 + Math.sin(lAnimTime * 0.5) * 0.04;
-                    const camRotY = lAnimTime * 0.2 + lScrollProgress * Math.PI * 1.5;
-                    const camRotZ = Math.sin(lScrollProgress * Math.PI * 2) * 0.08;
-
-                    // 1. 3D Grid Floor
-                    const gridY = 160;
-                    ctx.strokeStyle = 'rgba(13, 148, 136, 0.14)';
-                    ctx.lineWidth = 1;
-                    const gridSize = 70;
-                    const gridRange = 600;
-
-                    for (let gx = -gridRange; gx <= gridRange; gx += gridSize) {
-                        const p1 = project3D(gx, gridY, -gridRange, camRotX, camRotY, camRotZ, cx, cy);
-                        const p2 = project3D(gx, gridY, gridRange, camRotX, camRotY, camRotZ, cx, cy);
-                        if (p1.scale > 0 && p2.scale > 0) {
-                            ctx.beginPath(); ctx.moveTo(p1.sx, p1.sy); ctx.lineTo(p2.sx, p2.sy); ctx.stroke();
-                        }
-                    }
-
-                    for (let gz = -gridRange; gz <= gridRange; gz += gridSize) {
-                        const p1 = project3D(-gridRange, gridY, gz, camRotX, camRotY, camRotZ, cx, cy);
-                        const p2 = project3D(gridRange, gridY, gz, camRotX, camRotY, camRotZ, cx, cy);
-                        if (p1.scale > 0 && p2.scale > 0) {
-                            ctx.beginPath(); ctx.moveTo(p1.sx, p1.sy); ctx.lineTo(p2.sx, p2.sy); ctx.stroke();
-                        }
-                    }
-
-                    // 2. 3D Floating Particles
-                    lParticles3D.forEach(p => {
-                        p.x += p.vx; p.y += p.vy; p.z += p.vz;
-                        if (p.x > 400) p.x = -400; if (p.x < -400) p.x = 400;
-                        if (p.y > 250) p.y = -250; if (p.y < -250) p.y = 250;
-                        if (p.z > 400) p.z = -400; if (p.z < -400) p.z = 400;
-
-                        const proj = project3D(p.x, p.y, p.z, camRotX, camRotY, camRotZ, cx, cy);
-                        if (proj.scale > 0) {
-                            const alpha = Math.min(1, Math.max(0.15, proj.scale * 1.5));
-                            ctx.fillStyle = p.color + alpha + ')';
-                            ctx.beginPath();
-                            ctx.arc(proj.sx, proj.sy, Math.max(1, 2.5 * proj.scale), 0, Math.PI * 2);
-                            ctx.fill();
-                        }
-                    });
-
-                    // 3. Central 3D Rotating Rings
-                    ctx.lineWidth = 2.5;
-                    for (let ring = 0; ring < 3; ring++) {
-                        const rRadius = 90 + ring * 35;
-                        const rTiltX = camRotX + (ring === 0 ? lAnimTime * 0.8 : -lAnimTime * 0.6);
-                        const rTiltY = camRotY + (ring === 1 ? lAnimTime * 0.9 : 0);
-                        ctx.strokeStyle = ring === 0 ? 'rgba(45, 212, 191, 0.45)' : ring === 1 ? 'rgba(56, 189, 248, 0.3)' : 'rgba(129, 140, 248, 0.25)';
-                        ctx.beginPath();
-                        for (let s = 0; s <= 32; s++) {
-                            const theta = (s / 32) * Math.PI * 2;
-                            const rx = Math.cos(theta) * rRadius;
-                            const rz = Math.sin(theta) * rRadius;
-                            const proj = project3D(rx, 0, rz, rTiltX, rTiltY, camRotZ, cx, cy);
-                            if (s === 0) ctx.moveTo(proj.sx, proj.sy);
-                            else ctx.lineTo(proj.sx, proj.sy);
-                        }
-                        ctx.stroke();
-                    }
-
-                    // 4. Orbiting Multi-Cloud System Nodes (PostgreSQL, Stripe, Snowflake, Shopify)
-                    lSourceNodes3D.forEach((node, i) => {
-                        const curAngle = node.angle + lAnimTime * 0.3;
-                        const nx = Math.cos(curAngle) * node.dist;
-                        const nz = Math.sin(curAngle) * node.dist;
-                        const ny = node.y + Math.sin(lAnimTime * 2 + i) * 15;
-
-                        const pNode = project3D(nx, ny, nz, camRotX, camRotY, camRotZ, cx, cy);
-                        const pCenter = project3D(0, 0, 0, camRotX, camRotY, camRotZ, cx, cy);
-
-                        if (pNode.scale > 0 && pCenter.scale > 0) {
-                            ctx.beginPath();
-                            ctx.moveTo(pNode.sx, pNode.sy);
-                            ctx.lineTo(pCenter.sx, pCenter.sy);
-                            ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 + pNode.scale * 0.25})`;
-                            ctx.lineWidth = 1.5;
-                            ctx.stroke();
-
-                            const packetT = (lAnimTime * 0.7 + i * 0.25) % 1;
-                            const px = nx * (1 - packetT);
-                            const py = ny * (1 - packetT);
-                            const pz = nz * (1 - packetT);
-                            const pPacket = project3D(px, py, pz, camRotX, camRotY, camRotZ, cx, cy);
-                            if (pPacket.scale > 0) {
-                                ctx.fillStyle = '#2DD4BF';
-                                ctx.beginPath();
-                                ctx.arc(pPacket.sx, pPacket.sy, 3.5 * pPacket.scale, 0, Math.PI * 2);
-                                ctx.fill();
-                            }
-
-                            const nodeSize = 34 * pNode.scale;
-                            ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-                            ctx.strokeStyle = node.color;
-                            ctx.lineWidth = 2 * pNode.scale;
-                            ctx.beginPath();
-                            ctx.roundRect(pNode.sx - nodeSize, pNode.sy - nodeSize * 0.6, nodeSize * 2, nodeSize * 1.2, 6 * pNode.scale);
-                            ctx.fill();
-                            ctx.stroke();
-
-                            ctx.fillStyle = '#FFFFFF';
-                            ctx.font = `bold ${Math.max(9, Math.round(11 * pNode.scale))}px "Plus Jakarta Sans", sans-serif`;
-                            ctx.textAlign = 'center';
-                            ctx.fillText(`${node.icon} ${node.name}`, pNode.sx, pNode.sy + 3 * pNode.scale);
-                        }
-                    });
-
-                    // 5. Radar Anomaly Scan in 3D (Stage 3)
-                    if (lScrollProgress >= 0.40 && lScrollProgress <= 0.80) {
-                        const radarAlpha = Math.sin((lScrollProgress - 0.40) / 0.40 * Math.PI);
-                        const rRadius = 180;
-                        ctx.strokeStyle = `rgba(239, 68, 68, ${0.4 * radarAlpha})`;
-                        ctx.lineWidth = 2;
-                        ctx.beginPath();
-                        for (let s = 0; s <= 32; s++) {
-                            const theta = (s / 32) * Math.PI * 2;
-                            const rx = Math.cos(theta) * rRadius;
-                            const rz = Math.sin(theta) * rRadius;
-                            const proj = project3D(rx, 40, rz, camRotX, camRotY, camRotZ, cx, cy);
-                            if (s === 0) ctx.moveTo(proj.sx, proj.sy);
-                            else ctx.lineTo(proj.sx, proj.sy);
-                        }
-                        ctx.stroke();
-
-                        const ax = 90 + Math.sin(lAnimTime * 2) * 5, ay = 20, az = 70;
-                        const pAnomaly = project3D(ax, ay, az, camRotX, camRotY, camRotZ, cx, cy);
-                        if (pAnomaly.scale > 0) {
-                            const pulseR = (lAnimTime * 40 % 50) + 10;
-                            ctx.strokeStyle = `rgba(239, 68, 68, ${(1 - pulseR / 60) * radarAlpha})`;
-                            ctx.lineWidth = 2.5;
-                            ctx.beginPath();
-                            ctx.arc(pAnomaly.sx, pAnomaly.sy, pulseR * pAnomaly.scale, 0, Math.PI * 2);
-                            ctx.stroke();
-
-                            ctx.fillStyle = `rgba(185, 28, 28, ${0.9 * radarAlpha})`;
-                            ctx.strokeStyle = `rgba(248, 113, 113, ${radarAlpha})`;
-                            ctx.lineWidth = 2;
-                            ctx.beginPath();
-                            ctx.roundRect(pAnomaly.sx - 90 * pAnomaly.scale, pAnomaly.sy - 18 * pAnomaly.scale, 180 * pAnomaly.scale, 36 * pAnomaly.scale, 6);
-                            ctx.fill(); ctx.stroke();
-
-                            ctx.fillStyle = '#FFFFFF';
-                            ctx.font = `bold ${Math.max(9, Math.round(11 * pAnomaly.scale))}px "JetBrains Mono", monospace`;
-                            ctx.textAlign = 'center';
-                            ctx.fillText('⚠️ DUPLICATE REFUND LOOP', pAnomaly.sx, pAnomaly.sy - 2 * pAnomaly.scale);
-                            ctx.fillStyle = '#FECACA';
-                            ctx.font = `${Math.max(8, Math.round(9.5 * pAnomaly.scale))}px "JetBrains Mono", monospace`;
-                            ctx.fillText('-$20,430.00 ISOLATED', pAnomaly.sx, pAnomaly.sy + 10 * pAnomaly.scale);
-                        }
-                    }
-
-                    // 6. 3D Emerald Diamond / Consensus Shield (Stage 4)
-                    if (lScrollProgress >= 0.68) {
-                        const shieldAlpha = Math.min(1, (lScrollProgress - 0.68) / 0.15);
-                        const diamondH = 75, diamondW = 45;
-                        const vertices = [
-                            { x: 0, y: -diamondH, z: 0 },
-                            { x: diamondW, y: 0, z: 0 },
-                            { x: 0, y: 0, z: diamondW },
-                            { x: -diamondW, y: 0, z: 0 },
-                            { x: 0, y: 0, z: -diamondW },
-                            { x: 0, y: diamondH, z: 0 }
-                        ];
-
-                        const pVerts = vertices.map(v => project3D(v.x, v.y + Math.sin(lAnimTime * 3) * 8, v.z, camRotX, camRotY + lAnimTime * 1.2, camRotZ, cx, cy));
-                        ctx.strokeStyle = `rgba(52, 211, 153, ${0.85 * shieldAlpha})`;
-                        ctx.lineWidth = 2.5;
-                        const edges = [
-                            [0,1],[0,2],[0,3],[0,4],
-                            [5,1],[5,2],[5,3],[5,4],
-                            [1,2],[2,3],[3,4],[4,1]
-                        ];
-
-                        edges.forEach(e => {
-                            const vA = pVerts[e[0]], vB = pVerts[e[1]];
-                            if (vA.scale > 0 && vB.scale > 0) {
-                                ctx.beginPath(); ctx.moveTo(vA.sx, vA.sy); ctx.lineTo(vB.sx, vB.sy); ctx.stroke();
-                            }
-                        });
-
-                        const waveR = (lAnimTime * 50 % 90) + 20;
-                        ctx.strokeStyle = `rgba(16, 185, 129, ${(1 - waveR / 110) * shieldAlpha})`;
-                        ctx.lineWidth = 3;
-                        ctx.beginPath();
-                        ctx.arc(cx, cy, waveR, 0, Math.PI * 2);
-                        ctx.stroke();
-                    }
-                }
-
-                // Sync narrative cards visibility on landing
-                updateLandingCards(lScrollProgress);
-            }
-
-            requestAnimationFrame(renderLanding3DLoop);
-        }
-
-        requestAnimationFrame(renderLanding3DLoop);
-
-        function updateLandingCards(progress) {
-            const cards = [
-                document.getElementById('lCard0'),
-                document.getElementById('lCard1'),
-                document.getElementById('lCard2'),
-                document.getElementById('lCard3')
-            ];
-
-            let activeCardIdx = 0;
-            if (progress < 0.22) activeCardIdx = 0;
-            else if (progress >= 0.22 && progress < 0.48) activeCardIdx = 1;
-            else if (progress >= 0.48 && progress < 0.72) activeCardIdx = 2;
-            else activeCardIdx = 3;
-
-            cards.forEach((card, idx) => {
-                if (!card) return;
-                if (idx === activeCardIdx && progress < 0.96) {
-                    card.classList.add('visible');
-                } else {
-                    card.classList.remove('visible');
-                }
-            });
-        }
-
-        /* ══════════════════════════════════════════════════════════════
-           ── DASHBOARD INTERACTIVE ENGINE (Clean Cockpit View) ──
-           ══════════════════════════════════════════════════════════════ */
+        /* ── Company Profile Switcher ── */
         function toggleCompanyDropdown() {
             const el = document.getElementById('companyDropdown');
             el.style.display = el.style.display === 'flex' ? 'none' : 'flex';
@@ -2236,6 +1238,7 @@
             renderChart();
         }
 
+        /* ── Revenue Trajectory Chart ── */
         function renderChart() {
             const canvas = document.getElementById('revenueCanvas');
             if (!canvas) return;
@@ -2355,14 +1358,15 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            renderChart();
             const area = document.getElementById('canvasAreaContainer');
             if (window.ResizeObserver && area) {
-                new ResizeObserver(() => {
-                    if (currentView === 'app') renderChart();
-                }).observe(area);
+                new ResizeObserver(() => renderChart()).observe(area);
             }
         });
+        window.addEventListener('resize', renderChart);
 
+        /* ── Discount Slider ── */
         function updateDiscount(val) {
             discount = parseInt(val, 10);
             document.getElementById('sliderValue').innerText = val + '%';
@@ -2383,6 +1387,7 @@
             }
         }
 
+        /* ── Chat Messages ── */
         function addMessage(author, htmlContent, color) {
             const stream = document.getElementById('chatStream');
             if (stream.querySelector('.chat-empty')) stream.innerHTML = '';
@@ -2437,6 +1442,7 @@
             return out;
         }
 
+        /* ── Live Backend Integration ── */
         async function executeInquiry(question) {
             const stream = document.getElementById('chatStream');
             stream.innerHTML = '';
@@ -2453,6 +1459,7 @@
                 });
                 const data = await res.json();
 
+                // Analyst response
                 setPipe(2, 'completed');
                 setPipe(3, 'active');
 
@@ -2466,6 +1473,7 @@
 
                 addMessage('Analyst Agent', analystHtml, '#0D9488');
 
+                // Reviewer response
                 setPipe(3, 'completed');
                 setPipe(4, 'active');
 
@@ -2484,6 +1492,7 @@
 
                 addMessage('Reviewer Agent', reviewerHtml, '#D97706');
 
+                // Consensus Proposal
                 const actionText = data.proposed_action ? data.proposed_action : "100% Alignment Reached. Ready to authorize executive action.";
                 let consensusHtml = formatMarkdown(actionText);
                 consensusHtml += `<div class="consensus-banner">100% MULTI-AGENT CONSENSUS &bull; Analyst &check; Reviewer &check; Aligned &check;</div>`;
