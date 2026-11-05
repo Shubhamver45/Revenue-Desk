@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Revenue Desk — 3D Autonomous Financial Governance & Multi-Company Operations</title>
+    <title>Revenue Desk — Autonomous Financial Governance & Multi-Company Operations</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* ── Modern 2026 SaaS Cyber-Light Aesthetic ── */
+            /* ── Modern 2026 SaaS Light Theme (Dashboard) ── */
             --bg-page: #F8FAFC;
             --bg-card: #FFFFFF;
             --bg-subtle: #F1F5F9;
@@ -54,30 +54,49 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
             font-family: var(--font-sans);
-            background: #090D16;
-            color: var(--text-body);
-            overflow-x: hidden;
-            font-size: 13px;
-            line-height: 1.5;
         }
 
-        /* ── Persistent Floating Cyber Navigation Bar ── */
-        .navbar {
+        /* ══════════════════════════════════════════════════════════════
+           ── VIEW CONTAINER SWITCHING (Landing vs Dashboard) ──
+           ══════════════════════════════════════════════════════════════ */
+        .app-view-container {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .app-view-container.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           ── VIEW 1: 3D SCROLL ANIMATED LANDING PAGE ──
+           ══════════════════════════════════════════════════════════════ */
+        #landingView {
+            background: #090D16;
+            color: #E2E8F0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Landing Top Navigation Bar */
+        .landing-navbar {
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            height: clamp(54px, 7vh, 64px);
+            height: 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 clamp(16px, 2.5vw, 32px);
+            padding: 0 clamp(16px, 3vw, 40px);
             position: fixed;
             top: 0;
             left: 0;
@@ -85,69 +104,384 @@
             z-index: 100;
         }
 
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: clamp(10px, 1.2vw, 18px);
-        }
-
-        .brand-logo {
+        .brand-logo-dark {
             display: flex;
             align-items: center;
             gap: 10px;
             text-decoration: none;
             color: #FFFFFF;
             font-weight: 800;
-            font-size: clamp(14px, 1.1vw, 16px);
+            font-size: 15.5px;
             letter-spacing: -0.3px;
         }
 
-        .brand-icon {
-            width: 30px;
-            height: 30px;
+        .brand-icon-dark {
+            width: 32px;
+            height: 32px;
             background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 14px rgba(13, 148, 136, 0.5);
+            box-shadow: 0 0 16px rgba(13, 148, 136, 0.5);
             flex-shrink: 0;
         }
 
-        .brand-icon svg { width: 17px; height: 17px; stroke: #fff; stroke-width: 2.4; fill: none; }
+        .brand-icon-dark svg { width: 17px; height: 17px; stroke: #fff; stroke-width: 2.4; fill: none; }
+
+        .landing-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .landing-nav-link {
+            color: #94A3B8;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+
+        .landing-nav-link:hover { color: #FFFFFF; }
+
+        .btn-landing-login {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #FFFFFF;
+            padding: 7px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-landing-login:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-1px); }
+
+        .btn-landing-cta {
+            background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
+            border: none;
+            color: #FFFFFF;
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 0 20px rgba(13, 148, 136, 0.4);
+            transition: all 0.15s;
+        }
+
+        .btn-landing-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 25px rgba(37, 99, 235, 0.55); }
+
+        /* 3D Scroll Pin Track on Landing Page */
+        .landing-scroll-track {
+            position: relative;
+            height: 420vh;
+            background: radial-gradient(circle at 50% 20%, #0F172A 0%, #060911 100%);
+        }
+
+        .landing-sticky-viewport {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            height: 100dvh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        canvas#landing3DCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* 3D Floating Narrative Cards */
+        .landing-card-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 24px;
+        }
+
+        .landing-stage-card {
+            position: absolute;
+            max-width: 650px;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-lg);
+            padding: clamp(22px, 3vh, 36px) clamp(24px, 3vw, 40px);
+            box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.75), 0 0 30px rgba(13, 148, 136, 0.15);
+            opacity: 0;
+            transform: translateY(30px) scale(0.96);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .landing-stage-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .landing-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(13, 148, 136, 0.18);
+            border: 1px solid rgba(45, 212, 191, 0.35);
+            color: #2DD4BF;
+            padding: 3px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .landing-title {
+            font-size: clamp(26px, 3.4vw, 40px);
+            font-weight: 900;
+            color: #FFFFFF;
+            letter-spacing: -1px;
+            line-height: 1.15;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .landing-title span {
+            background: linear-gradient(135deg, #2DD4BF 0%, #38BDF8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .landing-desc {
+            font-size: clamp(13px, 1.1vw, 15px);
+            color: #94A3B8;
+            line-height: 1.6;
+            max-width: 550px;
+        }
+
+        .landing-pills-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 4px;
+        }
+
+        .landing-metric-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: var(--font-mono);
+        }
+
+        .landing-metric-val { font-size: 16px; font-weight: 800; color: #FFFFFF; }
+        .landing-metric-lbl { font-size: 10px; color: #64748B; text-transform: uppercase; }
+
+        /* Floating Landing Scroll Indicator */
+        .landing-scroll-hint {
+            position: absolute;
+            bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #94A3B8;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            pointer-events: auto;
+            cursor: pointer;
+            animation: bounceHint 2s infinite ease-in-out;
+            z-index: 15;
+        }
+
+        @keyframes bounceHint {
+            0%, 100% { transform: translateY(0); opacity: 0.7; }
+            50% { transform: translateY(6px); opacity: 1; }
+        }
+
+        .hint-mouse {
+            width: 20px;
+            height: 32px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            padding-top: 6px;
+        }
+
+        .hint-wheel {
+            width: 3px;
+            height: 6px;
+            background: #2DD4BF;
+            border-radius: 2px;
+            animation: wheelAnim 1.6s infinite;
+        }
+
+        @keyframes wheelAnim {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(10px); opacity: 0; }
+        }
+
+        /* ── Landing Bottom Section: Architecture & Testimonial ── */
+        .landing-footer-section {
+            background: #060911;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 80px 24px 100px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .landing-grid-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1080px;
+            width: 100%;
+            margin-top: 16px;
+            text-align: left;
+        }
+
+        .l-card {
+            background: #0F172A;
+            border: 1px solid #1E293B;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .l-card-icon { font-size: 24px; }
+        .l-card-title { font-size: 15px; font-weight: 700; color: #FFFFFF; }
+        .l-card-desc { font-size: 13px; color: #94A3B8; line-height: 1.6; }
+
+        /* ══════════════════════════════════════════════════════════════
+           ── VIEW 2: THE CLEAN LIVE OPERATIONS DASHBOARD COCKPIT ──
+           ══════════════════════════════════════════════════════════════ */
+        #appView {
+            background: radial-gradient(circle at 10% 10%, rgba(13, 148, 136, 0.04) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 20%, rgba(37, 99, 235, 0.03) 0%, transparent 40%),
+                        var(--bg-page);
+            color: var(--text-body);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* Dashboard Light Navbar (Matches User's Screenshot Exactly) */
+        .dash-navbar {
+            background: #FFFFFF;
+            border-bottom: 1px solid var(--border-default);
+            height: clamp(52px, 6.5vh, 60px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 clamp(14px, 2vw, 28px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            flex-shrink: 0;
+        }
+
+        .dash-nav-left {
+            display: flex;
+            align-items: center;
+            gap: clamp(10px, 1.2vw, 16px);
+        }
+
+        .dash-brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            text-decoration: none;
+            color: var(--text-heading);
+            font-weight: 800;
+            font-size: clamp(13.5px, 1.1vw, 15px);
+            letter-spacing: -0.3px;
+        }
+
+        .dash-brand-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(13, 148, 136, 0.25);
+            flex-shrink: 0;
+        }
+
+        .dash-brand-icon svg { width: 16px; height: 16px; stroke: #fff; stroke-width: 2.4; fill: none; }
 
         /* Company Switcher Pill */
-        .company-select-wrap {
-            position: relative;
-        }
+        .company-select-wrap { position: relative; }
 
         .company-btn {
             display: flex;
             align-items: center;
             gap: 7px;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 5px 12px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-default);
+            padding: 5px 11px;
             border-radius: var(--radius-sm);
             font-size: 12px;
             font-weight: 600;
-            color: #E2E8F0;
+            color: var(--text-heading);
             cursor: pointer;
             transition: all 0.15s ease;
             white-space: nowrap;
         }
 
-        .company-btn:hover { background: rgba(255, 255, 255, 0.12); color: #FFFFFF; }
+        .company-btn:hover { background: #E2E8F0; }
 
         .company-dropdown {
             position: absolute;
-            top: 115%;
+            top: 110%;
             left: 0;
             width: 260px;
-            background: #0F172A;
-            border: 1px solid #1E293B;
+            background: #FFFFFF;
+            border: 1px solid var(--border-default);
             border-radius: var(--radius-md);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: var(--shadow-modal);
             padding: 6px;
             display: none;
             flex-direction: column;
@@ -163,67 +497,62 @@
             border-radius: 6px;
             font-size: 12px;
             font-weight: 600;
-            color: #94A3B8;
+            color: var(--text-body);
             cursor: pointer;
             text-decoration: none;
             transition: 0.1s;
         }
 
-        .company-opt:hover { background: #1E293B; color: #2DD4BF; }
-        .company-opt.active { background: rgba(13, 148, 136, 0.2); color: #2DD4BF; }
+        .company-opt:hover { background: var(--bg-subtle); color: var(--brand-primary); }
+        .company-opt.active { background: var(--brand-primary-bg); color: var(--brand-primary); }
 
         .company-tag {
             font-size: 10px;
-            color: #64748B;
+            color: var(--text-muted);
             font-family: var(--font-mono);
         }
 
-        /* 3D Journey Checkpoint Tracker */
-        .stage-nav-pill-group {
+        .nav-status {
             display: flex;
             align-items: center;
-            gap: 4px;
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 6px;
+            background: var(--color-green-bg);
+            border: 1px solid #D1FAE5;
+            padding: 4px 10px;
             border-radius: 20px;
-            padding: 3px 6px;
-        }
-
-        .stage-pill {
-            background: transparent;
-            border: none;
-            color: #64748B;
-            font-family: var(--font-mono);
             font-size: 11px;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .stage-pill:hover { color: #E2E8F0; }
-        .stage-pill.active {
-            background: #0D9488;
-            color: #FFFFFF;
             font-weight: 700;
-            box-shadow: 0 0 10px rgba(13, 148, 136, 0.5);
+            color: #047857;
+            white-space: nowrap;
         }
 
-        .nav-right {
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: #10B981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .dash-nav-right {
             display: flex;
             align-items: center;
-            gap: clamp(8px, 1vw, 12px);
+            gap: clamp(6px, 0.8vw, 10px);
         }
 
-        .btn-nav-dark {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #E2E8F0;
+        .btn-tour-light {
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            color: #1D4ED8;
             padding: 6px 12px;
             border-radius: var(--radius-sm);
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -232,13 +561,31 @@
             white-space: nowrap;
         }
 
-        .btn-nav-dark:hover { background: rgba(255, 255, 255, 0.12); color: #FFFFFF; transform: translateY(-1px); }
+        .btn-tour-light:hover { background: #DBEAFE; transform: translateY(-1px); }
+
+        .btn-nav {
+            background: #FFFFFF;
+            border: 1px solid var(--border-default);
+            color: var(--text-body);
+            padding: 6px 11px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .btn-nav:hover { background: var(--bg-subtle); color: var(--text-heading); }
 
         .btn-action-primary {
-            background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
+            background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
             border: none;
             color: #FFFFFF;
-            padding: 7px 16px;
+            padding: 6px 15px;
             border-radius: var(--radius-sm);
             font-size: 12px;
             font-weight: 700;
@@ -247,279 +594,42 @@
             align-items: center;
             gap: 6px;
             transition: all 0.15s ease;
-            box-shadow: 0 0 16px rgba(13, 148, 136, 0.4);
+            box-shadow: 0 2px 8px rgba(13, 148, 136, 0.25);
             white-space: nowrap;
         }
 
-        .btn-action-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.5);
-        }
+        .btn-action-primary:hover { background: linear-gradient(135deg, #0F766E 0%, #115E59 100%); transform: translateY(-1px); }
 
-        /* ══════════════════════════════════════════════════════════════
-           ── 3D SCROLL EXPERIENCE (Sticky Pin 450vh Track) ──
-           ══════════════════════════════════════════════════════════════ */
-        #scrollExperience {
-            position: relative;
-            height: 420vh;
-            background: radial-gradient(circle at 50% 20%, #0F172A 0%, #060911 100%);
-        }
-
-        .sticky-3d-stage {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            height: 100dvh;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        canvas#threeDCanvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* 3D Floating Narrative Cards (Synced to Scroll) */
-        .stage-overlay-container {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 24px;
-        }
-
-        .stage-card {
-            position: absolute;
-            max-width: 640px;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: var(--radius-lg);
-            padding: clamp(20px, 3vh, 32px) clamp(22px, 3vw, 36px);
-            box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.7), 0 0 30px rgba(13, 148, 136, 0.15);
-            opacity: 0;
-            transform: translateY(30px) scale(0.96);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            pointer-events: auto;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .stage-card.visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .stage-eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(13, 148, 136, 0.18);
-            border: 1px solid rgba(45, 212, 191, 0.35);
-            color: #2DD4BF;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            font-family: var(--font-mono);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .stage-title {
-            font-size: clamp(24px, 3.2vw, 38px);
-            font-weight: 900;
-            color: #FFFFFF;
-            letter-spacing: -1px;
-            line-height: 1.15;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .stage-title span {
-            background: linear-gradient(135deg, #2DD4BF 0%, #38BDF8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .stage-desc {
-            font-size: clamp(13px, 1.1vw, 15px);
-            color: #94A3B8;
-            line-height: 1.6;
-            max-width: 540px;
-        }
-
-        .stage-pills-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 4px;
-        }
-
-        .stage-metric-capsule {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 14px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-family: var(--font-mono);
-        }
-
-        .stage-metric-val {
-            font-size: 16px;
-            font-weight: 800;
-            color: #FFFFFF;
-        }
-
-        .stage-metric-lbl {
-            font-size: 10px;
-            color: #64748B;
-            text-transform: uppercase;
-        }
-
-        /* Animated Scroll Indicator */
-        .scroll-down-hint {
-            position: absolute;
-            bottom: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            color: #94A3B8;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            letter-spacing: 0.5px;
-            pointer-events: auto;
-            cursor: pointer;
-            animation: bounceScroll 2s infinite ease-in-out;
-            z-index: 15;
-        }
-
-        @keyframes bounceScroll {
-            0%, 100% { transform: translateY(0); opacity: 0.7; }
-            50% { transform: translateY(6px); opacity: 1; }
-        }
-
-        .mouse-icon {
-            width: 20px;
-            height: 32px;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            padding-top: 6px;
-        }
-
-        .mouse-wheel {
-            width: 3px;
-            height: 6px;
-            background: #2DD4BF;
-            border-radius: 2px;
-            animation: mouseScroll 1.6s infinite;
-        }
-
-        @keyframes mouseScroll {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(10px); opacity: 0; }
-        }
-
-        /* ══════════════════════════════════════════════════════════════
-           ── THE LIVE OPERATIONS COCKPIT DECK ──
-           ══════════════════════════════════════════════════════════════ */
-        #liveOperationsDeck {
-            position: relative;
-            z-index: 20;
-            background: #F8FAFC;
-            border-top: 1px solid var(--border-default);
-            padding: clamp(24px, 4vh, 48px) clamp(16px, 2.5vw, 36px) 60px;
-            min-height: 100vh;
-        }
-
-        .deck-header-box {
-            max-width: 1480px;
-            margin: 0 auto 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .deck-title-area {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .deck-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #ECFDF5;
-            border: 1px solid #A7F3D0;
-            color: #047857;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 20px;
-            width: fit-content;
-        }
-
-        .deck-title {
-            font-size: clamp(22px, 2.2vw, 30px);
-            font-weight: 900;
-            color: var(--text-heading);
-            letter-spacing: -0.8px;
-        }
-
-        .deck-subtitle {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        /* App Container Grid inside Deck */
-        .app-container {
-            max-width: 1480px;
+        /* Main Workspace Container (Clean Screen-Fitting) */
+        .dash-app-container {
+            max-width: 1520px;
             width: 100%;
             margin: 0 auto;
+            padding: clamp(12px, 1.6vh, 22px) clamp(14px, 2vw, 28px);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: clamp(10px, 1.4vh, 18px);
+            flex: 1;
+            min-height: 0;
+            box-sizing: border-box;
         }
 
-        /* ── 3 Focused KPI Cards ── */
+        /* ── 3 Focused KPI Cards (Screenshot Exact) ── */
         .kpi-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            gap: clamp(10px, 1.2vw, 16px);
+            flex-shrink: 0;
         }
 
         .kpi-card {
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-md);
-            padding: 16px 20px;
+            padding: clamp(11px, 1.4vh, 16px) clamp(14px, 1.5vw, 20px);
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: clamp(3px, 0.5vh, 6px);
             box-shadow: var(--shadow-card);
             position: relative;
             overflow: hidden;
@@ -546,7 +656,7 @@
         }
 
         .kpi-label {
-            font-size: 11px;
+            font-size: clamp(10.5px, 0.85vw, 11.5px);
             font-weight: 700;
             color: var(--text-secondary);
             text-transform: uppercase;
@@ -554,8 +664,8 @@
         }
 
         .kpi-icon-pill {
-            width: 28px;
-            height: 28px;
+            width: clamp(26px, 2vw, 30px);
+            height: clamp(26px, 2vw, 30px);
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
@@ -566,7 +676,7 @@
         .kpi-icon-pill svg { width: 15px; height: 15px; stroke-width: 2.2; fill: none; }
 
         .kpi-num {
-            font-size: 26px;
+            font-size: clamp(21px, 1.9vw, 28px);
             font-weight: 800;
             letter-spacing: -0.8px;
             line-height: 1.1;
@@ -577,42 +687,48 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 11.5px;
+            font-size: clamp(11px, 0.8vw, 12px);
             font-family: var(--font-mono);
             font-weight: 600;
         }
 
-        /* ── 2-Column Main Workspace ── */
+        /* ── Fluid 2-Column Main Workspace ── */
         .workspace-grid {
             display: grid;
             grid-template-columns: 1.15fr 0.85fr;
-            gap: 20px;
-            align-items: start;
+            gap: clamp(12px, 1.4vw, 20px);
+            align-items: stretch;
+            flex: 1;
+            min-height: 0;
         }
 
         .col-left {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: clamp(10px, 1.4vh, 16px);
+            min-height: 0;
         }
 
-        /* ── Revenue Trajectory Chart ── */
+        /* ── Revenue Trajectory Chart Box ── */
         .chart-box {
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-md);
-            padding: 18px 22px 14px;
+            padding: clamp(12px, 1.5vh, 18px) clamp(14px, 1.6vw, 22px) clamp(10px, 1.2vh, 14px);
             box-shadow: var(--shadow-card);
             position: relative;
             display: flex;
             flex-direction: column;
+            flex: 1;
+            min-height: 0;
         }
 
         .chart-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: clamp(6px, 1vh, 10px);
+            flex-shrink: 0;
         }
 
         .chart-title-area {
@@ -622,7 +738,7 @@
         }
 
         .chart-title {
-            font-size: 13.5px;
+            font-size: clamp(12.5px, 0.95vw, 14px);
             font-weight: 700;
             color: var(--text-heading);
         }
@@ -640,7 +756,7 @@
         .chart-legend {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: clamp(8px, 1vw, 14px);
             font-size: 11px;
             color: var(--text-secondary);
             font-weight: 500;
@@ -651,7 +767,8 @@
 
         .canvas-area {
             width: 100%;
-            height: 200px;
+            flex: 1;
+            min-height: clamp(130px, 17vh, 210px);
             position: relative;
         }
 
@@ -673,16 +790,17 @@
             white-space: nowrap;
         }
 
-        /* ── Human Approval Gate ── */
+        /* ── Human Approval Gate (Policy-Safe) ── */
         .approval-gate-card {
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-md);
-            padding: 18px 22px;
+            padding: clamp(12px, 1.4vh, 18px) clamp(14px, 1.6vw, 22px);
             box-shadow: var(--shadow-card);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: clamp(8px, 1.1vh, 12px);
+            flex-shrink: 0;
         }
 
         .gate-head {
@@ -692,7 +810,7 @@
         }
 
         .gate-title {
-            font-size: 13.5px;
+            font-size: clamp(12.5px, 0.95vw, 13.5px);
             font-weight: 700;
             color: var(--text-heading);
         }
@@ -711,7 +829,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 8px 12px;
+            padding: clamp(6px, 0.9vh, 10px) 12px;
             background: var(--bg-subtle);
             border-radius: var(--radius-sm);
         }
@@ -777,7 +895,7 @@
             background: var(--bg-subtle);
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
-            padding: 10px 14px;
+            padding: clamp(8px, 1vh, 12px) 14px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
@@ -834,6 +952,7 @@
         .col-right {
             display: flex;
             flex-direction: column;
+            min-height: 0;
         }
 
         .room-card {
@@ -843,12 +962,15 @@
             box-shadow: var(--shadow-card);
             display: flex;
             flex-direction: column;
-            height: 580px;
+            height: 100%;
+            min-height: clamp(380px, 50vh, 600px);
+            max-height: calc(100vh - 185px);
+            max-height: calc(100dvh - 185px);
             overflow: hidden;
         }
 
         .room-header {
-            padding: 12px 18px;
+            padding: clamp(10px, 1.2vh, 14px) 18px;
             border-bottom: 1px solid var(--border-default);
             display: flex;
             align-items: center;
@@ -904,7 +1026,7 @@
 
         .chat-empty {
             text-align: center;
-            padding: 60px 16px;
+            padding: clamp(40px, 8vh, 70px) 16px;
             color: var(--text-muted);
             font-size: 12.5px;
             line-height: 1.6;
@@ -1038,11 +1160,85 @@
         .room-send-btn:hover { transform: scale(1.05); }
         .room-send-btn svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 2.2; fill: none; }
 
+        /* ── ENTERPRISE LOGIN MODAL (High-Tech Portal) ── */
+        .login-box {
+            max-width: 440px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            padding: 32px 36px;
+            box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            position: relative;
+        }
+
+        .login-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #F0FDFA;
+            border: 1px solid #CCFBF1;
+            color: #0D9488;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            width: fit-content;
+        }
+
+        .login-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .login-field label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-heading);
+        }
+
+        .login-field input {
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            padding: 9px 12px;
+            font-size: 13px;
+            color: var(--text-heading);
+            background: #F8FAFC;
+            outline: none;
+        }
+
+        .login-field input:focus { border-color: var(--brand-primary); background: #fff; }
+
+        .btn-instant-enter {
+            background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
+            border: none;
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 13.5px;
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+            transition: all 0.15s ease;
+        }
+
+        .btn-instant-enter:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
+        }
+
         /* ── Modals Base ── */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(5px);
             z-index: 200;
             display: none;
@@ -1133,193 +1329,256 @@
 
         .clean-table tr.highlight td { background: #FFFBEB; }
 
-        /* ── Breakpoints ── */
+        /* Responsive Breakpoints */
+        @media (max-height: 840px) {
+            .dash-navbar { height: 50px; padding: 0 16px; }
+            .dash-app-container { padding: 10px 16px; gap: 10px; }
+            .kpi-card { padding: 9px 14px; }
+            .kpi-num { font-size: 20px; }
+            .canvas-area { min-height: 130px; }
+            .room-card { min-height: 360px; max-height: calc(100vh - 160px); max-height: calc(100dvh - 160px); }
+            .stepper-row { padding: 5px 10px; }
+            .impact-grid { padding: 6px 10px; }
+        }
+
         @media (max-width: 1080px) {
             .workspace-grid { grid-template-columns: 1fr; }
-            .room-card { height: 480px; }
-            .stage-nav-pill-group { display: none; }
+            .room-card { height: 480px; max-height: none; }
+            .landing-grid-cards { grid-template-columns: 1fr; }
+            .landing-nav-links { display: none; }
         }
 
         @media (max-width: 768px) {
-            .navbar { padding: 0 14px; }
+            .dash-navbar { flex-wrap: wrap; height: auto; padding: 10px 14px; gap: 8px; }
             .kpi-row { grid-template-columns: 1fr; }
-            .company-select-wrap { display: none; }
+            .nav-status { display: none; }
+            .dash-nav-right { flex-wrap: wrap; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ── Top Fixed Navigation Bar ── -->
-    <header class="navbar">
-        <div class="nav-left">
-            <a href="#" class="brand-logo" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">
-                <div class="brand-icon">
+    <!-- ══════════════════════════════════════════════════════════════
+         ── VIEW 1: 3D SCROLL ANIMATED LANDING PAGE ──
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="app-view-container active" id="landingView">
+        
+        <!-- Landing Navbar -->
+        <header class="landing-navbar">
+            <a href="#" class="brand-logo-dark" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">
+                <div class="brand-icon-dark">
                     <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round"/></svg>
                 </div>
                 <span>Revenue Desk</span>
             </a>
 
-            <!-- Company Switcher Pill -->
-            <div class="company-select-wrap">
-                <button class="company-btn" onclick="toggleCompanyDropdown()">
-                    <span id="selectedCompanyIcon">🏢</span>
-                    <span id="selectedCompanyName">Acme Cloud (B2B SaaS)</span>
-                    <span style="font-size:9px; color:#94A3B8; margin-left:2px;">▼</span>
+            <div class="landing-nav-links">
+                <a class="landing-nav-link" onclick="jumpToLandingStage(0)">3D Nexus</a>
+                <a class="landing-nav-link" onclick="jumpToLandingStage(1)">Ingestion</a>
+                <a class="landing-nav-link" onclick="jumpToLandingStage(2)">Conflict Radar</a>
+                <a class="landing-nav-link" onclick="jumpToLandingStage(3)">Consensus</a>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:12px;">
+                <button class="btn-landing-login" onclick="openLoginModal()">Sign In</button>
+                <button class="btn-landing-cta" onclick="enterDashboard()">
+                    <span>Launch Live Deck</span>
+                    <span style="font-size:14px; line-height:1;">&rarr;</span>
                 </button>
-                <div class="company-dropdown" id="companyDropdown">
-                    <div style="font-size:10px; font-weight:700; color:#64748B; padding:4px 8px; text-transform:uppercase;">Select Company Profile</div>
-                    <div class="company-opt active" onclick="selectCompany('Acme Cloud (B2B SaaS)', '🏢', '$112,450', '-84.2%', '-$20,430', 'West Region')">
-                        <span>🏢 Acme Cloud Inc.</span>
-                        <span class="company-tag">SaaS / Enterprise</span>
-                    </div>
-                    <div class="company-opt" onclick="selectCompany('Nova Retail (E-Commerce)', '🛒', '$284,900', '-62.5%', '-$34,200', 'North Region')">
-                        <span>🛒 Nova Direct Retail</span>
-                        <span class="company-tag">E-Commerce / D2C</span>
-                    </div>
-                    <div class="company-opt" onclick="selectCompany('Starlight Pay (Fintech)', '💳', '$410,200', '-48.0%', '-$51,600', 'Global Merchant')">
-                        <span>💳 Starlight Payments</span>
-                        <span class="company-tag">FinTech / Gateway</span>
-                    </div>
-                </div>
             </div>
+        </header>
 
-            <!-- 3D Scroll Journey Stage Checkpoints -->
-            <div class="stage-nav-pill-group">
-                <button class="stage-pill active" id="pill0" onclick="jumpToStage(0)">01 Nexus</button>
-                <button class="stage-pill" id="pill1" onclick="jumpToStage(1)">02 Ingestion</button>
-                <button class="stage-pill" id="pill2" onclick="jumpToStage(2)">03 Radar</button>
-                <button class="stage-pill" id="pill3" onclick="jumpToStage(3)">04 Consensus</button>
-                <button class="stage-pill" id="pill4" onclick="jumpToStage(4)">05 Live Deck</button>
-            </div>
-        </div>
-
-        <div class="nav-right">
-            <button class="btn-nav-dark" onclick="openDatabaseModal()">
-                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-                Database
-            </button>
-            <button class="btn-nav-dark" onclick="openMemoModal()">
-                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                Audit Memo
-            </button>
-            <button class="btn-action-primary" onclick="jumpToStage(4)">
-                <span>⚡ Jump to Live Operations</span>
-                <span style="font-size:14px; line-height:1;">↓</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- ══════════════════════════════════════════════════════════════
-         ── 3D SCROLL EXPERIENCE (Sticky Pin Container) ──
-         ══════════════════════════════════════════════════════════════ -->
-    <section id="scrollExperience">
-        <div class="sticky-3d-stage">
-            
-            <!-- 60FPS Perspective 3D WebGL / Canvas Stage -->
-            <canvas id="threeDCanvas"></canvas>
-
-            <!-- Floating 3D Narrative Cards (Fade in/out as user scrolls) -->
-            <div class="stage-overlay-container">
+        <!-- 3D Scroll Track (Continuous 420vh animation) -->
+        <section class="landing-scroll-track" id="landingScrollTrack">
+            <div class="landing-sticky-viewport">
                 
-                <!-- Stage 1 (0% - 25% Scroll): The Autonomous Revenue Nexus -->
-                <div class="stage-card visible" id="cardStage0">
-                    <div class="stage-eyebrow">⚡ 3D AUTONOMOUS REVENUE NEXUS</div>
-                    <h1 class="stage-title">Autonomous Financial Governance for <span>Modern Enterprise</span></h1>
-                    <p class="stage-desc">Where humans and autonomous AI agents collaborate to catch billing discrepancies, reconcile multi-cloud ledgers, and secure enterprise capital.</p>
+                <!-- 60FPS Perspective 3D WebGL / Canvas Stage -->
+                <canvas id="landing3DCanvas"></canvas>
+
+                <!-- Floating 3D Narrative Cards (Fade in/out on scroll) -->
+                <div class="landing-card-layer">
                     
-                    <div class="stage-pills-row">
-                        <div class="stage-metric-capsule">
-                            <span class="stage-metric-val" style="color:#2DD4BF;">$112,450</span>
-                            <span class="stage-metric-lbl">Gross Revenue</span>
+                    <!-- Card 0: Nexus & Vision -->
+                    <div class="landing-stage-card visible" id="lCard0">
+                        <div class="landing-badge">⚡ 3D AUTONOMOUS REVENUE NEXUS</div>
+                        <h1 class="landing-title">Autonomous Financial Governance for <span>Modern Enterprise</span></h1>
+                        <p class="landing-desc">Where humans and autonomous AI agents collaborate in real-time to catch billing discrepancies, reconcile multi-cloud ledgers, and secure enterprise capital.</p>
+                        
+                        <div class="landing-pills-row">
+                            <div class="landing-metric-box">
+                                <span class="landing-metric-val" style="color:#2DD4BF;">$112,450</span>
+                                <span class="landing-metric-lbl">Gross Revenue</span>
+                            </div>
+                            <div class="landing-metric-box">
+                                <span class="landing-metric-val" style="color:#F87171;">-84.2%</span>
+                                <span class="landing-metric-lbl">Drop Flagged</span>
+                            </div>
+                            <div class="landing-metric-box">
+                                <span class="landing-metric-val" style="color:#FBBF24;">-$20,430</span>
+                                <span class="landing-metric-lbl">Caught Glitch</span>
+                            </div>
                         </div>
-                        <div class="stage-metric-capsule">
-                            <span class="stage-metric-val" style="color:#F87171;">-84.2%</span>
-                            <span class="stage-metric-lbl">Drop Flagged</span>
-                        </div>
-                        <div class="stage-metric-capsule">
-                            <span class="stage-metric-val" style="color:#FBBF24;">-$20,430</span>
-                            <span class="stage-metric-lbl">Caught Glitch</span>
+
+                        <div style="margin-top:6px; display:flex; gap:10px;">
+                            <button class="btn-landing-cta" onclick="enterDashboard()" style="padding:10px 22px;">Launch Live Command Center &rarr;</button>
                         </div>
                     </div>
+
+                    <!-- Card 1: Multi-Cloud Streaming Ingestion -->
+                    <div class="landing-stage-card" id="lCard1">
+                        <div class="landing-badge">02 / ZERO-COPY INGESTION</div>
+                        <h2 class="landing-title">Streaming Ingestion Across <span>Multi-Cloud Ledgers</span></h2>
+                        <p class="landing-desc">Revenue Desk connects directly to read-only transaction streams from PostgreSQL, Stripe, Snowflake, and Shopify — processing 2,400+ transactions per second with zero schema migration.</p>
+                        <div class="landing-pills-row">
+                            <span class="landing-badge" style="background:rgba(59,130,246,0.15); border-color:#3B82F6; color:#60A5FA;">🐘 PostgreSQL</span>
+                            <span class="landing-badge" style="background:rgba(99,102,241,0.15); border-color:#6366F1; color:#818CF8;">💳 Stripe Billing</span>
+                            <span class="landing-badge" style="background:rgba(14,165,233,0.15); border-color:#0EA5E9; color:#38BDF8;">❄️ Snowflake</span>
+                            <span class="landing-badge" style="background:rgba(16,185,129,0.15); border-color:#10B981; color:#34D399;">🛒 Shopify</span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: AI Sentinel Conflict Radar -->
+                    <div class="landing-stage-card" id="lCard2">
+                        <div class="landing-badge" style="background:rgba(239,68,68,0.2); border-color:#EF4444; color:#F87171;">03 / DEEP-SCAN TACTICAL RADAR</div>
+                        <h2 class="landing-title">AI Sentinel Detects <span>-$20,430 Duplicate Loop</span></h2>
+                        <p class="landing-desc">A naive AI panics at the gross drop and offers 20% discounts. Revenue Desk's Reviewer Agent cross-checks refund ledgers to isolate duplicate processor charges — saving your business from margin dilution.</p>
+                        <div class="landing-pills-row">
+                            <div class="landing-metric-box" style="border-color:#EF4444;">
+                                <span class="landing-metric-val" style="color:#EF4444;">-$20,430.00</span>
+                                <span class="landing-metric-lbl">Duplicate Processor Reversals</span>
+                            </div>
+                            <div class="landing-metric-box" style="border-color:#10B981;">
+                                <span class="landing-metric-val" style="color:#10B981;">$3,820.00</span>
+                                <span class="landing-metric-lbl">Certified Net Baseline</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Consensus & Enterprise Launch -->
+                    <div class="landing-stage-card" id="lCard3">
+                        <div class="landing-badge" style="background:rgba(16,185,129,0.2); border-color:#10B981; color:#34D399;">04 / MULTI-AGENT CONSENSUS</div>
+                        <h2 class="landing-title">100% Agreement & <span>Policy Guardrails</span></h2>
+                        <p class="landing-desc">Analyst and Reviewer agents reconcile records to 100% mathematical consensus. The Human Manager authorizes a policy-safe 15% renewal incentive, locking +$32,470.00 in enterprise profit.</p>
+                        <div style="margin-top:6px;">
+                            <button class="btn-landing-cta" onclick="enterDashboard()" style="padding:11px 26px; font-size:13.5px;">
+                                <span>Enter Live Operations Deck</span>
+                                <span style="font-size:16px;">&rarr;</span>
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- Stage 2 (25% - 50% Scroll): Zero-Copy Streaming Ingestion -->
-                <div class="stage-card" id="cardStage1">
-                    <div class="stage-eyebrow">02 / ZERO-COPY INGESTION</div>
-                    <h2 class="stage-title">Streaming Ingestion Across <span>Multi-Cloud Ledgers</span></h2>
-                    <p class="stage-desc">Revenue Desk connects directly to read-only transaction streams from PostgreSQL, Stripe, Snowflake, and Shopify — processing 2,400+ transactions per second with zero schema migration.</p>
-                    <div class="stage-pills-row">
-                        <span class="stage-eyebrow" style="background:rgba(59,130,246,0.15); border-color:#3B82F6; color:#60A5FA;">🐘 PostgreSQL</span>
-                        <span class="stage-eyebrow" style="background:rgba(99,102,241,0.15); border-color:#6366F1; color:#818CF8;">💳 Stripe Billing</span>
-                        <span class="stage-eyebrow" style="background:rgba(14,165,233,0.15); border-color:#0EA5E9; color:#38BDF8;">❄️ Snowflake</span>
-                        <span class="stage-eyebrow" style="background:rgba(16,185,129,0.15); border-color:#10B981; color:#34D399;">🛒 Shopify</span>
-                    </div>
-                </div>
-
-                <!-- Stage 3 (50% - 75% Scroll): The AI Sentinel & Conflict Radar -->
-                <div class="stage-card" id="cardStage2">
-                    <div class="stage-eyebrow" style="background:rgba(239,68,68,0.2); border-color:#EF4444; color:#F87171;">03 / DEEP-SCAN TACTICAL RADAR</div>
-                    <h2 class="stage-title">AI Sentinel Detects <span>-$20,430 Duplicate Loop</span></h2>
-                    <p class="stage-desc">A naive AI panics at the gross drop and offers 20% discounts. Revenue Desk's Reviewer Agent cross-checks refund ledgers to isolate duplicate processor charges — saving your business from margin dilution.</p>
-                    <div class="stage-pills-row">
-                        <div class="stage-metric-capsule" style="border-color:#EF4444;">
-                            <span class="stage-metric-val" style="color:#EF4444;">-$20,430.00</span>
-                            <span class="stage-metric-lbl">Duplicate Processor Reversals</span>
-                        </div>
-                        <div class="stage-metric-capsule" style="border-color:#10B981;">
-                            <span class="stage-metric-val" style="color:#10B981;">$3,820.00</span>
-                            <span class="stage-metric-lbl">Certified Net Baseline</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Stage 4 (75% - 95% Scroll): Consensus & Policy Guardrails -->
-                <div class="stage-card" id="cardStage3">
-                    <div class="stage-eyebrow" style="background:rgba(16,185,129,0.2); border-color:#10B981; color:#34D399;">04 / MULTI-AGENT CONSENSUS</div>
-                    <h2 class="stage-title">100% Agreement & <span>Policy Guardrails</span></h2>
-                    <p class="stage-desc">Analyst and Reviewer agents reconcile records to 100% mathematical consensus. The Human Manager authorizes a policy-safe 15% renewal incentive, locking +$32,470.00 in enterprise profit.</p>
-                    <div style="margin-top:6px;">
-                        <button class="btn-action-primary" onclick="jumpToStage(4)" style="padding:10px 24px; font-size:13px;">
-                            <span>Enter Live Operations Deck</span>
-                            <span style="font-size:16px;">↓</span>
-                        </button>
-                    </div>
+                <!-- Animated Scroll Hint -->
+                <div class="landing-scroll-hint" onclick="jumpToLandingStage(1)">
+                    <span>SCROLL TO EXPLORE 3D PIPELINE</span>
+                    <div class="hint-mouse"><div class="hint-wheel"></div></div>
                 </div>
 
             </div>
+        </section>
 
-            <!-- Animated Scroll Down Indicator -->
-            <div class="scroll-down-hint" onclick="jumpToStage(1)">
-                <span>SCROLL TO EXPLORE 3D PIPELINE</span>
-                <div class="mouse-icon">
-                    <div class="mouse-wheel"></div>
+        <!-- Landing Footer Showcase -->
+        <section class="landing-footer-section">
+            <span class="landing-badge">ENTERPRISE COMPATIBILITY</span>
+            <h3 style="font-size:clamp(22px, 2.5vw, 32px); font-weight:800; color:#FFFFFF;">Built for Any Company & Business Model</h3>
+            <p style="color:#94A3B8; max-width:620px; font-size:14px;">Whether you run B2B SaaS, D2C E-Commerce, or a FinTech payments gateway, Revenue Desk reconciles transactional truth across systems.</p>
+
+            <div class="landing-grid-cards">
+                <div class="l-card">
+                    <span class="l-card-icon">🏢</span>
+                    <span class="l-card-title">B2B SaaS / Subscriptions</span>
+                    <span class="l-card-desc">Reconciles recurring Stripe invoices against PostgreSQL user tier entitlements, catching prorated churn errors.</span>
+                </div>
+                <div class="l-card">
+                    <span class="l-card-icon">🛒</span>
+                    <span class="l-card-title">E-Commerce / Retail</span>
+                    <span class="l-card-desc">Matches Shopify checkout webhooks with warehouse reverse-logistics RMA scans, eliminating duplicate return payouts.</span>
+                </div>
+                <div class="l-card">
+                    <span class="l-card-icon">💳</span>
+                    <span class="l-card-title">FinTech / Gateway Rails</span>
+                    <span class="l-card-desc">Bridges ACH Fedwire batch latency with real-time double-entry ledger accounts to halt settlement drift.</span>
                 </div>
             </div>
 
-        </div>
-    </section>
+            <button class="btn-landing-cta" onclick="enterDashboard()" style="padding:12px 30px; font-size:14px; margin-top:20px;">
+                <span>Sign In & Open Live Command Center</span>
+                <span style="font-size:16px;">&rarr;</span>
+            </button>
+        </section>
+
+    </div>
 
     <!-- ══════════════════════════════════════════════════════════════
-         ── THE LIVE OPERATIONS COCKPIT DECK (Interactive Workspace) ──
+         ── VIEW 2: THE CLEAN LIVE OPERATIONS DASHBOARD COCKPIT ──
          ══════════════════════════════════════════════════════════════ -->
-    <section id="liveOperationsDeck">
+    <div class="app-view-container" id="appView">
         
-        <div class="deck-header-box">
-            <div class="deck-title-area">
-                <span class="deck-badge">● LIVE INTERACTIVE SWITCH ROOM</span>
-                <h2 class="deck-title">Executive Revenue Operations & Collaborative Governance</h2>
-                <span class="deck-subtitle">Interact with real backend AI agents, tune policy thresholds, and commit certified mutations to database.</span>
+        <!-- Top Navigation Bar (Exact Screenshot Design) -->
+        <header class="dash-navbar">
+            <div class="dash-nav-left">
+                <a href="#" class="dash-brand-logo" onclick="location.reload(); return false;">
+                    <div class="dash-brand-icon">
+                        <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round"/></svg>
+                    </div>
+                    <span>Revenue Desk</span>
+                </a>
+
+                <!-- Company Profile Switcher Dropdown -->
+                <div class="company-select-wrap">
+                    <button class="company-btn" onclick="toggleCompanyDropdown()">
+                        <span id="selectedCompanyIcon">🏢</span>
+                        <span id="selectedCompanyName">Acme Cloud (B2B SaaS)</span>
+                        <span style="font-size:9px; color:var(--text-muted); margin-left:3px;">▼</span>
+                    </button>
+                    <div class="company-dropdown" id="companyDropdown">
+                        <div style="font-size:10px; font-weight:700; color:var(--text-muted); padding:4px 8px; text-transform:uppercase;">Select Company Profile</div>
+                        <div class="company-opt active" onclick="selectCompany('Acme Cloud (B2B SaaS)', '🏢', '$112,450', '-84.2%', '-$20,430', 'West Region')">
+                            <span>🏢 Acme Cloud Inc.</span>
+                            <span class="company-tag">SaaS / Enterprise</span>
+                        </div>
+                        <div class="company-opt" onclick="selectCompany('Nova Retail (E-Commerce)', '🛒', '$284,900', '-62.5%', '-$34,200', 'North Region')">
+                            <span>🛒 Nova Direct Retail</span>
+                            <span class="company-tag">E-Commerce / D2C</span>
+                        </div>
+                        <div class="company-opt" onclick="selectCompany('Starlight Pay (Fintech)', '💳', '$410,200', '-48.0%', '-$51,600', 'Global Merchant')">
+                            <span>💳 Starlight Payments</span>
+                            <span class="company-tag">FinTech / Gateway</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-status">
+                    <span class="status-dot"></span>
+                    <span>Active Multi-Agent Governance</span>
+                </div>
             </div>
-            <div style="display:flex; gap:10px;">
-                <button class="btn-nav-dark" style="background:#FFFFFF; color:var(--text-heading); border:1px solid var(--border-default);" onclick="resetState()">Reset Demo</button>
+
+            <div class="dash-nav-right">
+                <!-- Return to 3D Landing Page Switcher -->
+                <button class="btn-tour-light" onclick="exitToLanding()">
+                    <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><circle cx="12" cy="12" r="10"/><polygon points="12 8 8 12 12 16"/><line x1="16" y1="12" x2="8" y2="12"/></svg>
+                    3D Product Tour
+                </button>
+                <button class="btn-nav" onclick="openDatabaseModal()">
+                    <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                    Database
+                </button>
+                <button class="btn-nav" onclick="openMemoModal()">
+                    <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Audit Memo
+                </button>
+                <button class="btn-nav" onclick="resetState()">Reset</button>
                 <button class="btn-action-primary" onclick="runInvestigation()">
-                    <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.5" fill="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                     Run Live Investigation
                 </button>
             </div>
-        </div>
+        </header>
 
-        <main class="app-container">
+        <!-- Main Workspace (Screen-Fitting Dashboard) -->
+        <main class="dash-app-container">
 
             <!-- ── 3 Focused KPI Cards ── -->
             <section class="kpi-row">
@@ -1457,10 +1716,7 @@
                                 <span class="room-title">Switch Room — Live Multi-Agent Governance</span>
                                 <span class="room-subtitle">Analyst Agent &bull; Reviewer Auditor &bull; Consensus Engine</span>
                             </div>
-                            <span style="display:flex; align-items:center; gap:6px; background:#ECFDF5; border:1px solid #D1FAE5; padding:3px 9px; border-radius:12px; font-size:10.5px; font-weight:700; color:#047857;">
-                                <span style="width:6px; height:6px; background:#10B981; border-radius:50%;"></span>
-                                Live Stream
-                            </span>
+                            <span class="nav-status"><span class="status-dot"></span>Live Stream</span>
                         </div>
 
                         <!-- Quick Starter Prompts -->
@@ -1490,7 +1746,35 @@
             </div>
 
         </main>
-    </section>
+    </div>
+
+    <!-- ── ENTERPRISE LOGIN MODAL ── -->
+    <div class="modal-overlay" id="loginModal" onclick="if(event.target===this) closeLoginModal()">
+        <div class="login-box">
+            <button class="modal-close-btn" onclick="closeLoginModal()">✕</button>
+            
+            <div style="display:flex; flex-direction:column; gap:4px;">
+                <span class="login-badge">SECURE ENTERPRISE PORTAL</span>
+                <h3 style="font-size:18px; font-weight:800; color:var(--text-heading); margin-top:4px;">Sign In to Revenue Desk</h3>
+                <span style="font-size:12px; color:var(--text-muted);">Enter your credentials or use 1-click instant demo sign-in:</span>
+            </div>
+
+            <div class="login-field">
+                <label>Work Email</label>
+                <input type="email" id="loginEmail" value="alex.rivera@acmecloud.io" readonly style="color:#64748B;">
+            </div>
+
+            <div class="login-field">
+                <label>Assigned Governance Role</label>
+                <input type="text" value="Human Manager (VP Revenue Operations)" readonly style="color:#0D9488; font-weight:700;">
+            </div>
+
+            <button class="btn-instant-enter" onclick="completeLogin()">
+                <span>Launch Live Command Center</span>
+                <span style="font-size:16px;">&rarr;</span>
+            </button>
+        </div>
+    </div>
 
     <!-- ── Database Explorer Modal ── -->
     <div class="modal-overlay" id="dbModal" onclick="if(event.target===this) closeDatabaseModal()">
@@ -1541,16 +1825,70 @@
     <script>
         let discount = 15;
         let cachedDbData = null;
+        let currentView = 'landing'; // 'landing' | 'app'
 
-        /* ── 3D Scroll State & Physics Engine ── */
-        let scrollProgress = 0.0;
-        let targetScrollProgress = 0.0;
-        let animTime = 0.0;
+        /* ── View Switcher Logic ── */
+        function showView(viewName) {
+            currentView = viewName;
+            const lView = document.getElementById('landingView');
+            const aView = document.getElementById('appView');
 
-        // 3D Particles
-        const particles3D = [];
+            if (viewName === 'app') {
+                lView.classList.remove('active');
+                aView.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                window.location.hash = 'app';
+                // Trigger chart rendering
+                setTimeout(renderChart, 50);
+            } else {
+                aView.classList.remove('active');
+                lView.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                window.location.hash = 'landing';
+                initLanding3DCanvas();
+            }
+        }
+
+        function enterDashboard() {
+            showView('app');
+        }
+
+        function exitToLanding() {
+            showView('landing');
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        function completeLogin() {
+            closeLoginModal();
+            enterDashboard();
+        }
+
+        // Check URL Hash on load
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash === '#app') {
+                showView('app');
+            } else {
+                showView('landing');
+            }
+        });
+
+        /* ══════════════════════════════════════════════════════════════
+           ── 3D SCROLL ANIMATION ENGINE (Runs on Landing Page) ──
+           ══════════════════════════════════════════════════════════════ */
+        let lScrollProgress = 0.0;
+        let lTargetScroll = 0.0;
+        let lAnimTime = 0.0;
+
+        const lParticles3D = [];
         for (let i = 0; i < 60; i++) {
-            particles3D.push({
+            lParticles3D.push({
                 x: (Math.random() - 0.5) * 800,
                 y: (Math.random() - 0.5) * 500,
                 z: (Math.random() - 0.5) * 800,
@@ -1561,339 +1899,298 @@
             });
         }
 
-        // Orbiting Source Nodes in 3D
-        const sourceNodes3D = [
+        const lSourceNodes3D = [
             { name: 'PostgreSQL', icon: '🐘', angle: 0, dist: 280, y: -40, color: '#38BDF8' },
             { name: 'Stripe Billing', icon: '💳', angle: Math.PI * 0.5, dist: 280, y: 30, color: '#818CF8' },
             { name: 'Snowflake', icon: '❄️', angle: Math.PI, dist: 280, y: -20, color: '#38BDF8' },
             { name: 'Shopify Store', icon: '🛒', angle: Math.PI * 1.5, dist: 280, y: 50, color: '#34D399' }
         ];
 
-        function init3DCanvas() {
-            const canvas = document.getElementById('threeDCanvas');
+        function initLanding3DCanvas() {
+            const canvas = document.getElementById('landing3DCanvas');
             if (!canvas) return;
             const dpr = window.devicePixelRatio || 1;
             canvas.width = Math.round(window.innerWidth * dpr);
             canvas.height = Math.round(window.innerHeight * dpr);
         }
 
-        window.addEventListener('resize', init3DCanvas);
-        window.addEventListener('DOMContentLoaded', init3DCanvas);
+        window.addEventListener('resize', () => {
+            if (currentView === 'landing') initLanding3DCanvas();
+            else renderChart();
+        });
 
-        // Update scroll tracker
-        function updateScroll() {
-            const track = document.getElementById('scrollExperience');
+        function updateLandingScroll() {
+            if (currentView !== 'landing') return;
+            const track = document.getElementById('landingScrollTrack');
             if (!track) return;
             const rect = track.getBoundingClientRect();
             const totalDist = track.offsetHeight - window.innerHeight;
             if (totalDist <= 0) return;
             const currentDist = -rect.top;
-            const rawProgress = Math.max(0, Math.min(1, currentDist / totalDist));
-            targetScrollProgress = rawProgress;
+            const raw = Math.max(0, Math.min(1, currentDist / totalDist));
+            lTargetScroll = raw;
         }
 
-        window.addEventListener('scroll', updateScroll, { passive: true });
+        window.addEventListener('scroll', updateLandingScroll, { passive: true });
 
-        function jumpToStage(idx) {
-            const track = document.getElementById('scrollExperience');
+        function jumpToLandingStage(idx) {
+            const track = document.getElementById('landingScrollTrack');
             if (!track) return;
-            if (idx === 4) {
-                document.getElementById('liveOperationsDeck').scrollIntoView({ behavior: 'smooth' });
-                return;
-            }
             const totalDist = track.offsetHeight - window.innerHeight;
             const checkpoints = [0.0, 0.28, 0.58, 0.85];
             const targetY = track.offsetTop + checkpoints[idx] * totalDist;
             window.scrollTo({ top: targetY, behavior: 'smooth' });
         }
 
-        /* ── 3D Projection Math Engine ── */
+        /* 3D Perspective Projection */
         function project3D(x, y, z, rotX, rotY, rotZ, cx, cy, f = 650) {
-            // Y-rotation
             let x1 = x * Math.cos(rotY) + z * Math.sin(rotY);
             let z1 = -x * Math.sin(rotY) + z * Math.cos(rotY);
 
-            // X-rotation
             let y1 = y * Math.cos(rotX) - z1 * Math.sin(rotX);
             let z2 = y * Math.sin(rotX) + z1 * Math.cos(rotX);
 
-            // Z-rotation
             let x2 = x1 * Math.cos(rotZ) - y1 * Math.sin(rotZ);
             let y2 = x1 * Math.sin(rotZ) + y1 * Math.cos(rotZ);
 
             const cameraDist = 800;
             const scale = f / (f + z2 + cameraDist);
-            return {
-                sx: cx + x2 * scale,
-                sy: cy + y2 * scale,
-                scale: scale,
-                depth: z2
-            };
+            return { sx: cx + x2 * scale, sy: cy + y2 * scale, scale: scale, depth: z2 };
         }
 
-        /* ── Main 60FPS 3D Render Loop ── */
-        function render3DLoop() {
-            animTime += 0.016;
-            // Smooth lerp scroll progress
-            scrollProgress += (targetScrollProgress - scrollProgress) * 0.09;
+        /* 3D Landing Animation Loop */
+        function renderLanding3DLoop() {
+            if (currentView === 'landing') {
+                lAnimTime += 0.016;
+                lScrollProgress += (lTargetScroll - lScrollProgress) * 0.09;
 
-            const canvas = document.getElementById('threeDCanvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                const dpr = window.devicePixelRatio || 1;
-                const w = canvas.width / dpr;
-                const h = canvas.height / dpr;
-                ctx.resetTransform ? ctx.resetTransform() : ctx.setTransform(1, 0, 0, 1, 0, 0);
-                ctx.scale(dpr, dpr);
+                const canvas = document.getElementById('landing3DCanvas');
+                if (canvas) {
+                    const ctx = canvas.getContext('2d');
+                    const dpr = window.devicePixelRatio || 1;
+                    const w = canvas.width / dpr;
+                    const h = canvas.height / dpr;
+                    ctx.resetTransform ? ctx.resetTransform() : ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    ctx.scale(dpr, dpr);
 
-                // Deep Cyber Void Background with dynamic horizon lighting
-                const bgGrad = ctx.createRadialGradient(w / 2, h * 0.45, 50, w / 2, h * 0.5, Math.max(w, h));
-                bgGrad.addColorStop(0, '#0F172A');
-                bgGrad.addColorStop(0.6, '#080C14');
-                bgGrad.addColorStop(1, '#030509');
-                ctx.fillStyle = bgGrad;
-                ctx.fillRect(0, 0, w, h);
+                    // Cyber space background
+                    const bgGrad = ctx.createRadialGradient(w / 2, h * 0.45, 50, w / 2, h * 0.5, Math.max(w, h));
+                    bgGrad.addColorStop(0, '#0F172A');
+                    bgGrad.addColorStop(0.6, '#080C14');
+                    bgGrad.addColorStop(1, '#030509');
+                    ctx.fillStyle = bgGrad;
+                    ctx.fillRect(0, 0, w, h);
 
-                const cx = w * 0.5;
-                const cy = h * 0.52;
+                    const cx = w * 0.5;
+                    const cy = h * 0.52;
 
-                // Camera angles driven smoothly by scroll progress
-                // As user scrolls: camera tilts, rotates, and zooms into the anomaly, then pulls back into consensus
-                const camRotX = 0.42 + Math.sin(scrollProgress * Math.PI) * 0.35 + Math.sin(animTime * 0.5) * 0.04;
-                const camRotY = animTime * 0.2 + scrollProgress * Math.PI * 1.5;
-                const camRotZ = Math.sin(scrollProgress * Math.PI * 2) * 0.08;
+                    // Camera dynamic angles driven by scroll
+                    const camRotX = 0.42 + Math.sin(lScrollProgress * Math.PI) * 0.35 + Math.sin(lAnimTime * 0.5) * 0.04;
+                    const camRotY = lAnimTime * 0.2 + lScrollProgress * Math.PI * 1.5;
+                    const camRotZ = Math.sin(lScrollProgress * Math.PI * 2) * 0.08;
 
-                // 1. Draw 3D Perspective Grid Floor
-                const gridY = 160;
-                ctx.strokeStyle = 'rgba(13, 148, 136, 0.14)';
-                ctx.lineWidth = 1;
-                const gridSize = 70;
-                const gridRange = 600;
+                    // 1. 3D Grid Floor
+                    const gridY = 160;
+                    ctx.strokeStyle = 'rgba(13, 148, 136, 0.14)';
+                    ctx.lineWidth = 1;
+                    const gridSize = 70;
+                    const gridRange = 600;
 
-                for (let gx = -gridRange; gx <= gridRange; gx += gridSize) {
-                    const p1 = project3D(gx, gridY, -gridRange, camRotX, camRotY, camRotZ, cx, cy);
-                    const p2 = project3D(gx, gridY, gridRange, camRotX, camRotY, camRotZ, cx, cy);
-                    if (p1.scale > 0 && p2.scale > 0) {
-                        ctx.beginPath();
-                        ctx.moveTo(p1.sx, p1.sy);
-                        ctx.lineTo(p2.sx, p2.sy);
-                        ctx.stroke();
-                    }
-                }
-
-                for (let gz = -gridRange; gz <= gridRange; gz += gridSize) {
-                    const p1 = project3D(-gridRange, gridY, gz, camRotX, camRotY, camRotZ, cx, cy);
-                    const p2 = project3D(gridRange, gridY, gz, camRotX, camRotY, camRotZ, cx, cy);
-                    if (p1.scale > 0 && p2.scale > 0) {
-                        ctx.beginPath();
-                        ctx.moveTo(p1.sx, p1.sy);
-                        ctx.lineTo(p2.sx, p2.sy);
-                        ctx.stroke();
-                    }
-                }
-
-                // 2. Floating 3D Starfield / Data Particles
-                particles3D.forEach(p => {
-                    p.x += p.vx; p.y += p.vy; p.z += p.vz;
-                    if (p.x > 400) p.x = -400; if (p.x < -400) p.x = 400;
-                    if (p.y > 250) p.y = -250; if (p.y < -250) p.y = 250;
-                    if (p.z > 400) p.z = -400; if (p.z < -400) p.z = 400;
-
-                    const proj = project3D(p.x, p.y, p.z, camRotX, camRotY, camRotZ, cx, cy);
-                    if (proj.scale > 0) {
-                        const alpha = Math.min(1, Math.max(0.15, proj.scale * 1.5));
-                        ctx.fillStyle = p.color + alpha + ')';
-                        ctx.beginPath();
-                        ctx.arc(proj.sx, proj.sy, Math.max(1, 2.5 * proj.scale), 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                });
-
-                // 3. Central 3D Core / Holographic Rings
-                // Inner rotating 3D Ring 1
-                ctx.lineWidth = 2.5;
-                for (let ring = 0; ring < 3; ring++) {
-                    const rRadius = 90 + ring * 35;
-                    const rTiltX = camRotX + (ring === 0 ? animTime * 0.8 : -animTime * 0.6);
-                    const rTiltY = camRotY + (ring === 1 ? animTime * 0.9 : 0);
-                    ctx.strokeStyle = ring === 0 ? 'rgba(45, 212, 191, 0.45)' : ring === 1 ? 'rgba(56, 189, 248, 0.3)' : 'rgba(129, 140, 248, 0.25)';
-                    ctx.beginPath();
-                    const segments = 32;
-                    for (let s = 0; s <= segments; s++) {
-                        const theta = (s / segments) * Math.PI * 2;
-                        const rx = Math.cos(theta) * rRadius;
-                        const rz = Math.sin(theta) * rRadius;
-                        const proj = project3D(rx, 0, rz, rTiltX, rTiltY, camRotZ, cx, cy);
-                        if (s === 0) ctx.moveTo(proj.sx, proj.sy);
-                        else ctx.lineTo(proj.sx, proj.sy);
-                    }
-                    ctx.stroke();
-                }
-
-                // 4. Orbiting Multi-Cloud System Nodes (Stage 1 & 2 emphasis)
-                sourceNodes3D.forEach((node, i) => {
-                    const curAngle = node.angle + animTime * 0.3;
-                    const nx = Math.cos(curAngle) * node.dist;
-                    const nz = Math.sin(curAngle) * node.dist;
-                    const ny = node.y + Math.sin(animTime * 2 + i) * 15;
-
-                    const pNode = project3D(nx, ny, nz, camRotX, camRotY, camRotZ, cx, cy);
-                    const pCenter = project3D(0, 0, 0, camRotX, camRotY, camRotZ, cx, cy);
-
-                    if (pNode.scale > 0 && pCenter.scale > 0) {
-                        // Connecting 3D Laser Conduit
-                        ctx.beginPath();
-                        ctx.moveTo(pNode.sx, pNode.sy);
-                        ctx.lineTo(pCenter.sx, pCenter.sy);
-                        ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 + pNode.scale * 0.25})`;
-                        ctx.lineWidth = 1.5;
-                        ctx.stroke();
-
-                        // Streaming packet along conduit
-                        const packetT = (animTime * 0.7 + i * 0.25) % 1;
-                        const px = nx * (1 - packetT);
-                        const py = ny * (1 - packetT);
-                        const pz = nz * (1 - packetT);
-                        const pPacket = project3D(px, py, pz, camRotX, camRotY, camRotZ, cx, cy);
-                        if (pPacket.scale > 0) {
-                            ctx.fillStyle = '#2DD4BF';
-                            ctx.beginPath();
-                            ctx.arc(pPacket.sx, pPacket.sy, 3.5 * pPacket.scale, 0, Math.PI * 2);
-                            ctx.fill();
+                    for (let gx = -gridRange; gx <= gridRange; gx += gridSize) {
+                        const p1 = project3D(gx, gridY, -gridRange, camRotX, camRotY, camRotZ, cx, cy);
+                        const p2 = project3D(gx, gridY, gridRange, camRotX, camRotY, camRotZ, cx, cy);
+                        if (p1.scale > 0 && p2.scale > 0) {
+                            ctx.beginPath(); ctx.moveTo(p1.sx, p1.sy); ctx.lineTo(p2.sx, p2.sy); ctx.stroke();
                         }
-
-                        // 3D Node Cube / Capsule
-                        const nodeSize = 34 * pNode.scale;
-                        ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-                        ctx.strokeStyle = node.color;
-                        ctx.lineWidth = 2 * pNode.scale;
-                        ctx.beginPath();
-                        ctx.roundRect(pNode.sx - nodeSize, pNode.sy - nodeSize * 0.6, nodeSize * 2, nodeSize * 1.2, 6 * pNode.scale);
-                        ctx.fill();
-                        ctx.stroke();
-
-                        ctx.fillStyle = '#FFFFFF';
-                        ctx.font = `bold ${Math.max(9, Math.round(11 * pNode.scale))}px "Plus Jakarta Sans", sans-serif`;
-                        ctx.textAlign = 'center';
-                        ctx.fillText(`${node.icon} ${node.name}`, pNode.sx, pNode.sy + 3 * pNode.scale);
                     }
-                });
 
-                // 5. Stage 3 (0.45 - 0.75): Tactical 3D Conflict Radar & Glitch Blip
-                if (scrollProgress >= 0.40 && scrollProgress <= 0.80) {
-                    const radarAlpha = Math.sin((scrollProgress - 0.40) / 0.40 * Math.PI);
-                    const radarSweep = animTime * 3;
-
-                    // 3D Radar Circle
-                    const rRadius = 180;
-                    ctx.strokeStyle = `rgba(239, 68, 68, ${0.4 * radarAlpha})`;
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    for (let s = 0; s <= 32; s++) {
-                        const theta = (s / 32) * Math.PI * 2;
-                        const rx = Math.cos(theta) * rRadius;
-                        const rz = Math.sin(theta) * rRadius;
-                        const proj = project3D(rx, 40, rz, camRotX, camRotY, camRotZ, cx, cy);
-                        if (s === 0) ctx.moveTo(proj.sx, proj.sy);
-                        else ctx.lineTo(proj.sx, proj.sy);
+                    for (let gz = -gridRange; gz <= gridRange; gz += gridSize) {
+                        const p1 = project3D(-gridRange, gridY, gz, camRotX, camRotY, camRotZ, cx, cy);
+                        const p2 = project3D(gridRange, gridY, gz, camRotX, camRotY, camRotZ, cx, cy);
+                        if (p1.scale > 0 && p2.scale > 0) {
+                            ctx.beginPath(); ctx.moveTo(p1.sx, p1.sy); ctx.lineTo(p2.sx, p2.sy); ctx.stroke();
+                        }
                     }
-                    ctx.stroke();
 
-                    // Anomaly Position in 3D
-                    const ax = 90 + Math.sin(animTime * 2) * 5;
-                    const ay = 20;
-                    const az = 70;
-                    const pAnomaly = project3D(ax, ay, az, camRotX, camRotY, camRotZ, cx, cy);
+                    // 2. 3D Floating Particles
+                    lParticles3D.forEach(p => {
+                        p.x += p.vx; p.y += p.vy; p.z += p.vz;
+                        if (p.x > 400) p.x = -400; if (p.x < -400) p.x = 400;
+                        if (p.y > 250) p.y = -250; if (p.y < -250) p.y = 250;
+                        if (p.z > 400) p.z = -400; if (p.z < -400) p.z = 400;
 
-                    if (pAnomaly.scale > 0) {
-                        // Pulsing red shockwaves
-                        const pulseR = (animTime * 40 % 50) + 10;
-                        ctx.strokeStyle = `rgba(239, 68, 68, ${(1 - pulseR / 60) * radarAlpha})`;
-                        ctx.lineWidth = 2.5;
-                        ctx.beginPath();
-                        ctx.arc(pAnomaly.sx, pAnomaly.sy, pulseR * pAnomaly.scale, 0, Math.PI * 2);
-                        ctx.stroke();
-
-                        // Anomaly Tag Box in 3D
-                        ctx.fillStyle = `rgba(185, 28, 28, ${0.9 * radarAlpha})`;
-                        ctx.strokeStyle = `rgba(248, 113, 113, ${radarAlpha})`;
-                        ctx.lineWidth = 2;
-                        ctx.beginPath();
-                        ctx.roundRect(pAnomaly.sx - 90 * pAnomaly.scale, pAnomaly.sy - 18 * pAnomaly.scale, 180 * pAnomaly.scale, 36 * pAnomaly.scale, 6);
-                        ctx.fill();
-                        ctx.stroke();
-
-                        ctx.fillStyle = '#FFFFFF';
-                        ctx.font = `bold ${Math.max(9, Math.round(11 * pAnomaly.scale))}px "JetBrains Mono", monospace`;
-                        ctx.textAlign = 'center';
-                        ctx.fillText('⚠️ DUPLICATE REFUND LOOP', pAnomaly.sx, pAnomaly.sy - 2 * pAnomaly.scale);
-                        ctx.fillStyle = '#FECACA';
-                        ctx.font = `${Math.max(8, Math.round(9.5 * pAnomaly.scale))}px "JetBrains Mono", monospace`;
-                        ctx.fillText('-$20,430.00 ISOLATED', pAnomaly.sx, pAnomaly.sy + 10 * pAnomaly.scale);
-                    }
-                }
-
-                // 6. Stage 4 (0.70 - 0.98): 3D Emerald Diamond / Consensus Shield
-                if (scrollProgress >= 0.68) {
-                    const shieldAlpha = Math.min(1, (scrollProgress - 0.68) / 0.15);
-                    const diamondH = 75;
-                    const diamondW = 45;
-
-                    // 3D Emerald Octahedron
-                    const vertices = [
-                        { x: 0, y: -diamondH, z: 0 },
-                        { x: diamondW, y: 0, z: 0 },
-                        { x: 0, y: 0, z: diamondW },
-                        { x: -diamondW, y: 0, z: 0 },
-                        { x: 0, y: 0, z: -diamondW },
-                        { x: 0, y: diamondH, z: 0 }
-                    ];
-
-                    const pVerts = vertices.map(v => project3D(v.x, v.y + Math.sin(animTime * 3) * 8, v.z, camRotX, camRotY + animTime * 1.2, camRotZ, cx, cy));
-
-                    ctx.strokeStyle = `rgba(52, 211, 153, ${0.85 * shieldAlpha})`;
-                    ctx.lineWidth = 2.5;
-                    const edges = [
-                        [0,1],[0,2],[0,3],[0,4],
-                        [5,1],[5,2],[5,3],[5,4],
-                        [1,2],[2,3],[3,4],[4,1]
-                    ];
-
-                    edges.forEach(e => {
-                        const vA = pVerts[e[0]], vB = pVerts[e[1]];
-                        if (vA.scale > 0 && vB.scale > 0) {
+                        const proj = project3D(p.x, p.y, p.z, camRotX, camRotY, camRotZ, cx, cy);
+                        if (proj.scale > 0) {
+                            const alpha = Math.min(1, Math.max(0.15, proj.scale * 1.5));
+                            ctx.fillStyle = p.color + alpha + ')';
                             ctx.beginPath();
-                            ctx.moveTo(vA.sx, vA.sy);
-                            ctx.lineTo(vB.sx, vB.sy);
-                            ctx.stroke();
+                            ctx.arc(proj.sx, proj.sy, Math.max(1, 2.5 * proj.scale), 0, Math.PI * 2);
+                            ctx.fill();
                         }
                     });
 
-                    // Expanding Green Shockwaves
-                    const pCenter = pVerts[1];
-                    const waveR = (animTime * 50 % 90) + 20;
-                    ctx.strokeStyle = `rgba(16, 185, 129, ${(1 - waveR / 110) * shieldAlpha})`;
-                    ctx.lineWidth = 3;
-                    ctx.beginPath();
-                    ctx.arc(cx, cy, waveR, 0, Math.PI * 2);
-                    ctx.stroke();
+                    // 3. Central 3D Rotating Rings
+                    ctx.lineWidth = 2.5;
+                    for (let ring = 0; ring < 3; ring++) {
+                        const rRadius = 90 + ring * 35;
+                        const rTiltX = camRotX + (ring === 0 ? lAnimTime * 0.8 : -lAnimTime * 0.6);
+                        const rTiltY = camRotY + (ring === 1 ? lAnimTime * 0.9 : 0);
+                        ctx.strokeStyle = ring === 0 ? 'rgba(45, 212, 191, 0.45)' : ring === 1 ? 'rgba(56, 189, 248, 0.3)' : 'rgba(129, 140, 248, 0.25)';
+                        ctx.beginPath();
+                        for (let s = 0; s <= 32; s++) {
+                            const theta = (s / 32) * Math.PI * 2;
+                            const rx = Math.cos(theta) * rRadius;
+                            const rz = Math.sin(theta) * rRadius;
+                            const proj = project3D(rx, 0, rz, rTiltX, rTiltY, camRotZ, cx, cy);
+                            if (s === 0) ctx.moveTo(proj.sx, proj.sy);
+                            else ctx.lineTo(proj.sx, proj.sy);
+                        }
+                        ctx.stroke();
+                    }
+
+                    // 4. Orbiting Multi-Cloud System Nodes (PostgreSQL, Stripe, Snowflake, Shopify)
+                    lSourceNodes3D.forEach((node, i) => {
+                        const curAngle = node.angle + lAnimTime * 0.3;
+                        const nx = Math.cos(curAngle) * node.dist;
+                        const nz = Math.sin(curAngle) * node.dist;
+                        const ny = node.y + Math.sin(lAnimTime * 2 + i) * 15;
+
+                        const pNode = project3D(nx, ny, nz, camRotX, camRotY, camRotZ, cx, cy);
+                        const pCenter = project3D(0, 0, 0, camRotX, camRotY, camRotZ, cx, cy);
+
+                        if (pNode.scale > 0 && pCenter.scale > 0) {
+                            ctx.beginPath();
+                            ctx.moveTo(pNode.sx, pNode.sy);
+                            ctx.lineTo(pCenter.sx, pCenter.sy);
+                            ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 + pNode.scale * 0.25})`;
+                            ctx.lineWidth = 1.5;
+                            ctx.stroke();
+
+                            const packetT = (lAnimTime * 0.7 + i * 0.25) % 1;
+                            const px = nx * (1 - packetT);
+                            const py = ny * (1 - packetT);
+                            const pz = nz * (1 - packetT);
+                            const pPacket = project3D(px, py, pz, camRotX, camRotY, camRotZ, cx, cy);
+                            if (pPacket.scale > 0) {
+                                ctx.fillStyle = '#2DD4BF';
+                                ctx.beginPath();
+                                ctx.arc(pPacket.sx, pPacket.sy, 3.5 * pPacket.scale, 0, Math.PI * 2);
+                                ctx.fill();
+                            }
+
+                            const nodeSize = 34 * pNode.scale;
+                            ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+                            ctx.strokeStyle = node.color;
+                            ctx.lineWidth = 2 * pNode.scale;
+                            ctx.beginPath();
+                            ctx.roundRect(pNode.sx - nodeSize, pNode.sy - nodeSize * 0.6, nodeSize * 2, nodeSize * 1.2, 6 * pNode.scale);
+                            ctx.fill();
+                            ctx.stroke();
+
+                            ctx.fillStyle = '#FFFFFF';
+                            ctx.font = `bold ${Math.max(9, Math.round(11 * pNode.scale))}px "Plus Jakarta Sans", sans-serif`;
+                            ctx.textAlign = 'center';
+                            ctx.fillText(`${node.icon} ${node.name}`, pNode.sx, pNode.sy + 3 * pNode.scale);
+                        }
+                    });
+
+                    // 5. Radar Anomaly Scan in 3D (Stage 3)
+                    if (lScrollProgress >= 0.40 && lScrollProgress <= 0.80) {
+                        const radarAlpha = Math.sin((lScrollProgress - 0.40) / 0.40 * Math.PI);
+                        const rRadius = 180;
+                        ctx.strokeStyle = `rgba(239, 68, 68, ${0.4 * radarAlpha})`;
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        for (let s = 0; s <= 32; s++) {
+                            const theta = (s / 32) * Math.PI * 2;
+                            const rx = Math.cos(theta) * rRadius;
+                            const rz = Math.sin(theta) * rRadius;
+                            const proj = project3D(rx, 40, rz, camRotX, camRotY, camRotZ, cx, cy);
+                            if (s === 0) ctx.moveTo(proj.sx, proj.sy);
+                            else ctx.lineTo(proj.sx, proj.sy);
+                        }
+                        ctx.stroke();
+
+                        const ax = 90 + Math.sin(lAnimTime * 2) * 5, ay = 20, az = 70;
+                        const pAnomaly = project3D(ax, ay, az, camRotX, camRotY, camRotZ, cx, cy);
+                        if (pAnomaly.scale > 0) {
+                            const pulseR = (lAnimTime * 40 % 50) + 10;
+                            ctx.strokeStyle = `rgba(239, 68, 68, ${(1 - pulseR / 60) * radarAlpha})`;
+                            ctx.lineWidth = 2.5;
+                            ctx.beginPath();
+                            ctx.arc(pAnomaly.sx, pAnomaly.sy, pulseR * pAnomaly.scale, 0, Math.PI * 2);
+                            ctx.stroke();
+
+                            ctx.fillStyle = `rgba(185, 28, 28, ${0.9 * radarAlpha})`;
+                            ctx.strokeStyle = `rgba(248, 113, 113, ${radarAlpha})`;
+                            ctx.lineWidth = 2;
+                            ctx.beginPath();
+                            ctx.roundRect(pAnomaly.sx - 90 * pAnomaly.scale, pAnomaly.sy - 18 * pAnomaly.scale, 180 * pAnomaly.scale, 36 * pAnomaly.scale, 6);
+                            ctx.fill(); ctx.stroke();
+
+                            ctx.fillStyle = '#FFFFFF';
+                            ctx.font = `bold ${Math.max(9, Math.round(11 * pAnomaly.scale))}px "JetBrains Mono", monospace`;
+                            ctx.textAlign = 'center';
+                            ctx.fillText('⚠️ DUPLICATE REFUND LOOP', pAnomaly.sx, pAnomaly.sy - 2 * pAnomaly.scale);
+                            ctx.fillStyle = '#FECACA';
+                            ctx.font = `${Math.max(8, Math.round(9.5 * pAnomaly.scale))}px "JetBrains Mono", monospace`;
+                            ctx.fillText('-$20,430.00 ISOLATED', pAnomaly.sx, pAnomaly.sy + 10 * pAnomaly.scale);
+                        }
+                    }
+
+                    // 6. 3D Emerald Diamond / Consensus Shield (Stage 4)
+                    if (lScrollProgress >= 0.68) {
+                        const shieldAlpha = Math.min(1, (lScrollProgress - 0.68) / 0.15);
+                        const diamondH = 75, diamondW = 45;
+                        const vertices = [
+                            { x: 0, y: -diamondH, z: 0 },
+                            { x: diamondW, y: 0, z: 0 },
+                            { x: 0, y: 0, z: diamondW },
+                            { x: -diamondW, y: 0, z: 0 },
+                            { x: 0, y: 0, z: -diamondW },
+                            { x: 0, y: diamondH, z: 0 }
+                        ];
+
+                        const pVerts = vertices.map(v => project3D(v.x, v.y + Math.sin(lAnimTime * 3) * 8, v.z, camRotX, camRotY + lAnimTime * 1.2, camRotZ, cx, cy));
+                        ctx.strokeStyle = `rgba(52, 211, 153, ${0.85 * shieldAlpha})`;
+                        ctx.lineWidth = 2.5;
+                        const edges = [
+                            [0,1],[0,2],[0,3],[0,4],
+                            [5,1],[5,2],[5,3],[5,4],
+                            [1,2],[2,3],[3,4],[4,1]
+                        ];
+
+                        edges.forEach(e => {
+                            const vA = pVerts[e[0]], vB = pVerts[e[1]];
+                            if (vA.scale > 0 && vB.scale > 0) {
+                                ctx.beginPath(); ctx.moveTo(vA.sx, vA.sy); ctx.lineTo(vB.sx, vB.sy); ctx.stroke();
+                            }
+                        });
+
+                        const waveR = (lAnimTime * 50 % 90) + 20;
+                        ctx.strokeStyle = `rgba(16, 185, 129, ${(1 - waveR / 110) * shieldAlpha})`;
+                        ctx.lineWidth = 3;
+                        ctx.beginPath();
+                        ctx.arc(cx, cy, waveR, 0, Math.PI * 2);
+                        ctx.stroke();
+                    }
                 }
+
+                // Sync narrative cards visibility on landing
+                updateLandingCards(lScrollProgress);
             }
 
-            // Sync HTML Narrative Cards visibility based on scroll
-            updateNarrativeCards(scrollProgress);
-
-            requestAnimationFrame(render3DLoop);
+            requestAnimationFrame(renderLanding3DLoop);
         }
 
-        requestAnimationFrame(render3DLoop);
+        requestAnimationFrame(renderLanding3DLoop);
 
-        function updateNarrativeCards(progress) {
+        function updateLandingCards(progress) {
             const cards = [
-                document.getElementById('cardStage0'),
-                document.getElementById('cardStage1'),
-                document.getElementById('cardStage2'),
-                document.getElementById('cardStage3')
+                document.getElementById('lCard0'),
+                document.getElementById('lCard1'),
+                document.getElementById('lCard2'),
+                document.getElementById('lCard3')
             ];
 
             let activeCardIdx = 0;
@@ -1910,19 +2207,11 @@
                     card.classList.remove('visible');
                 }
             });
-
-            // Update top stage pills
-            let activePillIdx = activeCardIdx;
-            if (progress >= 0.95) activePillIdx = 4;
-            for (let i = 0; i <= 4; i++) {
-                const pill = document.getElementById('pill' + i);
-                if (pill) {
-                    pill.className = 'stage-pill' + (i === activePillIdx ? ' active' : '');
-                }
-            }
         }
 
-        /* ── Company Profile Switcher ── */
+        /* ══════════════════════════════════════════════════════════════
+           ── DASHBOARD INTERACTIVE ENGINE (Clean Cockpit View) ──
+           ══════════════════════════════════════════════════════════════ */
         function toggleCompanyDropdown() {
             const el = document.getElementById('companyDropdown');
             el.style.display = el.style.display === 'flex' ? 'none' : 'flex';
@@ -1947,7 +2236,6 @@
             renderChart();
         }
 
-        /* ── Revenue Trajectory Chart ── */
         function renderChart() {
             const canvas = document.getElementById('revenueCanvas');
             if (!canvas) return;
@@ -2067,15 +2355,14 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            renderChart();
             const area = document.getElementById('canvasAreaContainer');
             if (window.ResizeObserver && area) {
-                new ResizeObserver(() => renderChart()).observe(area);
+                new ResizeObserver(() => {
+                    if (currentView === 'app') renderChart();
+                }).observe(area);
             }
         });
-        window.addEventListener('resize', renderChart);
 
-        /* ── Discount Slider ── */
         function updateDiscount(val) {
             discount = parseInt(val, 10);
             document.getElementById('sliderValue').innerText = val + '%';
@@ -2096,7 +2383,6 @@
             }
         }
 
-        /* ── Chat Messages ── */
         function addMessage(author, htmlContent, color) {
             const stream = document.getElementById('chatStream');
             if (stream.querySelector('.chat-empty')) stream.innerHTML = '';
@@ -2125,10 +2411,7 @@
         }
 
         function runInvestigation() {
-            jumpToStage(4);
-            setTimeout(() => {
-                executeInquiry("Why did repeat purchases drop in the West region last month?");
-            }, 300);
+            executeInquiry("Why did repeat purchases drop in the West region last month?");
         }
 
         function formatMarkdown(text) {
@@ -2154,7 +2437,6 @@
             return out;
         }
 
-        /* ── Live Backend Integration ── */
         async function executeInquiry(question) {
             const stream = document.getElementById('chatStream');
             stream.innerHTML = '';
@@ -2171,7 +2453,6 @@
                 });
                 const data = await res.json();
 
-                // Analyst response
                 setPipe(2, 'completed');
                 setPipe(3, 'active');
 
@@ -2185,7 +2466,6 @@
 
                 addMessage('Analyst Agent', analystHtml, '#0D9488');
 
-                // Reviewer response
                 setPipe(3, 'completed');
                 setPipe(4, 'active');
 
@@ -2204,7 +2484,6 @@
 
                 addMessage('Reviewer Agent', reviewerHtml, '#D97706');
 
-                // Consensus Proposal
                 const actionText = data.proposed_action ? data.proposed_action : "100% Alignment Reached. Ready to authorize executive action.";
                 let consensusHtml = formatMarkdown(actionText);
                 consensusHtml += `<div class="consensus-banner">100% MULTI-AGENT CONSENSUS &bull; Analyst &check; Reviewer &check; Aligned &check;</div>`;
