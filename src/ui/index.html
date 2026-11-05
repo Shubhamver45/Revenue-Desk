@@ -3,54 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue Desk — Financial Operations & Revenue Governance</title>
+    <title>Revenue Desk — Financial Operations</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Enterprise FinTech Palette (Stripe / Mercury / Ramp) */
-            --bg-page: #f2f7f7;
-            --bg-page-gradient: radial-gradient(circle at 10% 20%, #e8f5f4 0%, #f4fbfb 60%, #eef5f8 100%);
+            /* Minimalist Enterprise Palette (Linear / Stripe / Apple) */
+            --bg-page: #fafbfc;
             --bg-card: #ffffff;
-            --bg-sidebar: #ffffff;
-            --bg-input: #ffffff;
-            --bg-subtle: #f8fafc;
-            --bg-teal-light: #ecfdf5;
-            --bg-amber-light: #fffbeb;
-            --bg-red-light: #fef2f2;
-            --bg-blue-light: #eff6ff;
+            --bg-subtle: #f4f6f8;
+            --bg-hover: #f1f5f9;
 
+            --border-subtle: #eef2f6;
             --border-default: #e2e8f0;
-            --border-subtle: #edf2f7;
-            --border-card: #e5eff5;
-            --border-focus: #0d9488;
+            --border-focus: #0f766e;
 
-            /* Brand & Semantic Colors */
-            --brand-teal: #0f766e;
-            --brand-teal-hover: #115e59;
-            --brand-teal-active: #134e4a;
-            --brand-cyan: #0284c7;
-            --brand-emerald: #10b981;
-            --brand-amber: #f59e0b;
-            --brand-rose: #ef4444;
+            /* Focused Palette */
+            --brand-primary: #0f766e;
+            --brand-primary-hover: #115e59;
+            --brand-blue: #0284c7;
+            --brand-green: #059669;
+            --brand-amber: #d97706;
+            --brand-red: #dc2626;
 
-            /* Typography */
+            /* Clean Typography */
             --text-heading: #0f172a;
             --text-body: #334155;
             --text-secondary: #64748b;
             --text-muted: #94a3b8;
 
-            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             --font-mono: 'JetBrains Mono', Menlo, monospace;
 
-            --radius-xs: 6px;
-            --radius-sm: 10px;
-            --radius-md: 14px;
+            --radius-sm: 8px;
+            --radius-md: 12px;
             --radius-lg: 16px;
 
-            --shadow-card: 0 2px 12px rgba(15, 76, 92, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-            --shadow-hover: 0 8px 24px rgba(15, 76, 92, 0.08);
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 16px rgba(0, 0, 0, 0.02);
+            --shadow-float: 0 12px 32px rgba(15, 23, 42, 0.08);
         }
 
         * {
@@ -62,211 +53,103 @@
 
         body {
             font-family: var(--font-sans);
-            background: var(--bg-page-gradient);
+            background: var(--bg-page);
             color: var(--text-body);
             min-height: 100vh;
             display: flex;
-            font-size: 13px;
-            line-height: 1.45;
+            flex-direction: column;
+            font-size: 13.5px;
+            line-height: 1.5;
         }
 
-        /* Clean SVG Icon Utilities */
         .svg-icon {
-            width: 16px;
-            height: 16px;
+            width: 15px;
+            height: 15px;
             stroke-width: 2;
             stroke: currentColor;
             fill: none;
             stroke-linecap: round;
             stroke-linejoin: round;
-            display: inline-block;
-            vertical-align: middle;
             flex-shrink: 0;
         }
 
-        /* ── Left Slim Navigation Sidebar ── */
-        .sidebar {
-            width: 72px;
-            background: var(--bg-sidebar);
-            border-right: 1px solid var(--border-default);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 16px 0;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            z-index: 50;
-            flex-shrink: 0;
-        }
-
-        .sidebar-logo {
-            width: 40px;
-            height: 40px;
-            background: #0d9488;
-            color: #ffffff;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
-        }
-
-        .sidebar-logo svg {
-            width: 22px;
-            height: 22px;
-            stroke-width: 2.2;
-            stroke: #ffffff;
-            fill: none;
-        }
-
-        .nav-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-            align-items: center;
-            flex: 1;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-size: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 8px 6px;
-            width: 58px;
-            border-radius: var(--radius-sm);
-            transition: all 0.15s ease;
-            background: transparent;
-            border: none;
-            font-family: inherit;
-        }
-
-        .nav-item:hover {
-            color: var(--brand-teal);
-            background: var(--bg-teal-light);
-        }
-
-        .nav-item.active {
-            color: var(--brand-teal);
-            background: #e6f7f5;
-        }
-
-        .nav-item svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        /* ── Main App Shell ── */
-        .main-shell {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-            padding: 16px 24px 24px;
-            gap: 16px;
-            max-width: 1720px;
-            margin: 0 auto;
-        }
-
-        /* ── Top Header Bar ── */
-        .header {
+        /* ── Minimalist Top Navigation ── */
+        .navbar {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-default);
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #ffffff;
-            border: 1px solid var(--border-card);
-            border-radius: var(--radius-lg);
-            padding: 10px 18px;
-            box-shadow: var(--shadow-card);
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
-        .header-left {
+        .nav-brand {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
-        .brand-header-text {
+        .brand-symbol {
+            width: 32px;
+            height: 32px;
+            background: var(--brand-primary);
+            border-radius: 8px;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
         }
 
-        .brand-title {
-            font-size: 16px;
-            font-weight: 800;
+        .brand-symbol svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2.2;
+        }
+
+        .brand-name {
+            font-size: 15px;
+            font-weight: 700;
             color: var(--text-heading);
-            letter-spacing: -0.3px;
+            letter-spacing: -0.2px;
         }
 
-        .brand-subtitle {
-            font-size: 11px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            margin-top: -1px;
-        }
-
-        .room-tag {
+        .room-pill {
             display: flex;
             align-items: center;
             gap: 6px;
             background: var(--bg-subtle);
-            border: 1px solid var(--border-default);
+            border: 1px solid var(--border-subtle);
             padding: 4px 10px;
-            border-radius: var(--radius-xs);
-            font-size: 11.5px;
+            border-radius: 20px;
+            font-size: 11px;
             font-family: var(--font-mono);
             color: var(--text-secondary);
+            margin-left: 8px;
         }
 
-        .room-pulse {
-            width: 7px;
-            height: 7px;
-            background: var(--brand-emerald);
+        .pulse-indicator {
+            width: 6px;
+            height: 6px;
+            background: var(--brand-green);
             border-radius: 50%;
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
-            animation: pulse-dot 1.8s infinite;
         }
 
-        @keyframes pulse-dot {
-            0% { transform: scale(0.9); opacity: 0.8; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(0.9); opacity: 0.8; }
-        }
-
-        .consensus-pill-header {
+        .nav-actions {
             display: flex;
             align-items: center;
-            gap: 6px;
-            background: #e6f7ef;
-            border: 1px solid #a7f3d0;
-            color: #065f46;
-            font-weight: 700;
-            font-size: 11.5px;
-            font-family: var(--font-mono);
-            padding: 4px 10px;
-            border-radius: var(--radius-xs);
+            gap: 10px;
         }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-toolbar {
+        .btn-nav {
             background: #ffffff;
             border: 1px solid var(--border-default);
             color: var(--text-body);
-            padding: 6px 12px;
-            border-radius: var(--radius-xs);
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
             font-size: 12px;
             font-weight: 600;
             font-family: inherit;
@@ -277,165 +160,158 @@
             transition: all 0.15s ease;
         }
 
-        .btn-toolbar:hover {
-            background: var(--bg-subtle);
-            border-color: #cbd5e1;
+        .btn-nav:hover {
+            background: var(--bg-hover);
             color: var(--text-heading);
         }
 
-        .btn-primary {
-            background: var(--brand-teal);
-            border: 1px solid var(--brand-teal);
+        .btn-primary-action {
+            background: var(--brand-primary);
+            border: 1px solid var(--brand-primary);
             color: #ffffff;
-            font-weight: 700;
-            box-shadow: 0 2px 6px rgba(15, 118, 110, 0.25);
+            padding: 6px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
         }
 
-        .btn-primary:hover {
-            background: var(--brand-teal-hover);
-            color: #ffffff;
-            transform: translateY(-1px);
+        .btn-primary-action:hover {
+            background: var(--brand-primary-hover);
         }
 
-        /* ── Top Dashboard Section (Analytics Left, Chat Right) ── */
-        .dash-upper {
+        /* ── Main Layout Canvas ── */
+        .app-container {
+            max-width: 1480px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 28px 32px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* ── Minimal Metrics Bar ── */
+        .metrics-bar {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 16px 24px;
             display: grid;
-            grid-template-columns: 1fr 430px;
-            gap: 16px;
+            grid-template-columns: 1fr 1fr 1fr;
+            box-shadow: var(--shadow-subtle);
         }
 
-        @media (max-width: 1280px) {
-            .dash-upper {
+        .metric-col {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 0 16px;
+        }
+
+        .metric-col:not(:last-child) {
+            border-right: 1px solid var(--border-subtle);
+        }
+
+        .metric-title {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .metric-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-heading);
+            letter-spacing: -0.5px;
+        }
+
+        .metric-trend {
+            font-size: 11px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        /* ── Main Workspace Grid (60% Chart / Pipeline, 40% Operations) ── */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        @media (max-width: 1080px) {
+            .workspace-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        .analytics-col {
+        /* Chart & Pipeline Container */
+        .left-col {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 20px;
         }
 
-        /* 3-KPI Cards Row */
-        .kpi-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-        }
-
-        .kpi-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: var(--radius-lg);
-            padding: 14px 16px;
-            box-shadow: var(--shadow-card);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .kpi-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .kpi-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .kpi-value {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            font-family: var(--font-sans);
-        }
-
-        .kpi-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 10.5px;
-            font-weight: 700;
-            font-family: var(--font-mono);
-            padding: 2px 6px;
-            border-radius: var(--radius-xs);
-            margin-top: 2px;
-            width: fit-content;
-        }
-
-        .kpi-badge-green { background: #ecfdf5; color: #047857; }
-        .kpi-badge-red { background: #fef2f2; color: #b91c1c; }
-
-        .kpi-icon-wrap {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .kpi-icon-wrap svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Revenue Trajectory Chart Card */
-        .chart-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: var(--radius-lg);
-            padding: 16px 20px 14px;
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .chart-box {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 20px 24px 16px;
+            box-shadow: var(--shadow-subtle);
             position: relative;
         }
 
-        .chart-top-bar {
+        .chart-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-bottom: 12px;
         }
 
-        .chart-heading-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chart-title-main {
+        .chart-heading {
             font-size: 14px;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--text-heading);
+        }
+
+        .chart-legend {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+        }
+
+        .legend-tag {
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .chart-desc-sub {
-            font-size: 11px;
-            color: var(--text-secondary);
+        .legend-bullet {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
         }
 
-        .chart-region-select {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
-            padding: 4px 8px;
-            border-radius: var(--radius-xs);
-            font-size: 11.5px;
-            font-family: inherit;
-            color: var(--text-body);
-            font-weight: 600;
-            outline: none;
-        }
-
-        .chart-canvas-wrap {
+        .canvas-area {
             width: 100%;
-            height: 180px;
+            height: 220px;
             position: relative;
         }
 
@@ -445,630 +321,312 @@
             display: block;
         }
 
-        /* In-Chart Red Callout Badge */
-        .chart-callout-box {
+        /* Minimal In-Chart Callout Badge */
+        .chart-callout-pill {
             position: absolute;
-            top: 24px;
+            top: 28px;
             left: 56%;
             transform: translateX(-50%);
             background: #ffffff;
-            border: 1.5px solid #ef4444;
-            border-radius: var(--radius-sm);
-            padding: 8px 12px;
-            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.15);
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 6px 12px;
             font-size: 11px;
             font-family: var(--font-mono);
-            line-height: 1.4;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.08);
             pointer-events: none;
-            z-index: 10;
         }
 
-        .callout-header {
-            color: #b91c1c;
-            font-weight: 800;
+        /* Linear-style Progress Stepper */
+        .stepper-bar {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 14px 20px;
             display: flex;
             align-items: center;
-            gap: 4px;
-            margin-bottom: 2px;
+            justify-content: space-between;
+            box-shadow: var(--shadow-subtle);
         }
 
-        .chart-legend-bottom {
+        .step-node {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .step-node.active {
+            color: var(--brand-primary);
+        }
+
+        .step-node.completed {
+            color: var(--text-heading);
+        }
+
+        .step-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-default);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
             font-size: 11px;
-            font-family: var(--font-mono);
-            color: var(--text-secondary);
-            padding-top: 4px;
+            color: var(--text-muted);
         }
 
-        .legend-point {
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .step-node.active .step-icon {
+            background: var(--brand-primary);
+            border-color: var(--brand-primary);
+            color: #ffffff;
         }
 
-        .legend-dot-item {
-            width: 9px;
-            height: 9px;
-            border-radius: 50%;
+        .step-node.completed .step-icon {
+            background: #ecfdf5;
+            border-color: #a7f3d0;
+            color: var(--brand-green);
         }
 
-        /* ── Right Column: Operations Collaboration Stream ── */
-        .chat-panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-card);
+        .step-divider {
+            color: var(--border-default);
+            font-size: 12px;
+        }
+
+        /* Operations Collaboration Column */
+        .right-col {
             display: flex;
             flex-direction: column;
-            height: 380px;
+            gap: 16px;
         }
 
-        .chat-header {
-            padding: 12px 16px;
+        .stream-card {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-subtle);
+            display: flex;
+            flex-direction: column;
+            height: 480px;
+        }
+
+        .stream-header {
+            padding: 14px 18px;
             border-bottom: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .chat-title-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
+        .stream-title {
             font-size: 13px;
+            font-weight: 700;
             color: var(--text-heading);
         }
 
-        .chat-stream {
+        .stream-body {
             flex: 1;
             overflow-y: auto;
-            padding: 14px 16px;
+            padding: 16px 18px;
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .chat-msg {
+        .msg-row {
             display: flex;
             gap: 10px;
-            animation: fadeInMsg 0.25s ease-out;
-        }
-
-        @keyframes fadeInMsg {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .msg-avatar {
             width: 28px;
             height: 28px;
-            border-radius: 50%;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
+            font-size: 10px;
+            font-weight: 800;
+            font-family: var(--font-mono);
             flex-shrink: 0;
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
-        .msg-avatar svg {
-            width: 14px;
-            height: 14px;
-        }
-
-        .msg-content-wrap {
+        .msg-text-box {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            font-size: 12.5px;
+            line-height: 1.5;
         }
 
-        .msg-top-meta {
+        .msg-meta {
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
+            margin-bottom: 3px;
+            font-size: 10.5px;
         }
 
         .msg-author {
-            font-size: 12px;
             font-weight: 700;
             color: var(--text-heading);
         }
 
         .msg-time {
-            font-size: 10px;
-            font-family: var(--font-mono);
             color: var(--text-muted);
+            font-family: var(--font-mono);
         }
 
-        .msg-bubble {
-            background: #f8fafc;
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: 8px 12px;
-            font-size: 12px;
-            color: var(--text-body);
-            line-height: 1.45;
-        }
-
-        .msg-bubble-callout {
-            background: #fffbeb;
-            border-color: #fde68a;
-            color: #92400e;
-        }
-
-        .msg-bubble-consensus {
-            background: #ecfdf5;
-            border-color: #a7f3d0;
-            color: #065f46;
-        }
-
-        .chat-input-bar {
+        .stream-input-wrap {
             padding: 10px 14px;
             border-top: 1px solid var(--border-subtle);
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #ffffff;
-            border-bottom-left-radius: var(--radius-lg);
-            border-bottom-right-radius: var(--radius-lg);
         }
 
-        .chat-input {
+        .stream-input {
             flex: 1;
             border: 1px solid var(--border-default);
-            border-radius: var(--radius-xs);
-            padding: 7px 12px;
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
             font-size: 12px;
             font-family: inherit;
             outline: none;
         }
 
-        .chat-input:focus {
-            border-color: var(--brand-teal);
+        .stream-input:focus {
+            border-color: var(--brand-primary);
         }
 
-        .btn-chat-send {
-            background: var(--brand-teal);
-            border: none;
-            color: #ffffff;
-            width: 32px;
-            height: 32px;
-            border-radius: var(--radius-xs);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-chat-send svg {
-            width: 14px;
-            height: 14px;
-            stroke: #ffffff;
-        }
-
-        /* ── Middle Row: Execution Pipeline & Approval Gate ── */
-        .dash-middle {
-            display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 16px;
-        }
-
-        @media (max-width: 1100px) {
-            .dash-middle {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .pipeline-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: var(--radius-lg);
-            padding: 14px 18px;
-            box-shadow: var(--shadow-card);
+        /* Minimal In-Line Approval Gate Card */
+        .gate-card {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            box-shadow: var(--shadow-subtle);
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .pipeline-top {
+        .gate-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .pipeline-title {
+        .gate-title {
             font-size: 13px;
             font-weight: 700;
             color: var(--text-heading);
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
-        .pipeline-flow-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            padding: 4px 10px;
-        }
-
-        .pipeline-flow-row::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 40px;
-            right: 40px;
-            height: 2px;
-            background: #e2e8f0;
-            z-index: 1;
-        }
-
-        .pipe-node {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .node-circle {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: #ffffff;
-            border: 2px solid #cbd5e1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 800;
-            color: var(--text-secondary);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-            transition: all 0.2s ease;
-        }
-
-        .pipe-node.done .node-circle {
-            background: #10b981;
-            border-color: #10b981;
-            color: #ffffff;
-        }
-
-        .pipe-node.active .node-circle {
-            background: var(--brand-teal);
-            border-color: var(--brand-teal);
-            color: #ffffff;
-            box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.2);
-        }
-
-        .node-circle svg {
-            width: 15px;
-            height: 15px;
-            stroke-width: 2.4;
-        }
-
-        .node-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-body);
-            text-align: center;
-        }
-
-        .consensus-inline-box {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: var(--radius-sm);
-            padding: 8px 14px;
-        }
-
-        /* Human Approval Gate Card */
-        .approval-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: var(--radius-lg);
-            padding: 14px 18px;
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .approval-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .approval-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-heading);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .approval-badge {
+        .gate-badge {
             background: #ecfdf5;
-            color: #065f46;
-            border: 1px solid #a7f3d0;
-            font-size: 10px;
+            color: var(--brand-green);
+            font-size: 10.5px;
             font-weight: 700;
-            padding: 2px 7px;
-            border-radius: var(--radius-xs);
+            padding: 2px 8px;
+            border-radius: 12px;
         }
 
-        .slider-wrap {
+        .slider-group {
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
 
-        .slider-label-row {
+        .slider-flex {
             display: flex;
+            align-items: center;
             justify-content: space-between;
             font-size: 11px;
-            font-weight: 600;
             color: var(--text-secondary);
         }
 
-        .slider-track-wrap {
-            position: relative;
-            padding: 4px 0;
-        }
-
-        .range-slider {
+        .gate-slider {
             width: 100%;
-            accent-color: var(--brand-teal);
+            accent-color: var(--brand-primary);
             cursor: pointer;
         }
 
-        .slider-ticks {
-            display: flex;
-            justify-content: space-between;
-            font-size: 10.5px;
-            font-family: var(--font-mono);
-            color: var(--text-muted);
-        }
-
-        .impact-box {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
+        .impact-grid {
+            background: #f8fafc;
+            border: 1px solid var(--border-subtle);
             border-radius: var(--radius-sm);
-            padding: 8px 12px;
+            padding: 10px 14px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
             font-family: var(--font-mono);
             font-size: 11.5px;
+        }
+
+        .impact-cell {
             display: flex;
             flex-direction: column;
-            gap: 3px;
         }
 
-        .impact-row {
-            display: flex;
-            justify-content: space-between;
+        .impact-label {
+            font-size: 9.5px;
+            color: var(--text-muted);
+            text-transform: uppercase;
         }
 
-        .approval-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .impact-value {
+            font-weight: 700;
             margin-top: 2px;
         }
 
-        .btn-approve-solid {
-            flex: 1;
-            background: var(--brand-teal);
-            border: none;
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 12px;
-            padding: 8px 12px;
-            border-radius: var(--radius-xs);
-            cursor: pointer;
+        .gate-actions {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
-            box-shadow: 0 2px 6px rgba(15, 118, 110, 0.25);
-        }
-
-        .btn-approve-solid:hover {
-            background: var(--brand-teal-hover);
-        }
-
-        .btn-revise-outline {
-            background: #ffffff;
-            border: 1px solid var(--border-default);
-            color: var(--text-body);
-            font-weight: 600;
-            font-size: 12px;
-            padding: 8px 12px;
-            border-radius: var(--radius-xs);
-            cursor: pointer;
-        }
-
-        /* ── Bottom 3-Card Bento Row ── */
-        .dash-bottom {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 16px;
-        }
-
-        @media (max-width: 1100px) {
-            .dash-bottom {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .bottom-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-card);
-            border-radius: var(--radius-lg);
-            padding: 14px 16px;
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
             gap: 10px;
         }
 
-        .card-header-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .card-title-bottom {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-heading);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .task-list-ui {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .task-row-ui {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 11.5px;
-            padding: 4px 6px;
-            border-radius: var(--radius-xs);
-        }
-
-        .task-row-ui:hover {
-            background: var(--bg-subtle);
-        }
-
-        .task-check-icon {
-            width: 15px;
-            height: 15px;
-            border-radius: 4px;
-            border: 1px solid #cbd5e1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: transparent;
-        }
-
-        .task-row-ui.done .task-check-icon {
-            background: #10b981;
-            border-color: #10b981;
-            color: #ffffff;
-            font-weight: 800;
-        }
-
-        .task-code {
-            font-family: var(--font-mono);
-            font-weight: 700;
-            color: var(--text-heading);
-            min-width: 62px;
-        }
-
-        .task-title-text {
-            color: var(--text-body);
-        }
-
-        .audit-list-ui {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-            font-family: var(--font-mono);
-            font-size: 11px;
-        }
-
-        .audit-row-ui {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-        }
-
-        .audit-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #10b981;
-            margin-top: 4px;
-            flex-shrink: 0;
-        }
-
-        .audit-time {
-            color: var(--text-muted);
-            min-width: 50px;
-        }
-
-        .audit-desc {
-            color: var(--text-body);
-        }
-
-        .db-tabs-mini {
-            display: flex;
-            gap: 6px;
-            border-bottom: 1px solid var(--border-subtle);
-            padding-bottom: 6px;
-        }
-
-        .db-tab-pill {
-            background: transparent;
+        .btn-confirm {
+            flex: 1;
+            background: var(--brand-primary);
             border: none;
-            font-size: 11px;
-            font-family: var(--font-mono);
-            color: var(--text-secondary);
-            cursor: pointer;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        .db-tab-pill.active {
-            background: #e6f7f5;
-            color: var(--brand-teal);
-            font-weight: 700;
-        }
-
-        .mini-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: var(--font-mono);
-            font-size: 11px;
-        }
-
-        .mini-table th {
-            text-align: left;
-            color: var(--text-muted);
+            color: #ffffff;
             font-weight: 600;
-            padding: 4px 6px;
-            border-bottom: 1px solid var(--border-subtle);
-            font-size: 10px;
+            font-size: 12px;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
         }
 
-        .mini-table td {
-            padding: 5px 6px;
-            border-bottom: 1px solid #f1f5f9;
+        .btn-confirm:hover {
+            background: var(--brand-primary-hover);
         }
 
-        /* Modals */
+        .btn-dismiss {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            color: var(--text-secondary);
+            font-size: 12px;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+        }
+
+        /* Clean Modals */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(15, 23, 42, 0.45);
             backdrop-filter: blur(4px);
             z-index: 100;
             display: none;
@@ -1080,591 +638,286 @@
         .modal-box {
             background: #ffffff;
             border-radius: var(--radius-lg);
-            max-width: 820px;
+            max-width: 840px;
             width: 100%;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
-            padding: 28px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            padding: 28px 32px;
+            box-shadow: var(--shadow-float);
             position: relative;
         }
 
         .modal-close-btn {
             position: absolute;
-            top: 16px;
-            right: 16px;
-            background: #f1f5f9;
+            top: 18px;
+            right: 18px;
+            background: var(--bg-subtle);
             border: none;
             width: 28px;
             height: 28px;
             border-radius: 50%;
             cursor: pointer;
-            font-weight: 800;
+            font-weight: 700;
+            color: var(--text-secondary);
         }
     </style>
 </head>
 <body>
 
-    <!-- ── Left Slim Navigation Sidebar ── -->
-    <aside class="sidebar">
-        <div class="sidebar-logo">
-            <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+    <!-- ── Minimal Top Navigation ── -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <div class="brand-symbol">
+                <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+            </div>
+            <span class="brand-name">Revenue Desk</span>
+            <div class="room-pill">
+                <span class="pulse-indicator"></span>
+                <span>#revenue-desk &bull; PostgreSQL / SQLite</span>
+            </div>
         </div>
-        <nav class="nav-list">
-            <button class="nav-item active" onclick="scrollToTop()">
-                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                <span>Overview</span>
+
+        <div class="nav-actions">
+            <button class="btn-nav" onclick="openDatabaseModal()">
+                <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>Database</span>
             </button>
-            <button class="nav-item" onclick="focusOperations()">
-                <svg class="svg-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                <span>Operations</span>
-            </button>
-            <button class="nav-item" onclick="openDatabaseExplorer()">
-                <svg class="svg-icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-                <span>Data</span>
-            </button>
-            <button class="nav-item" onclick="focusTasks()">
-                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                <span>Tasks</span>
-            </button>
-            <button class="nav-item" onclick="focusAudit()">
-                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <span>Audit</span>
-            </button>
-            <button class="nav-item" onclick="openExecutiveMemo()">
-                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <button class="btn-nav" onclick="openMemoModal()">
+                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                 <span>Memo</span>
             </button>
-        </nav>
-        <button class="nav-item" style="margin-top: auto;" onclick="openSettingsModal()">
-            <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            <span>Config</span>
-        </button>
-    </aside>
+            <button class="btn-nav" onclick="resetState()">
+                <span>Reset</span>
+            </button>
+            <button class="btn-primary-action" onclick="runInvestigation()">
+                <span>Run Investigation</span>
+            </button>
+        </div>
+    </header>
 
-    <!-- ── Main App Shell ── -->
-    <main class="main-shell" id="mainContainer">
-        
-        <!-- Top Header Bar -->
-        <header class="header">
-            <div class="header-left">
-                <div class="brand-header-text">
-                    <div class="brand-title">Revenue Desk</div>
-                    <div class="brand-subtitle">Financial Operations & Revenue Governance</div>
-                </div>
+    <!-- ── Main Canvas ── -->
+    <main class="app-container">
 
-                <div class="room-tag">
-                    <span class="room-pulse"></span>
-                    <span>ROOM: #revenue-desk</span>
-                    <span style="color: #cbd5e1;">|</span>
-                    <span style="color: #0d9488; font-weight: 600;">SUPABASE v16 PG + SQLITE</span>
-                </div>
-
-                <div class="consensus-pill-header" id="headerConsensusPill">
-                    <svg class="svg-icon" style="width:13px; height:13px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                    <span>100% RECONCILED</span>
+        <!-- ── Minimal Metrics Bar ── -->
+        <section class="metrics-bar">
+            <div class="metric-col">
+                <span class="metric-title">Gross Revenue (Oct)</span>
+                <div class="metric-row">
+                    <span class="metric-number">$112,450</span>
+                    <span class="metric-trend" style="color: var(--brand-green);">+2.4% MoM</span>
                 </div>
             </div>
 
-            <div class="header-actions">
-                <button class="btn-toolbar" onclick="openDatabaseExplorer()">
-                    <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                    <span>Database Explorer</span>
-                </button>
-                <button class="btn-toolbar" onclick="openExecutiveMemo()">
-                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    <span>Executive Memo</span>
-                </button>
-                <button class="btn-toolbar" onclick="resetRoomState()">
-                    <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-                    <span>Reset</span>
-                </button>
-                <button class="btn-toolbar btn-primary" onclick="runInvestigation()">
-                    <svg class="svg-icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    <span>Run Investigation</span>
-                </button>
+            <div class="metric-col">
+                <span class="metric-title">West Repeat Drop</span>
+                <div class="metric-row">
+                    <span class="metric-number" style="color: var(--brand-red);">-84.2%</span>
+                    <span class="metric-trend" style="color: var(--brand-red);">5 Enterprise Lapsed</span>
+                </div>
             </div>
-        </header>
 
-        <!-- Top Dashboard Section: Analytics (Left) & Operations (Right) -->
-        <section class="dash-upper">
+            <div class="metric-col">
+                <span class="metric-title">Verified Net Baseline</span>
+                <div class="metric-row">
+                    <span class="metric-number" style="color: var(--brand-primary);">$3,820</span>
+                    <span class="metric-trend" style="color: var(--brand-amber);">-$20.4K Glitch Removed</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Workspace Grid ── -->
+        <div class="workspace-grid">
             
-            <div class="analytics-col">
-                <!-- 3-KPI Cards Row -->
-                <div class="kpi-row">
-                    <div class="kpi-card">
-                        <div class="kpi-info">
-                            <span class="kpi-label">Gross Revenue</span>
-                            <span class="kpi-value" style="color: #0f172a;">$112,450</span>
-                            <span class="kpi-badge kpi-badge-green">
-                                <svg class="svg-icon" style="width:10px; height:10px;" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
-                                +2.4% MoM
-                            </span>
-                        </div>
-                        <div class="kpi-icon-wrap" style="background: #e6f7f5; color: #0d9488;">
-                            <svg class="svg-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-                        </div>
-                    </div>
-
-                    <div class="kpi-card">
-                        <div class="kpi-info">
-                            <span class="kpi-label">West Repeat Churn</span>
-                            <span class="kpi-value" style="color: #b91c1c;">-84.2%</span>
-                            <span class="kpi-badge kpi-badge-red">5 Enterprise Accounts</span>
-                        </div>
-                        <div class="kpi-icon-wrap" style="background: #fef2f2; color: #ef4444;">
-                            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <!-- Left: Chart & Stepper -->
+            <div class="left-col">
+                <div class="chart-box">
+                    <div class="chart-header">
+                        <span class="chart-heading">Revenue Trajectory & Discrepancy Baseline</span>
+                        <div class="chart-legend">
+                            <div class="legend-tag">
+                                <span class="legend-bullet" style="background: var(--brand-blue);"></span>
+                                <span>Reported Gross</span>
+                            </div>
+                            <div class="legend-tag">
+                                <span class="legend-bullet" style="background: var(--brand-amber);"></span>
+                                <span>Refund Glitch</span>
+                            </div>
+                            <div class="legend-tag">
+                                <span class="legend-bullet" style="background: var(--brand-green);"></span>
+                                <span>Post-Campaign Target</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="kpi-card">
-                        <div class="kpi-info">
-                            <span class="kpi-label">Caught Refund Discrepancy</span>
-                            <span class="kpi-value" style="color: #b91c1c;">-$20,430</span>
-                            <span class="kpi-badge kpi-badge-red">Duplicate Reversals</span>
-                        </div>
-                        <div class="kpi-icon-wrap" style="background: #fff1f2; color: #f43f5e;">
-                            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Revenue Trajectory Chart Card -->
-                <div class="chart-card">
-                    <div class="chart-top-bar">
-                        <div class="chart-heading-group">
-                            <span class="chart-title-main">
-                                <svg class="svg-icon" style="color:#0284c7;" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-                                Revenue Trajectory — West Region (Jul – Dec 2026)
-                            </span>
-                            <span class="chart-desc-sub">Gross revenue vs. refund anomaly and post-campaign target</span>
-                        </div>
-                        <select class="chart-region-select" onchange="renderChart()">
-                            <option>West Region</option>
-                            <option>All Regions</option>
-                        </select>
-                    </div>
-
-                    <div class="chart-canvas-wrap">
+                    <div class="canvas-area">
                         <canvas id="revenueCanvas"></canvas>
                         
-                        <div class="chart-callout-box">
-                            <div class="callout-header">
-                                <svg class="svg-icon" style="width:12px; height:12px;" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                                October 2026 — Discrepancy Isolated
-                            </div>
-                            <div>• Duplicate refunds: <span style="color:#b91c1c; font-weight:700;">-$20,430</span></div>
-                            <div>• Real net revenue: <span style="color:#047857; font-weight:700;">$3,820</span></div>
+                        <div class="chart-callout-pill">
+                            <span style="color: var(--brand-red); font-weight:700;">October Discrepancy:</span> -$20,430 duplicate loop &bull; <span style="color: var(--brand-green); font-weight:700;">Net: $3,820</span>
                         </div>
                     </div>
+                </div>
 
-                    <div class="chart-legend-bottom">
-                        <div class="legend-point">
-                            <span class="legend-dot-item" style="background: #0284c7;"></span>
-                            <span>Gross Reported Revenue (Orders)</span>
-                        </div>
-                        <div class="legend-point">
-                            <span class="legend-dot-item" style="background: #f59e0b;"></span>
-                            <span>Phantom Refund Loop (Duplicate Billing)</span>
-                        </div>
-                        <div class="legend-point">
-                            <span class="legend-dot-item" style="background: #10b981;"></span>
-                            <span>Post-Winback Target (15% Campaign)</span>
-                        </div>
+                <!-- Linear-style Pipeline Stepper -->
+                <div class="stepper-bar">
+                    <div class="step-node completed">
+                        <div class="step-icon">✓</div>
+                        <span>1. Inquiry</span>
+                    </div>
+                    <span class="step-divider">&rarr;</span>
+                    <div class="step-node completed">
+                        <div class="step-icon">✓</div>
+                        <span>2. Analysis</span>
+                    </div>
+                    <span class="step-divider">&rarr;</span>
+                    <div class="step-node completed">
+                        <div class="step-icon">✓</div>
+                        <span>3. Audit</span>
+                    </div>
+                    <span class="step-divider">&rarr;</span>
+                    <div class="step-node active" id="step4Node">
+                        <div class="step-icon">4</div>
+                        <span>4. Approval</span>
+                    </div>
+                    <span class="step-divider">&rarr;</span>
+                    <div class="step-node" id="step5Node">
+                        <div class="step-icon">5</div>
+                        <span>5. Commit</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Column: Operations Stream -->
-            <div class="chat-panel" id="operationsPanel">
-                <div class="chat-header">
-                    <div class="chat-title-group">
-                        <svg class="svg-icon" style="color: #0284c7;" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                        <span>Operations Collaboration Stream</span>
-                    </div>
-                    <span style="color: #10b981; font-weight: 700; font-size: 11px; display: flex; align-items: center; gap: 4px;">
-                        <span style="width: 6px; height: 6px; background: #10b981; border-radius: 50%;"></span> Live
-                    </span>
-                </div>
-
-                <div class="chat-stream" id="chatStream">
-                    <!-- Manager Message -->
-                    <div class="chat-msg">
-                        <div class="msg-avatar" style="background: #0284c7;">
-                            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                        </div>
-                        <div class="msg-content-wrap">
-                            <div class="msg-top-meta">
-                                <span class="msg-author">Sales Operations Lead (You)</span>
-                                <span class="msg-time">10:22:03</span>
-                            </div>
-                            <div class="msg-bubble">
-                                Investigate the 84.2% drop in West region repeat purchases for October 2026. Is this real churn or a billing/reconciliation discrepancy?
-                            </div>
-                        </div>
+            <!-- Right: Operations Stream & Approval Gate -->
+            <div class="right-col">
+                
+                <div class="stream-card">
+                    <div class="stream-header">
+                        <span class="stream-title">Operations Stream</span>
+                        <span style="font-size: 11px; color: var(--brand-green); font-weight:600;">Reconciled</span>
                     </div>
 
-                    <!-- Analyst Message -->
-                    <div class="chat-msg">
-                        <div class="msg-avatar" style="background: #0d9488;">
-                            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                        </div>
-                        <div class="msg-content-wrap">
-                            <div class="msg-top-meta">
-                                <span class="msg-author">Quantitative Analytics Engine</span>
-                                <span class="msg-time">10:24:06</span>
-                            </div>
-                            <div class="msg-bubble">
-                                Executed SQL across order tables. West region October gross revenue dropped to $24,250, reflecting zero repeat purchases across 5 tier-1 enterprise accounts.
+                    <div class="stream-body" id="chatStream">
+                        <div class="msg-row">
+                            <div class="msg-avatar" style="background: var(--brand-blue);">SV</div>
+                            <div class="msg-text-box">
+                                <div class="msg-meta">
+                                    <span class="msg-author">Operations Lead</span>
+                                    <span class="msg-time">10:22 AM</span>
+                                </div>
+                                Why did repeat purchases drop in the West region last month? Is this real churn or a reconciliation error?
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Reviewer Message -->
-                    <div class="chat-msg">
-                        <div class="msg-avatar" style="background: #f59e0b;">
-                            <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        </div>
-                        <div class="msg-content-wrap">
-                            <div class="msg-top-meta">
-                                <span class="msg-author">Audit & Compliance Guardrail</span>
-                                <span class="msg-time">10:24:54</span>
+                        <div class="msg-row">
+                            <div class="msg-avatar" style="background: var(--brand-primary);">QA</div>
+                            <div class="msg-text-box">
+                                <div class="msg-meta">
+                                    <span class="msg-author">Analytics Service</span>
+                                    <span class="msg-time">10:24 AM</span>
+                                </div>
+                                Isolated 15 West enterprise accounts. October orders dropped to $24,250 with zero repeat purchases logged across Tier-1 clients.
                             </div>
-                            <div class="msg-bubble msg-bubble-callout">
-                                <strong>Discrepancy verified:</strong> Identified $20,430 in duplicate billing refund records (orders #1, #2, #3) caused by processor migration. Real net baseline is $3,820.
+                        </div>
+
+                        <div class="msg-row">
+                            <div class="msg-avatar" style="background: var(--brand-amber);">AU</div>
+                            <div class="msg-text-box" style="background: #fffbeb; border-color: #fde68a;">
+                                <div class="msg-meta">
+                                    <span class="msg-author" style="color: #92400e;">Audit & Compliance</span>
+                                    <span class="msg-time">10:24 AM</span>
+                                </div>
+                                Discrepancy confirmed: $20,430 in duplicate processor refund transactions occurred on orders #1–#3. True net revenue is $3,820.
+                            </div>
+                        </div>
+
+                        <div class="msg-row">
+                            <div class="msg-avatar" style="background: var(--brand-green);">RC</div>
+                            <div class="msg-text-box" style="background: #f0fdf4; border-color: #bbf7d0;">
+                                <div class="msg-meta">
+                                    <span class="msg-author" style="color: #166534;">Reconciliation Engine</span>
+                                    <span class="msg-time">10:25 AM</span>
+                                </div>
+                                Multi-service consensus achieved. Certified net baseline: $3,820. Ready for campaign authorization below.
                             </div>
                         </div>
                     </div>
 
-                    <!-- Consensus Message -->
-                    <div class="chat-msg">
-                        <div class="msg-avatar" style="background: #10b981;">
-                            <svg class="svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                        </div>
-                        <div class="msg-content-wrap">
-                            <div class="msg-top-meta">
-                                <span class="msg-author">Reconciliation Service</span>
-                                <span class="msg-time">10:25:01</span>
-                            </div>
-                            <div class="msg-bubble msg-bubble-consensus">
-                                Net baseline reconciled at $3,820. Multi-service consensus reached. Recommended action: Authorize a 15% Enterprise Win-Back Renewal Campaign.
-                            </div>
-                        </div>
+                    <div class="stream-input-wrap">
+                        <input type="text" class="stream-input" id="chatInput" placeholder="Enter inquiry or directive..." onkeydown="if(event.key==='Enter') sendMessage()">
                     </div>
                 </div>
 
-                <div class="chat-input-bar">
-                    <input type="text" class="chat-input" id="chatInput" placeholder="Enter inquiry or SQL directive..." onkeydown="if(event.key==='Enter') sendUserMessage()">
-                    <button class="btn-chat-send" onclick="sendUserMessage()">
-                        <svg class="svg-icon" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                    </button>
-                </div>
-            </div>
-        </section>
+                <!-- Clean Approval Gate -->
+                <div class="gate-card">
+                    <div class="gate-header">
+                        <span class="gate-title">Campaign Authorization</span>
+                        <span class="gate-badge">Awaiting Sign-Off</span>
+                    </div>
 
-        <!-- Middle Row: Execution Pipeline & Approval Gate -->
-        <section class="dash-middle">
-            
-            <div class="pipeline-card">
-                <div class="pipeline-top">
-                    <span class="pipeline-title">
-                        <svg class="svg-icon" style="color:var(--brand-teal);" viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
-                        Workflow Execution Pipeline
-                    </span>
-                    <div class="consensus-inline-box">
-                        <span style="color: #065f46; font-weight: 700; font-size: 11px; display: flex; align-items: center; gap: 4px;">
-                            <svg class="svg-icon" style="width:12px; height:12px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                            100% AUDIT RECONCILIATION
-                        </span>
-                        <span style="font-size: 11px; color: #047857; margin-left: 12px; font-family:var(--font-mono);">
-                            Analytics [PASS] &nbsp;|&nbsp; Compliance [PASS] &nbsp;|&nbsp; Consensus [PASS]
-                        </span>
+                    <div class="slider-group">
+                        <div class="slider-flex">
+                            <span>Win-Back Discount:</span>
+                            <span style="font-weight:700; color:var(--brand-primary); font-family:var(--font-mono);" id="sliderValue">15%</span>
+                        </div>
+                        <input type="range" min="10" max="20" step="5" value="15" class="gate-slider" id="discountInput" oninput="updateDiscount(this.value)">
+                    </div>
+
+                    <div class="impact-grid">
+                        <div class="impact-cell">
+                            <span class="impact-label">Target ARR</span>
+                            <span class="impact-value" style="color: var(--brand-green);">+$38,200</span>
+                        </div>
+                        <div class="impact-cell">
+                            <span class="impact-label">Discount Cost</span>
+                            <span class="impact-value" style="color: var(--brand-red);" id="costText">-$5,730</span>
+                        </div>
+                        <div class="impact-cell">
+                            <span class="impact-label">Net Gain</span>
+                            <span class="impact-value" style="color: var(--brand-primary);" id="gainText">+$32,470</span>
+                        </div>
+                    </div>
+
+                    <div class="gate-actions">
+                        <button class="btn-confirm" onclick="approveCampaign()">Authorize & Commit</button>
+                        <button class="btn-dismiss" onclick="rejectCampaign()">Dismiss</button>
                     </div>
                 </div>
 
-                <div class="pipeline-flow-row">
-                    <div class="pipe-node done" id="pipe1">
-                        <div class="node-circle"><svg class="svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-                        <div class="node-label">1. Operator<br>Inquiry</div>
-                    </div>
-
-                    <div class="pipe-node done" id="pipe2">
-                        <div class="node-circle"><svg class="svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-                        <div class="node-label">2. SQL Query<br>Execution</div>
-                    </div>
-
-                    <div class="pipe-node done" id="pipe3">
-                        <div class="node-circle"><svg class="svg-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-                        <div class="node-label">3. Audit<br>Verification</div>
-                    </div>
-
-                    <div class="pipe-node active" id="pipe4">
-                        <div class="node-circle"><svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-                        <div class="node-label">4. Human<br>Approval</div>
-                    </div>
-
-                    <div class="pipe-node" id="pipe5">
-                        <div class="node-circle"><svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></div>
-                        <div class="node-label">5. Atomic<br>Commit</div>
-                    </div>
-                </div>
             </div>
 
-            <!-- Human Approval Gate -->
-            <div class="approval-card">
-                <div class="approval-header">
-                    <span class="approval-title">
-                        <svg class="svg-icon" style="color:var(--brand-teal);" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                        Human Approval Gate
-                    </span>
-                    <span class="approval-badge">Ready for Authorization</span>
-                </div>
-                <div style="font-size: 11px; color: var(--text-secondary);">
-                    Authorize proposed recovery terms for 5 enterprise accounts.
-                </div>
-
-                <div class="slider-wrap">
-                    <div class="slider-label-row">
-                        <span>Win-Back Discount:</span>
-                        <span style="color: var(--brand-teal); font-weight: 800; font-family: var(--font-mono);" id="sliderValDisplay">15%</span>
-                    </div>
-                    <div class="slider-track-wrap">
-                        <input type="range" min="10" max="20" step="5" value="15" class="range-slider" id="discountRange" oninput="updateDiscountSlider(this.value)">
-                    </div>
-                    <div class="slider-ticks">
-                        <span>10%</span>
-                        <span style="color: var(--brand-teal); font-weight: 700;">15%</span>
-                        <span>20%</span>
-                    </div>
-                </div>
-
-                <div class="impact-box">
-                    <div class="impact-row" style="color: #047857; font-weight: 700; font-size: 10px; margin-bottom: 2px;">
-                        <span>PROJECTED MARGIN PROFILE</span>
-                    </div>
-                    <div class="impact-row">
-                        <span style="color: var(--text-secondary);">Protected Pipeline:</span>
-                        <span style="color: #047857; font-weight: 700;">+$38,200.00</span>
-                    </div>
-                    <div class="impact-row">
-                        <span style="color: var(--text-secondary);">Discount Expense:</span>
-                        <span style="color: #b91c1c; font-weight: 700;" id="costDisplay">-$5,730.00</span>
-                    </div>
-                    <div class="impact-row">
-                        <span style="color: var(--text-secondary);">Net Value Added:</span>
-                        <span style="color: #047857; font-weight: 800;" id="netDisplay">+$32,470.00</span>
-                    </div>
-                </div>
-
-                <div class="approval-actions">
-                    <button class="btn-approve-solid" onclick="approveAndCommit()">
-                        <svg class="svg-icon" style="width:13px; height:13px;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                        <span>Approve & Commit</span>
-                    </button>
-                    <button class="btn-revise-outline" onclick="reviseCampaign()">
-                        <span>Revise</span>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Bottom 3-Card Bento Row -->
-        <section class="dash-bottom">
-            <!-- Card 1: Task Backlog -->
-            <div class="bottom-card" id="taskBacklogCard">
-                <div class="card-header-row">
-                    <span class="card-title-bottom">
-                        <svg class="svg-icon" style="color:#0d9488;" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                        Operational Task Register (5)
-                    </span>
-                    <span style="font-size: 10.5px; font-weight: 700; color: #047857; background: #ecfdf5; padding: 2px 6px; border-radius: 4px;">
-                        3/5 Verified
-                    </span>
-                </div>
-                <div class="task-list-ui">
-                    <div class="task-row-ui done">
-                        <div class="task-check-icon">✓</div>
-                        <span class="task-code">TASK-101</span>
-                        <span class="task-title-text">Audit West revenue variance</span>
-                    </div>
-                    <div class="task-row-ui done">
-                        <div class="task-check-icon">✓</div>
-                        <span class="task-code">TASK-102</span>
-                        <span class="task-title-text">Analyze transaction & refund tables</span>
-                    </div>
-                    <div class="task-row-ui done">
-                        <div class="task-check-icon">✓</div>
-                        <span class="task-code">TASK-103</span>
-                        <span class="task-title-text">Cross-reconcile processor reversals</span>
-                    </div>
-                    <div class="task-row-ui" id="task104">
-                        <div class="task-check-icon">○</div>
-                        <span class="task-code">TASK-104</span>
-                        <span class="task-title-text">Formulate recovery proposal</span>
-                    </div>
-                    <div class="task-row-ui" id="task105">
-                        <div class="task-check-icon">○</div>
-                        <span class="task-code">TASK-105</span>
-                        <span class="task-title-text">Execute authorized database mutations</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2: Immutable Decision Ledger -->
-            <div class="bottom-card" id="auditLedgerCard">
-                <div class="card-header-row">
-                    <span class="card-title-bottom">
-                        <svg class="svg-icon" style="color:#0d9488;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        Audit Decision Ledger (Immutable)
-                    </span>
-                    <a href="#viewall" onclick="openDatabaseExplorer(); return false;" style="font-size: 11px; color: var(--brand-teal); text-decoration: none; font-weight: 600;">View Ledger</a>
-                </div>
-                <div class="audit-list-ui" id="auditList">
-                    <div class="audit-row-ui">
-                        <span class="audit-dot"></span>
-                        <span class="audit-time">10:22:11</span>
-                        <span class="audit-desc">System: Room initialized across Supabase PG & SQLite</span>
-                    </div>
-                    <div class="audit-row-ui">
-                        <span class="audit-dot"></span>
-                        <span class="audit-time">10:24:06</span>
-                        <span class="audit-desc">Analytics: isolated 15 West region accounts</span>
-                    </div>
-                    <div class="audit-row-ui">
-                        <span class="audit-dot"></span>
-                        <span class="audit-time">10:24:54</span>
-                        <span class="audit-desc">Audit: verified -$20,430 duplicate refund loop</span>
-                    </div>
-                    <div class="audit-row-ui">
-                        <span class="audit-dot"></span>
-                        <span class="audit-time">10:25:01</span>
-                        <span class="audit-desc">Consensus: net baseline certified at $3,820.00</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3: Database Explorer Mini-Table -->
-            <div class="bottom-card">
-                <div class="card-header-row">
-                    <span class="card-title-bottom">
-                        <svg class="svg-icon" style="color:#0d9488;" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-                        Live Database Explorer
-                    </span>
-                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">POSTGRESQL / SQLITE</span>
-                </div>
-                <div class="db-tabs-mini">
-                    <button class="db-tab-pill" onclick="switchMiniDb('customers')">Customers</button>
-                    <button class="db-tab-pill" onclick="switchMiniDb('orders')">Orders</button>
-                    <button class="db-tab-pill active" onclick="switchMiniDb('refunds')">Refunds</button>
-                    <button class="db-tab-pill" onclick="switchMiniDb('campaigns')">Campaigns</button>
-                </div>
-                <div style="overflow-x: auto;" id="miniDbContainer">
-                    <table class="mini-table">
-                        <thead>
-                            <tr>
-                                <th>refund_id</th>
-                                <th>order_id</th>
-                                <th>amount</th>
-                                <th>reason</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="background: #fffbeb;">
-                                <td style="font-weight:700;">r_001</td>
-                                <td>1</td>
-                                <td style="color:#b91c1c; font-weight:700;">$6,810.00</td>
-                                <td style="color:#92400e;">Duplicate billing</td>
-                            </tr>
-                            <tr style="background: #fffbeb;">
-                                <td style="font-weight:700;">r_002</td>
-                                2</td>
-                                <td style="color:#b91c1c; font-weight:700;">$6,810.00</td>
-                                <td style="color:#92400e;">Duplicate billing</td>
-                            </tr>
-                            <tr style="background: #fffbeb;">
-                                <td style="font-weight:700;">r_003</td>
-                                3</td>
-                                <td style="color:#b91c1c; font-weight:700;">$6,810.00</td>
-                                <td style="color:#92400e;">Duplicate billing</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </section>
+        </div>
 
     </main>
 
-    <!-- ── Database Explorer Modal ── -->
-    <div class="modal-overlay" id="dbModal" onclick="if(event.target===this) closeDatabaseExplorer()">
-        <div class="modal-box" style="max-width: 900px;">
-            <button class="modal-close-btn" onclick="closeDatabaseExplorer()">✕</button>
-            <div style="border-bottom: 2px solid var(--brand-teal); padding-bottom: 12px; margin-bottom: 16px;">
-                <div style="font-size: 11px; font-family: var(--font-mono); color: var(--brand-teal); font-weight: 700;">AUDITED TRANSACTION RECORDS</div>
-                <h3 style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 4px;">Live Supabase PostgreSQL & SQLite Ledger</h3>
-            </div>
-            <div id="fullDbTableContainer" style="max-height: 480px; overflow: auto;">Loading ledger records...</div>
-        </div>
-    </div>
-
-    <!-- ── Executive Memo Modal ── -->
-    <div class="modal-overlay" id="memoModal" onclick="if(event.target===this) closeExecutiveMemo()">
+    <!-- ── Minimal Database Modal ── -->
+    <div class="modal-overlay" id="dbModal" onclick="if(event.target===this) closeDatabaseModal()">
         <div class="modal-box">
-            <button class="modal-close-btn" onclick="closeExecutiveMemo()">✕</button>
-            <div style="border-bottom: 2px solid var(--brand-teal); padding-bottom: 12px; margin-bottom: 16px;">
-                <div style="font-size: 11px; font-family: var(--font-mono); color: var(--brand-teal); font-weight: 700;">CONFIDENTIAL • FINANCIAL GOVERNANCE MEMORANDUM</div>
-                <h2 style="font-size: 20px; font-weight: 800; color: #0f172a; margin-top: 4px;">Revenue Desk: West Coast Sales Audit & Campaign Authorization</h2>
-                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Certified by Revenue Governance Protocol</div>
-            </div>
-            <div style="font-size: 13px; line-height: 1.6; color: #334155; display: flex; flex-direction: column; gap: 12px;">
-                <p><strong>1. Executive Summary:</strong> Initial October sales monitoring flagged an <strong>84.2% reduction</strong> in West region repeat revenues across five Tier-1 enterprise clients.</p>
-                <p><strong>2. Reconciliation Audit:</strong> Independent verification isolated <strong>$20,430.00 in duplicate processor refund transactions</strong> from gateway migration, confirming the verified net revenue baseline at <strong>$3,820.00</strong> rather than authentic client churn.</p>
-                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px; font-family: var(--font-mono); font-size: 11.5px;">
-                    <div>• Gross October Orders: $24,250.00</div>
-                    <div>• Duplicate Refund Reversals: -$20,430.00</div>
-                    <div>• Certified Net Baseline: $3,820.00</div>
-                    <div style="color: #047857; font-weight: 700; margin-top: 4px;">• Target Enterprise ARR Protected: +$38,200.00</div>
-                </div>
-                <p><strong>3. Executed Authorization:</strong> The Sales Operations Lead authorized a calibrated <strong>15% Win-Back Campaign</strong> targeting Westfield Industries, Pacific Solutions, Golden Gate Corp, Sierra Analytics, and Redwood Partners.</p>
-            </div>
-            <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">Integrity Signature: e9a7...38f1 (Supabase PostgreSQL Committed)</span>
-                <button class="btn-toolbar btn-primary" onclick="window.print()">Print to PDF</button>
-            </div>
+            <button class="modal-close-btn" onclick="closeDatabaseModal()">✕</button>
+            <h3 style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 14px;">Database Records</h3>
+            <div id="dbContent" style="font-family: var(--font-mono); font-size: 12px;">Loading records...</div>
         </div>
     </div>
 
-    <!-- ── Settings Modal ── -->
-    <div class="modal-overlay" id="settingsModal" onclick="if(event.target===this) closeSettingsModal()">
-        <div class="modal-box" style="max-width: 560px;">
-            <button class="modal-close-btn" onclick="closeSettingsModal()">✕</button>
-            <div style="border-bottom: 2px solid var(--brand-teal); padding-bottom: 10px; margin-bottom: 14px;">
-                <h3 style="font-size: 16px; font-weight: 800; color: #0f172a;">Environment & Database Connection</h3>
+    <!-- ── Minimal Memo Modal ── -->
+    <div class="modal-overlay" id="memoModal" onclick="if(event.target===this) closeMemoModal()">
+        <div class="modal-box">
+            <button class="modal-close-btn" onclick="closeMemoModal()">✕</button>
+            <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">Executive Operations Memo</h3>
+            <div style="font-size: 13px; color: #334155; line-height: 1.6; display: flex; flex-direction: column; gap: 10px;">
+                <p><strong>Finding:</strong> West region October repeat orders dropped by 84.2% across 5 enterprise accounts.</p>
+                <p><strong>Root Cause:</strong> Independent audit revealed a $20,430 duplicate processor refund anomaly. Net baseline confirmed at $3,820.</p>
+                <p><strong>Action:</strong> 15% Win-Back Campaign approved. Projected net value: +$32,470.</p>
             </div>
-            <div style="font-family: var(--font-mono); font-size: 12px; display:flex; flex-direction:column; gap:10px;">
-                <div style="background:#f8fafc; padding:10px; border-radius:6px; border:1px solid #e2e8f0;">
-                    <div style="color:var(--text-secondary); font-size:10px; text-transform:uppercase;">Primary Cloud Database</div>
-                    <div style="color:var(--brand-teal); font-weight:700;">Supabase PostgreSQL v16 (HTTPS REST/RPC)</div>
-                </div>
-                <div style="background:#f8fafc; padding:10px; border-radius:6px; border:1px solid #e2e8f0;">
-                    <div style="color:var(--text-secondary); font-size:10px; text-transform:uppercase;">Local Resilient Engine</div>
-                    <div style="color:#0f172a; font-weight:700;">SQLite 3.x (Zero-Latency Local Mirror)</div>
-                </div>
-                <div style="background:#f8fafc; padding:10px; border-radius:6px; border:1px solid #e2e8f0;">
-                    <div style="color:var(--text-secondary); font-size:10px; text-transform:uppercase;">Room Invariant Enforcement</div>
-                    <div style="color:#047857; font-weight:700;">Active — Dual-Service Consensus Protocol</div>
-                </div>
+            <div style="margin-top: 18px; text-align: right;">
+                <button class="btn-primary-action" onclick="window.print()">Print Memo</button>
             </div>
         </div>
     </div>
 
     <!-- ── JavaScript Engine ── -->
     <script>
-        let currentDiscount = 15;
-        let dbCache = null;
+        let discount = 15;
 
-        // Draw Canvas Chart matching professional design
         function renderChart() {
             const canvas = document.getElementById('revenueCanvas');
             if (!canvas) return;
@@ -1681,233 +934,172 @@
 
             ctx.clearRect(0, 0, w, h);
 
-            // Grid lines and Y labels
-            const yLabels = ['$140K', '$120K', '$100K', '$80K', '$60K', '$40K', '$20K', '$0'];
-            const stepY = (h - 30) / (yLabels.length - 1);
-
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = '10px "JetBrains Mono", monospace';
-            ctx.textAlign = 'right';
-
-            for (let i = 0; i < yLabels.length; i++) {
-                const y = 10 + i * stepY;
-                ctx.fillText(yLabels[i], 42, y + 3);
-
-                ctx.strokeStyle = '#f1f5f9';
-                ctx.lineWidth = 1;
+            // Minimal Y grid lines
+            const ySteps = 4;
+            ctx.strokeStyle = '#f1f5f9';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= ySteps; i++) {
+                const y = 15 + (i * (h - 40) / ySteps);
                 ctx.beginPath();
-                ctx.moveTo(48, y);
+                ctx.moveTo(35, y);
                 ctx.lineTo(w - 15, y);
                 ctx.stroke();
             }
 
-            // X-Axis labels
-            const xLabels = ['Jul 2026', 'Aug 2026', 'Sep 2026', 'Oct 2026', 'Nov 2026', 'Dec 2026'];
-            const stepX = (w - 75) / (xLabels.length - 1);
-
+            // X Labels
+            const labels = ['Jul', 'Aug', 'Sep', 'Oct (Drop)', 'Nov', 'Dec (Target)'];
+            const stepX = (w - 70) / (labels.length - 1);
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '10.5px "JetBrains Mono", monospace';
             ctx.textAlign = 'center';
-            xLabels.forEach((label, i) => {
-                const x = 54 + i * stepX;
-                ctx.fillText(label, x, h - 6);
+            labels.forEach((l, i) => {
+                ctx.fillText(l, 35 + i * stepX, h - 8);
             });
 
-            // 1. Gross Reported Revenue (Blue Line: #0284c7)
+            // 1. Gross Reported Line
             const ptsGross = [
-                {x: 54 + 0 * stepX, y: h - 30 - 75},
-                {x: 54 + 1 * stepX, y: h - 30 - 82},
-                {x: 54 + 2 * stepX, y: h - 30 - 78},
-                {x: 54 + 3 * stepX, y: h - 30 - 32},
-                {x: 54 + 4 * stepX, y: h - 30 - 28},
-                {x: 54 + 5 * stepX, y: h - 30 - 25}
+                {x: 35 + 0 * stepX, y: h - 40 - 100},
+                {x: 35 + 1 * stepX, y: h - 40 - 110},
+                {x: 35 + 2 * stepX, y: h - 40 - 105},
+                {x: 35 + 3 * stepX, y: h - 40 - 38},
+                {x: 35 + 4 * stepX, y: h - 40 - 32},
+                {x: 35 + 5 * stepX, y: h - 40 - 28}
             ];
 
-            // Area under blue line
+            // Subtle area
             ctx.beginPath();
             ctx.moveTo(ptsGross[0].x, ptsGross[0].y);
-            ptsGross.forEach(pt => ctx.lineTo(pt.x, pt.y));
-            ctx.lineTo(ptsGross[ptsGross.length - 1].x, h - 30);
-            ctx.lineTo(ptsGross[0].x, h - 30);
+            ptsGross.forEach(p => ctx.lineTo(p.x, p.y));
+            ctx.lineTo(ptsGross[ptsGross.length - 1].x, h - 35);
+            ctx.lineTo(ptsGross[0].x, h - 35);
             ctx.closePath();
-            const grad = ctx.createLinearGradient(0, 0, 0, h);
-            grad.addColorStop(0, 'rgba(2, 132, 199, 0.12)');
-            grad.addColorStop(1, 'rgba(2, 132, 199, 0.0)');
-            ctx.fillStyle = grad;
+            ctx.fillStyle = 'rgba(2, 132, 199, 0.05)';
             ctx.fill();
 
-            // Stroke blue line
+            // Stroke Gross Line
             ctx.beginPath();
             ctx.moveTo(ptsGross[0].x, ptsGross[0].y);
-            ptsGross.forEach(pt => ctx.lineTo(pt.x, pt.y));
+            ptsGross.forEach(p => ctx.lineTo(p.x, p.y));
             ctx.strokeStyle = '#0284c7';
-            ctx.lineWidth = 2.2;
+            ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Blue dots
-            ptsGross.forEach(pt => {
-                ctx.beginPath();
-                ctx.arc(pt.x, pt.y, 3.5, 0, Math.PI * 2);
-                ctx.fillStyle = '#0284c7';
-                ctx.fill();
-            });
-
-            // 2. Phantom Refund Loop (Amber Dashed: #f59e0b)
+            // 2. Glitch Line
             const ptsGlitch = [
-                {x: 54 + 0 * stepX, y: h - 30 - 70},
-                {x: 54 + 1 * stepX, y: h - 30 - 70},
-                {x: 54 + 2 * stepX, y: h - 30 - 68},
-                {x: 54 + 3 * stepX, y: h - 30 - 45}
+                {x: 35 + 2 * stepX, y: h - 40 - 105},
+                {x: 35 + 3 * stepX, y: h - 40 - 15},
+                {x: 35 + 4 * stepX, y: h - 40 - 15}
             ];
-
             ctx.beginPath();
             ctx.setLineDash([4, 4]);
             ctx.moveTo(ptsGlitch[0].x, ptsGlitch[0].y);
-            ptsGlitch.forEach(pt => ctx.lineTo(pt.x, pt.y));
-            ctx.strokeStyle = '#f59e0b';
+            ptsGlitch.forEach(p => ctx.lineTo(p.x, p.y));
+            ctx.strokeStyle = '#d97706';
             ctx.lineWidth = 1.8;
             ctx.stroke();
             ctx.setLineDash([]);
 
-            ptsGlitch.forEach(pt => {
-                ctx.beginPath();
-                ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2);
-                ctx.fillStyle = '#f59e0b';
-                ctx.fill();
-            });
-
-            // 3. Post-Winback Target (Green Dashed: #10b981)
+            // 3. Post-Target Line
             const ptsTarget = [
-                {x: 54 + 3 * stepX, y: h - 30 - 32},
-                {x: 54 + 4 * stepX, y: h - 30 - 58},
-                {x: 54 + 5 * stepX, y: h - 30 - 85}
+                {x: 35 + 3 * stepX, y: h - 40 - 38},
+                {x: 35 + 4 * stepX, y: h - 40 - 75},
+                {x: 35 + 5 * stepX, y: h - 40 - 120}
             ];
-
             ctx.beginPath();
             ctx.setLineDash([4, 4]);
             ctx.moveTo(ptsTarget[0].x, ptsTarget[0].y);
-            ptsTarget.forEach(pt => ctx.lineTo(pt.x, pt.y));
-            ctx.strokeStyle = '#10b981';
+            ptsTarget.forEach(p => ctx.lineTo(p.x, p.y));
+            ctx.strokeStyle = '#059669';
             ctx.lineWidth = 2;
             ctx.stroke();
             ctx.setLineDash([]);
-
-            ptsTarget.forEach(pt => {
-                ctx.beginPath();
-                ctx.arc(pt.x, pt.y, 3.5, 0, Math.PI * 2);
-                ctx.fillStyle = '#10b981';
-                ctx.fill();
-            });
         }
 
         window.addEventListener('resize', renderChart);
         window.addEventListener('DOMContentLoaded', renderChart);
 
-        // Interactive Discount Range Slider
-        function updateDiscountSlider(val) {
-            currentDiscount = parseInt(val, 10);
-            document.getElementById('sliderValDisplay').innerText = val + '%';
-
-            // Calculate live financial impact
-            const totalPipeline = 38200;
-            const cost = Math.round(totalPipeline * (currentDiscount / 100));
-            const net = totalPipeline - cost;
-
-            document.getElementById('costDisplay').innerText = '-$' + cost.toLocaleString() + '.00';
-            document.getElementById('netDisplay').innerText = '+$' + net.toLocaleString() + '.00';
+        function updateDiscount(val) {
+            discount = parseInt(val, 10);
+            document.getElementById('sliderValue').innerText = val + '%';
+            const total = 38200;
+            const cost = Math.round(total * (discount / 100));
+            const gain = total - cost;
+            document.getElementById('costText').innerText = '-$' + cost.toLocaleString();
+            document.getElementById('gainText').innerText = '+$' + gain.toLocaleString();
         }
 
-        async function approveAndCommit() {
-            const btn = document.querySelector('.btn-approve-solid');
-            if (btn) {
-                btn.disabled = true;
-                btn.innerText = 'Committed to Database';
-                btn.style.background = '#059669';
+        async function approveCampaign() {
+            const btn = document.querySelector('.btn-confirm');
+            btn.disabled = true;
+            btn.innerText = 'Authorized';
+            btn.style.background = '#059669';
+
+            const s5 = document.getElementById('step5Node');
+            if (s5) {
+                s5.className = 'step-node completed';
+                s5.querySelector('.step-icon').innerText = '✓';
             }
 
-            // Update pipeline step 5
-            const pipe5 = document.getElementById('pipe5');
-            if (pipe5) pipe5.className = 'pipe-node done';
-
-            // Update tasks
-            const t104 = document.getElementById('task104');
-            const t105 = document.getElementById('task105');
-            if (t104) { t104.className = 'task-row-ui done'; t104.querySelector('.task-check-icon').innerText = '✓'; }
-            if (t105) { t105.className = 'task-row-ui done'; t105.querySelector('.task-check-icon').innerText = '✓'; }
-
-            // Add to collaboration stream
-            addChatMessage('Sales Operations Lead', `Authorized execution of Win-Back Campaign at ${currentDiscount}% discount.`, '#0284c7');
+            addMessage('Operations Lead', `Approved campaign with ${discount}% discount applied.`, '#0284c7');
             setTimeout(() => {
-                addChatMessage('Quantitative Analytics Engine', `Campaign mutations committed to Supabase PostgreSQL and local mirror. 5 enterprise accounts updated.`, '#0d9488');
+                addMessage('Analytics Service', `Database mutations committed to Supabase PostgreSQL & SQLite mirror.`, '#0f766e');
             }, 600);
-
-            // Add to audit ledger
-            const ledger = document.getElementById('auditList');
-            const newRow = document.createElement('div');
-            newRow.className = 'audit-row-ui';
-            newRow.innerHTML = `
-                <span class="audit-dot"></span>
-                <span class="audit-time">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'})}</span>
-                <span class="audit-desc">Manager approved ${currentDiscount}% discount; database commit finalized</span>
-            `;
-            ledger.appendChild(newRow);
 
             try {
                 await fetch('/api/approve', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ response: `Approved. Change discount to ${currentDiscount}%.` })
+                    body: JSON.stringify({ response: `Approved. Change discount to ${discount}%.` })
                 });
             } catch (e) {}
         }
 
-        function reviseCampaign() {
-            addChatMessage('Sales Operations Lead', 'Requested revision on campaign margins before sign-off.', '#0284c7');
+        function rejectCampaign() {
+            addMessage('Operations Lead', 'Revision requested on campaign terms.', '#0284c7');
         }
 
-        function addChatMessage(author, text, avatarColor) {
+        function addMessage(author, text, color) {
             const stream = document.getElementById('chatStream');
-            const msg = document.createElement('div');
-            msg.className = 'chat-msg';
-            msg.innerHTML = `
-                <div class="msg-avatar" style="background: ${avatarColor};">
-                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                </div>
-                <div class="msg-content-wrap">
-                    <div class="msg-top-meta">
+            const row = document.createElement('div');
+            row.className = 'msg-row';
+            row.innerHTML = `
+                <div class="msg-avatar" style="background: ${color};">${author.slice(0, 2).toUpperCase()}</div>
+                <div class="msg-text-box">
+                    <div class="msg-meta">
                         <span class="msg-author">${author}</span>
-                        <span class="msg-time">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'})}</span>
+                        <span class="msg-time">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span>
                     </div>
-                    <div class="msg-bubble">${text}</div>
+                    ${text}
                 </div>
             `;
-            stream.appendChild(msg);
+            stream.appendChild(row);
             stream.scrollTop = stream.scrollHeight;
         }
 
-        function sendUserMessage() {
-            const input = document.getElementById('chatInput');
-            const txt = input.value.trim();
+        function sendMessage() {
+            const inp = document.getElementById('chatInput');
+            const txt = inp.value.trim();
             if (!txt) return;
-            input.value = '';
-            addChatMessage('Sales Operations Lead', txt, '#0284c7');
+            inp.value = '';
+            addMessage('Operations Lead', txt, '#0284c7');
             runInvestigation();
         }
 
-        // Investigation Pipeline Execution
         async function runInvestigation() {
             const stream = document.getElementById('chatStream');
             stream.innerHTML = '';
 
-            addChatMessage('Sales Operations Lead', 'Investigate the 84.2% drop in West region repeat purchases for October 2026. Is this real churn or a billing/reconciliation discrepancy?', '#0284c7');
+            addMessage('Operations Lead', 'Investigate the 84.2% drop in West region repeat revenue. Is this churn or reconciliation?', '#0284c7');
 
             setTimeout(() => {
-                addChatMessage('Quantitative Analytics Engine', 'Executed SQL across order tables. West region October gross revenue dropped to $24,250, reflecting zero repeat purchases across 5 tier-1 enterprise accounts.', '#0d9488');
+                addMessage('Analytics Service', 'Ran SQL on West enterprise cohort. October revenue is $24,250 with zero repeat orders.', '#0f766e');
                 setTimeout(() => {
-                    addChatMessage('Audit & Compliance Guardrail', '<strong>Discrepancy verified:</strong> Identified $20,430 in duplicate billing refund records (orders #1, #2, #3) caused by processor migration. Real net baseline is $3,820.', '#f59e0b');
+                    addMessage('Audit & Compliance', 'Discrepancy confirmed: $20,430 duplicate processor refund anomaly. Net baseline is $3,820.', '#d97706');
                     setTimeout(() => {
-                        addChatMessage('Reconciliation Service', 'Net baseline reconciled at $3,820. Multi-service consensus reached. Recommended action: Authorize a 15% Enterprise Win-Back Renewal Campaign.', '#10b981');
-                    }, 700);
-                }, 700);
-            }, 500);
+                        addMessage('Reconciliation Engine', 'Consensus verified. Recommended: 15% Enterprise Win-Back Renewal Campaign.', '#059669');
+                    }, 600);
+                }, 600);
+            }, 400);
 
             try {
                 await fetch('/api/ask', {
@@ -1918,101 +1110,33 @@
             } catch (e) {}
         }
 
-        async function resetRoomState() {
+        async function resetState() {
             try { await fetch('/api/reset'); } catch (e) {}
             location.reload();
         }
 
-        // Mini DB tab switcher with real data
-        function switchMiniDb(tab) {
-            document.querySelectorAll('.db-tab-pill').forEach(p => p.className = 'db-tab-pill' + (p.innerText.toLowerCase() === tab ? ' active' : ''));
-            const c = document.getElementById('miniDbContainer');
-            if (tab === 'refunds') {
-                c.innerHTML = `
-                    <table class="mini-table">
-                        <thead><tr><th>refund_id</th><th>order_id</th><th>amount</th><th>reason</th></tr></thead>
-                        <tbody>
-                            <tr style="background:#fffbeb;"><td style="font-weight:700;">r_001</td><td>1</td><td style="color:#b91c1c; font-weight:700;">$6,810.00</td><td style="color:#92400e;">Duplicate billing</td></tr>
-                            <tr style="background:#fffbeb;"><td style="font-weight:700;">r_002</td><td>2</td><td style="color:#b91c1c; font-weight:700;">$6,810.00</td><td style="color:#92400e;">Duplicate billing</td></tr>
-                            <tr style="background:#fffbeb;"><td style="font-weight:700;">r_003</td><td>3</td><td style="color:#b91c1c; font-weight:700;">$6,810.00</td><td style="color:#92400e;">Duplicate billing</td></tr>
-                        </tbody>
-                    </table>
-                `;
-            } else if (tab === 'customers') {
-                c.innerHTML = `
-                    <table class="mini-table">
-                        <thead><tr><th>id</th><th>name</th><th>segment</th><th>region</th></tr></thead>
-                        <tbody>
-                            <tr><td>1</td><td style="font-weight:600;">Westfield Ind.</td><td>enterprise</td><td>west</td></tr>
-                            <tr><td>2</td><td style="font-weight:600;">Pacific Sol.</td><td>enterprise</td><td>west</td></tr>
-                            <tr><td>3</td><td style="font-weight:600;">Golden Gate</td><td>enterprise</td><td>west</td></tr>
-                        </tbody>
-                    </table>
-                `;
-            } else if (tab === 'orders') {
-                c.innerHTML = `
-                    <table class="mini-table">
-                        <thead><tr><th>order_id</th><th>customer</th><th>amount</th><th>date</th></tr></thead>
-                        <tbody>
-                            <tr><td>#1</td><td>Westfield</td><td style="color:#047857; font-weight:700;">$6,810.00</td><td>2026-10-04</td></tr>
-                            <tr><td>#2</td><td>Pacific Sol.</td><td style="color:#047857; font-weight:700;">$6,810.00</td><td>2026-10-06</td></tr>
-                            <tr><td>#3</td><td>Golden Gate</td><td style="color:#047857; font-weight:700;">$6,810.00</td><td>2026-10-09</td></tr>
-                        </tbody>
-                    </table>
-                `;
-            } else {
-                c.innerHTML = `
-                    <table class="mini-table">
-                        <thead><tr><th>id</th><th>campaign</th><th>discount</th><th>status</th></tr></thead>
-                        <tbody>
-                            <tr><td>#1</td><td>West Win-Back</td><td>15%</td><td style="color:#047857; font-weight:700;">● executed</td></tr>
-                        </tbody>
-                    </table>
-                `;
-            }
-        }
-
-        // Modals & Navigation Wiring
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function focusOperations() {
-            document.getElementById('operationsPanel').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function focusTasks() {
-            document.getElementById('taskBacklogCard').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function focusAudit() {
-            document.getElementById('auditLedgerCard').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function openDatabaseExplorer() {
+        function openDatabaseModal() {
             document.getElementById('dbModal').style.display = 'flex';
             fetch('/api/database').then(r => r.json()).then(data => {
-                const c = document.getElementById('fullDbTableContainer');
+                const c = document.getElementById('dbContent');
                 const rows = data.refunds || [];
                 c.innerHTML = `
-                    <table style="width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:12px;">
+                    <table style="width:100%; border-collapse:collapse; font-size:12px;">
                         <thead>
-                            <tr style="background:#f1f5f9; text-align:left;">
-                                <th style="padding:8px;">ID</th>
-                                <th style="padding:8px;">Customer</th>
-                                <th style="padding:8px;">Amount</th>
-                                <th style="padding:8px;">Reason / Discrepancy</th>
-                                <th style="padding:8px;">Date</th>
+                            <tr style="text-align:left; border-bottom:1px solid #e2e8f0; color:#64748b;">
+                                <th style="padding:6px 0;">ID</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Reason</th>
                             </tr>
                         </thead>
                         <tbody>
                             ${rows.map(r => `
-                                <tr style="border-bottom:1px solid #e2e8f0; background:${(r.reason||r[4]||'').includes('Duplicate')?'#fffbeb':'transparent'};">
-                                    <td style="padding:8px;">#${r.id||r[0]}</td>
-                                    <td style="padding:8px; font-weight:700;">${r.customer_name||r[2]}</td>
-                                    <td style="padding:8px; color:#b91c1c; font-weight:700;">-$${parseFloat(r.amount||r[3]).toFixed(2)}</td>
-                                    <td style="padding:8px;">${r.reason||r[4]}</td>
-                                    <td style="padding:8px;">${r.refund_date||r[5]}</td>
+                                <tr style="border-bottom:1px solid #f1f5f9; background:${(r.reason||'').includes('Duplicate')?'#fffbeb':'transparent'};">
+                                    <td style="padding:6px 0;">#${r.id||r[0]}</td>
+                                    <td>${r.customer_name||r[2]}</td>
+                                    <td style="color:#dc2626; font-weight:600;">-$${parseFloat(r.amount||r[3]).toFixed(2)}</td>
+                                    <td>${r.reason||r[4]}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -2021,24 +1145,16 @@
             }).catch(() => {});
         }
 
-        function closeDatabaseExplorer() {
+        function closeDatabaseModal() {
             document.getElementById('dbModal').style.display = 'none';
         }
 
-        function openExecutiveMemo() {
+        function openMemoModal() {
             document.getElementById('memoModal').style.display = 'flex';
         }
 
-        function closeExecutiveMemo() {
+        function closeMemoModal() {
             document.getElementById('memoModal').style.display = 'none';
-        }
-
-        function openSettingsModal() {
-            document.getElementById('settingsModal').style.display = 'flex';
-        }
-
-        function closeSettingsModal() {
-            document.getElementById('settingsModal').style.display = 'none';
         }
     </script>
 </body>
