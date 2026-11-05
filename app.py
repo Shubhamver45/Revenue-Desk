@@ -41,8 +41,10 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
-        if path in ("/", "/index.html"):
-            self.serve_ui()
+        if path in ("/", "/index.html", "/dashboard"):
+            self.serve_ui("index.html")
+        elif path in ("/landing", "/landing.html", "/login"):
+            self.serve_ui("landing.html")
         elif path == "/favicon.ico":
             self.send_response(204)
             self.end_headers()
@@ -200,10 +202,10 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             }
         }
 
-    def serve_ui(self) -> None:
-        html_file = ROOT_DIR / "src" / "ui" / "index.html"
+    def serve_ui(self, filename: str = "index.html") -> None:
+        html_file = ROOT_DIR / "src" / "ui" / filename
         if not html_file.exists():
-            self.send_error(404, "UI template not found")
+            self.send_error(404, f"{filename} not found")
             return
         
         content = html_file.read_bytes()
