@@ -220,7 +220,7 @@ def run_server(port: int = PORT) -> None:
         print("[ERROR] Could not bind to any available port.")
         return
     url = f"http://127.0.0.1:{port}"
-    print(f"\n✨ Revenue Desk Light-Theme UI is live at:")
+    print(f"\n⚡ Revenue Desk 2026 Executive Cockpit is live at:")
     print(f"👉 {url}")
     print(f"👉 http://localhost:{port}\n")
     try:
