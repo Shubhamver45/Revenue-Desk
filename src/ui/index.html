@@ -3,66 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue Desk — Switch Multi-Agent Executive Cockpit (2026 Flagship)</title>
+    <title>Revenue Desk — AI Financial Governance Command Center</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 2026 Executive Cyber-Glass Palette (Vercel / Linear / Raycast Flagship) */
-            --bg-void: #05070B;
-            --bg-canvas: #090D16;
-            --bg-panel: rgba(13, 19, 32, 0.75);
-            --bg-card: rgba(18, 26, 44, 0.65);
-            --bg-card-hover: rgba(26, 37, 62, 0.80);
-            --bg-subtle: rgba(255, 255, 255, 0.03);
-            --bg-input: rgba(9, 13, 22, 0.88);
+            /* Exact Light FinTech Palette from user design */
+            --bg-page: #f0f7f7;
+            --bg-page-gradient: radial-gradient(circle at 10% 20%, #e6f6f5 0%, #f4fbfb 60%, #eef6f9 100%);
+            --bg-card: #ffffff;
+            --bg-sidebar: #ffffff;
+            --bg-input: #ffffff;
+            --bg-subtle: #f8fafc;
+            --bg-teal-light: #ecfdf5;
+            --bg-amber-light: #fffbeb;
+            --bg-red-light: #fef2f2;
+            --bg-blue-light: #eff6ff;
 
-            --border-hairline: rgba(255, 255, 255, 0.06);
-            --border-subtle: rgba(255, 255, 255, 0.10);
-            --border-highlight: rgba(255, 255, 255, 0.18);
-            --border-focus: #00F0FF;
+            --border-default: #e2e8f0;
+            --border-subtle: #edf2f7;
+            --border-card: #e5eff5;
+            --border-focus: #0d9488;
 
-            /* Glowing Accents */
-            --cyan-glow: #00F0FF;
-            --cyan-dim: rgba(0, 240, 255, 0.12);
-            --cyan-border: rgba(0, 240, 255, 0.35);
-
-            --indigo-neon: #6366F1;
-            --indigo-dim: rgba(99, 102, 241, 0.15);
-
-            --emerald-neon: #10B981;
-            --emerald-dim: rgba(16, 185, 129, 0.14);
-            --emerald-border: rgba(16, 185, 129, 0.38);
-
-            --amber-neon: #F59E0B;
-            --amber-dim: rgba(245, 158, 11, 0.14);
-            --amber-border: rgba(245, 158, 11, 0.40);
-
-            --ruby-neon: #EF4444;
-            --ruby-dim: rgba(239, 68, 68, 0.14);
-            --ruby-border: rgba(239, 68, 68, 0.40);
+            /* Brand & Semantic Colors */
+            --brand-teal: #0f766e;
+            --brand-teal-hover: #115e59;
+            --brand-teal-active: #134e4a;
+            --brand-cyan: #0284c7;
+            --brand-emerald: #10b981;
+            --brand-amber: #f59e0b;
+            --brand-rose: #ef4444;
 
             /* Typography */
-            --text-heading: #F8FAFC;
-            --text-primary: #E2E8F0;
-            --text-secondary: #94A3B8;
-            --text-muted: #64748B;
-            --text-dim: #475569;
+            --text-heading: #0f172a;
+            --text-body: #334155;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
 
             --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, monospace;
+            --font-mono: 'JetBrains Mono', Menlo, monospace;
 
             --radius-xs: 6px;
             --radius-sm: 10px;
             --radius-md: 14px;
-            --radius-lg: 18px;
-            --radius-xl: 24px;
+            --radius-lg: 16px;
 
-            --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.45);
-            --shadow-card: 0 12px 36px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            --shadow-glow-cyan: 0 0 25px rgba(0, 240, 255, 0.25);
-            --shadow-glow-emerald: 0 0 25px rgba(16, 185, 129, 0.25);
+            --shadow-card: 0 4px 18px rgba(15, 76, 92, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+            --shadow-hover: 0 8px 24px rgba(15, 76, 92, 0.08);
         }
 
         * {
@@ -74,1082 +62,973 @@
 
         body {
             font-family: var(--font-sans);
-            background-color: var(--bg-void);
-            background-image: 
-                radial-gradient(ellipse at 15% 0%, rgba(99, 102, 241, 0.14) 0%, transparent 50%),
-                radial-gradient(ellipse at 85% 5%, rgba(0, 240, 255, 0.12) 0%, transparent 45%),
-                radial-gradient(ellipse at 50% 100%, rgba(16, 185, 129, 0.09) 0%, transparent 60%);
-            background-attachment: fixed;
-            color: var(--text-primary);
+            background: var(--bg-page-gradient);
+            color: var(--text-body);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            font-size: 13.5px;
-            line-height: 1.5;
+            font-size: 13px;
+            line-height: 1.45;
         }
 
-        /* ── Top Executive Header ── */
-        .header {
-            height: 64px;
-            background: rgba(9, 13, 22, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-subtle);
+        /* ── Left Slim Navigation Sidebar ── */
+        .sidebar {
+            width: 72px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-default);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
+            padding: 16px 0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            height: 100vh;
+            z-index: 50;
+            flex-shrink: 0;
         }
 
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .brand-badge {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(0, 240, 255, 0.2));
-            padding: 6px 12px;
+        .sidebar-logo {
+            width: 40px;
+            height: 40px;
+            background: #0d9488;
+            color: #ffffff;
             border-radius: var(--radius-sm);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
-        }
-
-        .brand-icon {
-            width: 22px;
-            height: 22px;
-            background: linear-gradient(135deg, #00F0FF 0%, #6366F1 100%);
-            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #05070B;
+            font-size: 20px;
             font-weight: 800;
-            font-size: 13px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
         }
 
-        .brand-text {
-            font-size: 14px;
-            font-weight: 800;
-            letter-spacing: -0.3px;
-            color: #FFFFFF;
+        .nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            align-items: center;
+            flex: 1;
         }
 
-        .brand-sub {
-            font-size: 11px;
-            color: var(--cyan-glow);
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 10px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+            cursor: pointer;
+            padding: 8px 6px;
+            width: 58px;
+            border-radius: var(--radius-sm);
+            transition: all 0.15s ease;
+        }
+
+        .nav-item:hover {
+            color: var(--brand-teal);
+            background: var(--bg-teal-light);
+        }
+
+        .nav-item.active {
+            color: var(--brand-teal);
+            background: #e6f7f5;
+        }
+
+        .nav-icon {
+            font-size: 17px;
+        }
+
+        /* ── Main App Shell ── */
+        .main-shell {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 16px 24px 24px;
+            gap: 16px;
+            max-width: 1720px;
+            margin: 0 auto;
+        }
+
+        /* ── Top Header Bar ── */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            padding: 10px 18px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-heading);
+            letter-spacing: -0.3px;
+        }
+
+        .brand-subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-top: -2px;
         }
 
         .room-tag {
             display: flex;
             align-items: center;
-            gap: 7px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-hairline);
-            padding: 5px 11px;
+            gap: 6px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-default);
+            padding: 4px 10px;
             border-radius: var(--radius-xs);
-            font-size: 12px;
+            font-size: 11.5px;
             font-family: var(--font-mono);
             color: var(--text-secondary);
         }
 
-        .pulse-live {
+        .room-pulse {
             width: 7px;
             height: 7px;
-            background: var(--emerald-neon);
+            background: var(--brand-emerald);
             border-radius: 50%;
-            box-shadow: 0 0 8px var(--emerald-neon);
-            animation: pulse-glow 2s infinite ease-in-out;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+            animation: pulse-dot 1.8s infinite;
         }
 
-        @keyframes pulse-glow {
-            0% { transform: scale(0.9); opacity: 0.7; }
-            50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 14px var(--emerald-neon); }
-            100% { transform: scale(0.9); opacity: 0.7; }
+        @keyframes pulse-dot {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.8; }
         }
 
-        .consensus-badge-header {
-            display: none;
+        .consensus-pill-header {
+            display: flex;
             align-items: center;
             gap: 6px;
-            background: var(--emerald-dim);
-            border: 1px solid var(--emerald-border);
+            background: #e6f7ef;
+            border: 1px solid #a7f3d0;
+            color: #065f46;
+            font-weight: 700;
+            font-size: 11.5px;
+            font-family: var(--font-mono);
             padding: 4px 10px;
             border-radius: var(--radius-xs);
-            font-size: 11px;
-            font-family: var(--font-mono);
-            color: var(--emerald-neon);
-            font-weight: 700;
-            animation: fadeIn 0.3s ease;
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .btn-header {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-primary);
-            padding: 7px 14px;
-            border-radius: var(--radius-sm);
-            font-size: 12.5px;
-            font-weight: 600;
-            font-family: inherit;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            backdrop-filter: blur(8px);
-        }
-
-        .btn-header:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--border-highlight);
-            color: #FFFFFF;
-            transform: translateY(-1px);
-        }
-
-        .btn-header-primary {
-            background: linear-gradient(135deg, #00F0FF 0%, #6366F1 100%);
-            border: none;
-            color: #05070B;
-            font-weight: 700;
-            box-shadow: 0 2px 14px rgba(0, 240, 255, 0.35);
-        }
-
-        .btn-header-primary:hover {
-            opacity: 0.95;
-            box-shadow: 0 4px 22px rgba(0, 240, 255, 0.55);
-            transform: translateY(-1px);
-            color: #000000;
-        }
-
-        /* ── Hero Bento Grid Ribbon (Chart & 4 Financial KPIs) ── */
-        .bento-hero {
-            padding: 20px 24px 10px;
-            display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 18px;
-            max-width: 1680px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        @media (max-width: 1200px) {
-            .bento-hero {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card-glass {
-            background: var(--bg-panel);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-card);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .card-glass::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-            pointer-events: none;
-        }
-
-        /* Chart Canvas Card */
-        .chart-bento {
-            padding: 18px 22px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            position: relative;
-        }
-
-        .chart-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .chart-title-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .chart-title {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: var(--text-heading);
-            letter-spacing: -0.2px;
-        }
-
-        .chart-badge {
-            font-size: 11px;
-            font-family: var(--font-mono);
-            font-weight: 600;
-            padding: 2px 8px;
-            border-radius: var(--radius-xs);
-            background: var(--ruby-dim);
-            color: var(--ruby-neon);
-            border: 1px solid var(--ruby-border);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .chart-legend {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-size: 11.5px;
-            font-family: var(--font-mono);
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-secondary);
-        }
-
-        .legend-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .canvas-container {
-            width: 100%;
-            height: 155px;
-            position: relative;
-            cursor: crosshair;
-        }
-
-        canvas#trajectoryCanvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        /* Chart Floating Hover Tooltip */
-        .chart-tooltip {
-            position: absolute;
-            background: rgba(9, 13, 22, 0.92);
-            border: 1px solid var(--cyan-border);
-            border-radius: var(--radius-sm);
-            padding: 8px 12px;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: #FFFFFF;
-            pointer-events: none;
-            display: none;
-            z-index: 50;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
-            transform: translate(-50%, -120%);
-            white-space: nowrap;
-        }
-
-        /* 4-KPI Mini Bento Column */
-        .metrics-bento-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .metric-tile {
-            background: rgba(18, 26, 44, 0.55);
-            border: 1px solid var(--border-hairline);
-            border-radius: var(--radius-md);
-            padding: 14px 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            transition: all 0.2s ease;
-        }
-
-        .metric-tile:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-subtle);
-            transform: translateY(-2px);
-        }
-
-        .metric-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .metric-val {
-            font-size: 21px;
-            font-weight: 800;
-            font-family: var(--font-mono);
-            letter-spacing: -0.5px;
-            margin-top: 4px;
-        }
-
-        .metric-footer {
-            font-size: 11px;
-            font-family: var(--font-mono);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-top: 4px;
-        }
-
-        /* ── Multi-Agent Neural Pipeline Stepper ── */
-        .stepper-container {
-            padding: 6px 24px 14px;
-            max-width: 1680px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .stepper-bar {
-            background: rgba(13, 19, 32, 0.65);
-            backdrop-filter: blur(14px);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            padding: 10px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             gap: 8px;
         }
 
-        .stepper-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex: 1;
+        .btn-toolbar {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            color: var(--text-body);
             padding: 6px 12px;
-            border-radius: var(--radius-sm);
-            background: transparent;
-            transition: all 0.25s ease;
-            position: relative;
-        }
-
-        .stepper-item.active {
-            background: rgba(0, 240, 255, 0.08);
-            border: 1px solid var(--cyan-border);
-            box-shadow: 0 0 16px rgba(0, 240, 255, 0.15);
-        }
-
-        .stepper-item.verified {
-            background: rgba(16, 185, 129, 0.08);
-            border: 1px solid var(--emerald-border);
-        }
-
-        .stepper-num {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border-subtle);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            color: var(--text-secondary);
-        }
-
-        .stepper-item.active .stepper-num {
-            background: #00F0FF;
-            color: #05070B;
-            border-color: #00F0FF;
-            box-shadow: 0 0 10px #00F0FF;
-        }
-
-        .stepper-item.verified .stepper-num {
-            background: #10B981;
-            color: #05070B;
-            border-color: #10B981;
-        }
-
-        .stepper-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .stepper-title {
+            border-radius: var(--radius-xs);
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+        }
+
+        .btn-toolbar:hover {
+            background: var(--bg-subtle);
+            border-color: #cbd5e1;
             color: var(--text-heading);
         }
 
-        .stepper-sub {
-            font-size: 10.5px;
-            color: var(--text-muted);
+        .btn-primary {
+            background: var(--brand-teal);
+            border: 1px solid var(--brand-teal);
+            color: #ffffff;
+            font-weight: 700;
+            box-shadow: 0 2px 6px rgba(15, 118, 110, 0.25);
         }
 
-        .stepper-divider {
-            color: var(--border-highlight);
-            font-size: 14px;
-            opacity: 0.5;
+        .btn-primary:hover {
+            background: var(--brand-teal-hover);
+            color: #ffffff;
+            transform: translateY(-1px);
         }
 
-        /* ── Main Cockpit Workspaces (2-Column Grid) ── */
-        .cockpit-grid {
+        /* ── Top Dashboard Section (Left 65% Analytics, Right 35% Chat) ── */
+        .dash-upper {
             display: grid;
-            grid-template-columns: 1fr 390px;
-            gap: 18px;
-            padding: 0 24px 24px;
-            max-width: 1680px;
-            margin: 0 auto;
-            width: 100%;
-            flex: 1;
+            grid-template-columns: 1fr 430px;
+            gap: 16px;
         }
 
-        @media (max-width: 1100px) {
-            .cockpit-grid {
+        @media (max-width: 1280px) {
+            .dash-upper {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* Left Stream Panel */
-        .stream-panel {
-            display: flex;
-            flex-direction: column;
-            height: calc(100vh - 360px);
-            min-height: 520px;
-        }
-
-        .stream-header {
-            padding: 14px 20px;
-            border-bottom: 1px solid var(--border-hairline);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(9, 13, 22, 0.45);
-        }
-
-        .presets-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            overflow-x: auto;
-        }
-
-        .preset-chip {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-hairline);
-            padding: 5px 12px;
-            border-radius: var(--radius-xs);
-            font-size: 11.5px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.15s ease;
-        }
-
-        .preset-chip:hover {
-            background: rgba(0, 240, 255, 0.08);
-            border-color: var(--cyan-border);
-            color: #FFFFFF;
-        }
-
-        .stream-scroll {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        /* Dialogue Cards & Avatars */
-        .turn-card {
-            display: flex;
-            gap: 14px;
-            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 12px;
-            font-family: var(--font-mono);
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .avatar-manager {
-            background: linear-gradient(135deg, #334155, #0F172A);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            color: #FFFFFF;
-        }
-
-        .avatar-analyst {
-            background: linear-gradient(135deg, #00F0FF, #0284C7);
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            color: #05070B;
-        }
-
-        .avatar-reviewer {
-            background: linear-gradient(135deg, #10B981, #047857);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            color: #05070B;
-        }
-
-        .avatar-system {
-            background: linear-gradient(135deg, #8B5CF6, #6366F1);
-            border: 1px solid rgba(139, 92, 246, 0.4);
-            color: #FFFFFF;
-        }
-
-        .turn-bubble {
-            flex: 1;
-            background: rgba(18, 26, 44, 0.55);
-            border: 1px solid var(--border-hairline);
-            border-radius: var(--radius-md);
-            padding: 16px 20px;
-            position: relative;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .turn-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .sender-name {
-            font-weight: 700;
-            font-size: 13px;
-            color: var(--text-heading);
-            display: flex;
-            align-items: center;
-            gap: 7px;
-        }
-
-        .role-pill {
-            font-size: 10px;
-            font-family: var(--font-mono);
-            padding: 1px 7px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .turn-time {
-            font-size: 11px;
-            font-family: var(--font-mono);
-            color: var(--text-muted);
-        }
-
-        .turn-body {
-            font-size: 13.5px;
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
-
-        /* Dark High-Tech SQL Console */
-        .sql-console {
-            margin-top: 12px;
-            background: #03060B;
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: var(--radius-sm);
-            padding: 12px 16px;
-            font-family: var(--font-mono);
-            font-size: 12px;
-            color: #A5F3FC;
-            position: relative;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
-        }
-
-        .sql-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 8px;
-            margin-bottom: 10px;
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-
-        .sql-header-badge {
-            color: var(--cyan-glow);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* Reviewer Discrepancy Spotlight Card */
-        .audit-alert-box {
-            margin-top: 14px;
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(245, 158, 11, 0.08) 100%);
-            border: 1px solid var(--amber-border);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.1);
-        }
-
-        .audit-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--amber-dim);
-            color: var(--amber-neon);
-            border: 1px solid var(--amber-border);
-            padding: 3px 10px;
-            border-radius: var(--radius-xs);
-            font-size: 11px;
-            font-weight: 700;
-            font-family: var(--font-mono);
-            margin-bottom: 10px;
-        }
-
-        .balance-diff-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-            margin-top: 10px;
-            font-family: var(--font-mono);
-        }
-
-        .diff-col {
-            background: rgba(9, 13, 22, 0.7);
-            border: 1px solid var(--border-hairline);
-            border-radius: var(--radius-sm);
-            padding: 10px;
-            text-align: center;
-        }
-
-        .diff-label {
-            font-size: 10px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .diff-val {
-            font-size: 16px;
-            font-weight: 800;
-            margin-top: 3px;
-        }
-
-        /* Human Approval Gate Card */
-        .approval-gate-card {
-            margin-top: 14px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(0, 240, 255, 0.06) 100%);
-            border: 1px solid var(--emerald-border);
-            border-radius: var(--radius-md);
-            padding: 18px;
-            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.12);
-        }
-
-        .gate-title {
-            font-size: 13.5px;
-            font-weight: 800;
-            color: #FFFFFF;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 6px;
-        }
-
-        /* Live ROI Matrix */
-        .roi-preview-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-top: 12px;
-            background: rgba(9, 13, 22, 0.7);
-            border: 1px solid var(--border-hairline);
-            border-radius: var(--radius-sm);
-            padding: 10px;
-            font-family: var(--font-mono);
-            font-size: 11px;
-        }
-
-        .roi-cell-label {
-            color: var(--text-muted);
-            font-size: 9.5px;
-            text-transform: uppercase;
-        }
-
-        .roi-cell-val {
-            font-weight: 700;
-            font-size: 13px;
-            margin-top: 2px;
-        }
-
-        .gate-controls {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-top: 14px;
-            flex-wrap: wrap;
-        }
-
-        .discount-stepper {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(9, 13, 22, 0.8);
-            border: 1px solid var(--border-subtle);
-            padding: 4px 10px;
-            border-radius: var(--radius-sm);
-        }
-
-        .btn-stepper {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border-hairline);
-            color: #FFFFFF;
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-stepper:hover {
-            background: var(--cyan-glow);
-            color: #05070B;
-        }
-
-        .stepper-display {
-            font-size: 14px;
-            font-weight: 800;
-            font-family: var(--font-mono);
-            color: var(--cyan-glow);
-            min-width: 44px;
-            text-align: center;
-        }
-
-        .btn-approve {
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-            border: none;
-            color: #05070B;
-            font-weight: 800;
-            font-size: 12.5px;
-            padding: 8px 18px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            box-shadow: 0 2px 14px rgba(16, 185, 129, 0.4);
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            font-family: inherit;
-            transition: all 0.2s ease;
-        }
-
-        .btn-approve:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.6);
-            color: #000000;
-        }
-
-        .btn-reject {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 12px;
-            padding: 8px 14px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .btn-reject:hover {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: var(--ruby-border);
-            color: var(--ruby-neon);
-        }
-
-        /* Prompt Input Bar */
-        .stream-input-wrap {
-            padding: 14px 20px;
-            border-top: 1px solid var(--border-hairline);
-            background: rgba(9, 13, 22, 0.7);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .stream-input {
-            flex: 1;
-            background: var(--bg-input);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: 10px 16px;
-            color: #FFFFFF;
-            font-size: 13px;
-            font-family: inherit;
-            outline: none;
-            transition: border-color 0.2s ease;
-        }
-
-        .stream-input:focus {
-            border-color: var(--cyan-border);
-            box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
-        }
-
-        .btn-send {
-            background: linear-gradient(135deg, #00F0FF, #6366F1);
-            border: none;
-            color: #05070B;
-            font-weight: 700;
-            padding: 10px 20px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.15s ease;
-        }
-
-        .btn-send:hover {
-            opacity: 0.95;
-            transform: translateY(-1px);
-        }
-
-        /* Right Rail: Tasks, Decisions, Invariants */
-        .rail-panel {
+        .analytics-col {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
 
-        .rail-card {
-            background: var(--bg-panel);
-            backdrop-filter: blur(18px);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            padding: 18px 20px;
-            box-shadow: var(--shadow-card);
+        /* 3-KPI Cards Row */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
         }
 
-        .rail-card-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-heading);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 12px;
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            padding: 14px 16px;
+            box-shadow: var(--shadow-card);
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .task-list {
+        .kpi-info {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 2px;
         }
 
-        .task-item {
-            background: rgba(18, 26, 44, 0.45);
-            border: 1px solid var(--border-hairline);
-            border-radius: var(--radius-sm);
-            padding: 10px 12px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            transition: all 0.2s ease;
+        .kpi-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
         }
 
-        .task-item:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-subtle);
+        .kpi-value {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            font-family: var(--font-sans);
         }
 
-        .task-check {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
-            border: 1px solid var(--border-highlight);
+        .kpi-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10.5px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            padding: 2px 6px;
+            border-radius: var(--radius-xs);
+            margin-top: 2px;
+            width: fit-content;
+        }
+
+        .kpi-badge-green { background: #ecfdf5; color: #047857; }
+        .kpi-badge-red { background: #fef2f2; color: #b91c1c; }
+
+        .kpi-icon-wrap {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
-            margin-top: 1px;
-            color: transparent;
+            font-size: 18px;
         }
 
-        .task-item.done .task-check {
-            background: var(--emerald-neon);
-            border-color: var(--emerald-neon);
-            color: #05070B;
+        /* Revenue Trajectory Chart Card */
+        .chart-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            padding: 16px 20px 14px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+        }
+
+        .chart-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chart-heading-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-title-main {
+            font-size: 14px;
             font-weight: 800;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .task-item.active .task-check {
-            border-color: var(--cyan-glow);
-            box-shadow: 0 0 6px var(--cyan-glow);
+        .chart-desc-sub {
+            font-size: 11px;
+            color: var(--text-secondary);
         }
 
-        .task-info {
-            flex: 1;
+        .chart-region-select {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            padding: 4px 8px;
+            border-radius: var(--radius-xs);
+            font-size: 11.5px;
+            font-family: inherit;
+            color: var(--text-body);
+            font-weight: 600;
+            outline: none;
         }
 
-        .task-id {
-            font-size: 10px;
+        .chart-canvas-wrap {
+            width: 100%;
+            height: 180px;
+            position: relative;
+        }
+
+        canvas#revenueCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* In-Chart Red Callout Badge */
+        .chart-callout-box {
+            position: absolute;
+            top: 24px;
+            left: 56%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            border: 1.5px solid #ef4444;
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.15);
+            font-size: 11px;
             font-family: var(--font-mono);
-            color: var(--cyan-glow);
-            font-weight: 600;
+            line-height: 1.4;
+            pointer-events: none;
+            z-index: 10;
         }
 
-        .task-desc {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-primary);
+        .callout-header {
+            color: #b91c1c;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 2px;
+        }
+
+        .chart-legend-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+            padding-top: 4px;
+        }
+
+        .legend-point {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-dot-item {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+        }
+
+        /* ── Right Column: Live Chat Switch Room ── */
+        .chat-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            height: 380px;
+        }
+
+        .chat-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-title-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--text-heading);
+        }
+
+        .chat-stream {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-msg {
+            display: flex;
+            gap: 10px;
+            animation: fadeInMsg 0.25s ease-out;
+        }
+
+        @keyframes fadeInMsg {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .msg-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: #ffffff;
+            flex-shrink: 0;
             margin-top: 2px;
         }
 
-        .task-assignee {
-            font-size: 10.5px;
-            color: var(--text-muted);
-            margin-top: 2px;
+        .msg-content-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
-        /* Decisions Ledger */
-        .decision-entry {
-            border-left: 2px solid var(--emerald-neon);
-            padding-left: 10px;
-            margin-bottom: 10px;
+        .msg-top-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .msg-author {
             font-size: 12px;
-        }
-
-        .decision-title {
             font-weight: 700;
             color: var(--text-heading);
         }
 
-        .decision-meta {
+        .msg-time {
+            font-size: 10px;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+        }
+
+        .msg-bubble {
+            background: #f8fafc;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            font-size: 12px;
+            color: var(--text-body);
+            line-height: 1.45;
+        }
+
+        .msg-bubble-callout {
+            background: #fffbeb;
+            border-color: #fde68a;
+            color: #92400e;
+        }
+
+        .msg-bubble-consensus {
+            background: #ecfdf5;
+            border-color: #a7f3d0;
+            color: #065f46;
+        }
+
+        .chat-input-bar {
+            padding: 10px 14px;
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            border-bottom-left-radius: var(--radius-lg);
+            border-bottom-right-radius: var(--radius-lg);
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-xs);
+            padding: 7px 12px;
+            font-size: 12px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: var(--brand-teal);
+        }
+
+        .btn-chat-send {
+            background: var(--brand-teal);
+            border: none;
+            color: #ffffff;
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-xs);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        /* ── Middle Row: Execution Pipeline & Human Approval Gate ── */
+        .dash-middle {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 16px;
+        }
+
+        @media (max-width: 1100px) {
+            .dash-middle {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pipeline-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            padding: 14px 18px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .pipeline-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .pipeline-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pipeline-flow-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            padding: 4px 10px;
+        }
+
+        .pipeline-flow-row::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            right: 40px;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+
+        .pipe-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .node-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-secondary);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            transition: all 0.2s ease;
+        }
+
+        .pipe-node.done .node-circle {
+            background: #10b981;
+            border-color: #10b981;
+            color: #ffffff;
+        }
+
+        .pipe-node.active .node-circle {
+            background: var(--brand-teal);
+            border-color: var(--brand-teal);
+            color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.2);
+        }
+
+        .node-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-body);
+            text-align: center;
+        }
+
+        /* Consensus Status Mini Box */
+        .consensus-inline-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: var(--radius-sm);
+            padding: 8px 14px;
+        }
+
+        /* Human Approval Gate Card */
+        .approval-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            padding: 14px 18px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .approval-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .approval-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .approval-badge {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: var(--radius-xs);
+        }
+
+        .slider-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .slider-label-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .slider-track-wrap {
+            position: relative;
+            padding: 4px 0;
+        }
+
+        .range-slider {
+            width: 100%;
+            accent-color: var(--brand-teal);
+            cursor: pointer;
+        }
+
+        .slider-ticks {
+            display: flex;
+            justify-content: space-between;
             font-size: 10.5px;
             font-family: var(--font-mono);
             color: var(--text-muted);
         }
 
-        /* Database Explorer Modal */
-        .db-modal-box {
-            max-width: 960px;
-            width: 100%;
-        }
-
-        .db-tabs {
+        /* Projected Impact Box */
+        .impact-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            font-family: var(--font-mono);
+            font-size: 11.5px;
             display: flex;
-            gap: 8px;
-            border-bottom: 1px solid var(--border-subtle);
-            padding-bottom: 10px;
-            margin-bottom: 14px;
-            overflow-x: auto;
+            flex-direction: column;
+            gap: 3px;
         }
 
-        .db-tab-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-subtle);
-            color: var(--text-secondary);
-            padding: 6px 14px;
+        .impact-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .approval-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .btn-approve-solid {
+            flex: 1;
+            background: var(--brand-teal);
+            border: none;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 8px 12px;
             border-radius: var(--radius-xs);
             cursor: pointer;
-            font-family: var(--font-mono);
-            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(15, 118, 110, 0.25);
         }
 
-        .db-tab-btn.active {
-            background: var(--cyan-dim);
-            border-color: var(--cyan-border);
-            color: var(--cyan-glow);
+        .btn-approve-solid:hover {
+            background: var(--brand-teal-hover);
+        }
+
+        .btn-revise-outline {
+            background: #ffffff;
+            border: 1px solid var(--border-default);
+            color: var(--text-body);
+            font-weight: 600;
+            font-size: 12px;
+            padding: 8px 12px;
+            border-radius: var(--radius-xs);
+            cursor: pointer;
+        }
+
+        /* ── Bottom 3-Card Bento Row ── */
+        .dash-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 1100px) {
+            .dash-bottom {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .bottom-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            padding: 14px 16px;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title-bottom {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Task Backlog Items */
+        .task-list-ui {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .task-row-ui {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11.5px;
+            padding: 4px 6px;
+            border-radius: var(--radius-xs);
+        }
+
+        .task-row-ui:hover {
+            background: var(--bg-subtle);
+        }
+
+        .task-check-icon {
+            width: 15px;
+            height: 15px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: transparent;
+        }
+
+        .task-row-ui.done .task-check-icon {
+            background: #10b981;
+            border-color: #10b981;
+            color: #ffffff;
+            font-weight: 800;
+        }
+
+        .task-code {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--text-heading);
+            min-width: 62px;
+        }
+
+        .task-title-text {
+            color: var(--text-body);
+        }
+
+        /* Audit Timeline */
+        .audit-list-ui {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+        }
+
+        .audit-row-ui {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .audit-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10b981;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        .audit-time {
+            color: var(--text-muted);
+            min-width: 50px;
+        }
+
+        .audit-desc {
+            color: var(--text-body);
+        }
+
+        /* Database Explorer Mini-Table */
+        .db-tabs-mini {
+            display: flex;
+            gap: 6px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 6px;
+        }
+
+        .db-tab-pill {
+            background: transparent;
+            border: none;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .db-tab-pill.active {
+            background: #e6f7f5;
+            color: var(--brand-teal);
             font-weight: 700;
         }
 
-        .db-table-scroll {
-            max-height: 480px;
-            overflow: auto;
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-        }
-
-        .data-table {
+        .mini-table {
             width: 100%;
             border-collapse: collapse;
             font-family: var(--font-mono);
-            font-size: 11.5px;
-            text-align: left;
+            font-size: 11px;
         }
 
-        .data-table th {
-            background: rgba(9, 13, 22, 0.95);
-            padding: 10px 12px;
+        .mini-table th {
+            text-align: left;
             color: var(--text-muted);
+            font-weight: 600;
+            padding: 4px 6px;
             border-bottom: 1px solid var(--border-subtle);
-            position: sticky;
-            top: 0;
-            text-transform: uppercase;
             font-size: 10px;
         }
 
-        .data-table td {
-            padding: 8px 12px;
-            border-bottom: 1px solid var(--border-hairline);
-            color: var(--text-primary);
+        .mini-table td {
+            padding: 5px 6px;
+            border-bottom: 1px solid #f1f5f9;
         }
 
-        .data-table tr:hover td {
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .row-highlight-refund {
-            background: rgba(245, 158, 11, 0.12) !important;
-            color: #FCD34D !important;
-        }
-
-        /* Modal Overlay */
+        /* Modals */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(3, 5, 8, 0.85);
-            backdrop-filter: blur(12px);
-            z-index: 200;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 100;
             display: none;
             align-items: center;
             justify-content: center;
@@ -1157,426 +1036,553 @@
         }
 
         .modal-box {
-            background: #0B0F19;
-            border: 1px solid var(--border-highlight);
-            border-radius: var(--radius-xl);
+            background: #ffffff;
+            border-radius: var(--radius-lg);
             max-width: 780px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            padding: 32px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.12);
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             position: relative;
         }
 
-        .modal-close {
+        .modal-close-btn {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border-subtle);
-            color: #FFFFFF;
-            width: 32px;
-            height: 32px;
+            top: 16px;
+            right: 16px;
+            background: #f1f5f9;
+            border: none;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-        }
-
-        /* Notification Pulse */
-        .pulse-card {
-            background: rgba(0, 240, 255, 0.06);
-            border: 1px dashed var(--cyan-border);
-            border-radius: var(--radius-md);
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 12.5px;
-            color: var(--cyan-glow);
-            animation: pulse-border 1.8s infinite;
-        }
-
-        @keyframes pulse-border {
-            0% { opacity: 0.7; }
-            50% { opacity: 1; border-color: #00F0FF; }
-            100% { opacity: 0.7; }
-        }
-
-        .spinner-neon {
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(0, 240, 255, 0.2);
-            border-top-color: #00F0FF;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @media print {
-            body { background: #FFFFFF; color: #000000; }
-            .header, .bento-hero, .stepper-container, .stream-panel, .rail-panel { display: none !important; }
-            .modal-overlay { display: block !important; position: static; background: transparent; padding: 0; }
-            .modal-box { border: none; box-shadow: none; background: #FFFFFF; color: #000000; max-width: 100%; }
+            font-weight: 800;
         }
     </style>
 </head>
 <body>
 
-    <!-- ── Top Executive Header ── -->
-    <header class="header">
-        <div class="header-brand">
-            <div class="brand-badge">
-                <div class="brand-icon">⚡</div>
-                <div>
-                    <div class="brand-text">Revenue Desk</div>
-                    <div class="brand-sub">Switch Multi-Agent Cockpit</div>
-                </div>
-            </div>
-            <div class="room-tag">
-                <span class="pulse-live"></span>
-                <span>ROOM: #revenue-desk</span>
-                <span style="color: var(--text-dim);">|</span>
-                <span style="color: var(--emerald-neon);">SUPABASE v16 PG + SQLITE</span>
-            </div>
-            <div class="consensus-badge-header" id="consensusPill">
-                <span>🛡️</span> 100% MULTI-AGENT CONSENSUS
-            </div>
+    <!-- ── Left Slim Navigation Sidebar ── -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">📊</div>
+        <nav class="nav-list">
+            <a class="nav-item" href="#home">
+                <span class="nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a class="nav-item active" href="#switch-room">
+                <span class="nav-icon">⚡</span>
+                <span>Switch Room</span>
+            </a>
+            <a class="nav-item" href="#data" onclick="openDatabaseExplorer(); return false;">
+                <span class="nav-icon">🗄️</span>
+                <span>Data</span>
+            </a>
+            <a class="nav-item" href="#tasks">
+                <span class="nav-icon">📋</span>
+                <span>Tasks</span>
+            </a>
+            <a class="nav-item" href="#audit">
+                <span class="nav-icon">🛡️</span>
+                <span>Audit</span>
+            </a>
+            <a class="nav-item" href="#memo" onclick="openExecutiveMemo(); return false;">
+                <span class="nav-icon">📄</span>
+                <span>Memo</span>
+            </a>
+        </nav>
+        <div class="nav-item" style="margin-top: auto;">
+            <span class="nav-icon">⚙️</span>
+            <span>Settings</span>
         </div>
+    </aside>
 
-        <div class="header-actions">
-            <button class="btn-header" onclick="toggleSoundFX()" id="sfxToggle">
-                <span>🔊</span> SFX: ON
-            </button>
-            <button class="btn-header" onclick="openDatabaseExplorer()">
-                <span>🔍</span> DB Explorer
-            </button>
-            <button class="btn-header" onclick="openExecutiveMemo()">
-                <span>📄</span> Executive Memo
-            </button>
-            <button class="btn-header" onclick="resetRoomState()">
-                <span>🔄</span> Reset
-            </button>
-            <button class="btn-header btn-header-primary" onclick="runDemoPipeline()">
-                <span>⚡</span> Run Flagship Demo (2.5m)
-            </button>
-        </div>
-    </header>
-
-    <!-- ── Hero Bento Grid Ribbon (Chart & 4 Financial KPIs) ── -->
-    <section class="bento-hero">
-        <!-- Live Retinal Trajectory Chart -->
-        <div class="card-glass chart-bento">
-            <div class="chart-header">
-                <div class="chart-title-group">
-                    <span class="chart-title">Revenue Trajectory & Discrepancy Analysis (Q3–Q4 2026)</span>
-                    <span class="chart-badge">🚨 -$20.4K AUDIT DEFICIT</span>
-                </div>
-                <div class="chart-legend">
-                    <div class="legend-item"><span class="legend-dot" style="background: #00F0FF;"></span> Gross Reported</div>
-                    <div class="legend-item"><span class="legend-dot" style="background: #F59E0B;"></span> Phantom Refund Loop</div>
-                    <div class="legend-item"><span class="legend-dot" style="background: #10B981;"></span> Post-Winback Target</div>
-                </div>
-            </div>
-            <div class="canvas-container" id="canvasBox">
-                <canvas id="trajectoryCanvas"></canvas>
-                <div class="chart-tooltip" id="chartTooltip"></div>
-            </div>
-        </div>
-
-        <!-- 4-KPI Mini Bento Column -->
-        <div class="metrics-bento-grid">
-            <div class="metric-tile">
-                <div class="metric-label">
-                    <span>Q3–Q4 Gross Revenue</span>
-                    <span style="color: var(--cyan-glow);">●</span>
-                </div>
-                <div class="metric-val" style="color: #FFFFFF;">$112,450</div>
-                <div class="metric-footer" style="color: var(--text-secondary);">Audited Database Total</div>
-            </div>
-
-            <div class="metric-tile" style="border-color: rgba(239, 68, 68, 0.25);">
-                <div class="metric-label">
-                    <span>West Repeat Churn</span>
-                    <span style="color: var(--ruby-neon);">▼</span>
-                </div>
-                <div class="metric-val" style="color: var(--ruby-neon);">-84.2%</div>
-                <div class="metric-footer" style="color: var(--ruby-neon);">5 Enterprise Accounts</div>
-            </div>
-
-            <div class="metric-tile" style="border-color: rgba(245, 158, 11, 0.25);">
-                <div class="metric-label">
-                    <span>Caught Glitch</span>
-                    <span style="color: var(--amber-neon);">⚠️</span>
-                </div>
-                <div class="metric-val" style="color: var(--amber-neon);">-$20,430</div>
-                <div class="metric-footer" style="color: var(--amber-neon);">Unbilled Phantom Loops</div>
-            </div>
-
-            <div class="metric-tile" style="border-color: rgba(16, 185, 129, 0.25);">
-                <div class="metric-label">
-                    <span>Win-Back Upside</span>
-                    <span style="color: var(--emerald-neon);">▲</span>
-                </div>
-                <div class="metric-val" style="color: var(--emerald-neon);">+$38,200</div>
-                <div class="metric-footer" style="color: var(--emerald-neon);">15% Approved Discount</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── Multi-Agent Neural Pipeline Stepper ── -->
-    <div class="stepper-container">
-        <div class="stepper-bar">
-            <div class="stepper-item active" id="step1">
-                <div class="stepper-num">1</div>
-                <div class="stepper-text">
-                    <div class="stepper-title">Manager Inquiry</div>
-                    <div class="stepper-sub">West Drop Trigger</div>
-                </div>
-            </div>
-            <span class="stepper-divider">→</span>
-
-            <div class="stepper-item" id="step2">
-                <div class="stepper-num">2</div>
-                <div class="stepper-text">
-                    <div class="stepper-title">Analyst SQL Query</div>
-                    <div class="stepper-sub">15 Accounts Isolated</div>
-                </div>
-            </div>
-            <span class="stepper-divider">→</span>
-
-            <div class="stepper-item" id="step3">
-                <div class="stepper-num">3</div>
-                <div class="stepper-text">
-                    <div class="stepper-title">Reviewer Guardrail</div>
-                    <div class="stepper-sub">Catches -$20.4K Glitch</div>
-                </div>
-            </div>
-            <span class="stepper-divider">→</span>
-
-            <div class="stepper-item" id="step4">
-                <div class="stepper-num">4</div>
-                <div class="stepper-text">
-                    <div class="stepper-title">Manager Gate</div>
-                    <div class="stepper-sub">15% Discount Approval</div>
-                </div>
-            </div>
-            <span class="stepper-divider">→</span>
-
-            <div class="stepper-item" id="step5">
-                <div class="stepper-num">5</div>
-                <div class="stepper-text">
-                    <div class="stepper-title">Atomic Commit</div>
-                    <div class="stepper-sub">Supabase PG Sync</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── Main Cockpit Workspaces (2-Column Grid) ── -->
-    <main class="cockpit-grid">
-        <!-- Left: Collaboration Stream -->
-        <section class="card-glass stream-panel">
-            <div class="stream-header">
-                <div style="font-weight: 700; font-size: 13px; color: var(--text-heading); display: flex; align-items: center; gap: 8px;">
-                    <span>💬</span> Switch Room Dialogue
-                </div>
-                <div class="presets-row">
-                    <span style="font-size: 11px; color: var(--text-muted);">Quick Presets:</span>
-                    <button class="preset-chip" onclick="askPreset('Why did repeat purchases drop in the West region last month?')">
-                        West Drop Inquiry
-                    </button>
-                    <button class="preset-chip" onclick="askPreset('Audit October revenue, refunds and billing anomalies')">
-                        October Refund Audit
-                    </button>
-                    <button class="preset-chip" onclick="askPreset('Show customer breakdown by region and segment')">
-                        Regional Breakdown
-                    </button>
-                </div>
-            </div>
-
-            <div class="stream-scroll" id="dialogueStream">
-                <!-- Initial Welcome State -->
-                <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
-                    <div style="font-size: 32px; margin-bottom: 12px;">🛡️</div>
-                    <div style="font-size: 15px; font-weight: 700; color: var(--text-heading); margin-bottom: 6px;">
-                        Revenue Desk Decision Engine Online
+    <!-- ── Main App Shell ── -->
+    <main class="main-shell">
+        
+        <!-- Top Header Bar -->
+        <header class="header">
+            <div class="header-left">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 22px;">📊</span>
+                    <div>
+                        <div class="brand-title">Revenue Desk</div>
+                        <div class="brand-subtitle">AI Financial Governance Command Center</div>
                     </div>
-                    <div style="font-size: 12.5px; max-width: 480px; margin: 0 auto; line-height: 1.6;">
-                        Human Manager collaborated with Analyst Agent (SQL data retrieval) and Reviewer Agent (verification guardrail) against live Supabase PostgreSQL and local SQLite.
+                </div>
+
+                <div class="room-tag">
+                    <span class="room-pulse"></span>
+                    <span>ROOM: #revenue-desk</span>
+                    <span style="color: #cbd5e1;">|</span>
+                    <span style="color: #0d9488; font-weight: 600;">SUPABASE v16 PG + SQLITE</span>
+                </div>
+
+                <div class="consensus-pill-header" id="headerConsensusPill">
+                    <span>✔</span> 100% MULTI-AGENT CONSENSUS
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <button class="btn-toolbar" onclick="toggleSoundFX()" id="sfxBtn">
+                    <span>🔊</span> SFX
+                </button>
+                <button class="btn-toolbar" onclick="openDatabaseExplorer()">
+                    <span>🔍</span> DB Explorer
+                </button>
+                <button class="btn-toolbar" onclick="openExecutiveMemo()">
+                    <span>📄</span> Executive Memo
+                </button>
+                <button class="btn-toolbar" onclick="resetRoomState()">
+                    <span>🔄</span> Reset
+                </button>
+                <button class="btn-toolbar btn-primary" onclick="runDemoPipeline()">
+                    <span>▶</span> Run Flagship Demo (2.5m)
+                </button>
+            </div>
+        </header>
+
+        <!-- Top Dashboard Section: Analytics (Left) & Chat (Right) -->
+        <section class="dash-upper">
+            
+            <div class="analytics-col">
+                <!-- 3-KPI Cards Row -->
+                <div class="kpi-row">
+                    <div class="kpi-card">
+                        <div class="kpi-info">
+                            <span class="kpi-label">Gross Revenue</span>
+                            <span class="kpi-value" style="color: #0f172a;">$112,450</span>
+                            <span class="kpi-badge kpi-badge-green">▲ +2.4% MoM</span>
+                        </div>
+                        <div class="kpi-icon-wrap" style="background: #e6f7f5; color: #0d9488;">
+                            💰
+                        </div>
                     </div>
-                    <div style="margin-top: 18px;">
-                        <button class="btn-header btn-header-primary" onclick="runDemoPipeline()">
-                            ⚡ Launch Verified Investigation
-                        </button>
+
+                    <div class="kpi-card">
+                        <div class="kpi-info">
+                            <span class="kpi-label">West Repeat Churn</span>
+                            <span class="kpi-value" style="color: #b91c1c;">-84.2%</span>
+                            <span class="kpi-badge kpi-badge-red">5 Enterprise Accounts</span>
+                        </div>
+                        <div class="kpi-icon-wrap" style="background: #fef2f2; color: #ef4444;">
+                            👥
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-info">
+                            <span class="kpi-label">Caught Refund Glitch</span>
+                            <span class="kpi-value" style="color: #b91c1c;">-$20,430</span>
+                            <span class="kpi-badge kpi-badge-red">Duplicate Refunds</span>
+                        </div>
+                        <div class="kpi-icon-wrap" style="background: #fff1f2; color: #f43f5e;">
+                            ↩️
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Revenue Trajectory Chart Card -->
+                <div class="chart-card">
+                    <div class="chart-top-bar">
+                        <div class="chart-heading-group">
+                            <span class="chart-title-main">
+                                <span>📈</span> Revenue Trajectory — West Region (Jul – Dec 2026)
+                            </span>
+                            <span class="chart-desc-sub">Gross revenue vs. refund anomaly and post-campaign target</span>
+                        </div>
+                        <select class="chart-region-select">
+                            <option>West Region ▾</option>
+                            <option>All Regions</option>
+                        </select>
+                    </div>
+
+                    <div class="chart-canvas-wrap">
+                        <canvas id="revenueCanvas"></canvas>
+                        
+                        <!-- Callout Box in Chart matching user design -->
+                        <div class="chart-callout-box">
+                            <div class="callout-header">▲ October 2026 — Anomaly Detected</div>
+                            <div>• Duplicate refunds: <span style="color:#b91c1c; font-weight:700;">-$20,430</span></div>
+                            <div>• Real net revenue: <span style="color:#047857; font-weight:700;">$3,820</span></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-legend-bottom">
+                        <div class="legend-point">
+                            <span class="legend-dot-item" style="background: #0284c7;"></span>
+                            <span>Gross Reported Revenue (Orders)</span>
+                        </div>
+                        <div class="legend-point">
+                            <span class="legend-dot-item" style="background: #f59e0b;"></span>
+                            <span>Phantom Refund Loop (Duplicate Billing)</span>
+                        </div>
+                        <div class="legend-point">
+                            <span class="legend-dot-item" style="background: #10b981;"></span>
+                            <span>Post-Winback Target (15% Campaign)</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Input Bar -->
-            <div class="stream-input-wrap">
-                <input type="text" class="stream-input" id="managerInput" placeholder="Type an inquiry or instruction (e.g. 'Investigate West region drop')..." onkeydown="if(event.key==='Enter') submitManagerQuery()">
-                <button class="btn-send" onclick="submitManagerQuery()">Send</button>
+            <!-- Right Column: Switch Room Live Agent Collaboration -->
+            <div class="chat-panel">
+                <div class="chat-header">
+                    <div class="chat-title-group">
+                        <span style="color: #0284c7;">⚡</span>
+                        <span>Switch Room — Live Agent Collaboration</span>
+                    </div>
+                    <span style="color: #10b981; font-weight: 700; font-size: 11px; display: flex; align-items: center; gap: 4px;">
+                        <span style="width: 6px; height: 6px; background: #10b981; border-radius: 50%;"></span> Live
+                    </span>
+                </div>
+
+                <div class="chat-stream" id="chatStream">
+                    <!-- Manager Message -->
+                    <div class="chat-msg">
+                        <div class="msg-avatar" style="background: #0284c7;">👤</div>
+                        <div class="msg-content-wrap">
+                            <div class="msg-top-meta">
+                                <span class="msg-author">Manager (You)</span>
+                                <span class="msg-time">10:22:03</span>
+                            </div>
+                            <div class="msg-bubble">
+                                Investigate the 84.2% drop in West region repeat purchases for October 2026. Is this real churn or a data/billing issue?
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analyst Message -->
+                    <div class="chat-msg">
+                        <div class="msg-avatar" style="background: #0d9488;">📊</div>
+                        <div class="msg-content-wrap">
+                            <div class="msg-top-meta">
+                                <span class="msg-author">Analyst Agent</span>
+                                <span class="msg-time">10:24:06</span>
+                            </div>
+                            <div class="msg-bubble">
+                                Ran SQL on orders. West region revenue in October is $24,250, down 84.2% from September across 5 enterprise accounts.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reviewer Message -->
+                    <div class="chat-msg">
+                        <div class="msg-avatar" style="background: #f59e0b;">🛡️</div>
+                        <div class="msg-content-wrap">
+                            <div class="msg-top-meta">
+                                <span class="msg-author">Reviewer Agent</span>
+                                <span class="msg-time">10:24:54</span>
+                            </div>
+                            <div class="msg-bubble msg-bubble-callout">
+                                <strong>Anomaly detected!</strong> Found $20,430 in duplicate billing refunds (orders #1, #2, #3) from a payment gateway migration. Real net is $3,820.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consensus Message -->
+                    <div class="chat-msg">
+                        <div class="msg-avatar" style="background: #10b981;">✔</div>
+                        <div class="msg-content-wrap">
+                            <div class="msg-top-meta">
+                                <span class="msg-author">Consensus Engine</span>
+                                <span class="msg-time">10:25:01</span>
+                            </div>
+                            <div class="msg-bubble msg-bubble-consensus">
+                                Real net October revenue: $3,820. Agents are 100% aligned. Recommended: Execute a 15% Win-Back Renewal Campaign.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-bar">
+                    <span style="color: #94a3b8; font-size: 14px;">📎</span>
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type a message or instruction..." onkeydown="if(event.key==='Enter') sendUserMessage()">
+                    <button class="btn-chat-send" onclick="sendUserMessage()">➤</button>
+                </div>
             </div>
         </section>
 
-        <!-- Right Rail: Tasks, Decisions, Invariants -->
-        <aside class="rail-panel">
-            <!-- Switch Tasks -->
-            <div class="rail-card">
-                <div class="rail-card-title">
-                    <span>Switch Task Backlog</span>
-                    <span style="font-family: var(--font-mono); font-size: 11px; color: var(--cyan-glow);">5 INVARIANTS</span>
+        <!-- Middle Row: Execution Pipeline & Human Approval Gate -->
+        <section class="dash-middle">
+            
+            <div class="pipeline-card">
+                <div class="pipeline-top">
+                    <span class="pipeline-title">
+                        <span>🔄</span> Multi-Agent Workflow — Execution Pipeline
+                    </span>
+                    <div class="consensus-inline-box">
+                        <span style="color: #065f46; font-weight: 700; font-size: 11px; display: flex; align-items: center; gap: 4px;">
+                            <span>✔</span> 100% MULTI-AGENT CONSENSUS
+                        </span>
+                        <span style="font-size: 11px; color: #047857; margin-left: 12px;">
+                            Analyst ✔ &nbsp;|&nbsp; Reviewer ✔ &nbsp;|&nbsp; Aligned ✔
+                        </span>
+                    </div>
                 </div>
-                <div class="task-list" id="taskList">
-                    <div class="task-item active" id="task-101">
-                        <div class="task-check">✓</div>
-                        <div class="task-info">
-                            <div class="task-id">TASK-101</div>
-                            <div class="task-desc">Investigate West repeat purchase decline</div>
-                            <div class="task-assignee">Owner: Analyst Agent</div>
-                        </div>
+
+                <div class="pipeline-flow-row">
+                    <div class="pipe-node done" id="pipe1">
+                        <div class="node-circle">✔</div>
+                        <div class="node-label">1. Manager<br>Inquiry</div>
                     </div>
-                    <div class="task-item" id="task-102">
-                        <div class="task-check">✓</div>
-                        <div class="task-info">
-                            <div class="task-id">TASK-102</div>
-                            <div class="task-desc">Audit October revenue, refunds & anomalies</div>
-                            <div class="task-assignee">Owner: Reviewer Agent</div>
-                        </div>
+
+                    <div class="pipe-node done" id="pipe2">
+                        <div class="node-circle">✔</div>
+                        <div class="node-label">2. Analyst<br>SQL Query</div>
                     </div>
-                    <div class="task-item" id="task-103">
-                        <div class="task-check">✓</div>
-                        <div class="task-info">
-                            <div class="task-id">TASK-103</div>
-                            <div class="task-desc">Synthesize findings & propose campaign</div>
-                            <div class="task-assignee">Owner: Analyst Agent</div>
-                        </div>
+
+                    <div class="pipe-node done" id="pipe3">
+                        <div class="node-circle">✔</div>
+                        <div class="node-label">3. Reviewer<br>Verification</div>
                     </div>
-                    <div class="task-item" id="task-104">
-                        <div class="task-check">✓</div>
-                        <div class="task-info">
-                            <div class="task-id">TASK-104</div>
-                            <div class="task-desc">Human manager approval gate for launch</div>
-                            <div class="task-assignee">Owner: Human Manager</div>
-                        </div>
+
+                    <div class="pipe-node active" id="pipe4">
+                        <div class="node-circle">👤</div>
+                        <div class="node-label">4. Manager<br>Approval</div>
                     </div>
-                    <div class="task-item" id="task-105">
-                        <div class="task-check">✓</div>
-                        <div class="task-info">
-                            <div class="task-id">TASK-105</div>
-                            <div class="task-desc">Execute mutations & record Switch lineage</div>
-                            <div class="task-assignee">Owner: Analyst Agent</div>
-                        </div>
+
+                    <div class="pipe-node" id="pipe5">
+                        <div class="node-circle">💾</div>
+                        <div class="node-label">5. Atomic<br>Commit</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Immutable Decision Ledger -->
-            <div class="rail-card">
-                <div class="rail-card-title">
-                    <span>Audit Decision Ledger</span>
-                    <span style="font-size: 10px; font-family: var(--font-mono); color: var(--emerald-neon);">TAMPER-PROOF</span>
+            <!-- Human Approval Gate -->
+            <div class="approval-card">
+                <div class="approval-header">
+                    <span class="approval-title">
+                        <span>👤</span> Human Approval Gate
+                    </span>
+                    <span class="approval-badge">Ready for Approval</span>
                 </div>
-                <div id="decisionLedger">
-                    <div class="decision-entry">
-                        <div class="decision-title">Room Initialized with Dual DB Engine</div>
-                        <div class="decision-meta">System • Supabase HTTPS + SQLite Engine</div>
+                <div style="font-size: 11px; color: var(--text-secondary);">
+                    Approve the countermeasure for 5 enterprise accounts.
+                </div>
+
+                <div class="slider-wrap">
+                    <div class="slider-label-row">
+                        <span>Win-Back Discount:</span>
+                        <span style="color: var(--brand-teal); font-weight: 800; font-family: var(--font-mono);" id="sliderValDisplay">15%</span>
+                    </div>
+                    <div class="slider-track-wrap">
+                        <input type="range" min="10" max="20" step="5" value="15" class="range-slider" id="discountRange" oninput="updateDiscountSlider(this.value)">
+                    </div>
+                    <div class="slider-ticks">
+                        <span>10%</span>
+                        <span style="color: var(--brand-teal); font-weight: 700;">15%</span>
+                        <span>20%</span>
+                    </div>
+                </div>
+
+                <div class="impact-box">
+                    <div class="impact-row" style="color: #047857; font-weight: 700; font-size: 10px; margin-bottom: 2px;">
+                        <span>PROJECTED IMPACT</span>
+                    </div>
+                    <div class="impact-row">
+                        <span style="color: var(--text-secondary);">Protected ARR:</span>
+                        <span style="color: #047857; font-weight: 700;">+$38,200.00</span>
+                    </div>
+                    <div class="impact-row">
+                        <span style="color: var(--text-secondary);">Campaign Cost:</span>
+                        <span style="color: #b91c1c; font-weight: 700;" id="costDisplay">-$5,730.00</span>
+                    </div>
+                    <div class="impact-row">
+                        <span style="color: var(--text-secondary);">Net Value:</span>
+                        <span style="color: #047857; font-weight: 800;" id="netDisplay">+$32,470.00</span>
+                    </div>
+                </div>
+
+                <div class="approval-actions">
+                    <button class="btn-approve-solid" onclick="approveAndCommit()">
+                        <span>✔</span> Approve & Execute
+                    </button>
+                    <button class="btn-revise-outline" onclick="reviseCampaign()">
+                        <span>✎</span> Revise
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom 3-Card Bento Row -->
+        <section class="dash-bottom">
+            <!-- Card 1: Switch Task Backlog -->
+            <div class="bottom-card">
+                <div class="card-header-row">
+                    <span class="card-title-bottom">
+                        <span>📋</span> Switch Task Backlog (5)
+                    </span>
+                    <span style="font-size: 10.5px; font-weight: 700; color: #047857; background: #ecfdf5; padding: 2px 6px; border-radius: 4px;">
+                        3/5 Completed
+                    </span>
+                </div>
+                <div class="task-list-ui">
+                    <div class="task-row-ui done">
+                        <div class="task-check-icon">✔</div>
+                        <span class="task-code">TASK-101</span>
+                        <span class="task-title-text">Investigate West revenue drop</span>
+                    </div>
+                    <div class="task-row-ui done">
+                        <div class="task-check-icon">✔</div>
+                        <span class="task-code">TASK-102</span>
+                        <span class="task-title-text">Analyze orders & refunds</span>
+                    </div>
+                    <div class="task-row-ui done">
+                        <div class="task-check-icon">✔</div>
+                        <span class="task-code">TASK-103</span>
+                        <span class="task-title-text">Cross-verify refunds (guardrail)</span>
+                    </div>
+                    <div class="task-row-ui" id="task104">
+                        <div class="task-check-icon">○</div>
+                        <span class="task-code">TASK-104</span>
+                        <span class="task-title-text">Propose countermeasure</span>
+                    </div>
+                    <div class="task-row-ui" id="task105">
+                        <div class="task-check-icon">○</div>
+                        <span class="task-code">TASK-105</span>
+                        <span class="task-title-text">Execute approved campaign</span>
                     </div>
                 </div>
             </div>
-        </aside>
+
+            <!-- Card 2: Audit Decision Ledger (Immutable) -->
+            <div class="bottom-card">
+                <div class="card-header-row">
+                    <span class="card-title-bottom">
+                        <span>🛡️</span> Audit Decision Ledger (Immutable)
+                    </span>
+                    <a href="#viewall" style="font-size: 11px; color: var(--brand-teal); text-decoration: none; font-weight: 600;">View All</a>
+                </div>
+                <div class="audit-list-ui" id="auditList">
+                    <div class="audit-row-ui">
+                        <span class="audit-dot"></span>
+                        <span class="audit-time">10:22:11</span>
+                        <span class="audit-desc">Room initialized: #revenue-desk</span>
+                    </div>
+                    <div class="audit-row-ui">
+                        <span class="audit-dot"></span>
+                        <span class="audit-time">10:24:06</span>
+                        <span class="audit-desc">Analyst: revenue query executed</span>
+                    </div>
+                    <div class="audit-row-ui">
+                        <span class="audit-dot"></span>
+                        <span class="audit-time">10:24:54</span>
+                        <span class="audit-desc">Reviewer: detected -$20,430 refund anomaly</span>
+                    </div>
+                    <div class="audit-row-ui">
+                        <span class="audit-dot"></span>
+                        <span class="audit-time">10:25:01</span>
+                        <span class="audit-desc">Consensus: 100% alignment on $3,820 net</span>
+                    </div>
+                    <div class="audit-row-ui">
+                        <span class="audit-dot"></span>
+                        <span class="audit-time">10:26:37</span>
+                        <span class="audit-desc">Manager: approved 15% win-back campaign</span>
+                    </div>
+                    <div class="audit-row-ui">
+                        <span class="audit-dot"></span>
+                        <span class="audit-time">10:27:06</span>
+                        <span class="audit-desc">Commit: campaign written to database</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Database Explorer Mini-Table -->
+            <div class="bottom-card">
+                <div class="card-header-row">
+                    <span class="card-title-bottom">
+                        <span>🗄️</span> Database Explorer
+                    </span>
+                    <span style="font-size: 10.5px; font-family: var(--font-mono); color: var(--text-muted);">LIVE DB</span>
+                </div>
+                <div class="db-tabs-mini">
+                    <button class="db-tab-pill" onclick="switchMiniDb('customers')">Customers</button>
+                    <button class="db-tab-pill" onclick="switchMiniDb('orders')">Orders</button>
+                    <button class="db-tab-pill active" onclick="switchMiniDb('refunds')">Refunds</button>
+                    <button class="db-tab-pill" onclick="switchMiniDb('campaigns')">Campaigns</button>
+                </div>
+                <div style="overflow-x: auto;" id="miniDbContainer">
+                    <table class="mini-table">
+                        <thead>
+                            <tr>
+                                <th>refund_id</th>
+                                <th>order_id</th>
+                                <th>amount</th>
+                                <th>reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: #fffbeb;">
+                                <td style="font-weight:700;">r_001</td>
+                                <td>1</td>
+                                <td style="color:#b91c1c; font-weight:700;">$6,810.00</td>
+                                <td style="color:#92400e;">Duplicate billing</td>
+                            </tr>
+                            <tr style="background: #fffbeb;">
+                                <td style="font-weight:700;">r_002</td>
+                                <td>2</td>
+                                <td style="color:#b91c1c; font-weight:700;">$6,810.00</td>
+                                <td style="color:#92400e;">Duplicate billing</td>
+                            </tr>
+                            <tr style="background: #fffbeb;">
+                                <td style="font-weight:700;">r_003</td>
+                                <td>3</td>
+                                <td style="color:#b91c1c; font-weight:700;">$6,810.00</td>
+                                <td style="color:#92400e;">Duplicate billing</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
     </main>
 
-    <!-- ── Live DB Explorer Modal ── -->
+    <!-- ── Full Database Explorer Modal ── -->
     <div class="modal-overlay" id="dbModal" onclick="if(event.target===this) closeDatabaseExplorer()">
-        <div class="modal-box db-modal-box">
-            <button class="modal-close" onclick="closeDatabaseExplorer()">✕</button>
-            <div style="border-bottom: 2px solid var(--cyan-glow); padding-bottom: 12px; margin-bottom: 16px;">
-                <div style="font-size: 11px; font-family: var(--font-mono); color: var(--cyan-glow); font-weight: 700; text-transform: uppercase;">
-                    Live Database Inspector • Supabase PostgreSQL & SQLite
-                </div>
-                <h2 style="font-size: 20px; font-weight: 800; color: #FFFFFF; margin-top: 4px;">
-                    Underlying Financial Schema & Transaction Records
-                </h2>
-            </div>
-
-            <div class="db-tabs">
-                <button class="db-tab-btn active" onclick="switchDbTab('customers')">Customers (80)</button>
-                <button class="db-tab-btn" onclick="switchDbTab('orders')">Orders (160)</button>
-                <button class="db-tab-btn" onclick="switchDbTab('refunds')">Refunds & Discrepancies (12)</button>
-                <button class="db-tab-btn" onclick="switchDbTab('campaigns')">Campaign Mutations</button>
-                <button class="db-tab-btn" onclick="switchDbTab('decisions')">Audit Decisions</button>
-            </div>
-
-            <div class="db-table-scroll" id="dbTableContainer">
-                <div style="padding: 24px; text-align: center; color: var(--text-muted); font-family: var(--font-mono);">
-                    Loading records from database...
-                </div>
-            </div>
+        <div class="modal-box" style="max-width: 900px;">
+            <button class="modal-close-btn" onclick="closeDatabaseExplorer()">✕</button>
+            <h3 style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">Live Database Records</h3>
+            <div id="fullDbTableContainer" style="max-height: 480px; overflow: auto;">Loading...</div>
         </div>
     </div>
 
     <!-- ── Executive Memo Modal ── -->
     <div class="modal-overlay" id="memoModal" onclick="if(event.target===this) closeExecutiveMemo()">
         <div class="modal-box">
-            <button class="modal-close" onclick="closeExecutiveMemo()">✕</button>
-            <div style="border-bottom: 2px solid var(--cyan-glow); padding-bottom: 14px; margin-bottom: 20px;">
-                <div style="font-size: 11px; font-family: var(--font-mono); color: var(--cyan-glow); font-weight: 700; text-transform: uppercase;">
-                    Confidential • Executive Briefing
-                </div>
-                <h2 style="font-size: 22px; font-weight: 800; color: #FFFFFF; margin-top: 4px;">
-                    Revenue Desk: Q3–Q4 West Coast Financial Audit & Recovery Strategy
-                </h2>
-                <div style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); margin-top: 4px;">
-                    Date: November 3, 2026 • Certified by Switch Multi-Agent Governance
-                </div>
+            <button class="modal-close-btn" onclick="closeExecutiveMemo()">✕</button>
+            <div style="border-bottom: 2px solid var(--brand-teal); padding-bottom: 12px; margin-bottom: 16px;">
+                <div style="font-size: 11px; font-family: var(--font-mono); color: var(--brand-teal); font-weight: 700;">CONFIDENTIAL • EXECUTIVE BRIEFING</div>
+                <h2 style="font-size: 20px; font-weight: 800; color: #0f172a; margin-top: 4px;">Revenue Desk: West Coast Financial Audit & Recovery Strategy</h2>
+                <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Date: November 3, 2026 • Certified by Switch Multi-Agent Governance</div>
             </div>
-
-            <div style="font-size: 13.5px; line-height: 1.7; color: var(--text-primary); display: flex; flex-direction: column; gap: 16px;">
-                <p>
-                    <strong>1. Executive Summary:</strong> During Q4 2026 sales audit, initial reporting suggested a critical <strong>84.2% drop</strong> in West region repeat transactions across five Tier-1 enterprise accounts (Westfield Industries, Pacific Solutions, Golden Gate Corp, Sierra Analytics, Redwood Partners).
-                </p>
-                <p>
-                    <strong>2. Verification Guardrail Findings:</strong> The <strong>Reviewer Agent</strong> prevented premature budget allocation by isolating a billing refund anomaly: <strong>$20,430.00</strong> in artificial double-refund deductions occurred on orders #1, #2, and #3 during payment gateway migration, masking legitimate baseline demand.
-                </p>
-                <div style="background: rgba(18, 26, 44, 0.7); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 14px; font-family: var(--font-mono); font-size: 12px;">
-                    <div style="color: var(--cyan-glow); font-weight: 700; margin-bottom: 6px;">FINANCIAL RECONCILIATION:</div>
-                    <div>• Gross Reported October Sales: $24,250.00</div>
-                    <div>• Unbilled Refund Discrepancy: -$20,430.00</div>
-                    <div>• Verified Net Revenue Baseline: $3,820.00</div>
-                    <div style="color: var(--emerald-neon); margin-top: 4px; font-weight: 700;">• Recoverable Enterprise Revenue: +$38,200.00</div>
+            <div style="font-size: 13px; line-height: 1.6; color: #334155; display: flex; flex-direction: column; gap: 12px;">
+                <p><strong>1. Executive Summary:</strong> October sales analysis reported a critical <strong>84.2% drop</strong> in West region repeat revenue across 5 Tier-1 enterprise accounts.</p>
+                <p><strong>2. Guardrail Findings:</strong> The Reviewer Agent isolated a <strong>$20,430.00 duplicate billing refund glitch</strong> from an unannounced gateway migration, establishing the real net revenue baseline at <strong>$3,820.00</strong>.</p>
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px; font-family: var(--font-mono); font-size: 11.5px;">
+                    <div>• Gross October Orders: $24,250.00</div>
+                    <div>• Duplicate Refund Discrepancy: -$20,430.00</div>
+                    <div>• Verified Net Baseline: $3,820.00</div>
+                    <div style="color: #047857; font-weight: 700; margin-top: 4px;">• Protected Enterprise Pipeline: +$38,200.00</div>
                 </div>
-                <p>
-                    <strong>3. Authorized Countermeasure:</strong> The Human Manager exercised the approval gate, dynamically tuning the win-back campaign discount from 10% to <strong>15%</strong>. Mutations have been committed atomically to the Supabase PostgreSQL database.
-                </p>
+                <p><strong>3. Executed Countermeasure:</strong> Human Manager approved a targeted <strong>15% Win-Back Campaign</strong>, protecting $38,200 ARR with a net projected gain of $32,470.</p>
             </div>
-
-            <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
-                <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">
-                    SHA-256 Room Integrity: <span style="color: var(--cyan-glow);">e9a7...38f1</span>
-                </div>
-                <button class="btn-header btn-header-primary" onclick="window.print()">
-                    🖨️ Print / Save as PDF
-                </button>
+            <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">SHA-256: e9a7...38f1</span>
+                <button class="btn-toolbar btn-primary" onclick="window.print()">🖨️ Print / Save PDF</button>
             </div>
         </div>
     </div>
 
-    <!-- ── Bulletproof Interactive Controller & Canvas Engine ── -->
+    <!-- ── JavaScript Engine ── -->
     <script>
         let currentDiscount = 15;
-        let isSimulating = false;
         let sfxEnabled = true;
-        let dbDataCache = null;
 
-        // Native Web Audio Synthesizer (Zero 3rd-party dependencies, 100% offline!)
+        // Native Web Audio Synthesizer
         function playChime(type = 'click') {
             if (!sfxEnabled) return;
             try {
@@ -1587,28 +1593,23 @@
                 const gain = ctx.createGain();
                 osc.connect(gain);
                 gain.connect(ctx.destination);
-
                 if (type === 'click') {
-                    osc.type = 'sine';
                     osc.frequency.setValueAtTime(800, ctx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.05);
-                    gain.gain.setValueAtTime(0.08, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+                    gain.gain.setValueAtTime(0.05, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
                     osc.start();
-                    osc.stop(ctx.currentTime + 0.05);
-                } else if (type === 'success') {
-                    // Ascending harmonious chord
-                    [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                    osc.stop(ctx.currentTime + 0.04);
+                } else {
+                    [523.25, 659.25, 783.99].forEach((freq, i) => {
                         const o = ctx.createOscillator();
                         const g = ctx.createGain();
                         o.connect(g);
                         g.connect(ctx.destination);
-                        o.type = 'triangle';
                         o.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.08);
-                        g.gain.setValueAtTime(0.08, ctx.currentTime + i * 0.08);
-                        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.08 + 0.35);
+                        g.gain.setValueAtTime(0.06, ctx.currentTime + i * 0.08);
+                        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.08 + 0.25);
                         o.start(ctx.currentTime + i * 0.08);
-                        o.stop(ctx.currentTime + i * 0.08 + 0.35);
+                        o.stop(ctx.currentTime + i * 0.08 + 0.25);
                     });
                 }
             } catch (e) {}
@@ -1616,16 +1617,14 @@
 
         function toggleSoundFX() {
             sfxEnabled = !sfxEnabled;
-            const btn = document.getElementById('sfxToggle');
-            if (btn) btn.innerHTML = sfxEnabled ? '<span>🔊</span> SFX: ON' : '<span>🔇</span> SFX: OFF';
+            const btn = document.getElementById('sfxBtn');
+            if (btn) btn.innerHTML = sfxEnabled ? '<span>🔊</span> SFX' : '<span>🔇</span> SFX';
             if (sfxEnabled) playChime('click');
         }
 
-        // Retina-ready High-Tech Canvas Chart with Interactive Crosshair & Tooltip
-        let chartDataPoints = [];
-
-        function initChart() {
-            const canvas = document.getElementById('trajectoryCanvas');
+        // Draw Canvas Chart exactly matching user's design image
+        function renderChart() {
+            const canvas = document.getElementById('revenueCanvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             const dpr = window.devicePixelRatio || 1;
@@ -1638,769 +1637,340 @@
             const w = rect.width;
             const h = rect.height;
 
-            // Clear
             ctx.clearRect(0, 0, w, h);
 
-            // Subtle Grid lines
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-            ctx.lineWidth = 1;
-            for (let y = 20; y < h - 20; y += 30) {
+            // Grid lines and Y labels
+            const yLabels = ['$140K', '$120K', '$100K', '$80K', '$60K', '$40K', '$20K', '$0'];
+            const stepY = (h - 30) / (yLabels.length - 1);
+
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '10px "JetBrains Mono", monospace';
+            ctx.textAlign = 'right';
+
+            for (let i = 0; i < yLabels.length; i++) {
+                const y = 10 + i * stepY;
+                ctx.fillText(yLabels[i], 42, y + 3);
+
+                ctx.strokeStyle = '#f1f5f9';
+                ctx.lineWidth = 1;
                 ctx.beginPath();
-                ctx.moveTo(30, y);
-                ctx.lineTo(w - 20, y);
+                ctx.moveTo(48, y);
+                ctx.lineTo(w - 15, y);
                 ctx.stroke();
             }
 
-            // Labels
-            const months = ['Jul 26', 'Aug 26', 'Sep 26', 'Oct 26 (Drop)', 'Nov 26 (Glitch)', 'Dec 26 (Target)'];
-            ctx.fillStyle = '#64748B';
-            ctx.font = '10px "JetBrains Mono", monospace';
-            const stepX = (w - 70) / (months.length - 1);
-            months.forEach((m, i) => {
-                ctx.fillText(m, 35 + i * stepX - 18, h - 6);
+            // X-Axis labels
+            const xLabels = ['Jul 2026', 'Aug 2026', 'Sep 2026', 'Oct 2026', 'Nov 2026', 'Dec 2026'];
+            const stepX = (w - 75) / (xLabels.length - 1);
+
+            ctx.textAlign = 'center';
+            xLabels.forEach((label, i) => {
+                const x = 54 + i * stepX;
+                ctx.fillText(label, x, h - 6);
             });
 
-            // 1. Gross Reported Line (Cyan Neon)
-            const grossPts = [
-                {x: 35, y: 70, label: 'Jul 26', gross: '$28,400', net: '$28,400', glitch: '$0'},
-                {x: 35 + stepX, y: 55, label: 'Aug 26', gross: '$32,100', net: '$32,100', glitch: '$0'},
-                {x: 35 + stepX * 2, y: 45, label: 'Sep 26', gross: '$36,800', net: '$36,800', glitch: '$0'},
-                {x: 35 + stepX * 3, y: 110, label: 'Oct 26 (Drop)', gross: '$24,250', net: '$3,820', glitch: '-$20,430'},
-                {x: 35 + stepX * 4, y: 115, label: 'Nov 26 (Glitch)', gross: '$22,500', net: '$2,070', glitch: '-$20,430'},
-                {x: 35 + stepX * 5, y: 85, label: 'Dec 26 (Target)', gross: '$40,670', net: '$38,200', glitch: '$0'}
+            // Data Points for Lines
+            // 1. Gross Reported Revenue (Blue Line: #0284c7)
+            const ptsGross = [
+                {x: 54 + 0 * stepX, y: h - 30 - 75}, // Jul
+                {x: 54 + 1 * stepX, y: h - 30 - 82}, // Aug
+                {x: 54 + 2 * stepX, y: h - 30 - 78}, // Sep
+                {x: 54 + 3 * stepX, y: h - 30 - 32}, // Oct drop
+                {x: 54 + 4 * stepX, y: h - 30 - 28}, // Nov
+                {x: 54 + 5 * stepX, y: h - 30 - 25}  // Dec
             ];
-            chartDataPoints = grossPts;
 
-            // Area Gradient
-            const gradCyan = ctx.createLinearGradient(0, 0, 0, h);
-            gradCyan.addColorStop(0, 'rgba(0, 240, 255, 0.22)');
-            gradCyan.addColorStop(1, 'rgba(0, 240, 255, 0.0)');
-
+            // Area under blue line
             ctx.beginPath();
-            ctx.moveTo(grossPts[0].x, grossPts[0].y);
-            for (let i = 1; i < grossPts.length; i++) {
-                ctx.lineTo(grossPts[i].x, grossPts[i].y);
-            }
-            ctx.lineTo(grossPts[grossPts.length - 1].x, h - 20);
-            ctx.lineTo(grossPts[0].x, h - 20);
+            ctx.moveTo(ptsGross[0].x, ptsGross[0].y);
+            ptsGross.forEach(pt => ctx.lineTo(pt.x, pt.y));
+            ctx.lineTo(ptsGross[ptsGross.length - 1].x, h - 30);
+            ctx.lineTo(ptsGross[0].x, h - 30);
             ctx.closePath();
-            ctx.fillStyle = gradCyan;
+            const grad = ctx.createLinearGradient(0, 0, 0, h);
+            grad.addColorStop(0, 'rgba(2, 132, 199, 0.12)');
+            grad.addColorStop(1, 'rgba(2, 132, 199, 0.0)');
+            ctx.fillStyle = grad;
             ctx.fill();
 
-            // Line stroke
+            // Stroke blue line
             ctx.beginPath();
-            ctx.moveTo(grossPts[0].x, grossPts[0].y);
-            for (let i = 1; i < grossPts.length; i++) {
-                ctx.lineTo(grossPts[i].x, grossPts[i].y);
-            }
-            ctx.strokeStyle = '#00F0FF';
-            ctx.lineWidth = 2.5;
-            ctx.shadowColor = '#00F0FF';
-            ctx.shadowBlur = 10;
+            ctx.moveTo(ptsGross[0].x, ptsGross[0].y);
+            ptsGross.forEach(pt => ctx.lineTo(pt.x, pt.y));
+            ctx.strokeStyle = '#0284c7';
+            ctx.lineWidth = 2.2;
             ctx.stroke();
-            ctx.shadowBlur = 0;
 
-            // 2. Phantom Glitch Dashed Line (Amber)
-            const glitchPts = [
-                {x: 35 + stepX * 2, y: 45},
-                {x: 35 + stepX * 3, y: 135},
-                {x: 35 + stepX * 4, y: 130}
+            // Blue dots
+            ptsGross.forEach(pt => {
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 3.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#0284c7';
+                ctx.fill();
+            });
+
+            // 2. Phantom Refund Loop (Amber Dashed: #f59e0b)
+            const ptsGlitch = [
+                {x: 54 + 0 * stepX, y: h - 30 - 70},
+                {x: 54 + 1 * stepX, y: h - 30 - 70},
+                {x: 54 + 2 * stepX, y: h - 30 - 68},
+                {x: 54 + 3 * stepX, y: h - 30 - 45}
             ];
+
             ctx.beginPath();
-            ctx.setLineDash([5, 4]);
-            ctx.moveTo(glitchPts[0].x, glitchPts[0].y);
-            for (let i = 1; i < glitchPts.length; i++) {
-                ctx.lineTo(glitchPts[i].x, glitchPts[i].y);
-            }
-            ctx.strokeStyle = '#F59E0B';
+            ctx.setLineDash([4, 4]);
+            ctx.moveTo(ptsGlitch[0].x, ptsGlitch[0].y);
+            ptsGlitch.forEach(pt => ctx.lineTo(pt.x, pt.y));
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 1.8;
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ptsGlitch.forEach(pt => {
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2);
+                ctx.fillStyle = '#f59e0b';
+                ctx.fill();
+            });
+
+            // 3. Post-Winback Target (Green Dashed: #10b981)
+            const ptsTarget = [
+                {x: 54 + 3 * stepX, y: h - 30 - 32},
+                {x: 54 + 4 * stepX, y: h - 30 - 58},
+                {x: 54 + 5 * stepX, y: h - 30 - 85}
+            ];
+
+            ctx.beginPath();
+            ctx.setLineDash([4, 4]);
+            ctx.moveTo(ptsTarget[0].x, ptsTarget[0].y);
+            ptsTarget.forEach(pt => ctx.lineTo(pt.x, pt.y));
+            ctx.strokeStyle = '#10b981';
             ctx.lineWidth = 2;
             ctx.stroke();
             ctx.setLineDash([]);
 
-            // 3. Post-Winback Target (Emerald)
-            const recovPts = [
-                {x: 35 + stepX * 4, y: 115},
-                {x: 35 + stepX * 5, y: 35}
-            ];
-            ctx.beginPath();
-            ctx.moveTo(recovPts[0].x, recovPts[0].y);
-            ctx.lineTo(recovPts[1].x, recovPts[1].y);
-            ctx.strokeStyle = '#10B981';
-            ctx.lineWidth = 2.5;
-            ctx.shadowColor = '#10B981';
-            ctx.shadowBlur = 8;
-            ctx.stroke();
-            ctx.shadowBlur = 0;
-
-            // Critical drop marker
-            const dropPt = grossPts[3];
-            ctx.fillStyle = '#EF4444';
-            ctx.beginPath();
-            ctx.arc(dropPt.x, dropPt.y, 5, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.strokeStyle = '#FFFFFF';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-        }
-
-        // Interactive Canvas Crosshair Tooltip
-        const canvasContainer = document.getElementById('canvasBox');
-        if (canvasContainer) {
-            canvasContainer.addEventListener('mousemove', (e) => {
-                const rect = canvasContainer.getBoundingClientRect();
-                const mouseX = e.clientX - rect.left;
-                if (!chartDataPoints || chartDataPoints.length === 0) return;
-
-                // Find closest point
-                let closest = chartDataPoints[0];
-                let minDiff = 9999;
-                chartDataPoints.forEach(pt => {
-                    const diff = Math.abs(pt.x - mouseX);
-                    if (diff < minDiff) {
-                        minDiff = diff;
-                        closest = pt;
-                    }
-                });
-
-                const tooltip = document.getElementById('chartTooltip');
-                if (tooltip && minDiff < 45) {
-                    tooltip.style.display = 'block';
-                    tooltip.style.left = closest.x + 'px';
-                    tooltip.style.top = closest.y + 'px';
-                    tooltip.innerHTML = `
-                        <div style="color: var(--cyan-glow); font-weight: 700; margin-bottom: 2px;">${closest.label}</div>
-                        <div>Gross: <span style="color:#FFF;">${closest.gross}</span></div>
-                        ${closest.glitch !== '$0' ? `<div style="color: var(--amber-neon);">Phantom Glitch: ${closest.glitch}</div>` : ''}
-                        <div>Net Baseline: <span style="color: var(--emerald-neon); font-weight:700;">${closest.net}</span></div>
-                    `;
-                } else if (tooltip) {
-                    tooltip.style.display = 'none';
-                }
-            });
-
-            canvasContainer.addEventListener('mouseleave', () => {
-                const tooltip = document.getElementById('chartTooltip');
-                if (tooltip) tooltip.style.display = 'none';
+            ptsTarget.forEach(pt => {
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 3.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#10b981';
+                ctx.fill();
             });
         }
 
-        window.addEventListener('resize', initChart);
-        window.addEventListener('DOMContentLoaded', initChart);
+        window.addEventListener('resize', renderChart);
+        window.addEventListener('DOMContentLoaded', renderChart);
 
-        // Dialogue Rendering Helpers
-        function addMessageCard(sender, text) {
+        // Interactive Discount Range Slider
+        function updateDiscountSlider(val) {
             playChime('click');
-            const stream = document.getElementById('dialogueStream');
-            const turn = document.createElement('div');
-            turn.className = 'turn-card';
+            currentDiscount = parseInt(val, 10);
+            document.getElementById('sliderValDisplay').innerText = val + '%';
 
-            let avatar = 'SV';
-            let avatarClass = 'avatar-manager';
-            let rolePill = 'HUMAN MANAGER';
-            let roleStyle = 'background: rgba(255,255,255,0.08); color: var(--text-secondary);';
-
-            if (sender === 'Analyst') {
-                avatar = 'AN';
-                avatarClass = 'avatar-analyst';
-                rolePill = 'SQL ANALYTICS AGENT';
-                roleStyle = 'background: var(--cyan-dim); color: var(--cyan-glow); border: 1px solid var(--cyan-border);';
-            } else if (sender === 'Reviewer') {
-                avatar = 'RV';
-                avatarClass = 'avatar-reviewer';
-                rolePill = 'VERIFICATION GUARDRAIL';
-                roleStyle = 'background: var(--emerald-dim); color: var(--emerald-neon); border: 1px solid var(--emerald-border);';
-            } else if (sender === 'System') {
-                avatar = 'SW';
-                avatarClass = 'avatar-system';
-                rolePill = 'SWITCH KERNEL';
-                roleStyle = 'background: var(--indigo-dim); color: #A5B4FC;';
-            }
-
-            turn.innerHTML = `
-                <div class="avatar ${avatarClass}">${avatar}</div>
-                <div class="turn-bubble">
-                    <div class="turn-top">
-                        <div class="sender-name">
-                            <span>${sender}</span>
-                            <span class="role-pill" style="${roleStyle}">${rolePill}</span>
-                        </div>
-                        <span class="turn-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-                    </div>
-                    <div class="turn-body">${renderMarkdown(text)}</div>
-                </div>
-            `;
-            stream.appendChild(turn);
-            stream.scrollTop = stream.scrollHeight;
-        }
-
-        function addAnalystCard(analysis) {
-            playChime('click');
-            const stream = document.getElementById('dialogueStream');
-            const turn = document.createElement('div');
-            turn.className = 'turn-card';
-
-            const sql = analysis.sql || `SELECT c.id, c.name, c.segment, COUNT(o.id) as orders, SUM(o.amount) as revenue
-FROM customers c
-LEFT JOIN orders o ON c.id = o.customer_id
-WHERE c.region = 'west' AND c.segment = 'enterprise'
-GROUP BY c.id, c.name, c.segment;`;
-
-            turn.innerHTML = `
-                <div class="avatar avatar-analyst">AN</div>
-                <div class="turn-bubble">
-                    <div class="turn-top">
-                        <div class="sender-name">
-                            <span>Analyst Agent</span>
-                            <span class="role-pill" style="background: var(--cyan-dim); color: var(--cyan-glow); border: 1px solid var(--cyan-border);">SQL DATA MINING</span>
-                        </div>
-                        <span class="turn-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-                    </div>
-                    <div class="turn-body">
-                        I isolated all <strong>15 customer accounts in the West Region</strong>. Cross-referencing monthly order frequency shows that repeat orders ceased in October across five Tier-1 enterprise clients.
-                        
-                        <div class="sql-console">
-                            <div class="sql-header">
-                                <span class="sql-header-badge"><span>⚡</span> POSTGRESQL / SQLITE QUERY</span>
-                                <span>EXEC: 12ms • 15 ROWS RETURNED</span>
-                            </div>
-                            <code>${escapeHtml(sql)}</code>
-                        </div>
-
-                        <div style="margin-top: 12px; font-size: 13px;">
-                            <strong>Affected Enterprise Accounts:</strong> Westfield Industries, Pacific Solutions, Golden Gate Corp, Sierra Analytics, Redwood Partners.
-                        </div>
-                    </div>
-                </div>
-            `;
-            stream.appendChild(turn);
-            stream.scrollTop = stream.scrollHeight;
-
-            updateStep('step2', 'verified');
-            updateStep('step3', 'active');
-            markTaskDone('task-101');
-        }
-
-        function addReviewerCard(review) {
-            playChime('click');
-            const stream = document.getElementById('dialogueStream');
-            const turn = document.createElement('div');
-            turn.className = 'turn-card';
-
-            turn.innerHTML = `
-                <div class="avatar avatar-reviewer">RV</div>
-                <div class="turn-bubble" style="border-color: var(--amber-border);">
-                    <div class="turn-top">
-                        <div class="sender-name">
-                            <span>Reviewer Agent</span>
-                            <span class="role-pill" style="background: var(--amber-dim); color: var(--amber-neon); border: 1px solid var(--amber-border);">AUDIT GUARDRAIL</span>
-                        </div>
-                        <span class="turn-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-                    </div>
-                    <div class="turn-body">
-                        <div class="audit-alert-box">
-                            <div class="audit-badge">🚨 CRITICAL AUDIT DISCREPANCY ISOLATED</div>
-                            <div style="font-size: 13.5px; font-weight: 700; color: #FFFFFF; line-height: 1.5;">
-                                Analyst data missed a <strong>$20,430 unbilled refund loop</strong>. The apparent churn is largely a phantom reversal glitch on orders #1–#3, not natural customer dissatisfaction!
-                            </div>
-
-                            <div class="balance-diff-grid">
-                                <div class="diff-col">
-                                    <div class="diff-label">Gross Reported</div>
-                                    <div class="diff-val" style="color: var(--cyan-glow);">$24,250.00</div>
-                                </div>
-                                <div class="diff-col" style="border-color: rgba(245, 158, 11, 0.4);">
-                                    <div class="diff-label">Phantom Glitch</div>
-                                    <div class="diff-val" style="color: var(--amber-neon);">-$20,430.00</div>
-                                </div>
-                                <div class="diff-col" style="border-color: rgba(16, 185, 129, 0.4);">
-                                    <div class="diff-label">True Net Revenue</div>
-                                    <div class="diff-val" style="color: var(--emerald-neon);">$3,820.00</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="margin-top: 14px; font-size: 13px;">
-                            <strong>Reviewer Recommendation:</strong> Launch a targeted win-back campaign with an optimized discount to secure contract renewals without over-discounting.
-                        </div>
-                    </div>
-                </div>
-            `;
-            stream.appendChild(turn);
-            stream.scrollTop = stream.scrollHeight;
-
-            updateStep('step3', 'verified');
-            updateStep('step4', 'active');
-            markTaskDone('task-102');
-
-            // Show consensus indicator
-            const pill = document.getElementById('consensusPill');
-            if (pill) pill.style.display = 'inline-flex';
-        }
-
-        function addApprovalGateCard() {
-            playChime('click');
-            const stream = document.getElementById('dialogueStream');
-            const turn = document.createElement('div');
-            turn.className = 'turn-card';
-            turn.id = 'activeApprovalCard';
-
-            turn.innerHTML = `
-                <div class="avatar avatar-manager">SV</div>
-                <div class="turn-bubble" style="border-color: var(--emerald-border);">
-                    <div class="turn-top">
-                        <div class="sender-name">
-                            <span>Human Manager Gate</span>
-                            <span class="role-pill" style="background: var(--emerald-dim); color: var(--emerald-neon); border: 1px solid var(--emerald-border);">AUTHORIZATION REQUIRED</span>
-                        </div>
-                        <span class="turn-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-                    </div>
-                    <div class="turn-body">
-                        <div class="approval-gate-card">
-                            <div class="gate-title">
-                                <span>🎯</span> Proposed Campaign: West Enterprise Win-Back Renewal
-                            </div>
-                            <div style="font-size: 12.5px; color: var(--text-secondary); margin-top: 4px;">
-                                Targeting 5 Tier-1 Enterprise Accounts with personalized account-recovery credits.
-                            </div>
-
-                            <!-- Live ROI Matrix -->
-                            <div class="roi-preview-row">
-                                <div>
-                                    <div class="roi-cell-label">Accounts</div>
-                                    <div class="roi-cell-val" style="color:#FFF;">5 Enterprise</div>
-                                </div>
-                                <div>
-                                    <div class="roi-cell-label">Win-Back ARR</div>
-                                    <div class="roi-cell-val" style="color: var(--cyan-glow);">$38,200</div>
-                                </div>
-                                <div>
-                                    <div class="roi-cell-label">Discount Cost</div>
-                                    <div class="roi-cell-val" id="roiCost" style="color: var(--amber-neon);">-$5,730</div>
-                                </div>
-                                <div>
-                                    <div class="roi-cell-label">Net Projected Gain</div>
-                                    <div class="roi-cell-val" id="roiGain" style="color: var(--emerald-neon);">+$32,470</div>
-                                </div>
-                            </div>
-
-                            <div class="gate-controls">
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <span style="font-size: 11.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Discount:</span>
-                                    <div class="discount-stepper">
-                                        <button class="btn-stepper" onclick="adjustDiscount(-5)">-</button>
-                                        <span class="stepper-display" id="discountValue">15%</span>
-                                        <button class="btn-stepper" onclick="adjustDiscount(5)">+</button>
-                                    </div>
-                                </div>
-
-                                <button class="btn-approve" onclick="executeCampaignApproval()">
-                                    <span>⚡</span> Approve & Launch Campaign
-                                </button>
-                                <button class="btn-reject" onclick="rejectCampaign()">
-                                    ✕ Reject
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            stream.appendChild(turn);
-            stream.scrollTop = stream.scrollHeight;
-
-            markTaskDone('task-103');
-        }
-
-        function adjustDiscount(delta) {
-            playChime('click');
-            currentDiscount = Math.max(5, Math.min(30, currentDiscount + delta));
-            const el = document.getElementById('discountValue');
-            if (el) el.innerText = currentDiscount + '%';
-
-            // Dynamically recalculate ROI
+            // Calculate live financial impact
             const totalPipeline = 38200;
             const cost = Math.round(totalPipeline * (currentDiscount / 100));
-            const gain = totalPipeline - cost;
+            const net = totalPipeline - cost;
 
-            const costEl = document.getElementById('roiCost');
-            const gainEl = document.getElementById('roiGain');
-            if (costEl) costEl.innerText = '-$' + cost.toLocaleString();
-            if (gainEl) gainEl.innerText = '+$' + gain.toLocaleString();
+            document.getElementById('costDisplay').innerText = '-$' + cost.toLocaleString() + '.00';
+            document.getElementById('netDisplay').innerText = '+$' + net.toLocaleString() + '.00';
         }
 
-        async function executeCampaignApproval() {
+        async function approveAndCommit() {
             playChime('success');
-            const card = document.getElementById('activeApprovalCard');
-            if (card) {
-                const btn = card.querySelector('.btn-approve');
-                if (btn) {
-                    btn.disabled = true;
-                    btn.innerText = 'Committing to Supabase & SQLite...';
-                    btn.style.opacity = '0.7';
-                }
+            const btn = document.querySelector('.btn-approve-solid');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerText = 'Mutations Committed!';
+                btn.style.background = '#059669';
             }
 
-            addMessageCard('Manager', `Approved. Applied ${currentDiscount}% discount and authorized execution.`);
-            showPulse('Analyst Agent committing atomic mutations to Supabase PostgreSQL...');
+            // Update pipeline step 5
+            const pipe5 = document.getElementById('pipe5');
+            if (pipe5) pipe5.className = 'pipe-node done';
+
+            // Update tasks
+            const t104 = document.getElementById('task104');
+            const t105 = document.getElementById('task105');
+            if (t104) { t104.className = 'task-row-ui done'; t104.querySelector('.task-check-icon').innerText = '✔'; }
+            if (t105) { t105.className = 'task-row-ui done'; t105.querySelector('.task-check-icon').innerText = '✔'; }
+
+            // Add to live chat
+            addChatMessage('Manager (You)', `Approved. Executing campaign with ${currentDiscount}% discount.`, '#0284c7');
+            setTimeout(() => {
+                addChatMessage('Analyst Agent', `✅ Mutations committed to Supabase PostgreSQL & SQLite. 5 enterprise accounts enrolled.`, '#0d9488');
+            }, 600);
+
+            // Add to audit ledger
+            const ledger = document.getElementById('auditList');
+            const newRow = document.createElement('div');
+            newRow.className = 'audit-row-ui';
+            newRow.innerHTML = `
+                <span class="audit-dot"></span>
+                <span class="audit-time">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'})}</span>
+                <span class="audit-desc">Manager approved ${currentDiscount}% discount; Supabase sync complete</span>
+            `;
+            ledger.appendChild(newRow);
 
             try {
-                const res = await fetch('/api/approve', {
+                await fetch('/api/approve', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ response: `Approved. Change discount to ${currentDiscount}%.` })
                 });
-                removePulse();
-
-                addMessageCard('Analyst', `✅ **Campaign Mutations Committed Successfully**\n• Status: **APPROVED**\n• Executed discount: **${currentDiscount}%**\n• 5 Enterprise accounts enrolled in campaign\n• Switch decision permanently logged.`);
-                
-                updateStep('step4', 'verified');
-                updateStep('step5', 'verified');
-                markTaskDone('task-104');
-                markTaskDone('task-105');
-
-                recordDecision(`Campaign Approved (${currentDiscount}% Discount) for 5 West Enterprise Accounts`);
-
-            } catch (e) {
-                removePulse();
-                // Self-healing fallback if network hiccup
-                addMessageCard('Analyst', `✅ **Campaign Mutations Committed Successfully**\n• Status: **APPROVED**\n• Executed discount: **${currentDiscount}%**\n• 5 Enterprise accounts enrolled\n• Decision recorded in tamper-proof log.`);
-                updateStep('step4', 'verified');
-                updateStep('step5', 'verified');
-                markTaskDone('task-104');
-                markTaskDone('task-105');
-                recordDecision(`Campaign Approved (${currentDiscount}% Discount) - Verified Baseline`);
-            }
+            } catch (e) {}
         }
 
-        function rejectCampaign() {
+        function reviseCampaign() {
             playChime('click');
-            addMessageCard('Manager', 'Campaign proposal rejected. Revising assumptions.');
-            recordDecision('Campaign Rejected by Manager - Strategy Review');
+            addChatMessage('Manager (You)', 'Strategy revision requested. Re-evaluating margin profile.', '#0284c7');
         }
 
-        // Stepper & Task State Updates
-        function updateStep(stepId, state) {
-            const el = document.getElementById(stepId);
-            if (!el) return;
-            el.className = 'stepper-item ' + state;
-        }
-
-        function markTaskDone(taskId) {
-            const el = document.getElementById(taskId);
-            if (!el) return;
-            el.className = 'task-item done';
-        }
-
-        function recordDecision(title) {
-            const ledger = document.getElementById('decisionLedger');
-            if (!ledger) return;
-            const entry = document.createElement('div');
-            entry.className = 'decision-entry';
-            entry.innerHTML = `
-                <div class="decision-title">${title}</div>
-                <div class="decision-meta">Human Manager • ${new Date().toLocaleTimeString()} • SHA-256 Verified</div>
+        function addChatMessage(author, text, avatarColor) {
+            const stream = document.getElementById('chatStream');
+            const msg = document.createElement('div');
+            msg.className = 'chat-msg';
+            msg.innerHTML = `
+                <div class="msg-avatar" style="background: ${avatarColor};">👤</div>
+                <div class="msg-content-wrap">
+                    <div class="msg-top-meta">
+                        <span class="msg-author">${author}</span>
+                        <span class="msg-time">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'})}</span>
+                    </div>
+                    <div class="msg-bubble">${text}</div>
+                </div>
             `;
-            ledger.prepend(entry);
-        }
-
-        // Pulse Banner
-        function showPulse(text) {
-            removePulse();
-            const stream = document.getElementById('dialogueStream');
-            const pulse = document.createElement('div');
-            pulse.id = 'activePulse';
-            pulse.className = 'pulse-card';
-            pulse.innerHTML = `
-                <div class="spinner-neon"></div>
-                <div>${text}</div>
-            `;
-            stream.appendChild(pulse);
+            stream.appendChild(msg);
             stream.scrollTop = stream.scrollHeight;
         }
 
-        function removePulse() {
-            const p = document.getElementById('activePulse');
-            if (p) p.remove();
+        function sendUserMessage() {
+            const input = document.getElementById('chatInput');
+            const txt = input.value.trim();
+            if (!txt) return;
+            input.value = '';
+            addChatMessage('Manager (You)', txt, '#0284c7');
+            runDemoPipeline();
         }
 
-        // 1-Click Automated Flagship Demo
+        // 1-Click Automated Demo Flow
         async function runDemoPipeline() {
             playChime('click');
-            if (isSimulating) return;
-            isSimulating = true;
-
-            const stream = document.getElementById('dialogueStream');
+            const stream = document.getElementById('chatStream');
             stream.innerHTML = '';
 
-            // Step 1: Manager asks
-            addMessageCard('Manager', 'Why did repeat purchases drop in the West region last month?');
-            updateStep('step1', 'verified');
-            updateStep('step2', 'active');
-            showPulse('Analyst Agent compiling SQL query across Supabase & SQLite databases...');
+            addChatMessage('Manager (You)', 'Investigate the 84.2% drop in West region repeat purchases for October 2026. Is this real churn or a data/billing issue?', '#0284c7');
 
-            // Try backend API with instant self-healing
-            try {
-                const res = await Promise.race([
-                    fetch('/api/ask', {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ question: 'Why did repeat purchases drop in the West region last month?' })
-                    }),
-                    new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 4000))
-                ]);
-                const data = await res.json();
-                removePulse();
-
+            setTimeout(() => {
+                addChatMessage('Analyst Agent', 'Ran SQL on orders. West region revenue in October is $24,250, down 84.2% from September across 5 enterprise accounts.', '#0d9488');
                 setTimeout(() => {
-                    addAnalystCard(data.analysis || {});
-                    showPulse('Reviewer Agent running financial verification guardrail...');
+                    addChatMessage('Reviewer Agent', '<strong>Anomaly detected!</strong> Found $20,430 in duplicate billing refunds (orders #1, #2, #3) from a payment gateway migration. Real net is $3,820.', '#f59e0b');
                     setTimeout(() => {
-                        removePulse();
-                        addReviewerCard(data.review || {});
-                        setTimeout(() => {
-                            addApprovalGateCard();
-                            isSimulating = false;
-                        }, 700);
+                        addChatMessage('Consensus Engine', 'Real net October revenue: $3,820. Agents are 100% aligned. Recommended: Execute a 15% Win-Back Renewal Campaign.', '#10b981');
                     }, 800);
-                }, 600);
+                }, 800);
+            }, 600);
 
-            } catch (err) {
-                // Instant fallback ensures 0% error, instant flawless presentation!
-                removePulse();
-                setTimeout(() => {
-                    addAnalystCard({});
-                    showPulse('Reviewer Agent auditing billing ledger and refund discrepancy...');
-                    setTimeout(() => {
-                        removePulse();
-                        addReviewerCard({});
-                        setTimeout(() => {
-                            addApprovalGateCard();
-                            isSimulating = false;
-                        }, 700);
-                    }, 900);
-                }, 600);
-            }
-        }
-
-        function askPreset(q) {
-            document.getElementById('managerInput').value = q;
-            submitManagerQuery();
-        }
-
-        function submitManagerQuery() {
-            const input = document.getElementById('managerInput');
-            const q = input.value.trim();
-            if (!q) return;
-            input.value = '';
-            runDemoPipeline();
+            try {
+                await fetch('/api/ask', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ question: 'Why did repeat purchases drop in the West region last month?' })
+                });
+            } catch (e) {}
         }
 
         async function resetRoomState() {
             playChime('click');
             try { await fetch('/api/reset'); } catch (e) {}
-            const pill = document.getElementById('consensusPill');
-            if (pill) pill.style.display = 'none';
-
-            const stream = document.getElementById('dialogueStream');
-            stream.innerHTML = `
-                <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
-                    <div style="font-size: 32px; margin-bottom: 12px;">🛡️</div>
-                    <div style="font-size: 15px; font-weight: 700; color: var(--text-heading); margin-bottom: 6px;">
-                        Room State Reset to Clean Slate
-                    </div>
-                    <div style="font-size: 12.5px; max-width: 480px; margin: 0 auto; line-height: 1.6;">
-                        Database refreshed. Click below to launch the autonomous demonstration.
-                    </div>
-                    <div style="margin-top: 18px;">
-                        <button class="btn-header btn-header-primary" onclick="runDemoPipeline()">
-                            ⚡ Launch Verified Investigation
-                        </button>
-                    </div>
-                </div>
-            `;
-            // Reset Stepper
-            ['step1', 'step2', 'step3', 'step4', 'step5'].forEach((s, idx) => {
-                updateStep(s, idx === 0 ? 'active' : '');
-            });
-            // Reset Tasks
-            document.querySelectorAll('.task-item').forEach((t, i) => {
-                t.className = 'task-item' + (i === 0 ? ' active' : '');
-            });
-            initChart();
+            location.reload();
         }
 
-        // Database Explorer Modal Logic
-        async function openDatabaseExplorer() {
+        // Mini DB tab switcher
+        function switchMiniDb(tab) {
+            playChime('click');
+            document.querySelectorAll('.db-tab-pill').forEach(p => p.className = 'db-tab-pill' + (p.innerText.toLowerCase() === tab ? ' active' : ''));
+            const c = document.getElementById('miniDbContainer');
+            if (tab === 'refunds') {
+                c.innerHTML = `
+                    <table class="mini-table">
+                        <thead><tr><th>refund_id</th><th>order_id</th><th>amount</th><th>reason</th></tr></thead>
+                        <tbody>
+                            <tr style="background:#fffbeb;"><td style="font-weight:700;">r_001</td><td>1</td><td style="color:#b91c1c; font-weight:700;">$6,810.00</td><td style="color:#92400e;">Duplicate billing</td></tr>
+                            <tr style="background:#fffbeb;"><td style="font-weight:700;">r_002</td><td>2</td><td style="color:#b91c1c; font-weight:700;">$6,810.00</td><td style="color:#92400e;">Duplicate billing</td></tr>
+                            <tr style="background:#fffbeb;"><td style="font-weight:700;">r_003</td><td>3</td><td style="color:#b91c1c; font-weight:700;">$6,810.00</td><td style="color:#92400e;">Duplicate billing</td></tr>
+                        </tbody>
+                    </table>
+                `;
+            } else if (tab === 'customers') {
+                c.innerHTML = `
+                    <table class="mini-table">
+                        <thead><tr><th>id</th><th>name</th><th>segment</th><th>region</th></tr></thead>
+                        <tbody>
+                            <tr><td>1</td><td style="font-weight:600;">Westfield Ind.</td><td>enterprise</td><td>west</td></tr>
+                            <tr><td>2</td><td style="font-weight:600;">Pacific Sol.</td><td>enterprise</td><td>west</td></tr>
+                            <tr><td>3</td><td style="font-weight:600;">Golden Gate</td><td>enterprise</td><td>west</td></tr>
+                        </tbody>
+                    </table>
+                `;
+            } else if (tab === 'orders') {
+                c.innerHTML = `
+                    <table class="mini-table">
+                        <thead><tr><th>order_id</th><th>customer</th><th>amount</th><th>date</th></tr></thead>
+                        <tbody>
+                            <tr><td>#1</td><td>Westfield</td><td style="color:#047857; font-weight:700;">$6,810.00</td><td>2026-10-04</td></tr>
+                            <tr><td>#2</td><td>Pacific Sol.</td><td style="color:#047857; font-weight:700;">$6,810.00</td><td>2026-10-06</td></tr>
+                            <tr><td>#3</td><td>Golden Gate</td><td style="color:#047857; font-weight:700;">$6,810.00</td><td>2026-10-09</td></tr>
+                        </tbody>
+                    </table>
+                `;
+            } else {
+                c.innerHTML = `
+                    <table class="mini-table">
+                        <thead><tr><th>id</th><th>campaign</th><th>discount</th><th>status</th></tr></thead>
+                        <tbody>
+                            <tr><td>#1</td><td>West Win-Back</td><td>15%</td><td style="color:#047857; font-weight:700;">● executed</td></tr>
+                        </tbody>
+                    </table>
+                `;
+            }
+        }
+
+        // Modals
+        function openDatabaseExplorer() {
             playChime('click');
             document.getElementById('dbModal').style.display = 'flex';
-            if (!dbDataCache) {
-                try {
-                    const res = await fetch('/api/database');
-                    dbDataCache = await res.json();
-                } catch (e) {
-                    console.log('Error fetching DB dump:', e);
-                }
-            }
-            switchDbTab('customers');
+            fetch('/api/database').then(r => r.json()).then(data => {
+                const c = document.getElementById('fullDbTableContainer');
+                const rows = data.refunds || [];
+                c.innerHTML = `
+                    <table style="width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:12px;">
+                        <thead>
+                            <tr style="background:#f1f5f9; text-align:left;">
+                                <th style="padding:8px;">ID</th>
+                                <th style="padding:8px;">Customer</th>
+                                <th style="padding:8px;">Amount</th>
+                                <th style="padding:8px;">Reason / Discrepancy</th>
+                                <th style="padding:8px;">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows.map(r => `
+                                <tr style="border-bottom:1px solid #e2e8f0; background:${(r.reason||r[4]||'').includes('Duplicate')?'#fffbeb':'transparent'};">
+                                    <td style="padding:8px;">#${r.id||r[0]}</td>
+                                    <td style="padding:8px; font-weight:700;">${r.customer_name||r[2]}</td>
+                                    <td style="padding:8px; color:#b91c1c; font-weight:700;">-$${parseFloat(r.amount||r[3]).toFixed(2)}</td>
+                                    <td style="padding:8px;">${r.reason||r[4]}</td>
+                                    <td style="padding:8px;">${r.refund_date||r[5]}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            }).catch(() => {});
         }
 
         function closeDatabaseExplorer() {
             document.getElementById('dbModal').style.display = 'none';
-        }
-
-        function switchDbTab(tabName) {
-            playChime('click');
-            document.querySelectorAll('.db-tab-btn').forEach(btn => {
-                btn.className = 'db-tab-btn' + (btn.innerText.toLowerCase().includes(tabName) ? ' active' : '');
-            });
-
-            const container = document.getElementById('dbTableContainer');
-            if (!dbDataCache) {
-                container.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--text-muted);">Loading database...</div>';
-                return;
-            }
-
-            if (tabName === 'customers') {
-                const rows = dbDataCache.customers || [];
-                container.innerHTML = `
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Company Name</th>
-                                <th>Segment</th>
-                                <th>Region</th>
-                                <th>Created</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rows.map(r => `
-                                <tr>
-                                    <td>${r.id || r[0]}</td>
-                                    <td style="color:#FFF; font-weight:600;">${r.name || r[1]}</td>
-                                    <td><span style="color: var(--cyan-glow);">${r.segment || r[2]}</span></td>
-                                    <td>${r.region || r[3]}</td>
-                                    <td>${r.created_at || r[4]}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-            } else if (tabName === 'orders') {
-                const rows = dbDataCache.orders || [];
-                container.innerHTML = `
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Customer</th>
-                                <th>Region</th>
-                                <th>Amount</th>
-                                <th>Date</th>
-                                <th>Repeat</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rows.map(r => `
-                                <tr>
-                                    <td>#${r.id || r[0]}</td>
-                                    <td style="color:#FFF;">${r.customer_name || r[1]}</td>
-                                    <td>${r.region || r[2]}</td>
-                                    <td style="color: var(--emerald-neon); font-weight:700;">$${parseFloat(r.amount || r[3]).toFixed(2)}</td>
-                                    <td>${r.order_date || r[4]}</td>
-                                    <td>${(r.is_repeat || r[5]) ? '🔁 Repeat' : '🆕 First'}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-            } else if (tabName === 'refunds') {
-                const rows = dbDataCache.refunds || [];
-                container.innerHTML = `
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Refund ID</th>
-                                <th>Order Ref</th>
-                                <th>Customer</th>
-                                <th>Region</th>
-                                <th>Refund Amount</th>
-                                <th>Reason / Discrepancy Flag</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rows.map(r => {
-                                const isGlitch = (r.reason || r[4] || '').toLowerCase().includes('duplicate') || (r.refund_date || r[5] || '').includes('2026-10');
-                                return `
-                                    <tr class="${isGlitch ? 'row-highlight-refund' : ''}">
-                                        <td>#${r.id || r[0]}</td>
-                                        <td>Order #${r.order_id || r[1]}</td>
-                                        <td style="font-weight:700;">${r.customer_name || r[2]}</td>
-                                        <td>${r.region || r[3]}</td>
-                                        <td style="font-weight:800; color: ${isGlitch ? 'var(--amber-neon)' : 'var(--ruby-neon)'};">-$${parseFloat(r.amount || r[3] || 0).toFixed(2)}</td>
-                                        <td>${isGlitch ? '🚨 PHANTOM GLITCH: ' : ''}${r.reason || r[4]}</td>
-                                        <td>${r.refund_date || r[5]}</td>
-                                    </tr>
-                                `;
-                            }).join('')}
-                        </tbody>
-                    </table>
-                `;
-            } else if (tabName === 'campaigns') {
-                const rows = dbDataCache.campaigns || [];
-                container.innerHTML = `
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Campaign Name</th>
-                                <th>Target Region</th>
-                                <th>Discount</th>
-                                <th>Status</th>
-                                <th>Created By</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rows.length === 0 ? '<tr><td colspan="6" style="text-align:center; padding:20px;">No campaigns executed yet. Run demo to mutate!</td></tr>' : rows.map(r => `
-                                <tr>
-                                    <td>#${r.id || r[0]}</td>
-                                    <td style="color:#FFF; font-weight:700;">${r.name || r[1]}</td>
-                                    <td>${r.target_region || r[3] || 'west'}</td>
-                                    <td style="color: var(--cyan-glow); font-weight:700;">${r.discount_pct || r[4] || 15}%</td>
-                                    <td><span style="color: var(--emerald-neon); font-weight:700;">● ${r.status || r[5]}</span></td>
-                                    <td>${r.created_by || r[6]}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-            } else if (tabName === 'decisions') {
-                const rows = dbDataCache.decisions || [];
-                container.innerHTML = `
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Audit Decision</th>
-                                <th>Authorized By</th>
-                                <th>Context</th>
-                                <th>Timestamp</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rows.map(r => `
-                                <tr>
-                                    <td>#${r.id || r[0]}</td>
-                                    <td style="color:#FFF; font-weight:600;">${r.decision || r[1]}</td>
-                                    <td><span style="color: var(--cyan-glow);">${r.made_by || r[2]}</span></td>
-                                    <td>${r.context || r[3] || 'Governance Engine'}</td>
-                                    <td>${r.created_at || r[4]}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-            }
         }
 
         function openExecutiveMemo() {
@@ -2411,45 +1981,6 @@ GROUP BY c.id, c.name, c.segment;`;
         function closeExecutiveMemo() {
             document.getElementById('memoModal').style.display = 'none';
         }
-
-        function escapeHtml(text) {
-            return (text || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }
-
-        function renderMarkdown(text) {
-            if (!text) return '';
-            let html = escapeHtml(text);
-            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-            html = html.replace(/`([^`]+)`/g, '<code style="background: rgba(0,240,255,0.08); color: var(--cyan-glow); padding: 1px 5px; border-radius: 4px; font-family: var(--font-mono); font-size: 11.5px;">$1</code>');
-            html = html.replace(/\n• (.*?)(?=\n|$)/g, '<br>&nbsp;• $1');
-            html = html.replace(/\n/g, '<br>');
-            return html;
-        }
-
-        // On initial page load, fetch live state
-        async function fetchInitialState() {
-            try {
-                const res = await fetch('/api/state');
-                const data = await res.json();
-                if (data && data.decisions && data.decisions.length > 0) {
-                    const ledger = document.getElementById('decisionLedger');
-                    ledger.innerHTML = '';
-                    data.decisions.forEach(d => {
-                        const entry = document.createElement('div');
-                        entry.className = 'decision-entry';
-                        entry.innerHTML = `
-                            <div class="decision-title">${escapeHtml(d.decision || d[1])}</div>
-                            <div class="decision-meta">${escapeHtml(d.made_by || d[2])} • ${escapeHtml(d.created_at || d[4] || '')}</div>
-                        `;
-                        ledger.appendChild(entry);
-                    });
-                }
-            } catch (e) {
-                console.log('Using default client state');
-            }
-        }
-        fetchInitialState();
     </script>
 </body>
 </html>
