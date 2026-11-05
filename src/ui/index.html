@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Revenue Desk — Financial Governance & Multi-Company Operations</title>
+    <title>Revenue Desk — 3D Autonomous Financial Governance & Multi-Company Operations</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* ── Modern Clean 2026 SaaS Light Theme ── */
+            /* ── Modern 2026 SaaS Cyber-Light Aesthetic ── */
             --bg-page: #F8FAFC;
             --bg-card: #FFFFFF;
             --bg-subtle: #F1F5F9;
@@ -54,74 +54,67 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
 
-        html, body {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: var(--font-sans);
-            background: radial-gradient(circle at 10% 10%, rgba(13, 148, 136, 0.04) 0%, transparent 40%),
-                        radial-gradient(circle at 90% 20%, rgba(37, 99, 235, 0.03) 0%, transparent 40%),
-                        var(--bg-page);
+            background: #090D16;
             color: var(--text-body);
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
+            overflow-x: hidden;
             font-size: 13px;
             line-height: 1.5;
         }
 
-        /* ── Top Navigation Bar (Fluid & Screen Adaptive) ── */
+        /* ── Persistent Floating Cyber Navigation Bar ── */
         .navbar {
-            background: #FFFFFF;
-            border-bottom: 1px solid var(--border-default);
-            height: clamp(52px, 6.5vh, 60px);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            height: clamp(54px, 7vh, 64px);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 clamp(14px, 2vw, 28px);
-            position: sticky;
+            padding: 0 clamp(16px, 2.5vw, 32px);
+            position: fixed;
             top: 0;
-            z-index: 50;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
-            flex-shrink: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
         }
 
         .nav-left {
             display: flex;
             align-items: center;
-            gap: clamp(10px, 1.2vw, 16px);
+            gap: clamp(10px, 1.2vw, 18px);
         }
 
         .brand-logo {
             display: flex;
             align-items: center;
-            gap: 9px;
+            gap: 10px;
             text-decoration: none;
-            color: var(--text-heading);
+            color: #FFFFFF;
             font-weight: 800;
-            font-size: clamp(13.5px, 1.1vw, 15px);
+            font-size: clamp(14px, 1.1vw, 16px);
             letter-spacing: -0.3px;
         }
 
         .brand-icon {
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(13, 148, 136, 0.25);
+            box-shadow: 0 0 14px rgba(13, 148, 136, 0.5);
             flex-shrink: 0;
         }
 
-        .brand-icon svg { width: 16px; height: 16px; stroke: #fff; stroke-width: 2.4; fill: none; }
+        .brand-icon svg { width: 17px; height: 17px; stroke: #fff; stroke-width: 2.4; fill: none; }
 
         /* Company Switcher Pill */
         .company-select-wrap {
@@ -132,29 +125,29 @@
             display: flex;
             align-items: center;
             gap: 7px;
-            background: var(--bg-subtle);
-            border: 1px solid var(--border-default);
-            padding: 5px 11px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 5px 12px;
             border-radius: var(--radius-sm);
             font-size: 12px;
             font-weight: 600;
-            color: var(--text-heading);
+            color: #E2E8F0;
             cursor: pointer;
             transition: all 0.15s ease;
             white-space: nowrap;
         }
 
-        .company-btn:hover { background: #E2E8F0; }
+        .company-btn:hover { background: rgba(255, 255, 255, 0.12); color: #FFFFFF; }
 
         .company-dropdown {
             position: absolute;
-            top: 110%;
+            top: 115%;
             left: 0;
             width: 260px;
-            background: #FFFFFF;
-            border: 1px solid var(--border-default);
+            background: #0F172A;
+            border: 1px solid #1E293B;
             border-radius: var(--radius-md);
-            box-shadow: var(--shadow-modal);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
             padding: 6px;
             display: none;
             flex-direction: column;
@@ -170,139 +163,82 @@
             border-radius: 6px;
             font-size: 12px;
             font-weight: 600;
-            color: var(--text-body);
+            color: #94A3B8;
             cursor: pointer;
             text-decoration: none;
             transition: 0.1s;
         }
 
-        .company-opt:hover { background: var(--bg-subtle); color: var(--brand-primary); }
-        .company-opt.active { background: var(--brand-primary-bg); color: var(--brand-primary); }
+        .company-opt:hover { background: #1E293B; color: #2DD4BF; }
+        .company-opt.active { background: rgba(13, 148, 136, 0.2); color: #2DD4BF; }
 
         .company-tag {
             font-size: 10px;
-            color: var(--text-muted);
+            color: #64748B;
             font-family: var(--font-mono);
         }
 
-        .nav-status {
+        /* 3D Journey Checkpoint Tracker */
+        .stage-nav-pill-group {
             display: flex;
             align-items: center;
-            gap: 6px;
-            background: var(--color-green-bg);
-            border: 1px solid #D1FAE5;
-            padding: 4px 10px;
+            gap: 4px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
+            padding: 3px 6px;
+        }
+
+        .stage-pill {
+            background: transparent;
+            border: none;
+            color: #64748B;
+            font-family: var(--font-mono);
             font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .stage-pill:hover { color: #E2E8F0; }
+        .stage-pill.active {
+            background: #0D9488;
+            color: #FFFFFF;
             font-weight: 700;
-            color: #047857;
-            white-space: nowrap;
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background: #10B981;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.85); }
+            box-shadow: 0 0 10px rgba(13, 148, 136, 0.5);
         }
 
         .nav-right {
             display: flex;
             align-items: center;
-            gap: clamp(6px, 0.8vw, 10px);
+            gap: clamp(8px, 1vw, 12px);
         }
 
-        /* ── Prominent Live Video Animation Pill ── */
-        .btn-live-video {
-            background: linear-gradient(135deg, #0F766E 0%, #2563EB 100%);
-            color: #FFFFFF;
-            border: none;
-            padding: 6px 13px;
-            border-radius: var(--radius-sm);
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            box-shadow: 0 2px 10px rgba(13, 148, 136, 0.28);
-            transition: all 0.15s ease;
-            white-space: nowrap;
-        }
-
-        .btn-live-video:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-        }
-
-        .video-play-pulse-icon {
-            width: 18px;
-            height: 18px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .video-play-pulse-icon svg { width: 10px; height: 10px; fill: #FFFFFF; stroke: none; margin-left: 1px; }
-
-        .badge-live-fps {
-            background: rgba(255, 255, 255, 0.25);
-            padding: 1px 5px;
-            border-radius: 10px;
-            font-size: 9.5px;
-            font-family: var(--font-mono);
-            letter-spacing: 0.3px;
-        }
-
-        .btn-tour {
-            background: #EFF6FF;
-            border: 1px solid #BFDBFE;
-            color: #1D4ED8;
+        .btn-nav-dark {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #E2E8F0;
             padding: 6px 12px;
-            border-radius: var(--radius-sm);
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.15s ease;
-            white-space: nowrap;
-        }
-
-        .btn-tour:hover { background: #DBEAFE; transform: translateY(-1px); }
-
-        .btn-nav {
-            background: #FFFFFF;
-            border: 1px solid var(--border-default);
-            color: var(--text-body);
-            padding: 6px 11px;
             border-radius: var(--radius-sm);
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             transition: all 0.15s ease;
             white-space: nowrap;
         }
 
-        .btn-nav:hover { background: var(--bg-subtle); color: var(--text-heading); }
+        .btn-nav-dark:hover { background: rgba(255, 255, 255, 0.12); color: #FFFFFF; transform: translateY(-1px); }
 
         .btn-action-primary {
-            background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
+            background: linear-gradient(135deg, #0D9488 0%, #2563EB 100%);
             border: none;
             color: #FFFFFF;
-            padding: 6px 15px;
+            padding: 7px 16px;
             border-radius: var(--radius-sm);
             font-size: 12px;
             font-weight: 700;
@@ -311,42 +247,279 @@
             align-items: center;
             gap: 6px;
             transition: all 0.15s ease;
-            box-shadow: 0 2px 8px rgba(13, 148, 136, 0.25);
+            box-shadow: 0 0 16px rgba(13, 148, 136, 0.4);
             white-space: nowrap;
         }
 
-        .btn-action-primary:hover { background: linear-gradient(135deg, #0F766E 0%, #115E59 100%); transform: translateY(-1px); }
-
-        /* ── Fluid Responsive Screen-Fitting Container ── */
-        .app-container {
-            max-width: 1520px;
-            width: 100%;
-            margin: 0 auto;
-            padding: clamp(12px, 1.6vh, 22px) clamp(14px, 2vw, 28px);
-            display: flex;
-            flex-direction: column;
-            gap: clamp(10px, 1.4vh, 18px);
-            flex: 1;
-            min-height: 0;
-            box-sizing: border-box;
+        .btn-action-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.5);
         }
 
-        /* ── Simple Focused KPI Cards ── */
+        /* ══════════════════════════════════════════════════════════════
+           ── 3D SCROLL EXPERIENCE (Sticky Pin 450vh Track) ──
+           ══════════════════════════════════════════════════════════════ */
+        #scrollExperience {
+            position: relative;
+            height: 420vh;
+            background: radial-gradient(circle at 50% 20%, #0F172A 0%, #060911 100%);
+        }
+
+        .sticky-3d-stage {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            height: 100dvh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        canvas#threeDCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* 3D Floating Narrative Cards (Synced to Scroll) */
+        .stage-overlay-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 24px;
+        }
+
+        .stage-card {
+            position: absolute;
+            max-width: 640px;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-lg);
+            padding: clamp(20px, 3vh, 32px) clamp(22px, 3vw, 36px);
+            box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.7), 0 0 30px rgba(13, 148, 136, 0.15);
+            opacity: 0;
+            transform: translateY(30px) scale(0.96);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .stage-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .stage-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(13, 148, 136, 0.18);
+            border: 1px solid rgba(45, 212, 191, 0.35);
+            color: #2DD4BF;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .stage-title {
+            font-size: clamp(24px, 3.2vw, 38px);
+            font-weight: 900;
+            color: #FFFFFF;
+            letter-spacing: -1px;
+            line-height: 1.15;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .stage-title span {
+            background: linear-gradient(135deg, #2DD4BF 0%, #38BDF8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stage-desc {
+            font-size: clamp(13px, 1.1vw, 15px);
+            color: #94A3B8;
+            line-height: 1.6;
+            max-width: 540px;
+        }
+
+        .stage-pills-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 4px;
+        }
+
+        .stage-metric-capsule {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: var(--font-mono);
+        }
+
+        .stage-metric-val {
+            font-size: 16px;
+            font-weight: 800;
+            color: #FFFFFF;
+        }
+
+        .stage-metric-lbl {
+            font-size: 10px;
+            color: #64748B;
+            text-transform: uppercase;
+        }
+
+        /* Animated Scroll Indicator */
+        .scroll-down-hint {
+            position: absolute;
+            bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #94A3B8;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            pointer-events: auto;
+            cursor: pointer;
+            animation: bounceScroll 2s infinite ease-in-out;
+            z-index: 15;
+        }
+
+        @keyframes bounceScroll {
+            0%, 100% { transform: translateY(0); opacity: 0.7; }
+            50% { transform: translateY(6px); opacity: 1; }
+        }
+
+        .mouse-icon {
+            width: 20px;
+            height: 32px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            padding-top: 6px;
+        }
+
+        .mouse-wheel {
+            width: 3px;
+            height: 6px;
+            background: #2DD4BF;
+            border-radius: 2px;
+            animation: mouseScroll 1.6s infinite;
+        }
+
+        @keyframes mouseScroll {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(10px); opacity: 0; }
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           ── THE LIVE OPERATIONS COCKPIT DECK ──
+           ══════════════════════════════════════════════════════════════ */
+        #liveOperationsDeck {
+            position: relative;
+            z-index: 20;
+            background: #F8FAFC;
+            border-top: 1px solid var(--border-default);
+            padding: clamp(24px, 4vh, 48px) clamp(16px, 2.5vw, 36px) 60px;
+            min-height: 100vh;
+        }
+
+        .deck-header-box {
+            max-width: 1480px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .deck-title-area {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .deck-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            color: #047857;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            width: fit-content;
+        }
+
+        .deck-title {
+            font-size: clamp(22px, 2.2vw, 30px);
+            font-weight: 900;
+            color: var(--text-heading);
+            letter-spacing: -0.8px;
+        }
+
+        .deck-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* App Container Grid inside Deck */
+        .app-container {
+            max-width: 1480px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* ── 3 Focused KPI Cards ── */
         .kpi-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: clamp(10px, 1.2vw, 16px);
-            flex-shrink: 0;
+            gap: 16px;
         }
 
         .kpi-card {
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-md);
-            padding: clamp(11px, 1.4vh, 16px) clamp(14px, 1.5vw, 20px);
+            padding: 16px 20px;
             display: flex;
             flex-direction: column;
-            gap: clamp(3px, 0.5vh, 6px);
+            gap: 5px;
             box-shadow: var(--shadow-card);
             position: relative;
             overflow: hidden;
@@ -358,9 +531,7 @@
         .kpi-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 3px;
         }
 
@@ -375,7 +546,7 @@
         }
 
         .kpi-label {
-            font-size: clamp(10.5px, 0.85vw, 11.5px);
+            font-size: 11px;
             font-weight: 700;
             color: var(--text-secondary);
             text-transform: uppercase;
@@ -383,8 +554,8 @@
         }
 
         .kpi-icon-pill {
-            width: clamp(26px, 2vw, 30px);
-            height: clamp(26px, 2vw, 30px);
+            width: 28px;
+            height: 28px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
@@ -395,7 +566,7 @@
         .kpi-icon-pill svg { width: 15px; height: 15px; stroke-width: 2.2; fill: none; }
 
         .kpi-num {
-            font-size: clamp(21px, 1.9vw, 28px);
+            font-size: 26px;
             font-weight: 800;
             letter-spacing: -0.8px;
             line-height: 1.1;
@@ -406,26 +577,23 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: clamp(11px, 0.8vw, 12px);
+            font-size: 11.5px;
             font-family: var(--font-mono);
             font-weight: 600;
         }
 
-        /* ── Fluid 2-Column Main Workspace ── */
+        /* ── 2-Column Main Workspace ── */
         .workspace-grid {
             display: grid;
             grid-template-columns: 1.15fr 0.85fr;
-            gap: clamp(12px, 1.4vw, 20px);
-            align-items: stretch;
-            flex: 1;
-            min-height: 0;
+            gap: 20px;
+            align-items: start;
         }
 
         .col-left {
             display: flex;
             flex-direction: column;
-            gap: clamp(10px, 1.4vh, 16px);
-            min-height: 0;
+            gap: 16px;
         }
 
         /* ── Revenue Trajectory Chart ── */
@@ -433,21 +601,18 @@
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-md);
-            padding: clamp(12px, 1.5vh, 18px) clamp(14px, 1.6vw, 22px) clamp(10px, 1.2vh, 14px);
+            padding: 18px 22px 14px;
             box-shadow: var(--shadow-card);
             position: relative;
             display: flex;
             flex-direction: column;
-            flex: 1;
-            min-height: 0;
         }
 
         .chart-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: clamp(6px, 1vh, 10px);
-            flex-shrink: 0;
+            margin-bottom: 10px;
         }
 
         .chart-title-area {
@@ -457,7 +622,7 @@
         }
 
         .chart-title {
-            font-size: clamp(12.5px, 0.95vw, 14px);
+            font-size: 13.5px;
             font-weight: 700;
             color: var(--text-heading);
         }
@@ -475,7 +640,7 @@
         .chart-legend {
             display: flex;
             align-items: center;
-            gap: clamp(8px, 1vw, 14px);
+            gap: 12px;
             font-size: 11px;
             color: var(--text-secondary);
             font-weight: 500;
@@ -486,8 +651,7 @@
 
         .canvas-area {
             width: 100%;
-            flex: 1;
-            min-height: clamp(130px, 17vh, 210px);
+            height: 200px;
             position: relative;
         }
 
@@ -509,17 +673,16 @@
             white-space: nowrap;
         }
 
-        /* ── Human Approval Gate (Policy-Safe) ── */
+        /* ── Human Approval Gate ── */
         .approval-gate-card {
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-md);
-            padding: clamp(12px, 1.4vh, 18px) clamp(14px, 1.6vw, 22px);
+            padding: 18px 22px;
             box-shadow: var(--shadow-card);
             display: flex;
             flex-direction: column;
-            gap: clamp(8px, 1.1vh, 12px);
-            flex-shrink: 0;
+            gap: 12px;
         }
 
         .gate-head {
@@ -529,7 +692,7 @@
         }
 
         .gate-title {
-            font-size: clamp(12.5px, 0.95vw, 13.5px);
+            font-size: 13.5px;
             font-weight: 700;
             color: var(--text-heading);
         }
@@ -544,12 +707,11 @@
             border-radius: 12px;
         }
 
-        /* Stepper bar inside gate */
         .stepper-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: clamp(6px, 0.9vh, 10px) 12px;
+            padding: 8px 12px;
             background: var(--bg-subtle);
             border-radius: var(--radius-sm);
         }
@@ -615,7 +777,7 @@
             background: var(--bg-subtle);
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
-            padding: clamp(8px, 1vh, 12px) 14px;
+            padding: 10px 14px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
@@ -668,11 +830,10 @@
 
         .btn-dismiss:hover { background: var(--bg-subtle); color: var(--text-heading); }
 
-        /* ── Right Column: Switch Room Collaboration (Viewport Adaptive) ── */
+        /* ── Right Column: Switch Room Collaboration ── */
         .col-right {
             display: flex;
             flex-direction: column;
-            min-height: 0;
         }
 
         .room-card {
@@ -682,15 +843,12 @@
             box-shadow: var(--shadow-card);
             display: flex;
             flex-direction: column;
-            height: 100%;
-            min-height: clamp(380px, 50vh, 600px);
-            max-height: calc(100vh - 185px);
-            max-height: calc(100dvh - 185px);
+            height: 580px;
             overflow: hidden;
         }
 
         .room-header {
-            padding: clamp(10px, 1.2vh, 14px) 18px;
+            padding: 12px 18px;
             border-bottom: 1px solid var(--border-default);
             display: flex;
             align-items: center;
@@ -702,7 +860,6 @@
         .room-title { font-size: 13.5px; font-weight: 800; color: var(--text-heading); }
         .room-subtitle { font-size: 10.5px; color: var(--text-muted); }
 
-        /* Quick starter prompts */
         .prompt-pills-bar {
             padding: 6px 14px;
             background: var(--bg-subtle);
@@ -747,7 +904,7 @@
 
         .chat-empty {
             text-align: center;
-            padding: clamp(40px, 8vh, 70px) 16px;
+            padding: 60px 16px;
             color: var(--text-muted);
             font-size: 12.5px;
             line-height: 1.6;
@@ -885,13 +1042,13 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.55);
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(5px);
             z-index: 200;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: clamp(10px, 2vw, 24px);
+            padding: 20px;
         }
 
         .modal-box {
@@ -901,7 +1058,6 @@
             max-width: 860px;
             width: 100%;
             max-height: 88vh;
-            max-height: 88dvh;
             overflow-y: auto;
             padding: 24px 28px;
             box-shadow: var(--shadow-modal);
@@ -977,337 +1133,41 @@
 
         .clean-table tr.highlight td { background: #FFFBEB; }
 
-        /* ── LIVE VIDEO ANIMATION THEATER MODAL ── */
-        .video-modal-box {
-            max-width: 960px;
-            width: 100%;
-            background: #0B0F17;
-            border: 1px solid #1E293B;
-            border-radius: var(--radius-lg);
-            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7);
-            padding: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .video-player-header {
-            background: #111827;
-            padding: 10px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #1F2937;
-        }
-
-        .video-player-title-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .video-live-pill {
-            background: #EF4444;
-            color: #FFFFFF;
-            font-size: 9.5px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            padding: 2px 7px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .video-live-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #FFFFFF;
-            animation: livePulse 1.2s infinite;
-        }
-
-        @keyframes livePulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.7); }
-        }
-
-        .video-scenario-tabs {
-            display: flex;
-            background: #1F2937;
-            padding: 3px;
-            border-radius: 6px;
-            gap: 3px;
-        }
-
-        .v-scen-btn {
-            background: transparent;
-            border: none;
-            color: #9CA3AF;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 9px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .v-scen-btn:hover { color: #FFFFFF; }
-        .v-scen-btn.active {
-            background: #0D9488;
-            color: #FFFFFF;
-            font-weight: 700;
-        }
-
-        .video-close-btn {
-            background: #1F2937;
-            border: 1px solid #374151;
-            color: #9CA3AF;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            transition: 0.15s;
-        }
-
-        .video-close-btn:hover { background: #374151; color: #FFFFFF; }
-
-        /* The 16:9 Canvas Screen */
-        .video-screen-wrapper {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            max-height: clamp(280px, 52vh, 480px);
-            background: radial-gradient(circle at 50% 50%, #0F172A 0%, #020617 100%);
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        canvas#videoCanvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .video-watermark {
-            position: absolute;
-            top: 12px;
-            left: 16px;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            pointer-events: none;
-            font-family: var(--font-mono);
-            font-size: 10.5px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .video-scene-indicator {
-            position: absolute;
-            top: 12px;
-            right: 16px;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 10.5px;
-            font-weight: 700;
-            color: #38BDF8;
-            pointer-events: none;
-        }
-
-        /* Video Controls Bar */
-        .video-controls-bar {
-            background: #0F172A;
-            border-top: 1px solid #1E293B;
-            padding: 8px 16px 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .video-scrubber-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            position: relative;
-        }
-
-        .video-scrubber {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 5px;
-            background: #334155;
-            border-radius: 4px;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .video-scrubber::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 13px;
-            height: 13px;
-            border-radius: 50%;
-            background: #0D9488;
-            box-shadow: 0 0 8px #0D9488;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        .video-scrubber::-webkit-slider-thumb:hover { transform: scale(1.3); }
-
-        .video-time-display {
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: #94A3B8;
-            min-width: 70px;
-            text-align: right;
-        }
-
-        .video-buttons-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .video-left-btns {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-vctrl {
-            background: transparent;
-            border: none;
-            color: #E2E8F0;
-            cursor: pointer;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            border-radius: 6px;
-            transition: background 0.15s;
-        }
-
-        .btn-vctrl:hover { background: #1E293B; color: #38BDF8; }
-
-        .btn-vplay {
-            background: #0D9488;
-            color: #FFFFFF;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(13, 148, 136, 0.4);
-            cursor: pointer;
-            border: none;
-            transition: all 0.15s;
-        }
-
-        .btn-vplay:hover { background: #0F766E; transform: scale(1.08); }
-        .btn-vplay svg { width: 14px; height: 14px; fill: currentColor; }
-
-        .video-chapters {
-            display: flex;
-            gap: 6px;
-        }
-
-        .v-chapter-pill {
-            background: #1E293B;
-            border: 1px solid #334155;
-            color: #94A3B8;
-            font-size: 10.5px;
-            font-weight: 600;
-            padding: 3px 9px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .v-chapter-pill:hover, .v-chapter-pill.active {
-            background: rgba(13, 148, 136, 0.25);
-            border-color: #0D9488;
-            color: #2DD4BF;
-        }
-
-        .video-right-btns {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .btn-vspeed {
-            background: #1E293B;
-            border: 1px solid #334155;
-            color: #E2E8F0;
-            font-family: var(--font-mono);
-            font-size: 10px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-vspeed:hover { background: #334155; }
-
-        /* ── Responsive Screen Fitting Breakpoints ── */
-        @media (max-height: 840px) {
-            .navbar { height: 50px; padding: 0 16px; }
-            .app-container { padding: 10px 16px; gap: 10px; }
-            .kpi-card { padding: 9px 14px; }
-            .kpi-num { font-size: 20px; }
-            .canvas-area { min-height: 130px; }
-            .room-card { min-height: 360px; max-height: calc(100vh - 160px); max-height: calc(100dvh - 160px); }
-            .stepper-row { padding: 5px 10px; }
-            .impact-grid { padding: 6px 10px; }
-        }
-
+        /* ── Breakpoints ── */
         @media (max-width: 1080px) {
             .workspace-grid { grid-template-columns: 1fr; }
-            .room-card { height: 480px; max-height: none; }
+            .room-card { height: 480px; }
+            .stage-nav-pill-group { display: none; }
         }
 
         @media (max-width: 768px) {
-            .navbar { flex-wrap: wrap; height: auto; padding: 10px 14px; gap: 8px; }
+            .navbar { padding: 0 14px; }
             .kpi-row { grid-template-columns: 1fr; }
-            .nav-status { display: none; }
-            .nav-right { flex-wrap: wrap; }
+            .company-select-wrap { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ── Top Navigation Bar ── -->
+    <!-- ── Top Fixed Navigation Bar ── -->
     <header class="navbar">
         <div class="nav-left">
-            <a href="#" class="brand-logo" onclick="location.reload(); return false;">
+            <a href="#" class="brand-logo" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">
                 <div class="brand-icon">
                     <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round"/></svg>
                 </div>
                 <span>Revenue Desk</span>
             </a>
 
-            <!-- Company Profile Switcher Dropdown (Any Company Can Use This!) -->
+            <!-- Company Switcher Pill -->
             <div class="company-select-wrap">
                 <button class="company-btn" onclick="toggleCompanyDropdown()">
                     <span id="selectedCompanyIcon">🏢</span>
                     <span id="selectedCompanyName">Acme Cloud (B2B SaaS)</span>
-                    <span style="font-size:9px; color:var(--text-muted); margin-left:3px;">▼</span>
+                    <span style="font-size:9px; color:#94A3B8; margin-left:2px;">▼</span>
                 </button>
                 <div class="company-dropdown" id="companyDropdown">
-                    <div style="font-size:10px; font-weight:700; color:var(--text-muted); padding:4px 8px; text-transform:uppercase;">Select Company Profile</div>
+                    <div style="font-size:10px; font-weight:700; color:#64748B; padding:4px 8px; text-transform:uppercase;">Select Company Profile</div>
                     <div class="company-opt active" onclick="selectCompany('Acme Cloud (B2B SaaS)', '🏢', '$112,450', '-84.2%', '-$20,430', 'West Region')">
                         <span>🏢 Acme Cloud Inc.</span>
                         <span class="company-tag">SaaS / Enterprise</span>
@@ -1320,375 +1180,317 @@
                         <span>💳 Starlight Payments</span>
                         <span class="company-tag">FinTech / Gateway</span>
                     </div>
-                    <div style="border-top:1px solid #E2E8F0; margin-top:4px; padding-top:4px;"></div>
-                    <div class="company-opt" onclick="openConnectModal()" style="color:var(--brand-primary);">
-                        <span>🔌 + Connect Your Company</span>
-                        <span class="company-tag">PG / Stripe</span>
-                    </div>
                 </div>
             </div>
 
-            <div class="nav-status">
-                <span class="status-dot"></span>
-                <span>Active Multi-Agent Governance</span>
+            <!-- 3D Scroll Journey Stage Checkpoints -->
+            <div class="stage-nav-pill-group">
+                <button class="stage-pill active" id="pill0" onclick="jumpToStage(0)">01 Nexus</button>
+                <button class="stage-pill" id="pill1" onclick="jumpToStage(1)">02 Ingestion</button>
+                <button class="stage-pill" id="pill2" onclick="jumpToStage(2)">03 Radar</button>
+                <button class="stage-pill" id="pill3" onclick="jumpToStage(3)">04 Consensus</button>
+                <button class="stage-pill" id="pill4" onclick="jumpToStage(4)">05 Live Deck</button>
             </div>
         </div>
 
         <div class="nav-right">
-            <!-- Prominent Live Video Animation Pill -->
-            <button class="btn-live-video" onclick="openVideoPlayerModal()" title="Watch Live Video Animation">
-                <div class="video-play-pulse-icon">
-                    <svg viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg>
-                </div>
-                <span>Live Video Animation</span>
-                <span class="badge-live-fps">60 FPS</span>
-            </button>
-
-            <button class="btn-tour" onclick="openTourModal()">
-                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                Tour
-            </button>
-            <button class="btn-nav" onclick="openDatabaseModal()">
+            <button class="btn-nav-dark" onclick="openDatabaseModal()">
                 <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
                 Database
             </button>
-            <button class="btn-nav" onclick="openMemoModal()">
+            <button class="btn-nav-dark" onclick="openMemoModal()">
                 <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                 Audit Memo
             </button>
-            <button class="btn-nav" onclick="resetState()">Reset</button>
-            <button class="btn-action-primary" onclick="runInvestigation()">
-                <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                Run Investigation
+            <button class="btn-action-primary" onclick="jumpToStage(4)">
+                <span>⚡ Jump to Live Operations</span>
+                <span style="font-size:14px; line-height:1;">↓</span>
             </button>
         </div>
     </header>
 
-    <!-- ── Main Workspace ── -->
-    <main class="app-container">
-
-        <!-- ── 3 Focused KPI Cards ── -->
-        <section class="kpi-row">
-            <div class="kpi-card kpi-teal">
-                <div class="kpi-top">
-                    <span class="kpi-label">Gross Revenue (October)</span>
-                    <div class="kpi-icon-pill" style="background:#ECFDF5;">
-                        <svg viewBox="0 0 24 24" style="stroke:#059669"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                    </div>
-                </div>
-                <span class="kpi-num" id="metricGross">$112,450</span>
-                <div class="kpi-sub" style="color:#059669;">
-                    <svg viewBox="0 0 12 12" width="12" height="12" style="stroke:currentColor;stroke-width:2.4;fill:none"><polyline points="1 8 4 4 7 6 11 2"/></svg>
-                    +2.4% MoM Across Transactions
-                </div>
-            </div>
-
-            <div class="kpi-card kpi-red">
-                <div class="kpi-top">
-                    <span class="kpi-label">Repeat Purchase Drop</span>
-                    <div class="kpi-icon-pill" style="background:#FEF2F2;">
-                        <svg viewBox="0 0 24 24" style="stroke:#DC2626"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
-                    </div>
-                </div>
-                <span class="kpi-num" style="color:#DC2626;" id="metricDrop">-84.2%</span>
-                <div class="kpi-sub" style="color:#DC2626;">5 Enterprise Accounts Flagged</div>
-            </div>
-
-            <div class="kpi-card kpi-amber">
-                <div class="kpi-top">
-                    <span class="kpi-label">Caught Billing Glitch</span>
-                    <div class="kpi-icon-pill" style="background:#FFFBEB;">
-                        <svg viewBox="0 0 24 24" style="stroke:#D97706"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                    </div>
-                </div>
-                <span class="kpi-num" style="color:#D97706;" id="metricNet">-$20,430</span>
-                <div class="kpi-sub" style="color:#D97706;">Duplicate Processor Refund Loop</div>
-            </div>
-        </section>
-
-        <!-- ── 2-Column Clean Workspace ── -->
-        <div class="workspace-grid">
-
-            <!-- Left: Trajectory Chart & Authorization Gate -->
-            <div class="col-left">
-
-                <!-- Chart Card -->
-                <div class="chart-box">
-                    <div class="chart-header">
-                        <div class="chart-title-area">
-                            <span class="chart-title" id="chartHeaderTitle">Revenue Trajectory & Anomaly Detection</span>
-                            <span class="chart-company-badge" id="chartBadge">West Region (Jul – Dec 2026)</span>
-                        </div>
-                        <div class="chart-legend">
-                            <div class="legend-tag"><span class="legend-bullet" style="background:#2563EB;"></span>Reported Orders</div>
-                            <div class="legend-tag"><span class="legend-bullet" style="background:#F59E0B;"></span>Glitch Loop</div>
-                            <div class="legend-tag"><span class="legend-bullet" style="background:#10B981;"></span>Win-Back Target</div>
-                        </div>
-                    </div>
-
-                    <div class="canvas-area" id="canvasAreaContainer">
-                        <canvas id="revenueCanvas"></canvas>
-                        <div class="chart-callout-pill" id="chartCallout">
-                            <span style="color:#DC2626; font-weight:800;">October Glitch:</span> -$20,430 duplicate refunds &bull; <span style="color:#059669; font-weight:800;">Real net revenue: $3,820</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Human Approval Gate -->
-                <div class="approval-gate-card">
-                    <div class="gate-head">
-                        <div>
-                            <span class="gate-title">Human-in-the-Loop Campaign Authorization</span>
-                            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Protect revenue with policy-safe discount guardrails before writing to database.</div>
-                        </div>
-                        <span class="gate-status-pill" id="gateBadge">Ready for Review</span>
-                    </div>
-
-                    <!-- Clean Linear Stepper -->
-                    <div class="stepper-row">
-                        <div class="step-item active" id="pipe1"><span class="step-bubble">1</span><span>1. Inquiry</span></div>
-                        <span style="color:#CBD5E1;">&rarr;</span>
-                        <div class="step-item" id="pipe2"><span class="step-bubble">2</span><span>2. Analyst SQL</span></div>
-                        <span style="color:#CBD5E1;">&rarr;</span>
-                        <div class="step-item" id="pipe3"><span class="step-bubble">3</span><span>3. Auditor Check</span></div>
-                        <span style="color:#CBD5E1;">&rarr;</span>
-                        <div class="step-item" id="pipe4"><span class="step-bubble">4</span><span>4. Human Approval</span></div>
-                        <span style="color:#CBD5E1;">&rarr;</span>
-                        <div class="step-item" id="pipe5"><span class="step-bubble">5</span><span>5. Commit</span></div>
-                    </div>
-
-                    <!-- Discount Slider -->
-                    <div class="slider-wrap">
-                        <div class="slider-header">
-                            <span>Adjust Renewal Incentive:</span>
-                            <span class="slider-pct" id="sliderValue">15%</span>
-                        </div>
-                        <input type="range" min="5" max="25" step="5" value="15" id="discountInput" oninput="updateDiscount(this.value)">
-                    </div>
-
-                    <!-- Impact Calculation -->
-                    <div class="impact-grid">
-                        <div class="impact-col">
-                            <span class="impact-col-lbl">Protected Pipeline</span>
-                            <span class="impact-col-val" style="color:#059669;" id="arrText">+$38,200.00</span>
-                        </div>
-                        <div class="impact-col">
-                            <span class="impact-col-lbl">Campaign Cost</span>
-                            <span class="impact-col-val" style="color:#DC2626;" id="costText">-$5,730.00</span>
-                        </div>
-                        <div class="impact-col">
-                            <span class="impact-col-lbl">Net Projected Gain</span>
-                            <span class="impact-col-val" style="color:#0F766E;" id="gainText">+$32,470.00</span>
-                        </div>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="gate-actions">
-                        <button class="btn-authorize" id="btnApprove" onclick="approveCampaign()">
-                            <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.5" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
-                            Approve & Execute Campaign
-                        </button>
-                        <button class="btn-dismiss" onclick="rejectCampaign()">Dismiss</button>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Right: Switch Room Live Agent Collaboration -->
-            <div class="col-right">
-
-                <div class="room-card">
-                    <div class="room-header">
-                        <div class="room-title-box">
-                            <span class="room-title">Switch Room — Live Multi-Agent Governance</span>
-                            <span class="room-subtitle">Analyst Agent &bull; Reviewer Auditor &bull; Consensus Engine</span>
-                        </div>
-                        <span class="nav-status"><span class="status-dot"></span>Live Stream</span>
-                    </div>
-
-                    <!-- Quick Starter Prompts -->
-                    <div class="prompt-pills-bar">
-                        <button class="prompt-pill" onclick="executeInquiry('Why did repeat purchases drop in the West region last month?')">⚡ Investigate West Drop</button>
-                        <button class="prompt-pill" onclick="executeInquiry('Audit all duplicate billing refunds and gateway glitches')">🔍 Audit Billing Glitches</button>
-                        <button class="prompt-pill" onclick="executeInquiry('Show me all enterprise customers in West region')">👥 Show Enterprise Accounts</button>
-                        <button class="prompt-pill" onclick="executeInquiry('What is the revenue breakdown by region?')">📊 Regional Revenue</button>
-                    </div>
-
-                    <div class="room-body" id="chatStream">
-                        <div class="chat-empty">
-                            Ask a business question or click <strong>"Run Investigation"</strong> above to see the agents formulate SQL, audit records, and resolve financial discrepancies in real time.
-                        </div>
-                    </div>
-
-                    <div class="room-input-wrap">
-                        <input type="text" class="room-input" id="chatInput" placeholder="Ask a business question or instruction..." onkeydown="if(event.key==='Enter') submitCustomInquiry()">
-                        <button class="room-send-btn" onclick="submitCustomInquiry()" title="Send">
-                            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </main>
-
-    <!-- ── LIVE VIDEO ANIMATION THEATER MODAL ── -->
-    <div class="modal-overlay" id="videoModal" onclick="if(event.target===this) closeVideoPlayerModal()">
-        <div class="video-modal-box">
+    <!-- ══════════════════════════════════════════════════════════════
+         ── 3D SCROLL EXPERIENCE (Sticky Pin Container) ──
+         ══════════════════════════════════════════════════════════════ -->
+    <section id="scrollExperience">
+        <div class="sticky-3d-stage">
             
-            <!-- Video Top Bar -->
-            <div class="video-player-header">
-                <div class="video-player-title-box">
-                    <span class="video-live-pill"><span class="video-live-dot"></span> SIMULATION</span>
-                    <span style="font-size:13px; font-weight:800; color:#FFFFFF;">Revenue Desk — Live Multi-Company Explainer</span>
-                </div>
+            <!-- 60FPS Perspective 3D WebGL / Canvas Stage -->
+            <canvas id="threeDCanvas"></canvas>
 
-                <!-- Scenario Switcher inside Video -->
-                <div class="video-scenario-tabs">
-                    <button class="v-scen-btn active" id="vScenSaaS" onclick="setVideoScenario('saas')">🏢 SaaS / Stripe</button>
-                    <button class="v-scen-btn" id="vScenEcom" onclick="setVideoScenario('ecom')">🛒 E-Commerce / Shopify</button>
-                    <button class="v-scen-btn" id="vScenFintech" onclick="setVideoScenario('fintech')">💳 FinTech / ACH</button>
-                </div>
-
-                <button class="video-close-btn" onclick="closeVideoPlayerModal()" title="Close Video">✕</button>
-            </div>
-
-            <!-- 16:9 Live Canvas Video Screen -->
-            <div class="video-screen-wrapper" id="videoScreenWrapper" onclick="togglePlayPause()">
-                <canvas id="videoCanvas"></canvas>
-                <div class="video-watermark">
-                    <div class="status-dot"></div>
-                    <span id="vWatermarkText">ACME CLOUD (POSTGRESQL &bull; STRIPE RECONCILIATION)</span>
-                </div>
-                <div class="video-scene-indicator" id="vSceneIndicator">Scene 1: Ingestion & Telemetry</div>
-            </div>
-
-            <!-- Video Controls Bar -->
-            <div class="video-controls-bar">
+            <!-- Floating 3D Narrative Cards (Fade in/out as user scrolls) -->
+            <div class="stage-overlay-container">
                 
-                <!-- Interactive Scrubber -->
-                <div class="video-scrubber-row">
-                    <input type="range" class="video-scrubber" id="vScrubber" min="0" max="30" step="0.05" value="0" oninput="onScrubberInput(this.value)">
-                    <span class="video-time-display" id="vTimeDisplay">0:00 / 0:30</span>
+                <!-- Stage 1 (0% - 25% Scroll): The Autonomous Revenue Nexus -->
+                <div class="stage-card visible" id="cardStage0">
+                    <div class="stage-eyebrow">⚡ 3D AUTONOMOUS REVENUE NEXUS</div>
+                    <h1 class="stage-title">Autonomous Financial Governance for <span>Modern Enterprise</span></h1>
+                    <p class="stage-desc">Where humans and autonomous AI agents collaborate to catch billing discrepancies, reconcile multi-cloud ledgers, and secure enterprise capital.</p>
+                    
+                    <div class="stage-pills-row">
+                        <div class="stage-metric-capsule">
+                            <span class="stage-metric-val" style="color:#2DD4BF;">$112,450</span>
+                            <span class="stage-metric-lbl">Gross Revenue</span>
+                        </div>
+                        <div class="stage-metric-capsule">
+                            <span class="stage-metric-val" style="color:#F87171;">-84.2%</span>
+                            <span class="stage-metric-lbl">Drop Flagged</span>
+                        </div>
+                        <div class="stage-metric-capsule">
+                            <span class="stage-metric-val" style="color:#FBBF24;">-$20,430</span>
+                            <span class="stage-metric-lbl">Caught Glitch</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Bottom Button Controls & Chapter Shortcuts -->
-                <div class="video-buttons-row">
-                    
-                    <div class="video-left-btns">
-                        <button class="btn-vplay" id="btnVideoPlay" onclick="togglePlayPause()" title="Play / Pause">
-                            <svg viewBox="0 0 24 24" id="vPlayIcon"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                <!-- Stage 2 (25% - 50% Scroll): Zero-Copy Streaming Ingestion -->
+                <div class="stage-card" id="cardStage1">
+                    <div class="stage-eyebrow">02 / ZERO-COPY INGESTION</div>
+                    <h2 class="stage-title">Streaming Ingestion Across <span>Multi-Cloud Ledgers</span></h2>
+                    <p class="stage-desc">Revenue Desk connects directly to read-only transaction streams from PostgreSQL, Stripe, Snowflake, and Shopify — processing 2,400+ transactions per second with zero schema migration.</p>
+                    <div class="stage-pills-row">
+                        <span class="stage-eyebrow" style="background:rgba(59,130,246,0.15); border-color:#3B82F6; color:#60A5FA;">🐘 PostgreSQL</span>
+                        <span class="stage-eyebrow" style="background:rgba(99,102,241,0.15); border-color:#6366F1; color:#818CF8;">💳 Stripe Billing</span>
+                        <span class="stage-eyebrow" style="background:rgba(14,165,233,0.15); border-color:#0EA5E9; color:#38BDF8;">❄️ Snowflake</span>
+                        <span class="stage-eyebrow" style="background:rgba(16,185,129,0.15); border-color:#10B981; color:#34D399;">🛒 Shopify</span>
+                    </div>
+                </div>
+
+                <!-- Stage 3 (50% - 75% Scroll): The AI Sentinel & Conflict Radar -->
+                <div class="stage-card" id="cardStage2">
+                    <div class="stage-eyebrow" style="background:rgba(239,68,68,0.2); border-color:#EF4444; color:#F87171;">03 / DEEP-SCAN TACTICAL RADAR</div>
+                    <h2 class="stage-title">AI Sentinel Detects <span>-$20,430 Duplicate Loop</span></h2>
+                    <p class="stage-desc">A naive AI panics at the gross drop and offers 20% discounts. Revenue Desk's Reviewer Agent cross-checks refund ledgers to isolate duplicate processor charges — saving your business from margin dilution.</p>
+                    <div class="stage-pills-row">
+                        <div class="stage-metric-capsule" style="border-color:#EF4444;">
+                            <span class="stage-metric-val" style="color:#EF4444;">-$20,430.00</span>
+                            <span class="stage-metric-lbl">Duplicate Processor Reversals</span>
+                        </div>
+                        <div class="stage-metric-capsule" style="border-color:#10B981;">
+                            <span class="stage-metric-val" style="color:#10B981;">$3,820.00</span>
+                            <span class="stage-metric-lbl">Certified Net Baseline</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage 4 (75% - 95% Scroll): Consensus & Policy Guardrails -->
+                <div class="stage-card" id="cardStage3">
+                    <div class="stage-eyebrow" style="background:rgba(16,185,129,0.2); border-color:#10B981; color:#34D399;">04 / MULTI-AGENT CONSENSUS</div>
+                    <h2 class="stage-title">100% Agreement & <span>Policy Guardrails</span></h2>
+                    <p class="stage-desc">Analyst and Reviewer agents reconcile records to 100% mathematical consensus. The Human Manager authorizes a policy-safe 15% renewal incentive, locking +$32,470.00 in enterprise profit.</p>
+                    <div style="margin-top:6px;">
+                        <button class="btn-action-primary" onclick="jumpToStage(4)" style="padding:10px 24px; font-size:13px;">
+                            <span>Enter Live Operations Deck</span>
+                            <span style="font-size:16px;">↓</span>
                         </button>
-                        <button class="btn-vctrl" onclick="restartVideo()" title="Restart (0s)">
-                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-                        </button>
-                        
-                        <!-- Chapter Jump Pills -->
-                        <div class="video-chapters">
-                            <button class="v-chapter-pill active" id="ch1" onclick="jumpToChapter(0)">1. Ingestion</button>
-                            <button class="v-chapter-pill" id="ch2" onclick="jumpToChapter(10)">2. Glitch Radar</button>
-                            <button class="v-chapter-pill" id="ch3" onclick="jumpToChapter(20)">3. Profit Locked</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Animated Scroll Down Indicator -->
+            <div class="scroll-down-hint" onclick="jumpToStage(1)">
+                <span>SCROLL TO EXPLORE 3D PIPELINE</span>
+                <div class="mouse-icon">
+                    <div class="mouse-wheel"></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         ── THE LIVE OPERATIONS COCKPIT DECK (Interactive Workspace) ──
+         ══════════════════════════════════════════════════════════════ -->
+    <section id="liveOperationsDeck">
+        
+        <div class="deck-header-box">
+            <div class="deck-title-area">
+                <span class="deck-badge">● LIVE INTERACTIVE SWITCH ROOM</span>
+                <h2 class="deck-title">Executive Revenue Operations & Collaborative Governance</h2>
+                <span class="deck-subtitle">Interact with real backend AI agents, tune policy thresholds, and commit certified mutations to database.</span>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-nav-dark" style="background:#FFFFFF; color:var(--text-heading); border:1px solid var(--border-default);" onclick="resetState()">Reset Demo</button>
+                <button class="btn-action-primary" onclick="runInvestigation()">
+                    <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.5" fill="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Run Live Investigation
+                </button>
+            </div>
+        </div>
+
+        <main class="app-container">
+
+            <!-- ── 3 Focused KPI Cards ── -->
+            <section class="kpi-row">
+                <div class="kpi-card kpi-teal">
+                    <div class="kpi-top">
+                        <span class="kpi-label">Gross Revenue (October)</span>
+                        <div class="kpi-icon-pill" style="background:#ECFDF5;">
+                            <svg viewBox="0 0 24 24" style="stroke:#059669"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        </div>
+                    </div>
+                    <span class="kpi-num" id="metricGross">$112,450</span>
+                    <div class="kpi-sub" style="color:#059669;">
+                        <svg viewBox="0 0 12 12" width="12" height="12" style="stroke:currentColor;stroke-width:2.4;fill:none"><polyline points="1 8 4 4 7 6 11 2"/></svg>
+                        +2.4% MoM Across Transactions
+                    </div>
+                </div>
+
+                <div class="kpi-card kpi-red">
+                    <div class="kpi-top">
+                        <span class="kpi-label">Repeat Purchase Drop</span>
+                        <div class="kpi-icon-pill" style="background:#FEF2F2;">
+                            <svg viewBox="0 0 24 24" style="stroke:#DC2626"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+                        </div>
+                    </div>
+                    <span class="kpi-num" style="color:#DC2626;" id="metricDrop">-84.2%</span>
+                    <div class="kpi-sub" style="color:#DC2626;">5 Enterprise Accounts Flagged</div>
+                </div>
+
+                <div class="kpi-card kpi-amber">
+                    <div class="kpi-top">
+                        <span class="kpi-label">Caught Billing Glitch</span>
+                        <div class="kpi-icon-pill" style="background:#FFFBEB;">
+                            <svg viewBox="0 0 24 24" style="stroke:#D97706"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                    </div>
+                    <span class="kpi-num" style="color:#D97706;" id="metricNet">-$20,430</span>
+                    <div class="kpi-sub" style="color:#D97706;">Duplicate Processor Refund Loop</div>
+                </div>
+            </section>
+
+            <!-- ── 2-Column Clean Workspace ── -->
+            <div class="workspace-grid">
+
+                <!-- Left: Trajectory Chart & Authorization Gate -->
+                <div class="col-left">
+
+                    <!-- Chart Card -->
+                    <div class="chart-box">
+                        <div class="chart-header">
+                            <div class="chart-title-area">
+                                <span class="chart-title" id="chartHeaderTitle">Revenue Trajectory & Anomaly Detection</span>
+                                <span class="chart-company-badge" id="chartBadge">West Region (Jul – Dec 2026)</span>
+                            </div>
+                            <div class="chart-legend">
+                                <div class="legend-tag"><span class="legend-bullet" style="background:#2563EB;"></span>Reported Orders</div>
+                                <div class="legend-tag"><span class="legend-bullet" style="background:#F59E0B;"></span>Glitch Loop</div>
+                                <div class="legend-tag"><span class="legend-bullet" style="background:#10B981;"></span>Win-Back Target</div>
+                            </div>
+                        </div>
+
+                        <div class="canvas-area" id="canvasAreaContainer">
+                            <canvas id="revenueCanvas"></canvas>
+                            <div class="chart-callout-pill" id="chartCallout">
+                                <span style="color:#DC2626; font-weight:800;">October Glitch:</span> -$20,430 duplicate refunds &bull; <span style="color:#059669; font-weight:800;">Real net revenue: $3,820</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="video-right-btns">
-                        <button class="btn-vspeed" id="btnSoundFx" onclick="toggleSoundFx()" title="Toggle High-Tech Audio FX">🔊 FX: ON</button>
-                        <button class="btn-vspeed" id="btnSpeed" onclick="cycleVideoSpeed()">1.0x</button>
+                    <!-- Human Approval Gate -->
+                    <div class="approval-gate-card">
+                        <div class="gate-head">
+                            <div>
+                                <span class="gate-title">Human-in-the-Loop Campaign Authorization</span>
+                                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Protect revenue with policy-safe discount guardrails before writing to database.</div>
+                            </div>
+                            <span class="gate-status-pill" id="gateBadge">Ready for Review</span>
+                        </div>
+
+                        <!-- Clean Linear Stepper -->
+                        <div class="stepper-row">
+                            <div class="step-item active" id="pipe1"><span class="step-bubble">1</span><span>1. Inquiry</span></div>
+                            <span style="color:#CBD5E1;">&rarr;</span>
+                            <div class="step-item" id="pipe2"><span class="step-bubble">2</span><span>2. Analyst SQL</span></div>
+                            <span style="color:#CBD5E1;">&rarr;</span>
+                            <div class="step-item" id="pipe3"><span class="step-bubble">3</span><span>3. Auditor Check</span></div>
+                            <span style="color:#CBD5E1;">&rarr;</span>
+                            <div class="step-item" id="pipe4"><span class="step-bubble">4</span><span>4. Human Approval</span></div>
+                            <span style="color:#CBD5E1;">&rarr;</span>
+                            <div class="step-item" id="pipe5"><span class="step-bubble">5</span><span>5. Commit</span></div>
+                        </div>
+
+                        <!-- Discount Slider -->
+                        <div class="slider-wrap">
+                            <div class="slider-header">
+                                <span>Adjust Renewal Incentive:</span>
+                                <span class="slider-pct" id="sliderValue">15%</span>
+                            </div>
+                            <input type="range" min="5" max="25" step="5" value="15" id="discountInput" oninput="updateDiscount(this.value)">
+                        </div>
+
+                        <!-- Impact Calculation -->
+                        <div class="impact-grid">
+                            <div class="impact-col">
+                                <span class="impact-col-lbl">Protected Pipeline</span>
+                                <span class="impact-col-val" style="color:#059669;" id="arrText">+$38,200.00</span>
+                            </div>
+                            <div class="impact-col">
+                                <span class="impact-col-lbl">Campaign Cost</span>
+                                <span class="impact-col-val" style="color:#DC2626;" id="costText">-$5,730.00</span>
+                            </div>
+                            <div class="impact-col">
+                                <span class="impact-col-lbl">Net Projected Gain</span>
+                                <span class="impact-col-val" style="color:#0F766E;" id="gainText">+$32,470.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="gate-actions">
+                            <button class="btn-authorize" id="btnApprove" onclick="approveCampaign()">
+                                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.5" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
+                                Approve & Execute Campaign
+                            </button>
+                            <button class="btn-dismiss" onclick="rejectCampaign()">Dismiss</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right: Switch Room Live Agent Collaboration -->
+                <div class="col-right">
+
+                    <div class="room-card">
+                        <div class="room-header">
+                            <div class="room-title-box">
+                                <span class="room-title">Switch Room — Live Multi-Agent Governance</span>
+                                <span class="room-subtitle">Analyst Agent &bull; Reviewer Auditor &bull; Consensus Engine</span>
+                            </div>
+                            <span style="display:flex; align-items:center; gap:6px; background:#ECFDF5; border:1px solid #D1FAE5; padding:3px 9px; border-radius:12px; font-size:10.5px; font-weight:700; color:#047857;">
+                                <span style="width:6px; height:6px; background:#10B981; border-radius:50%;"></span>
+                                Live Stream
+                            </span>
+                        </div>
+
+                        <!-- Quick Starter Prompts -->
+                        <div class="prompt-pills-bar">
+                            <button class="prompt-pill" onclick="executeInquiry('Why did repeat purchases drop in the West region last month?')">⚡ Investigate West Drop</button>
+                            <button class="prompt-pill" onclick="executeInquiry('Audit all duplicate billing refunds and gateway glitches')">🔍 Audit Billing Glitches</button>
+                            <button class="prompt-pill" onclick="executeInquiry('Show me all enterprise customers in West region')">👥 Show Enterprise Accounts</button>
+                            <button class="prompt-pill" onclick="executeInquiry('What is the revenue breakdown by region?')">📊 Regional Revenue</button>
+                        </div>
+
+                        <div class="room-body" id="chatStream">
+                            <div class="chat-empty">
+                                Ask a business question or click <strong>"Run Live Investigation"</strong> above to see the agents formulate SQL, audit records, and resolve financial discrepancies in real time.
+                            </div>
+                        </div>
+
+                        <div class="room-input-wrap">
+                            <input type="text" class="room-input" id="chatInput" placeholder="Ask a business question or instruction..." onkeydown="if(event.key==='Enter') submitCustomInquiry()">
+                            <button class="room-send-btn" onclick="submitCustomInquiry()" title="Send">
+                                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            </button>
+                        </div>
                     </div>
 
                 </div>
 
             </div>
 
-        </div>
-    </div>
-
-    <!-- ── Static Step-by-Step Tour Modal ── -->
-    <div class="modal-overlay" id="tourModal" onclick="if(event.target===this) closeTourModal()">
-        <div class="modal-box" style="max-width:760px;">
-            <button class="modal-close-btn" onclick="closeTourModal()">✕</button>
-            <div class="modal-title">How Any Company Can Use Revenue Desk</div>
-            <div class="modal-subtitle">Autonomous financial governance in 3 simple, safe steps:</div>
-
-            <!-- Slide 1 -->
-            <div class="tour-slide active" id="tourSlide1">
-                <div style="background:radial-gradient(circle at 50% 50%, rgba(13, 148, 136, 0.08) 0%, #F8FAFC 80%); border:1px solid var(--border-default); border-radius:12px; padding:28px 20px; display:flex; justify-content:center; align-items:center; gap:20px; margin-bottom:14px;">
-                    <div style="background:#fff; border:1px solid #E2E8F0; padding:10px 16px; border-radius:8px; font-weight:700;">🐘 PostgreSQL / Stripe</div>
-                    <div style="color:#0D9488; font-size:20px; font-weight:bold;">&rarr;</div>
-                    <div style="background:#F0FDFA; border:1px solid #0D9488; padding:10px 16px; border-radius:8px; font-weight:700; color:#0D9488;">⚡ Revenue Desk Stream</div>
-                </div>
-                <h4 style="font-size:14px; color:var(--text-heading); margin-bottom:4px;">1. Connect Your Production Data Sources</h4>
-                <p style="font-size:12.5px; color:var(--text-secondary); line-height:1.6;">Plug in your existing billing databases (Stripe, PostgreSQL, Snowflake, or QuickBooks). Revenue Desk queries read-only transaction ledgers with zero migration required.</p>
-            </div>
-
-            <!-- Slide 2 -->
-            <div class="tour-slide" id="tourSlide2" style="display:none;">
-                <div style="background:radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.08) 0%, #F8FAFC 80%); border:1px solid var(--border-default); border-radius:12px; padding:28px 20px; display:flex; justify-content:center; align-items:center; gap:20px; margin-bottom:14px;">
-                    <div style="background:#EFF6FF; border:1px solid #BFDBFE; padding:10px 16px; border-radius:8px; font-weight:700; color:#1D4ED8;">🔍 Analyst Agent</div>
-                    <div style="color:#F59E0B; font-size:20px; font-weight:bold;">&harr;</div>
-                    <div style="background:#FFFBEB; border:1px solid #FDE68A; padding:10px 16px; border-radius:8px; font-weight:700; color:#D97706;">🛡️ Reviewer Auditor</div>
-                </div>
-                <h4 style="font-size:14px; color:var(--text-heading); margin-bottom:4px;">2. Autonomous Dual-Agent Cross Verification</h4>
-                <p style="font-size:12.5px; color:var(--text-secondary); line-height:1.6;">Single AIs often hallucinate. Revenue Desk pairs an Analyst with an independent Auditor who cross-checks refund records, catching $20K+ glitches before panic discounts occur.</p>
-            </div>
-
-            <!-- Slide 3 -->
-            <div class="tour-slide" id="tourSlide3" style="display:none;">
-                <div style="background:radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.08) 0%, #F8FAFC 80%); border:1px solid var(--border-default); border-radius:12px; padding:28px 20px; display:flex; justify-content:center; align-items:center; gap:20px; margin-bottom:14px;">
-                    <div style="background:#ECFDF5; border:1px solid #A7F3D0; padding:10px 16px; border-radius:8px; font-weight:700; color:#059669;">👤 Human Approval Gate</div>
-                    <div style="color:#10B981; font-size:20px; font-weight:bold;">&rarr;</div>
-                    <div style="background:#fff; border:1px solid #E2E8F0; padding:10px 16px; border-radius:8px; font-weight:700;">📜 Certified Audit Ledger</div>
-                </div>
-                <h4 style="font-size:14px; color:var(--text-heading); margin-bottom:4px;">3. Safe Human Execution & Audit Compliance</h4>
-                <p style="font-size:12.5px; color:var(--text-secondary); line-height:1.6;">The AI never spends money autonomously. Human managers set discount boundaries, authorize verified actions, and generate 1-click audit memorandums ready for CFOs and board reviews.</p>
-            </div>
-
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; border-top:1px solid var(--border-default); padding-top:14px;">
-                <div style="display:flex; gap:6px;">
-                    <span class="v-chapter-pill active" id="tDot1" onclick="goTourSlide(1)">Step 1</span>
-                    <span class="v-chapter-pill" id="tDot2" onclick="goTourSlide(2)">Step 2</span>
-                    <span class="v-chapter-pill" id="tDot3" onclick="goTourSlide(3)">Step 3</span>
-                </div>
-                <div style="display:flex; gap:8px;">
-                    <button class="btn-nav" id="btnTourPrev" onclick="prevTourSlide()" style="display:none;">Previous</button>
-                    <button class="btn-action-primary" id="btnTourNext" onclick="nextTourSlide()">Next Step &rarr;</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── Connect Your Company Modal ── -->
-    <div class="modal-overlay" id="connectModal" onclick="if(event.target===this) closeConnectModal()">
-        <div class="modal-box" style="max-width:580px;">
-            <button class="modal-close-btn" onclick="closeConnectModal()">✕</button>
-            <div class="modal-title">Connect Your Company Data</div>
-            <div class="modal-subtitle">Hook up your sales & transaction databases to run Revenue Desk:</div>
-
-            <div style="display:flex; flex-direction:column; gap:14px;">
-                <div>
-                    <label style="font-size:12px; font-weight:700; color:var(--text-heading); margin-bottom:6px; display:block;">Select Primary Database / Provider:</label>
-                    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
-                        <button class="btn-nav" style="justify-content:center; border-color:var(--brand-primary); background:var(--brand-primary-bg); color:var(--brand-primary);">🐘 PostgreSQL</button>
-                        <button class="btn-nav" style="justify-content:center;">⚡ Supabase</button>
-                        <button class="btn-nav" style="justify-content:center;">💳 Stripe Billing</button>
-                    </div>
-                </div>
-
-                <div>
-                    <label style="font-size:12px; font-weight:700; color:var(--text-heading); margin-bottom:6px; display:block;">Database Connection URI or API Key:</label>
-                    <input type="text" class="room-input" value="postgresql://postgres:••••••••@aws-0-us-west-1.pooler.supabase.com:6543/postgres" readonly style="background:#F8FAFC; color:#64748B;">
-                </div>
-
-                <div style="background:#ECFDF5; border:1px solid #A7F3D0; border-radius:8px; padding:12px; font-size:12px; color:#047857;">
-                    ✅ <strong>Active Connection Verified:</strong> Connected to live PostgreSQL & local SQLite mirror with 160 orders and 80 customer accounts.
-                </div>
-
-                <button class="btn-action-primary" style="justify-content:center; padding:10px 0;" onclick="closeConnectModal()">Save & Return to Command Center</button>
-            </div>
-        </div>
-    </div>
+        </main>
+    </section>
 
     <!-- ── Database Explorer Modal ── -->
     <div class="modal-overlay" id="dbModal" onclick="if(event.target===this) closeDatabaseModal()">
@@ -1739,7 +1541,386 @@
     <script>
         let discount = 15;
         let cachedDbData = null;
-        let currentTourSlide = 1;
+
+        /* ── 3D Scroll State & Physics Engine ── */
+        let scrollProgress = 0.0;
+        let targetScrollProgress = 0.0;
+        let animTime = 0.0;
+
+        // 3D Particles
+        const particles3D = [];
+        for (let i = 0; i < 60; i++) {
+            particles3D.push({
+                x: (Math.random() - 0.5) * 800,
+                y: (Math.random() - 0.5) * 500,
+                z: (Math.random() - 0.5) * 800,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                vz: (Math.random() - 0.5) * 0.4,
+                color: Math.random() > 0.5 ? 'rgba(45, 212, 191,' : 'rgba(56, 189, 248,'
+            });
+        }
+
+        // Orbiting Source Nodes in 3D
+        const sourceNodes3D = [
+            { name: 'PostgreSQL', icon: '🐘', angle: 0, dist: 280, y: -40, color: '#38BDF8' },
+            { name: 'Stripe Billing', icon: '💳', angle: Math.PI * 0.5, dist: 280, y: 30, color: '#818CF8' },
+            { name: 'Snowflake', icon: '❄️', angle: Math.PI, dist: 280, y: -20, color: '#38BDF8' },
+            { name: 'Shopify Store', icon: '🛒', angle: Math.PI * 1.5, dist: 280, y: 50, color: '#34D399' }
+        ];
+
+        function init3DCanvas() {
+            const canvas = document.getElementById('threeDCanvas');
+            if (!canvas) return;
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = Math.round(window.innerWidth * dpr);
+            canvas.height = Math.round(window.innerHeight * dpr);
+        }
+
+        window.addEventListener('resize', init3DCanvas);
+        window.addEventListener('DOMContentLoaded', init3DCanvas);
+
+        // Update scroll tracker
+        function updateScroll() {
+            const track = document.getElementById('scrollExperience');
+            if (!track) return;
+            const rect = track.getBoundingClientRect();
+            const totalDist = track.offsetHeight - window.innerHeight;
+            if (totalDist <= 0) return;
+            const currentDist = -rect.top;
+            const rawProgress = Math.max(0, Math.min(1, currentDist / totalDist));
+            targetScrollProgress = rawProgress;
+        }
+
+        window.addEventListener('scroll', updateScroll, { passive: true });
+
+        function jumpToStage(idx) {
+            const track = document.getElementById('scrollExperience');
+            if (!track) return;
+            if (idx === 4) {
+                document.getElementById('liveOperationsDeck').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            const totalDist = track.offsetHeight - window.innerHeight;
+            const checkpoints = [0.0, 0.28, 0.58, 0.85];
+            const targetY = track.offsetTop + checkpoints[idx] * totalDist;
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+        }
+
+        /* ── 3D Projection Math Engine ── */
+        function project3D(x, y, z, rotX, rotY, rotZ, cx, cy, f = 650) {
+            // Y-rotation
+            let x1 = x * Math.cos(rotY) + z * Math.sin(rotY);
+            let z1 = -x * Math.sin(rotY) + z * Math.cos(rotY);
+
+            // X-rotation
+            let y1 = y * Math.cos(rotX) - z1 * Math.sin(rotX);
+            let z2 = y * Math.sin(rotX) + z1 * Math.cos(rotX);
+
+            // Z-rotation
+            let x2 = x1 * Math.cos(rotZ) - y1 * Math.sin(rotZ);
+            let y2 = x1 * Math.sin(rotZ) + y1 * Math.cos(rotZ);
+
+            const cameraDist = 800;
+            const scale = f / (f + z2 + cameraDist);
+            return {
+                sx: cx + x2 * scale,
+                sy: cy + y2 * scale,
+                scale: scale,
+                depth: z2
+            };
+        }
+
+        /* ── Main 60FPS 3D Render Loop ── */
+        function render3DLoop() {
+            animTime += 0.016;
+            // Smooth lerp scroll progress
+            scrollProgress += (targetScrollProgress - scrollProgress) * 0.09;
+
+            const canvas = document.getElementById('threeDCanvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                const dpr = window.devicePixelRatio || 1;
+                const w = canvas.width / dpr;
+                const h = canvas.height / dpr;
+                ctx.resetTransform ? ctx.resetTransform() : ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.scale(dpr, dpr);
+
+                // Deep Cyber Void Background with dynamic horizon lighting
+                const bgGrad = ctx.createRadialGradient(w / 2, h * 0.45, 50, w / 2, h * 0.5, Math.max(w, h));
+                bgGrad.addColorStop(0, '#0F172A');
+                bgGrad.addColorStop(0.6, '#080C14');
+                bgGrad.addColorStop(1, '#030509');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, w, h);
+
+                const cx = w * 0.5;
+                const cy = h * 0.52;
+
+                // Camera angles driven smoothly by scroll progress
+                // As user scrolls: camera tilts, rotates, and zooms into the anomaly, then pulls back into consensus
+                const camRotX = 0.42 + Math.sin(scrollProgress * Math.PI) * 0.35 + Math.sin(animTime * 0.5) * 0.04;
+                const camRotY = animTime * 0.2 + scrollProgress * Math.PI * 1.5;
+                const camRotZ = Math.sin(scrollProgress * Math.PI * 2) * 0.08;
+
+                // 1. Draw 3D Perspective Grid Floor
+                const gridY = 160;
+                ctx.strokeStyle = 'rgba(13, 148, 136, 0.14)';
+                ctx.lineWidth = 1;
+                const gridSize = 70;
+                const gridRange = 600;
+
+                for (let gx = -gridRange; gx <= gridRange; gx += gridSize) {
+                    const p1 = project3D(gx, gridY, -gridRange, camRotX, camRotY, camRotZ, cx, cy);
+                    const p2 = project3D(gx, gridY, gridRange, camRotX, camRotY, camRotZ, cx, cy);
+                    if (p1.scale > 0 && p2.scale > 0) {
+                        ctx.beginPath();
+                        ctx.moveTo(p1.sx, p1.sy);
+                        ctx.lineTo(p2.sx, p2.sy);
+                        ctx.stroke();
+                    }
+                }
+
+                for (let gz = -gridRange; gz <= gridRange; gz += gridSize) {
+                    const p1 = project3D(-gridRange, gridY, gz, camRotX, camRotY, camRotZ, cx, cy);
+                    const p2 = project3D(gridRange, gridY, gz, camRotX, camRotY, camRotZ, cx, cy);
+                    if (p1.scale > 0 && p2.scale > 0) {
+                        ctx.beginPath();
+                        ctx.moveTo(p1.sx, p1.sy);
+                        ctx.lineTo(p2.sx, p2.sy);
+                        ctx.stroke();
+                    }
+                }
+
+                // 2. Floating 3D Starfield / Data Particles
+                particles3D.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.z += p.vz;
+                    if (p.x > 400) p.x = -400; if (p.x < -400) p.x = 400;
+                    if (p.y > 250) p.y = -250; if (p.y < -250) p.y = 250;
+                    if (p.z > 400) p.z = -400; if (p.z < -400) p.z = 400;
+
+                    const proj = project3D(p.x, p.y, p.z, camRotX, camRotY, camRotZ, cx, cy);
+                    if (proj.scale > 0) {
+                        const alpha = Math.min(1, Math.max(0.15, proj.scale * 1.5));
+                        ctx.fillStyle = p.color + alpha + ')';
+                        ctx.beginPath();
+                        ctx.arc(proj.sx, proj.sy, Math.max(1, 2.5 * proj.scale), 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                });
+
+                // 3. Central 3D Core / Holographic Rings
+                // Inner rotating 3D Ring 1
+                ctx.lineWidth = 2.5;
+                for (let ring = 0; ring < 3; ring++) {
+                    const rRadius = 90 + ring * 35;
+                    const rTiltX = camRotX + (ring === 0 ? animTime * 0.8 : -animTime * 0.6);
+                    const rTiltY = camRotY + (ring === 1 ? animTime * 0.9 : 0);
+                    ctx.strokeStyle = ring === 0 ? 'rgba(45, 212, 191, 0.45)' : ring === 1 ? 'rgba(56, 189, 248, 0.3)' : 'rgba(129, 140, 248, 0.25)';
+                    ctx.beginPath();
+                    const segments = 32;
+                    for (let s = 0; s <= segments; s++) {
+                        const theta = (s / segments) * Math.PI * 2;
+                        const rx = Math.cos(theta) * rRadius;
+                        const rz = Math.sin(theta) * rRadius;
+                        const proj = project3D(rx, 0, rz, rTiltX, rTiltY, camRotZ, cx, cy);
+                        if (s === 0) ctx.moveTo(proj.sx, proj.sy);
+                        else ctx.lineTo(proj.sx, proj.sy);
+                    }
+                    ctx.stroke();
+                }
+
+                // 4. Orbiting Multi-Cloud System Nodes (Stage 1 & 2 emphasis)
+                sourceNodes3D.forEach((node, i) => {
+                    const curAngle = node.angle + animTime * 0.3;
+                    const nx = Math.cos(curAngle) * node.dist;
+                    const nz = Math.sin(curAngle) * node.dist;
+                    const ny = node.y + Math.sin(animTime * 2 + i) * 15;
+
+                    const pNode = project3D(nx, ny, nz, camRotX, camRotY, camRotZ, cx, cy);
+                    const pCenter = project3D(0, 0, 0, camRotX, camRotY, camRotZ, cx, cy);
+
+                    if (pNode.scale > 0 && pCenter.scale > 0) {
+                        // Connecting 3D Laser Conduit
+                        ctx.beginPath();
+                        ctx.moveTo(pNode.sx, pNode.sy);
+                        ctx.lineTo(pCenter.sx, pCenter.sy);
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${0.15 + pNode.scale * 0.25})`;
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+
+                        // Streaming packet along conduit
+                        const packetT = (animTime * 0.7 + i * 0.25) % 1;
+                        const px = nx * (1 - packetT);
+                        const py = ny * (1 - packetT);
+                        const pz = nz * (1 - packetT);
+                        const pPacket = project3D(px, py, pz, camRotX, camRotY, camRotZ, cx, cy);
+                        if (pPacket.scale > 0) {
+                            ctx.fillStyle = '#2DD4BF';
+                            ctx.beginPath();
+                            ctx.arc(pPacket.sx, pPacket.sy, 3.5 * pPacket.scale, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+
+                        // 3D Node Cube / Capsule
+                        const nodeSize = 34 * pNode.scale;
+                        ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+                        ctx.strokeStyle = node.color;
+                        ctx.lineWidth = 2 * pNode.scale;
+                        ctx.beginPath();
+                        ctx.roundRect(pNode.sx - nodeSize, pNode.sy - nodeSize * 0.6, nodeSize * 2, nodeSize * 1.2, 6 * pNode.scale);
+                        ctx.fill();
+                        ctx.stroke();
+
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.font = `bold ${Math.max(9, Math.round(11 * pNode.scale))}px "Plus Jakarta Sans", sans-serif`;
+                        ctx.textAlign = 'center';
+                        ctx.fillText(`${node.icon} ${node.name}`, pNode.sx, pNode.sy + 3 * pNode.scale);
+                    }
+                });
+
+                // 5. Stage 3 (0.45 - 0.75): Tactical 3D Conflict Radar & Glitch Blip
+                if (scrollProgress >= 0.40 && scrollProgress <= 0.80) {
+                    const radarAlpha = Math.sin((scrollProgress - 0.40) / 0.40 * Math.PI);
+                    const radarSweep = animTime * 3;
+
+                    // 3D Radar Circle
+                    const rRadius = 180;
+                    ctx.strokeStyle = `rgba(239, 68, 68, ${0.4 * radarAlpha})`;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    for (let s = 0; s <= 32; s++) {
+                        const theta = (s / 32) * Math.PI * 2;
+                        const rx = Math.cos(theta) * rRadius;
+                        const rz = Math.sin(theta) * rRadius;
+                        const proj = project3D(rx, 40, rz, camRotX, camRotY, camRotZ, cx, cy);
+                        if (s === 0) ctx.moveTo(proj.sx, proj.sy);
+                        else ctx.lineTo(proj.sx, proj.sy);
+                    }
+                    ctx.stroke();
+
+                    // Anomaly Position in 3D
+                    const ax = 90 + Math.sin(animTime * 2) * 5;
+                    const ay = 20;
+                    const az = 70;
+                    const pAnomaly = project3D(ax, ay, az, camRotX, camRotY, camRotZ, cx, cy);
+
+                    if (pAnomaly.scale > 0) {
+                        // Pulsing red shockwaves
+                        const pulseR = (animTime * 40 % 50) + 10;
+                        ctx.strokeStyle = `rgba(239, 68, 68, ${(1 - pulseR / 60) * radarAlpha})`;
+                        ctx.lineWidth = 2.5;
+                        ctx.beginPath();
+                        ctx.arc(pAnomaly.sx, pAnomaly.sy, pulseR * pAnomaly.scale, 0, Math.PI * 2);
+                        ctx.stroke();
+
+                        // Anomaly Tag Box in 3D
+                        ctx.fillStyle = `rgba(185, 28, 28, ${0.9 * radarAlpha})`;
+                        ctx.strokeStyle = `rgba(248, 113, 113, ${radarAlpha})`;
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.roundRect(pAnomaly.sx - 90 * pAnomaly.scale, pAnomaly.sy - 18 * pAnomaly.scale, 180 * pAnomaly.scale, 36 * pAnomaly.scale, 6);
+                        ctx.fill();
+                        ctx.stroke();
+
+                        ctx.fillStyle = '#FFFFFF';
+                        ctx.font = `bold ${Math.max(9, Math.round(11 * pAnomaly.scale))}px "JetBrains Mono", monospace`;
+                        ctx.textAlign = 'center';
+                        ctx.fillText('⚠️ DUPLICATE REFUND LOOP', pAnomaly.sx, pAnomaly.sy - 2 * pAnomaly.scale);
+                        ctx.fillStyle = '#FECACA';
+                        ctx.font = `${Math.max(8, Math.round(9.5 * pAnomaly.scale))}px "JetBrains Mono", monospace`;
+                        ctx.fillText('-$20,430.00 ISOLATED', pAnomaly.sx, pAnomaly.sy + 10 * pAnomaly.scale);
+                    }
+                }
+
+                // 6. Stage 4 (0.70 - 0.98): 3D Emerald Diamond / Consensus Shield
+                if (scrollProgress >= 0.68) {
+                    const shieldAlpha = Math.min(1, (scrollProgress - 0.68) / 0.15);
+                    const diamondH = 75;
+                    const diamondW = 45;
+
+                    // 3D Emerald Octahedron
+                    const vertices = [
+                        { x: 0, y: -diamondH, z: 0 },
+                        { x: diamondW, y: 0, z: 0 },
+                        { x: 0, y: 0, z: diamondW },
+                        { x: -diamondW, y: 0, z: 0 },
+                        { x: 0, y: 0, z: -diamondW },
+                        { x: 0, y: diamondH, z: 0 }
+                    ];
+
+                    const pVerts = vertices.map(v => project3D(v.x, v.y + Math.sin(animTime * 3) * 8, v.z, camRotX, camRotY + animTime * 1.2, camRotZ, cx, cy));
+
+                    ctx.strokeStyle = `rgba(52, 211, 153, ${0.85 * shieldAlpha})`;
+                    ctx.lineWidth = 2.5;
+                    const edges = [
+                        [0,1],[0,2],[0,3],[0,4],
+                        [5,1],[5,2],[5,3],[5,4],
+                        [1,2],[2,3],[3,4],[4,1]
+                    ];
+
+                    edges.forEach(e => {
+                        const vA = pVerts[e[0]], vB = pVerts[e[1]];
+                        if (vA.scale > 0 && vB.scale > 0) {
+                            ctx.beginPath();
+                            ctx.moveTo(vA.sx, vA.sy);
+                            ctx.lineTo(vB.sx, vB.sy);
+                            ctx.stroke();
+                        }
+                    });
+
+                    // Expanding Green Shockwaves
+                    const pCenter = pVerts[1];
+                    const waveR = (animTime * 50 % 90) + 20;
+                    ctx.strokeStyle = `rgba(16, 185, 129, ${(1 - waveR / 110) * shieldAlpha})`;
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, waveR, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+            }
+
+            // Sync HTML Narrative Cards visibility based on scroll
+            updateNarrativeCards(scrollProgress);
+
+            requestAnimationFrame(render3DLoop);
+        }
+
+        requestAnimationFrame(render3DLoop);
+
+        function updateNarrativeCards(progress) {
+            const cards = [
+                document.getElementById('cardStage0'),
+                document.getElementById('cardStage1'),
+                document.getElementById('cardStage2'),
+                document.getElementById('cardStage3')
+            ];
+
+            let activeCardIdx = 0;
+            if (progress < 0.22) activeCardIdx = 0;
+            else if (progress >= 0.22 && progress < 0.48) activeCardIdx = 1;
+            else if (progress >= 0.48 && progress < 0.72) activeCardIdx = 2;
+            else activeCardIdx = 3;
+
+            cards.forEach((card, idx) => {
+                if (!card) return;
+                if (idx === activeCardIdx && progress < 0.96) {
+                    card.classList.add('visible');
+                } else {
+                    card.classList.remove('visible');
+                }
+            });
+
+            // Update top stage pills
+            let activePillIdx = activeCardIdx;
+            if (progress >= 0.95) activePillIdx = 4;
+            for (let i = 0; i <= 4; i++) {
+                const pill = document.getElementById('pill' + i);
+                if (pill) {
+                    pill.className = 'stage-pill' + (i === activePillIdx ? ' active' : '');
+                }
+            }
+        }
 
         /* ── Company Profile Switcher ── */
         function toggleCompanyDropdown() {
@@ -1763,15 +1944,10 @@
             document.getElementById('chartBadge').innerText = region + ' (Jul – Dec 2026)';
             document.getElementById('companyDropdown').style.display = 'none';
 
-            // Also synchronize video player scenario if open
-            if (name.includes('Retail')) setVideoScenario('ecom');
-            else if (name.includes('Pay')) setVideoScenario('fintech');
-            else setVideoScenario('saas');
-
             renderChart();
         }
 
-        /* ── Revenue Trajectory Chart with High-DPI & ResizeObserver ── */
+        /* ── Revenue Trajectory Chart ── */
         function renderChart() {
             const canvas = document.getElementById('revenueCanvas');
             if (!canvas) return;
@@ -1890,7 +2066,6 @@
             ctx.stroke();
         }
 
-        // Attach ResizeObserver so chart always resizes fluidly
         window.addEventListener('DOMContentLoaded', () => {
             renderChart();
             const area = document.getElementById('canvasAreaContainer');
@@ -1950,7 +2125,10 @@
         }
 
         function runInvestigation() {
-            executeInquiry("Why did repeat purchases drop in the West region last month?");
+            jumpToStage(4);
+            setTimeout(() => {
+                executeInquiry("Why did repeat purchases drop in the West region last month?");
+            }, 300);
         }
 
         function formatMarkdown(text) {
@@ -2091,638 +2269,6 @@
         function escapeHtml(text) {
             return (text || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
-
-        /* ── 60FPS LIVE VIDEO ANIMATION ENGINE ── */
-        let vIsPlaying = false;
-        let vCurrentTime = 0.0;
-        const vDuration = 30.0;
-        let vPlaybackSpeed = 1.0;
-        let vAnimFrameId = null;
-        let vLastTimestamp = null;
-        let vScenario = 'saas'; // 'saas' | 'ecom' | 'fintech'
-        let soundFxEnabled = true;
-        let audioCtx = null;
-        let lastPlayedCue = -1;
-
-        // Particle system for video
-        let streamParticles = [];
-        for (let i = 0; i < 40; i++) {
-            streamParticles.push({
-                x: Math.random(),
-                lane: Math.floor(Math.random() * 4),
-                speed: 0.15 + Math.random() * 0.25,
-                size: 2 + Math.random() * 2.5,
-                alpha: 0.3 + Math.random() * 0.7
-            });
-        }
-
-        // Radar radar state
-        let radarAngle = 0;
-
-        function openVideoPlayerModal() {
-            const modal = document.getElementById('videoModal');
-            modal.style.display = 'flex';
-            vIsPlaying = true;
-            vLastTimestamp = null;
-            updatePlayIcon();
-            resizeVideoCanvas();
-            startVideoLoop();
-        }
-
-        function closeVideoPlayerModal() {
-            const modal = document.getElementById('videoModal');
-            modal.style.display = 'none';
-            vIsPlaying = false;
-            updatePlayIcon();
-            if (vAnimFrameId) cancelAnimationFrame(vAnimFrameId);
-        }
-
-        function togglePlayPause() {
-            vIsPlaying = !vIsPlaying;
-            vLastTimestamp = null;
-            updatePlayIcon();
-            if (vIsPlaying) startVideoLoop();
-        }
-
-        function updatePlayIcon() {
-            const icon = document.getElementById('vPlayIcon');
-            if (vIsPlaying) {
-                icon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
-            } else {
-                icon.innerHTML = '<polygon points="6 4 20 12 6 20 6 4"/>';
-            }
-        }
-
-        function restartVideo() {
-            vCurrentTime = 0;
-            vLastTimestamp = null;
-            lastPlayedCue = -1;
-            document.getElementById('vScrubber').value = 0;
-            updateTimeDisplay();
-            if (!vIsPlaying) {
-                vIsPlaying = true;
-                updatePlayIcon();
-                startVideoLoop();
-            }
-        }
-
-        function onScrubberInput(val) {
-            vCurrentTime = parseFloat(val);
-            vLastTimestamp = null;
-            updateTimeDisplay();
-            drawVideoFrame();
-        }
-
-        function jumpToChapter(sec) {
-            vCurrentTime = sec;
-            vLastTimestamp = null;
-            document.getElementById('vScrubber').value = sec;
-            updateTimeDisplay();
-            drawVideoFrame();
-        }
-
-        function cycleVideoSpeed() {
-            if (vPlaybackSpeed === 1.0) vPlaybackSpeed = 1.5;
-            else if (vPlaybackSpeed === 1.5) vPlaybackSpeed = 2.0;
-            else vPlaybackSpeed = 1.0;
-            document.getElementById('btnSpeed').innerText = vPlaybackSpeed.toFixed(1) + 'x';
-        }
-
-        function toggleSoundFx() {
-            soundFxEnabled = !soundFxEnabled;
-            const btn = document.getElementById('btnSoundFx');
-            btn.innerText = soundFxEnabled ? '🔊 FX: ON' : '🔇 FX: OFF';
-            btn.style.color = soundFxEnabled ? '#E2E8F0' : '#64748B';
-        }
-
-        function playSynthesizedSound(type) {
-            if (!soundFxEnabled) return;
-            try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-
-                const now = audioCtx.currentTime;
-                if (type === 'radar') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(580, now);
-                    osc.frequency.exponentialRampToValueAtTime(320, now + 0.18);
-                    gain.gain.setValueAtTime(0.08, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-                    osc.start(now);
-                    osc.stop(now + 0.18);
-                } else if (type === 'glitch') {
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(220, now);
-                    osc.frequency.setValueAtTime(180, now + 0.08);
-                    gain.gain.setValueAtTime(0.12, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-                    osc.start(now);
-                    osc.stop(now + 0.25);
-                } else if (type === 'success') {
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(523.25, now); // C5
-                    osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
-                    osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
-                    gain.gain.setValueAtTime(0.12, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
-                    osc.start(now);
-                    osc.stop(now + 0.45);
-                }
-            } catch (e) {}
-        }
-
-        function setVideoScenario(scen) {
-            vScenario = scen;
-            ['vScenSaaS', 'vScenEcom', 'vScenFintech'].forEach(id => {
-                const b = document.getElementById(id);
-                if (b) b.className = 'v-scen-btn' + (id.toLowerCase().includes(scen) ? ' active' : '');
-            });
-
-            const wm = document.getElementById('vWatermarkText');
-            if (scen === 'saas') wm.innerText = 'ACME CLOUD (POSTGRESQL • STRIPE RECONCILIATION)';
-            else if (scen === 'ecom') wm.innerText = 'NOVA DIRECT (SHOPIFY • RETURNS WAREHOUSE AUDIT)';
-            else wm.innerText = 'STARLIGHT PAY (ACH GATEWAY • SETTLEMENT LEDGER)';
-
-            drawVideoFrame();
-        }
-
-        function updateTimeDisplay() {
-            const min = Math.floor(vCurrentTime / 60);
-            const sec = Math.floor(vCurrentTime % 60);
-            const dMin = Math.floor(vDuration / 60);
-            const dSec = Math.floor(vDuration % 60);
-            document.getElementById('vTimeDisplay').innerText = 
-                `${min}:${sec < 10 ? '0' : ''}${sec} / ${dMin}:${dSec < 10 ? '0' : ''}${dSec}`;
-
-            // Chapter highlight
-            ['ch1', 'ch2', 'ch3'].forEach((id, idx) => {
-                const el = document.getElementById(id);
-                if (!el) return;
-                const isActive = (idx === 0 && vCurrentTime < 10) || 
-                                 (idx === 1 && vCurrentTime >= 10 && vCurrentTime < 20) || 
-                                 (idx === 2 && vCurrentTime >= 20);
-                el.className = 'v-chapter-pill' + (isActive ? ' active' : '');
-            });
-
-            // Scene indicator
-            const ind = document.getElementById('vSceneIndicator');
-            if (vCurrentTime < 10) ind.innerText = 'Scene 1: Ingestion & Telemetry';
-            else if (vCurrentTime < 20) ind.innerText = 'Scene 2: Conflict & Radar Anomaly';
-            else ind.innerText = 'Scene 3: Consensus & Profit Locked';
-        }
-
-        function resizeVideoCanvas() {
-            const canvas = document.getElementById('videoCanvas');
-            if (!canvas) return;
-            const wrap = document.getElementById('videoScreenWrapper');
-            const dpr = window.devicePixelRatio || 1;
-            const rect = wrap.getBoundingClientRect();
-            if (rect.width === 0) return;
-            canvas.width = Math.round(rect.width * dpr);
-            canvas.height = Math.round(rect.height * dpr);
-        }
-
-        function startVideoLoop() {
-            if (vAnimFrameId) cancelAnimationFrame(vAnimFrameId);
-            function loop(timestamp) {
-                if (!vIsPlaying) return;
-                if (!vLastTimestamp) vLastTimestamp = timestamp;
-                const dt = (timestamp - vLastTimestamp) / 1000;
-                vLastTimestamp = timestamp;
-
-                vCurrentTime += dt * vPlaybackSpeed;
-                if (vCurrentTime >= vDuration) {
-                    vCurrentTime = vDuration;
-                    vIsPlaying = false;
-                    updatePlayIcon();
-                }
-
-                document.getElementById('vScrubber').value = vCurrentTime;
-                updateTimeDisplay();
-                drawVideoFrame();
-
-                if (vIsPlaying) {
-                    vAnimFrameId = requestAnimationFrame(loop);
-                }
-            }
-            vAnimFrameId = requestAnimationFrame(loop);
-        }
-
-        /* ── Canvas Rendering Engine (60 FPS Vector Animations) ── */
-        function drawVideoFrame() {
-            const canvas = document.getElementById('videoCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const dpr = window.devicePixelRatio || 1;
-            const w = canvas.width / dpr;
-            const h = canvas.height / dpr;
-            ctx.resetTransform ? ctx.resetTransform() : ctx.setTransform(1, 0, 0, 1, 0, 0);
-            ctx.scale(dpr, dpr);
-
-            // Dark sci-fi gradient background
-            const bgGrad = ctx.createRadialGradient(w / 2, h / 2, 40, w / 2, h / 2, w * 0.7);
-            bgGrad.addColorStop(0, '#0F172A');
-            bgGrad.addColorStop(1, '#020617');
-            ctx.fillStyle = bgGrad;
-            ctx.fillRect(0, 0, w, h);
-
-            // Subtle cyber grid
-            ctx.strokeStyle = 'rgba(30, 41, 59, 0.4)';
-            ctx.lineWidth = 1;
-            const gridSize = 32;
-            for (let x = 0; x < w; x += gridSize) {
-                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
-            }
-            for (let y = 0; y < h; y += gridSize) {
-                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
-            }
-
-            // Audio Cue Triggering
-            const cue = Math.floor(vCurrentTime);
-            if (cue !== lastPlayedCue) {
-                lastPlayedCue = cue;
-                if (cue === 10 || cue === 12) playSynthesizedSound('glitch');
-                else if (cue === 20 || cue === 22) playSynthesizedSound('success');
-                else if (cue % 3 === 0 && cue < 10) playSynthesizedSound('radar');
-            }
-
-            // ══════════════════════════════════════════════════════════════
-            // SCENE 1: INGESTION & MULTI-SYSTEM TELEMETRY (0s - 10s)
-            // ══════════════════════════════════════════════════════════════
-            if (vCurrentTime < 10.0) {
-                const progress = vCurrentTime / 10.0;
-
-                // Central Hub: Revenue Desk Core
-                const hubX = w * 0.68;
-                const hubY = h * 0.5;
-
-                // Outer pulsing rings
-                const pulseR = 48 + Math.sin(vCurrentTime * 4) * 5;
-                ctx.beginPath();
-                ctx.arc(hubX, hubY, pulseR, 0, Math.PI * 2);
-                ctx.strokeStyle = 'rgba(13, 148, 136, 0.35)';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.arc(hubX, hubY, pulseR + 14, 0, Math.PI * 2);
-                ctx.strokeStyle = 'rgba(37, 99, 235, 0.2)';
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-
-                // Central Hub Body
-                ctx.fillStyle = '#0F766E';
-                ctx.beginPath();
-                ctx.arc(hubX, hubY, 36, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.strokeStyle = '#2DD4BF';
-                ctx.lineWidth = 2.5;
-                ctx.stroke();
-
-                // Hub Text
-                ctx.fillStyle = '#FFFFFF';
-                ctx.font = 'bold 11px "Plus Jakarta Sans", sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('REVENUE DESK', hubX, hubY - 4);
-                ctx.font = '9px "JetBrains Mono", monospace';
-                ctx.fillStyle = '#CCFBF1';
-                ctx.fillText('CORE ENGINE', hubX, hubY + 10);
-
-                // Source systems on Left
-                const sources = vScenario === 'saas' 
-                    ? [ { name: 'PostgreSQL DB', icon: '🐘', sub: 'Orders & ARR' },
-                        { name: 'Stripe Billing', icon: '💳', sub: 'Gateway Invoices' },
-                        { name: 'Snowflake', icon: '❄️', sub: 'Data Warehouse' },
-                        { name: 'Salesforce CRM', icon: '☁️', sub: 'Enterprise Deals' } ]
-                    : vScenario === 'ecom'
-                    ? [ { name: 'Shopify Store', icon: '🛒', sub: 'Checkout Webhooks' },
-                        { name: 'Warehouse WMS', icon: '📦', sub: 'Return Scans' },
-                        { name: 'PayPal Gateway', icon: '🅿️', sub: 'Chargebacks' },
-                        { name: 'ERP Inventory', icon: '📑', sub: 'SKU Reconcile' } ]
-                    : [ { name: 'ACH Fedwire', icon: '🏛️', sub: 'Batch Batches' },
-                        { name: 'Core Ledger', icon: '💳', sub: 'Double-Entry' },
-                        { name: 'Risk Scoring', icon: '🛡️', sub: 'KYC & Fraud' },
-                        { name: 'Payout API', icon: '⚡', sub: 'Merchant Rails' } ];
-
-                const laneSpacing = (h - 60) / 4;
-
-                sources.forEach((src, idx) => {
-                    const srcX = w * 0.16;
-                    const srcY = 40 + idx * laneSpacing;
-
-                    // Draw connecting conduit wire to central hub
-                    ctx.beginPath();
-                    ctx.moveTo(srcX + 50, srcY);
-                    ctx.bezierCurveTo(srcX + 160, srcY, hubX - 120, hubY, hubX, hubY);
-                    ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
-
-                    // Source Box
-                    ctx.fillStyle = '#1E293B';
-                    ctx.strokeStyle = '#334155';
-                    ctx.lineWidth = 1.5;
-                    ctx.beginPath();
-                    ctx.roundRect(srcX - 55, srcY - 18, 120, 36, 6);
-                    ctx.fill();
-                    ctx.stroke();
-
-                    ctx.fillStyle = '#FFFFFF';
-                    ctx.font = 'bold 11px "Plus Jakarta Sans", sans-serif';
-                    ctx.textAlign = 'left';
-                    ctx.fillText(`${src.icon} ${src.name}`, srcX - 48, srcY - 2);
-                    ctx.fillStyle = '#94A3B8';
-                    ctx.font = '9px "JetBrains Mono", monospace';
-                    ctx.fillText(src.sub, srcX - 48, srcY + 11);
-                });
-
-                // Animate floating streaming packets
-                streamParticles.forEach(p => {
-                    p.x += p.speed * 0.015;
-                    if (p.x > 1) p.x = 0;
-                    const srcY = 40 + p.lane * laneSpacing;
-                    const srcX = w * 0.16 + 50;
-
-                    // Bezier interpolation
-                    const t = p.x;
-                    const cp1x = srcX + 110, cp1y = srcY;
-                    const cp2x = hubX - 120, cp2y = hubY;
-                    const bx = Math.pow(1-t, 3)*srcX + 3*Math.pow(1-t, 2)*t*cp1x + 3*(1-t)*Math.pow(t, 2)*cp2x + Math.pow(t, 3)*hubX;
-                    const by = Math.pow(1-t, 3)*srcY + 3*Math.pow(1-t, 2)*t*cp1y + 3*(1-t)*Math.pow(t, 2)*cp2y + Math.pow(t, 3)*hubY;
-
-                    ctx.beginPath();
-                    ctx.arc(bx, by, p.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(56, 189, 248, ${p.alpha})`;
-                    ctx.fill();
-                });
-
-                // Top Metric Telemetry Banner
-                const rate = Math.floor(2400 + Math.sin(vCurrentTime * 8) * 350);
-                ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-                ctx.strokeStyle = '#334155';
-                ctx.beginPath();
-                ctx.roundRect(w * 0.5 - 160, h - 38, 320, 26, 6);
-                ctx.fill();
-                ctx.stroke();
-                ctx.fillStyle = '#38BDF8';
-                ctx.font = 'bold 10px "JetBrains Mono", monospace';
-                ctx.textAlign = 'center';
-                ctx.fillText(`STREAMING: ${rate} txns/sec • ZERO-COPY READ REPLICAS`, w * 0.5, h - 22);
-            }
-
-            // ══════════════════════════════════════════════════════════════
-            // SCENE 2: CONFLICT RADAR & ANOMALY DETECTION (10s - 20s)
-            // ══════════════════════════════════════════════════════════════
-            else if (vCurrentTime >= 10.0 && vCurrentTime < 20.0) {
-                radarAngle += 0.05 * vPlaybackSpeed;
-                const rX = w * 0.5;
-                const rY = h * 0.44;
-                const radius = Math.min(w, h) * 0.38;
-
-                // Radar rings
-                [0.3, 0.6, 0.9, 1.0].forEach(frac => {
-                    ctx.beginPath();
-                    ctx.arc(rX, rY, radius * frac, 0, Math.PI * 2);
-                    ctx.strokeStyle = 'rgba(13, 148, 136, 0.2)';
-                    ctx.lineWidth = 1;
-                    ctx.stroke();
-                });
-
-                // Crosshairs
-                ctx.beginPath();
-                ctx.moveTo(rX - radius, rY); ctx.lineTo(rX + radius, rY);
-                ctx.moveTo(rX, rY - radius); ctx.lineTo(rX, rY + radius);
-                ctx.strokeStyle = 'rgba(13, 148, 136, 0.15)';
-                ctx.stroke();
-
-                // Sweeping phosphor cone
-                const coneGrad = ctx.createRadialGradient(rX, rY, 0, rX, rY, radius);
-                coneGrad.addColorStop(0, 'rgba(13, 148, 136, 0.35)');
-                coneGrad.addColorStop(1, 'rgba(13, 148, 136, 0.0)');
-
-                ctx.save();
-                ctx.beginPath();
-                ctx.moveTo(rX, rY);
-                ctx.arc(rX, rY, radius, radarAngle, radarAngle + 0.45);
-                ctx.closePath();
-                ctx.fillStyle = coneGrad;
-                ctx.fill();
-                ctx.restore();
-
-                // Two Inspecting Agent Avatars
-                // Analyst (Left)
-                const aX = w * 0.18, aY = h * 0.38;
-                ctx.fillStyle = '#1E3A8A';
-                ctx.beginPath();
-                ctx.arc(aX, aY, 26, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.strokeStyle = '#3B82F6';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-                ctx.fillStyle = '#FFFFFF';
-                ctx.font = 'bold 11px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('ANALYST', aX, aY + 4);
-
-                // Auditor (Right)
-                const revX = w * 0.82, revY = h * 0.38;
-                ctx.fillStyle = '#78350F';
-                ctx.beginPath();
-                ctx.arc(revX, revY, 26, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.strokeStyle = '#F59E0B';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-                ctx.fillStyle = '#FFFFFF';
-                ctx.font = 'bold 11px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('AUDITOR', revX, revY + 4);
-
-                // Scanning laser beams pointing toward anomaly
-                const anomalyX = rX + Math.sin(vCurrentTime * 3) * 12;
-                const anomalyY = rY + 35;
-
-                ctx.strokeStyle = 'rgba(59, 130, 246, 0.6)';
-                ctx.lineWidth = 2;
-                ctx.beginPath(); ctx.moveTo(aX, aY); ctx.lineTo(anomalyX, anomalyY); ctx.stroke();
-
-                ctx.strokeStyle = 'rgba(245, 158, 11, 0.6)';
-                ctx.lineWidth = 2;
-                ctx.beginPath(); ctx.moveTo(revX, revY); ctx.lineTo(anomalyX, anomalyY); ctx.stroke();
-
-                // Pulsing Red Anomaly Target
-                const shockR = 18 + (vCurrentTime * 8 % 24);
-                ctx.beginPath();
-                ctx.arc(anomalyX, anomalyY, shockR, 0, Math.PI * 2);
-                ctx.strokeStyle = `rgba(239, 68, 68, ${1 - (shockR - 18) / 24})`;
-                ctx.lineWidth = 2.5;
-                ctx.stroke();
-
-                // Red Target Box
-                ctx.fillStyle = 'rgba(153, 27, 27, 0.9)';
-                ctx.strokeStyle = '#EF4444';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.roundRect(anomalyX - 110, anomalyY - 18, 220, 36, 8);
-                ctx.fill();
-                ctx.stroke();
-
-                ctx.fillStyle = '#FFFFFF';
-                ctx.font = 'bold 11px "JetBrains Mono", monospace';
-                ctx.textAlign = 'center';
-                ctx.fillText('⚠️ DISCREPANCY DETECTED', anomalyX, anomalyY - 2);
-
-                const anomalyLabel = vScenario === 'saas' ? 'DUPLICATE REFUND LOOP: -$20,430'
-                                   : vScenario === 'ecom' ? 'UNRECORDED RETURN BATCH: -$34,200'
-                                   : 'SETTLEMENT LATENCY DRIFT: -$51,600';
-                ctx.fillStyle = '#FECACA';
-                ctx.font = '9.5px "JetBrains Mono", monospace';
-                ctx.fillText(anomalyLabel, anomalyX, anomalyY + 11);
-
-                // Bottom Callout Card
-                ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
-                ctx.strokeStyle = '#EF4444';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.roundRect(w * 0.5 - 200, h - 42, 400, 30, 6);
-                ctx.fill();
-                ctx.stroke();
-                ctx.fillStyle = '#F87171';
-                ctx.font = 'bold 10px "JetBrains Mono", monospace';
-                ctx.fillText('CROSS-CHECK: Gross drop was not churn — it was a payment gateway glitch.', w * 0.5, h - 23);
-            }
-
-            // ══════════════════════════════════════════════════════════════
-            // SCENE 3: CONSENSUS & PROFIT LOCKED (20s - 30s)
-            // ══════════════════════════════════════════════════════════════
-            else {
-                const cX = w * 0.5;
-                const cY = h * 0.45;
-
-                // Victory shockwaves
-                const waveR = (vCurrentTime * 14 % 60) + 40;
-                ctx.beginPath();
-                ctx.arc(cX, cY, waveR, 0, Math.PI * 2);
-                ctx.strokeStyle = `rgba(16, 185, 129, ${0.8 - (waveR - 40) / 60})`;
-                ctx.lineWidth = 3;
-                ctx.stroke();
-
-                // Golden Green Shield / Diamond
-                ctx.fillStyle = '#065F46';
-                ctx.strokeStyle = '#10B981';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                ctx.moveTo(cX, cY - 48);
-                ctx.lineTo(cX + 55, cY);
-                ctx.lineTo(cX, cY + 48);
-                ctx.lineTo(cX - 55, cY);
-                ctx.closePath();
-                ctx.fill();
-                ctx.stroke();
-
-                // Shield Text
-                ctx.fillStyle = '#FFFFFF';
-                ctx.font = 'bold 12px "Plus Jakarta Sans", sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('100% CONSENSUS', cX, cY - 6);
-                ctx.fillStyle = '#6EE7B7';
-                ctx.font = 'bold 10px "JetBrains Mono", monospace';
-                ctx.fillText('ALIGNED & LOCKED', cX, cY + 12);
-
-                // Confetti / Particle Stars
-                for (let k = 0; k < 18; k++) {
-                    const ang = k * (Math.PI * 2 / 18) + (vCurrentTime * 0.5);
-                    const dist = 75 + Math.sin(vCurrentTime * 4 + k) * 16;
-                    const starX = cX + Math.cos(ang) * dist;
-                    const starY = cY + Math.sin(ang) * dist;
-                    ctx.fillStyle = k % 2 === 0 ? '#10B981' : '#F59E0B';
-                    ctx.beginPath();
-                    ctx.arc(starX, starY, 3, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                // Two converged agents
-                ctx.fillStyle = '#0F172A';
-                ctx.strokeStyle = '#10B981';
-                ctx.beginPath();
-                ctx.roundRect(w * 0.14, cY - 20, 110, 40, 8);
-                ctx.fill(); ctx.stroke();
-                ctx.fillStyle = '#10B981';
-                ctx.font = 'bold 10px sans-serif';
-                ctx.fillText('✓ Analyst Aligned', w * 0.14 + 55, cY + 4);
-
-                ctx.fillStyle = '#0F172A';
-                ctx.strokeStyle = '#10B981';
-                ctx.beginPath();
-                ctx.roundRect(w * 0.86 - 110, cY - 20, 110, 40, 8);
-                ctx.fill(); ctx.stroke();
-                ctx.fillStyle = '#10B981';
-                ctx.font = 'bold 10px sans-serif';
-                ctx.fillText('✓ Auditor Certified', w * 0.86 - 55, cY + 4);
-
-                // Main Impact Recovery Banner
-                const recoveryAmt = vScenario === 'saas' ? '+$32,470.00 NET PROFIT LOCKED'
-                                  : vScenario === 'ecom' ? '+$48,150.00 RECOVERED REVENUE'
-                                  : '+$67,800.00 SETTLED CAPITAL';
-                ctx.fillStyle = 'rgba(6, 78, 59, 0.95)';
-                ctx.strokeStyle = '#34D399';
-                ctx.lineWidth = 1.5;
-                ctx.beginPath();
-                ctx.roundRect(w * 0.5 - 220, h - 48, 440, 36, 8);
-                ctx.fill();
-                ctx.stroke();
-
-                ctx.fillStyle = '#FFFFFF';
-                ctx.font = 'bold 12.5px "JetBrains Mono", monospace';
-                ctx.textAlign = 'center';
-                ctx.fillText(recoveryAmt, w * 0.5, h - 25);
-            }
-        }
-
-        // Attach resize observer for video canvas
-        window.addEventListener('resize', () => {
-            if (document.getElementById('videoModal').style.display === 'flex') {
-                resizeVideoCanvas();
-                drawVideoFrame();
-            }
-        });
-
-        /* ── Tour Modal Controls ── */
-        function openTourModal() { document.getElementById('tourModal').style.display = 'flex'; goTourSlide(1); }
-        function closeTourModal() { document.getElementById('tourModal').style.display = 'none'; }
-
-        function goTourSlide(n) {
-            currentTourSlide = n;
-            for (let i = 1; i <= 3; i++) {
-                const s = document.getElementById('tourSlide' + i);
-                if (s) s.style.display = i === n ? 'block' : 'none';
-                const d = document.getElementById('tDot' + i);
-                if (d) d.className = 'v-chapter-pill' + (i === n ? ' active' : '');
-            }
-            document.getElementById('btnTourPrev').style.display = n === 1 ? 'none' : 'inline-flex';
-            document.getElementById('btnTourNext').innerText = n === 3 ? 'Finish & Start' : 'Next Step →';
-        }
-
-        function nextTourSlide() {
-            if (currentTourSlide < 3) goTourSlide(currentTourSlide + 1);
-            else closeTourModal();
-        }
-
-        function prevTourSlide() {
-            if (currentTourSlide > 1) goTourSlide(currentTourSlide - 1);
-        }
-
-        /* ── Connect Modal Controls ── */
-        function openConnectModal() {
-            document.getElementById('companyDropdown').style.display = 'none';
-            document.getElementById('connectModal').style.display = 'flex';
-        }
-        function closeConnectModal() { document.getElementById('connectModal').style.display = 'none'; }
 
         /* ── Database Modal Controls ── */
         async function openDatabaseModal() {
