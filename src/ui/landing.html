@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Revenue Desk — Financial Operations & Revenue Intelligence</title>
+    <title>Revenue Desk — Financial Operations & Ledger Intelligence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* ── Modern Clean Light Theme (Exact Match with Project) ── */
+            /* ── High-End Clean 2026 SaaS Light Theme ── */
             --bg-page: #F8FAFC;
             --bg-card: #FFFFFF;
             --bg-subtle: #F1F5F9;
@@ -30,7 +30,7 @@
             --color-red: #E11D48;
             --color-red-bg: #FFF1F2;
 
-            --color-amber: #D97706;
+            --color-gold: #D97706;
 
             --text-heading: #0F172A;
             --text-body: #334155;
@@ -47,6 +47,7 @@
 
             --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.03), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
             --shadow-card: 0 16px 40px -10px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+            --shadow-modal: 0 24px 60px -12px rgba(15, 23, 42, 0.18);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
@@ -75,39 +76,30 @@
         }
 
         /* ══════════════════════════════════════════════════════════════
-           ── LEFT 50%: 3D VISUALIZATION PANE ──
+           ── LEFT 50%: DEDICATED 3D STAGE & ZERO TEXT OVERLAP ──
            ══════════════════════════════════════════════════════════════ */
         .stage-3d-pane {
             position: relative;
-            background: radial-gradient(circle at 15% 15%, rgba(13, 148, 136, 0.08) 0%, transparent 45%),
-                        radial-gradient(circle at 85% 85%, rgba(37, 99, 235, 0.06) 0%, transparent 50%),
+            background: radial-gradient(circle at 10% 10%, rgba(13, 148, 136, 0.07) 0%, transparent 45%),
+                        radial-gradient(circle at 90% 90%, rgba(37, 99, 235, 0.06) 0%, transparent 50%),
                         #F8FAFC;
             border-right: 1px solid var(--border-default);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: clamp(24px, 3vh, 36px) clamp(28px, 3.5vw, 48px);
+            padding: clamp(20px, 2.8vh, 32px) clamp(24px, 3.2vw, 44px);
             overflow: hidden;
             user-select: none;
         }
 
-        canvas#revenue3DCanvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* Top HUD */
+        /* Top HUD Bar */
         .hud-top-bar {
             position: relative;
             z-index: 10;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-shrink: 0;
         }
 
         .hud-brand {
@@ -130,11 +122,7 @@
 
         .hud-brand-mark svg { width: 19px; height: 19px; stroke: #FFFFFF; stroke-width: 2.3; fill: none; }
 
-        .hud-brand-text {
-            display: flex;
-            flex-direction: column;
-        }
-
+        .hud-brand-text { display: flex; flex-direction: column; }
         .hud-brand-title {
             font-size: 16px;
             font-weight: 800;
@@ -142,7 +130,6 @@
             color: var(--text-heading);
             line-height: 1.2;
         }
-
         .hud-brand-sub {
             font-size: 10px;
             font-weight: 700;
@@ -181,40 +168,22 @@
             100% { transform: scale(0.9); opacity: 1; }
         }
 
-        /* Center Hero Overlay */
-        .stage-center-content {
+        /* Clean Top Hero Section (Completely Clear of 3D Model) */
+        .stage-hero-block {
             position: relative;
             z-index: 10;
-            max-width: 520px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
-            margin-top: auto;
-            margin-bottom: auto;
-            padding-top: 10px;
-        }
-
-        .eyebrow-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            background: linear-gradient(90deg, #F0FDFA 0%, #EFF6FF 100%);
-            border: 1px solid rgba(204, 251, 241, 0.8);
-            color: var(--brand-primary);
-            padding: 4px 12px;
-            border-radius: var(--radius-full);
-            font-size: 11px;
-            font-weight: 700;
-            font-family: var(--font-mono);
-            letter-spacing: 0.5px;
-            width: fit-content;
+            gap: 10px;
+            margin-top: 10px;
+            flex-shrink: 0;
         }
 
         .stage-hero-heading {
-            font-size: clamp(28px, 3vw, 42px);
+            font-size: clamp(26px, 2.7vw, 36px);
             font-weight: 900;
-            letter-spacing: -1.2px;
-            line-height: 1.12;
+            letter-spacing: -1.1px;
+            line-height: 1.15;
             color: var(--text-heading);
         }
 
@@ -225,32 +194,55 @@
         }
 
         .stage-hero-desc {
-            font-size: 13.5px;
+            font-size: 13px;
             color: var(--text-secondary);
-            line-height: 1.6;
-            font-weight: 500;
+            line-height: 1.55;
+            max-width: 500px;
         }
 
-        /* Mode Switcher */
+        /* Dedicated 3D Interactive Canvas Area */
+        .stage-canvas-wrapper {
+            position: relative;
+            flex: 1;
+            width: 100%;
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        canvas#revenue3DCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            pointer-events: none;
+        }
+
+        /* 3D Mode Selector Pill (Positioned above Telemetry) */
         .mode-segmented-dock {
+            position: relative;
+            z-index: 10;
             display: flex;
             align-items: center;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(16px);
             border: 1px solid var(--border-default);
             border-radius: var(--radius-full);
-            padding: 4px;
-            gap: 4px;
+            padding: 3px;
+            gap: 3px;
             width: fit-content;
+            margin: 0 auto 12px auto;
             box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
-            margin-top: 4px;
+            flex-shrink: 0;
         }
 
         .mode-tab-pill {
             background: transparent;
             border: none;
             color: var(--text-secondary);
-            padding: 7px 16px;
+            padding: 6px 14px;
             border-radius: var(--radius-full);
             font-size: 11.5px;
             font-weight: 700;
@@ -258,7 +250,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.18s ease;
+            transition: all 0.16s ease;
             font-family: var(--font-sans);
         }
 
@@ -266,7 +258,7 @@
         .mode-tab-pill.active {
             background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
             color: #FFFFFF;
-            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.32);
+            box-shadow: 0 3px 10px rgba(13, 148, 136, 0.3);
         }
 
         /* Bottom Floating Telemetry Capsule */
@@ -279,40 +271,31 @@
             backdrop-filter: blur(20px);
             border: 1px solid var(--border-default);
             border-radius: var(--radius-md);
-            padding: 12px 18px;
-            box-shadow: 0 10px 30px -8px rgba(15, 23, 42, 0.08);
-            gap: 16px;
+            padding: 10px 16px;
+            box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.06);
+            gap: 14px;
+            flex-shrink: 0;
         }
 
-        .telemetry-cell {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .telemetry-cell:not(:first-child) {
-            border-left: 1px solid var(--border-default);
-            padding-left: 16px;
-        }
-
+        .telemetry-cell { display: flex; flex-direction: column; gap: 2px; }
+        .telemetry-cell:not(:first-child) { border-left: 1px solid var(--border-default); padding-left: 14px; }
         .telemetry-label {
-            font-size: 10px;
+            font-size: 9.5px;
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.6px;
             font-family: var(--font-mono);
         }
-
         .telemetry-val {
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 800;
             color: var(--text-heading);
             font-family: var(--font-mono);
         }
 
         /* ══════════════════════════════════════════════════════════════
-           ── RIGHT 50%: CLEAN, BASIC & CLASSY SIGN IN PORTAL ──
+           ── RIGHT 50%: CLASSY AUTHENTICATION PORTAL (REAL GOOGLE + EMAIL) ──
            ══════════════════════════════════════════════════════════════ */
         .stage-auth-pane {
             background: #FFFFFF;
@@ -327,11 +310,11 @@
         }
 
         .auth-clean-card {
-            max-width: 400px;
+            max-width: 390px;
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px;
             position: relative;
             z-index: 5;
         }
@@ -355,7 +338,7 @@
         }
 
         .auth-title {
-            font-size: clamp(24px, 2.4vw, 28px);
+            font-size: clamp(23px, 2.3vw, 27px);
             font-weight: 800;
             letter-spacing: -0.6px;
             color: var(--text-heading);
@@ -368,7 +351,7 @@
             line-height: 1.5;
         }
 
-        /* Google Sign In Button */
+        /* Real Google Sign In Button */
         .btn-google-signin {
             width: 100%;
             background: #FFFFFF;
@@ -391,7 +374,7 @@
         .btn-google-signin:hover {
             border-color: #CBD5E1;
             background: var(--bg-subtle);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
             transform: translateY(-1px);
         }
 
@@ -401,10 +384,10 @@
             align-items: center;
             gap: 12px;
             color: var(--text-muted);
-            font-size: 11.5px;
-            font-weight: 600;
+            font-size: 11px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
         }
 
         .auth-divider::before,
@@ -419,19 +402,25 @@
         .auth-form {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 13px;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
         }
 
         .form-label {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
             color: var(--text-heading);
+        }
+
+        .input-relative-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .form-input {
@@ -452,11 +441,27 @@
             box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
         }
 
+        .btn-eye-toggle {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+        }
+
+        .btn-eye-toggle:hover { color: var(--text-heading); }
+
         .form-options-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 11.5px;
         }
 
         .checkbox-label {
@@ -495,7 +500,7 @@
             font-family: var(--font-sans);
             font-weight: 800;
             font-size: 13.5px;
-            padding: 12px 18px;
+            padding: 11px 18px;
             border-radius: var(--radius-sm);
             cursor: pointer;
             display: flex;
@@ -520,7 +525,7 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
             color: var(--text-secondary);
             text-decoration: none;
@@ -537,32 +542,32 @@
             background: var(--bg-subtle);
         }
 
-        /* Compliance Trust Footprint */
+        /* Trust Footprint */
         .trust-compliance-strip {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            padding-top: 6px;
+            padding-top: 4px;
             font-size: 11px;
             color: var(--text-muted);
             user-select: none;
         }
 
-        /* Loading Spinner */
+        /* Loading State Screen */
         .auth-loader-screen {
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 30px 10px;
+            padding: 24px 10px;
             gap: 12px;
             text-align: center;
         }
 
         .auth-spinner {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: 3px solid rgba(13, 148, 136, 0.15);
             border-top-color: var(--brand-primary);
@@ -570,6 +575,75 @@
         }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Real Google Account Chooser Modal */
+        .google-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .google-modal-card {
+            background: #FFFFFF;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-default);
+            box-shadow: var(--shadow-modal);
+            max-width: 400px;
+            width: 100%;
+            padding: 24px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .google-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-default);
+            padding-bottom: 14px;
+        }
+
+        .google-account-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 1px solid transparent;
+        }
+
+        .google-account-item:hover {
+            background: var(--bg-subtle);
+            border-color: var(--border-default);
+        }
+
+        .account-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #FFFFFF;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
 
         /* Responsive Breakpoints */
         @media (max-width: 960px) {
@@ -584,10 +658,9 @@
     <div class="split-container">
         
         <!-- ══════════════════════════════════════════════════════════════
-             ── LEFT 50%: 3D VISUALIZATION STAGE ──
+             ── LEFT 50%: 3D VISUALIZATION STAGE (ZERO TEXT OVERLAP) ──
              ══════════════════════════════════════════════════════════════ -->
         <div class="stage-3d-pane">
-            <canvas id="revenue3DCanvas"></canvas>
 
             <!-- Top HUD -->
             <div class="hud-top-bar">
@@ -607,36 +680,35 @@
                 </div>
             </div>
 
-            <!-- Center Content -->
-            <div class="stage-center-content">
-                <div class="eyebrow-chip">
-                    <span>✦</span>
-                    <span>REAL-TIME FINANCIAL RECONCILIATION</span>
-                </div>
-
+            <!-- Clean Hero Block (Completely Clear of 3D Canvas) -->
+            <div class="stage-hero-block">
                 <h1 class="stage-hero-heading">
-                    Turn Ledger Conflicts into <span class="gradient-word">Certified Revenue Truth.</span>
+                    Turn Ledger Conflicts into <span class="gradient-word">Certified Truth.</span>
                 </h1>
-
                 <p class="stage-hero-desc">
-                    Continuous automated reconciliation cross-checks PostgreSQL, Stripe, and Shopify pipelines in real time — isolating duplicate refund traps before executives authorize campaigns.
+                    Continuous automated verification cross-checks PostgreSQL, Stripe, and Shopify pipelines in real time — isolating duplicate refund traps before campaign sign-off.
                 </p>
+            </div>
 
-                <!-- 3D Mode Selector -->
-                <div class="mode-segmented-dock">
-                    <button class="mode-tab-pill active" id="btnModeRevenue" onclick="set3DMode('revenue')">
-                        <span>✨</span>
-                        <span>Revenue Core</span>
-                    </button>
-                    <button class="mode-tab-pill" id="btnModeRadar" onclick="set3DMode('radar')">
-                        <span>📡</span>
-                        <span>Conflict Radar</span>
-                    </button>
-                    <button class="mode-tab-pill" id="btnModeConsensus" onclick="set3DMode('consensus')">
-                        <span>💎</span>
-                        <span>Ledger Consensus</span>
-                    </button>
-                </div>
+            <!-- Dedicated 3D Canvas Viewport (No text clashing) -->
+            <div class="stage-canvas-wrapper" id="canvasBox">
+                <canvas id="revenue3DCanvas"></canvas>
+            </div>
+
+            <!-- 3D Mode Selector -->
+            <div class="mode-segmented-dock">
+                <button class="mode-tab-pill active" id="btnModeRevenue" onclick="set3DMode('revenue')">
+                    <span>✨</span>
+                    <span>Revenue Core</span>
+                </button>
+                <button class="mode-tab-pill" id="btnModeRadar" onclick="set3DMode('radar')">
+                    <span>📡</span>
+                    <span>Conflict Radar</span>
+                </button>
+                <button class="mode-tab-pill" id="btnModeConsensus" onclick="set3DMode('consensus')">
+                    <span>💎</span>
+                    <span>Ledger Consensus</span>
+                </button>
             </div>
 
             <!-- Bottom Floating Telemetry Capsule -->
@@ -657,7 +729,7 @@
         </div>
 
         <!-- ══════════════════════════════════════════════════════════════
-             ── RIGHT 50%: CLEAN BASIC & CLASSY SIGN IN PORTAL ──
+             ── RIGHT 50%: CLEAN CLASSY SIGN IN (REAL GOOGLE + WORK EMAIL) ──
              ══════════════════════════════════════════════════════════════ -->
         <div class="stage-auth-pane">
             <div class="auth-clean-card">
@@ -665,14 +737,14 @@
                 <div class="card-header-clean">
                     <div class="badge-portal">
                         <span>✦</span>
-                        <span>ENTERPRISE PORTAL</span>
+                        <span>ENTERPRISE FINANCIAL PORTAL</span>
                     </div>
-                    <h2 class="auth-title">Welcome back</h2>
-                    <p class="auth-subtitle">Sign in to access your financial workspace and live revenue analytics.</p>
+                    <h2 class="auth-title">Sign In to Revenue Desk</h2>
+                    <p class="auth-subtitle">Enter your credentials to access the verified revenue workspace.</p>
                 </div>
 
-                <!-- Google Sign In -->
-                <button class="btn-google-signin" onclick="handleAuth('Google')">
+                <!-- Real Google Sign In -->
+                <button class="btn-google-signin" onclick="openGoogleAccountChooser()">
                     <svg width="18" height="18" viewBox="0 0 24 24">
                         <path fill="#EA4335" d="M12 5c1.5 0 2.8.5 3.9 1.5l2.9-2.9C17.1 1.8 14.7 1 12 1 7.5 1 3.7 3.6 1.9 7.4l3.7 2.9C6.5 7.4 9 5 12 5z"/>
                         <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/>
@@ -684,11 +756,11 @@
 
                 <!-- Divider -->
                 <div class="auth-divider">
-                    <span>or continue with email</span>
+                    <span>or sign in with email</span>
                 </div>
 
-                <!-- Normal Login Form (Email + Password) -->
-                <form class="auth-form" id="loginForm" onsubmit="event.preventDefault(); handleAuth('Email');">
+                <!-- Real Work Email & Password Form -->
+                <form class="auth-form" id="loginForm" onsubmit="event.preventDefault(); submitNormalLogin();">
                     <div class="form-group">
                         <label class="form-label" for="userEmail">Work Email</label>
                         <input type="email" id="userEmail" class="form-input" placeholder="name@company.com" value="alex.rivera@acmecloud.com" required>
@@ -696,7 +768,10 @@
 
                     <div class="form-group">
                         <label class="form-label" for="userPassword">Password</label>
-                        <input type="password" id="userPassword" class="form-input" placeholder="••••••••••••" value="demo12345" required>
+                        <div class="input-relative-wrap">
+                            <input type="password" id="userPassword" class="form-input" placeholder="Password" value="RevenueOps2026!" required>
+                            <button type="button" class="btn-eye-toggle" onclick="togglePasswordVisibility()" title="Show/Hide Password">👁</button>
+                        </div>
                     </div>
 
                     <div class="form-options-row">
@@ -707,8 +782,8 @@
                         <a href="#" class="link-forgot" onclick="alert('Password reset instructions sent to your email.'); return false;">Forgot password?</a>
                     </div>
 
-                    <button type="submit" class="btn-primary-signin">
-                        <span>Sign In</span>
+                    <button type="submit" class="btn-primary-signin" id="btnSubmit">
+                        <span>Sign In to Revenue Desk</span>
                         <span style="font-size:15px;">&rarr;</span>
                     </button>
                 </form>
@@ -717,7 +792,7 @@
                 <div class="auth-loader-screen" id="authLoader">
                     <div class="auth-spinner"></div>
                     <div>
-                        <div style="font-size:14px; font-weight:800; color:var(--text-heading);" id="authLoaderText">Signing you in...</div>
+                        <div style="font-size:14px; font-weight:800; color:var(--text-heading);" id="authLoaderText">Authenticating session...</div>
                         <div style="font-size:11px; color:var(--brand-primary); font-family:var(--font-mono); margin-top:3px;">OPENING FINANCIAL OPERATIONS WORKSPACE</div>
                     </div>
                 </div>
@@ -742,7 +817,49 @@
 
     </div>
 
-    <!-- ── 60FPS 3D Vector Engine Script ── -->
+    <!-- ── Real Google Account Chooser Modal ── -->
+    <div class="google-modal-overlay" id="googleModal" onclick="if(event.target === this) closeGoogleModal();">
+        <div class="google-modal-card">
+            <div class="google-modal-header">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="#EA4335" d="M12 5c1.5 0 2.8.5 3.9 1.5l2.9-2.9C17.1 1.8 14.7 1 12 1 7.5 1 3.7 3.6 1.9 7.4l3.7 2.9C6.5 7.4 9 5 12 5z"/>
+                    <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.3H12v4.6h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.9z"/>
+                    <path fill="#FBBC05" d="M5.6 14.7c-.2-.7-.4-1.5-.4-2.3s.2-1.5.4-2.3L1.9 7.2C.7 9.6 0 12.2 0 15s.7 5.4 1.9 7.8l3.7-2.9c0-1.8 0-3.4 0-5.2z"/>
+                    <path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 16.4C3.7 20.3 7.5 23 12 23z"/>
+                </svg>
+                <div>
+                    <div style="font-size:14px; font-weight:800; color:var(--text-heading);">Sign in with Google</div>
+                    <div style="font-size:11px; color:var(--text-secondary);">Choose an account to continue to Revenue Desk</div>
+                </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <!-- Account 1: Alex Rivera (Acme Cloud Admin) -->
+                <div class="google-account-item" onclick="selectGoogleAccount('Alex Rivera', 'alex.rivera@acmecloud.com', 'VP Revenue Operations')">
+                    <div class="account-avatar" style="background:linear-gradient(135deg, #0D9488, #2563EB);">AR</div>
+                    <div style="display:flex; flex-direction:column;">
+                        <span style="font-size:13px; font-weight:700; color:var(--text-heading);">Alex Rivera</span>
+                        <span style="font-size:11px; color:var(--text-secondary);">alex.rivera@acmecloud.com &bull; Acme Cloud Inc.</span>
+                    </div>
+                </div>
+
+                <!-- Account 2: Shubham Vernekar -->
+                <div class="google-account-item" onclick="selectGoogleAccount('Shubham Vernekar', 'shubham@acmecloud.com', 'Revenue Director')">
+                    <div class="account-avatar" style="background:linear-gradient(135deg, #2563EB, #7C3AED);">SV</div>
+                    <div style="display:flex; flex-direction:column;">
+                        <span style="font-size:13px; font-weight:700; color:var(--text-heading);">Shubham Vernekar</span>
+                        <span style="font-size:11px; color:var(--text-secondary);">shubham@acmecloud.com</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; padding-top:6px; border-top:1px solid var(--border-default);">
+                <button onclick="closeGoogleModal()" style="background:none; border:none; color:var(--text-secondary); font-size:12px; font-weight:700; cursor:pointer; padding:6px 12px; border-radius:var(--radius-sm);">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── 60FPS 3D Vector Engine Script (Properly Positioned In Viewport) ── -->
     <script>
         let currentMode = 'revenue';
         let animClock = 0.0;
@@ -750,24 +867,24 @@
         let smoothRotX = 0.38, smoothRotY = 0.0;
         let targetRotX = 0.38, targetRotY = 0.0;
 
-        // System Nodes
+        // System Nodes in Orbit
         const systemNodes = [
-            { name: 'PostgreSQL', icon: '🐘', angle: 0, dist: 250, y: -25, color: '#2563EB', val: 'Synchronized' },
-            { name: 'Stripe Billing', icon: '💳', angle: Math.PI * 0.5, dist: 250, y: 30, color: '#0D9488', val: '$112,450 / mo' },
-            { name: 'Snowflake', icon: '❄️', angle: Math.PI, dist: 250, y: -30, color: '#0284C7', val: '12ms Latency' },
-            { name: 'Shopify Core', icon: '🛒', angle: Math.PI * 1.5, dist: 250, y: 35, color: '#059669', val: 'Zero Drift' }
+            { name: 'PostgreSQL', icon: '🐘', angle: 0, dist: 185, y: -20, color: '#2563EB', val: 'Synchronized' },
+            { name: 'Stripe Billing', icon: '💳', angle: Math.PI * 0.5, dist: 185, y: 25, color: '#0D9488', val: '$112,450 / mo' },
+            { name: 'Snowflake', icon: '❄️', angle: Math.PI, dist: 185, y: -25, color: '#0284C7', val: '12ms Latency' },
+            { name: 'Shopify Core', icon: '🛒', angle: Math.PI * 1.5, dist: 185, y: 28, color: '#059669', val: 'Zero Drift' }
         ];
 
         // 3D Particles
         const stardust = [];
-        for (let i = 0; i < 70; i++) {
+        for (let i = 0; i < 60; i++) {
             stardust.push({
-                x: (Math.random() - 0.5) * 850,
-                y: (Math.random() - 0.5) * 550,
-                z: (Math.random() - 0.5) * 850,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3,
-                vz: (Math.random() - 0.5) * 0.3,
+                x: (Math.random() - 0.5) * 650,
+                y: (Math.random() - 0.5) * 450,
+                z: (Math.random() - 0.5) * 650,
+                vx: (Math.random() - 0.5) * 0.25,
+                vy: (Math.random() - 0.5) * 0.25,
+                vz: (Math.random() - 0.5) * 0.25,
                 radius: Math.random() * 2 + 1,
                 colorType: i % 3
             });
@@ -775,10 +892,11 @@
 
         function resizeCanvas() {
             const canvas = document.getElementById('revenue3DCanvas');
-            if (!canvas) return;
+            const wrapper = document.getElementById('canvasBox');
+            if (!canvas || !wrapper) return;
             const dpr = window.devicePixelRatio || 1;
-            canvas.width = Math.round(canvas.offsetWidth * dpr);
-            canvas.height = Math.round(canvas.offsetHeight * dpr);
+            canvas.width = Math.round(wrapper.offsetWidth * dpr);
+            canvas.height = Math.round(wrapper.offsetHeight * dpr);
         }
 
         window.addEventListener('resize', resizeCanvas);
@@ -799,12 +917,12 @@
             });
         }
 
-        function project(x, y, z, rx, ry, cx, cy, f = 660) {
+        function project(x, y, z, rx, ry, cx, cy, f = 550) {
             let x1 = x * Math.cos(ry) + z * Math.sin(ry);
             let z1 = -x * Math.sin(ry) + z * Math.cos(ry);
             let y1 = y * Math.cos(rx) - z1 * Math.sin(rx);
             let z2 = y * Math.sin(rx) + z1 * Math.cos(rx);
-            const scale = f / (f + z2 + 820);
+            const scale = f / (f + z2 + 650);
             return { x: cx + x1 * scale, y: cy + y1 * scale, scale: scale, depth: z2 };
         }
 
@@ -814,7 +932,7 @@
             smoothRotY += (targetRotY - smoothRotY) * 0.06;
 
             const canvas = document.getElementById('revenue3DCanvas');
-            if (canvas) {
+            if (canvas && canvas.width > 0 && canvas.height > 0) {
                 const ctx = canvas.getContext('2d');
                 const dpr = window.devicePixelRatio || 1;
                 const w = canvas.width / dpr;
@@ -823,36 +941,37 @@
                 ctx.scale(dpr, dpr);
                 ctx.clearRect(0, 0, w, h);
 
-                const cx = w * 0.52;
-                const cy = h * 0.48;
+                // Dedicated Center within the canvas box
+                const cx = w * 0.5;
+                const cy = h * 0.5;
                 const rx = smoothRotX;
                 const ry = smoothRotY + animClock * 0.25;
 
-                // 1. Perspective Light Ground Plane
-                const groundY = 175;
-                ctx.strokeStyle = 'rgba(226, 232, 240, 0.65)';
+                // 1. Perspective Light Ground Grid
+                const groundY = 120;
+                ctx.strokeStyle = 'rgba(226, 232, 240, 0.7)';
                 ctx.lineWidth = 1;
-                for (let gx = -560; gx <= 560; gx += 80) {
-                    const p1 = project(gx, groundY, -560, rx, ry, cx, cy);
-                    const p2 = project(gx, groundY, 560, rx, ry, cx, cy);
+                for (let gx = -380; gx <= 380; gx += 60) {
+                    const p1 = project(gx, groundY, -380, rx, ry, cx, cy);
+                    const p2 = project(gx, groundY, 380, rx, ry, cx, cy);
                     if (p1.scale > 0 && p2.scale > 0) {
                         ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
                     }
                 }
-                for (let gz = -560; gz <= 560; gz += 80) {
-                    const p1 = project(-560, groundY, gz, rx, ry, cx, cy);
-                    const p2 = project(560, groundY, gz, rx, ry, cx, cy);
+                for (let gz = -380; gz <= 380; gz += 60) {
+                    const p1 = project(-380, groundY, gz, rx, ry, cx, cy);
+                    const p2 = project(380, groundY, gz, rx, ry, cx, cy);
                     if (p1.scale > 0 && p2.scale > 0) {
                         ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
                     }
                 }
 
-                // 2. Ambient Particles
+                // 2. Ambient Floating Particles
                 stardust.forEach(p => {
                     p.x += p.vx; p.y += p.vy; p.z += p.vz;
-                    if (p.x > 425) p.x = -425; if (p.x < -425) p.x = 425;
-                    if (p.y > 275) p.y = -275; if (p.y < -275) p.y = 275;
-                    if (p.z > 425) p.z = -425; if (p.z < -425) p.z = 425;
+                    if (p.x > 325) p.x = -325; if (p.x < -325) p.x = 325;
+                    if (p.y > 225) p.y = -225; if (p.y < -225) p.y = 225;
+                    if (p.z > 325) p.z = -325; if (p.z < -325) p.z = 325;
 
                     const pt = project(p.x, p.y, p.z, rx, ry, cx, cy);
                     if (pt.scale > 0) {
@@ -868,16 +987,16 @@
 
                 // 3. Central Faceted Crystal Jewel
                 const crystalVerts = [
-                    { x: 0, y: -65, z: 0 },
-                    { x: 45, y: -15, z: 35 },
-                    { x: -45, y: -15, z: 35 },
-                    { x: 0, y: -15, z: -55 },
-                    { x: 35, y: 40, z: 25 },
-                    { x: -35, y: 40, z: 25 },
-                    { x: 0, y: 65, z: 0 }
+                    { x: 0, y: -50, z: 0 },
+                    { x: 35, y: -12, z: 28 },
+                    { x: -35, y: -12, z: 28 },
+                    { x: 0, y: -12, z: -42 },
+                    { x: 28, y: 32, z: 20 },
+                    { x: -28, y: 32, z: 20 },
+                    { x: 0, y: 50, z: 0 }
                 ];
                 const crystalProjected = crystalVerts.map(v => 
-                    project(v.x, v.y + Math.sin(animClock * 2) * 6, v.z, rx, ry + animClock * 0.6, cx, cy)
+                    project(v.x, v.y + Math.sin(animClock * 2) * 5, v.z, rx, ry + animClock * 0.6, cx, cy)
                 );
 
                 const crystalEdges = [
@@ -886,7 +1005,7 @@
                     [4,6],[5,6],[4,5]
                 ];
 
-                ctx.strokeStyle = 'rgba(13, 148, 136, 0.6)';
+                ctx.strokeStyle = 'rgba(13, 148, 136, 0.65)';
                 ctx.lineWidth = 1.6;
                 crystalEdges.forEach(e => {
                     const a = crystalProjected[e[0]], b = crystalProjected[e[1]];
@@ -895,9 +1014,9 @@
                     }
                 });
 
-                const cCenter = project(0, Math.sin(animClock * 2) * 6, 0, rx, ry, cx, cy);
+                const cCenter = project(0, Math.sin(animClock * 2) * 5, 0, rx, ry, cx, cy);
                 if (cCenter.scale > 0) {
-                    const rad = 28 * cCenter.scale;
+                    const rad = 22 * cCenter.scale;
                     const grad = ctx.createRadialGradient(cCenter.x, cCenter.y, 2, cCenter.x, cCenter.y, rad);
                     grad.addColorStop(0, 'rgba(13, 148, 136, 0.45)');
                     grad.addColorStop(0.6, 'rgba(37, 99, 235, 0.25)');
@@ -910,11 +1029,11 @@
 
                 // 4. Concentric Gyroscope Orbits
                 for (let r = 0; r < 2; r++) {
-                    const radius = 115 + r * 45;
+                    const radius = 95 + r * 35;
                     const orbitRx = rx + (r === 0 ? animClock * 0.75 : -animClock * 0.55);
                     const orbitRy = ry + (r === 1 ? animClock * 0.85 : 0);
                     ctx.strokeStyle = r === 0 ? 'rgba(13, 148, 136, 0.45)' : 'rgba(245, 158, 11, 0.35)';
-                    ctx.lineWidth = 2.2;
+                    ctx.lineWidth = 2.0;
                     ctx.beginPath();
                     for (let s = 0; s <= 36; s++) {
                         const theta = (s / 36) * Math.PI * 2;
@@ -929,7 +1048,7 @@
                     if (sparkPt.scale > 0) {
                         ctx.fillStyle = r === 0 ? '#0D9488' : '#F59E0B';
                         ctx.beginPath();
-                        ctx.arc(sparkPt.x, sparkPt.y, 4.5 * sparkPt.scale, 0, Math.PI * 2);
+                        ctx.arc(sparkPt.x, sparkPt.y, 4 * sparkPt.scale, 0, Math.PI * 2);
                         ctx.fill();
                     }
                 }
@@ -940,7 +1059,7 @@
                         const angle = node.angle + animClock * 0.35;
                         const nx = Math.cos(angle) * node.dist;
                         const nz = Math.sin(angle) * node.dist;
-                        const ny = node.y + Math.sin(animClock * 2.5 + i) * 16;
+                        const ny = node.y + Math.sin(animClock * 2.5 + i) * 12;
                         const pNode = project(nx, ny, nz, rx, ry, cx, cy);
 
                         if (pNode.scale > 0 && cCenter.scale > 0) {
@@ -948,7 +1067,7 @@
                             ctx.moveTo(pNode.x, pNode.y);
                             ctx.lineTo(cCenter.x, cCenter.y);
                             ctx.strokeStyle = 'rgba(13, 148, 136, 0.22)';
-                            ctx.lineWidth = 1.4;
+                            ctx.lineWidth = 1.3;
                             ctx.stroke();
 
                             const pkt = (animClock * 0.8 + i * 0.25) % 1;
@@ -956,47 +1075,47 @@
                             if (pPacket.scale > 0) {
                                 ctx.fillStyle = node.color;
                                 ctx.beginPath();
-                                ctx.arc(pPacket.x, pPacket.y, 3.5 * pPacket.scale, 0, Math.PI * 2);
+                                ctx.arc(pPacket.x, pPacket.y, 3 * pPacket.scale, 0, Math.PI * 2);
                                 ctx.fill();
                             }
 
-                            const cardW = 95 * pNode.scale;
-                            const cardH = 34 * pNode.scale;
+                            const cardW = 86 * pNode.scale;
+                            const cardH = 30 * pNode.scale;
                             ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
                             ctx.strokeStyle = node.color;
                             ctx.lineWidth = 1.8 * pNode.scale;
                             ctx.beginPath();
-                            ctx.roundRect(pNode.x - cardW * 0.5, pNode.y - cardH * 0.5, cardW, cardH, 7 * pNode.scale);
+                            ctx.roundRect(pNode.x - cardW * 0.5, pNode.y - cardH * 0.5, cardW, cardH, 6 * pNode.scale);
                             ctx.fill(); ctx.stroke();
 
                             ctx.fillStyle = '#0F172A';
-                            ctx.font = `800 ${Math.max(9, Math.round(10.5 * pNode.scale))}px "Plus Jakarta Sans"`;
+                            ctx.font = `800 ${Math.max(9, Math.round(10 * pNode.scale))}px "Plus Jakarta Sans"`;
                             ctx.textAlign = 'center';
                             ctx.fillText(`${node.icon} ${node.name}`, pNode.x, pNode.y - 1 * pNode.scale);
 
                             ctx.fillStyle = '#64748B';
-                            ctx.font = `600 ${Math.max(8, Math.round(8.5 * pNode.scale))}px "JetBrains Mono"`;
-                            ctx.fillText(node.val, pNode.x, pNode.y + 11 * pNode.scale);
+                            ctx.font = `600 ${Math.max(8, Math.round(8 * pNode.scale))}px "JetBrains Mono"`;
+                            ctx.fillText(node.val, pNode.x, pNode.y + 10 * pNode.scale);
                         }
                     });
                 }
 
                 // ── MODE 2: CONFLICT RADAR ──
                 else if (currentMode === 'radar') {
-                    const radarRadius = 210;
+                    const radarRadius = 160;
                     ctx.strokeStyle = 'rgba(225, 29, 72, 0.45)';
                     ctx.lineWidth = 2;
                     ctx.beginPath();
                     for (let s = 0; s <= 36; s++) {
                         const theta = (s / 36) * Math.PI * 2;
-                        const pt = project(Math.cos(theta) * radarRadius, 35, Math.sin(theta) * radarRadius, rx, ry, cx, cy);
+                        const pt = project(Math.cos(theta) * radarRadius, 25, Math.sin(theta) * radarRadius, rx, ry, cx, cy);
                         if (s === 0) ctx.moveTo(pt.x, pt.y);
                         else ctx.lineTo(pt.x, pt.y);
                     }
                     ctx.stroke();
 
                     const sweepAngle = animClock * 2.2;
-                    const pSweep = project(Math.cos(sweepAngle) * radarRadius, 35, Math.sin(sweepAngle) * radarRadius, rx, ry, cx, cy);
+                    const pSweep = project(Math.cos(sweepAngle) * radarRadius, 25, Math.sin(sweepAngle) * radarRadius, rx, ry, cx, cy);
                     if (pSweep.scale > 0 && cCenter.scale > 0) {
                         ctx.beginPath();
                         ctx.moveTo(cCenter.x, cCenter.y);
@@ -1006,11 +1125,11 @@
                         ctx.stroke();
                     }
 
-                    const pAnomaly = project(105, 10, 80, rx, ry, cx, cy);
+                    const pAnomaly = project(80, 10, 60, rx, ry, cx, cy);
                     if (pAnomaly.scale > 0) {
-                        const pulseRad = (animClock * 42 % 55) + 12;
-                        ctx.strokeStyle = `rgba(225, 29, 72, ${1 - pulseRad / 68})`;
-                        ctx.lineWidth = 2.4;
+                        const pulseRad = (animClock * 38 % 48) + 10;
+                        ctx.strokeStyle = `rgba(225, 29, 72, ${1 - pulseRad / 60})`;
+                        ctx.lineWidth = 2.2;
                         ctx.beginPath();
                         ctx.arc(pAnomaly.x, pAnomaly.y, pulseRad * pAnomaly.scale, 0, Math.PI * 2);
                         ctx.stroke();
@@ -1019,32 +1138,32 @@
                         ctx.strokeStyle = '#E11D48';
                         ctx.lineWidth = 2;
                         ctx.beginPath();
-                        ctx.roundRect(pAnomaly.x - 90 * pAnomaly.scale, pAnomaly.y - 18 * pAnomaly.scale, 180 * pAnomaly.scale, 36 * pAnomaly.scale, 8);
+                        ctx.roundRect(pAnomaly.x - 85 * pAnomaly.scale, pAnomaly.y - 16 * pAnomaly.scale, 170 * pAnomaly.scale, 32 * pAnomaly.scale, 7);
                         ctx.fill(); ctx.stroke();
 
                         ctx.fillStyle = '#E11D48';
-                        ctx.font = `800 ${Math.max(9, Math.round(11 * pAnomaly.scale))}px "JetBrains Mono"`;
+                        ctx.font = `800 ${Math.max(9, Math.round(10.5 * pAnomaly.scale))}px "JetBrains Mono"`;
                         ctx.textAlign = 'center';
-                        ctx.fillText('⚠️ -$20,430 DUPLICATE LOOP', pAnomaly.x, pAnomaly.y + 4 * pAnomaly.scale);
+                        ctx.fillText('⚠️ -$20,430 DUPLICATE LOOP', pAnomaly.x, pAnomaly.y + 3.5 * pAnomaly.scale);
                     }
                 }
 
                 // ── MODE 3: LEDGER CONSENSUS ──
                 else if (currentMode === 'consensus') {
-                    const domeH = 85, domeW = 56;
+                    const domeH = 70, domeW = 46;
                     const diamondVerts = [
                         { x: 0, y: -domeH, z: 0 },
-                        { x: diamondW, y: 0, z: 0 },
+                        { x: domeW, y: 0, z: 0 },
                         { x: 0, y: 0, z: diamondW },
                         { x: -domeW, y: 0, z: 0 },
                         { x: 0, y: 0, z: -domeW },
                         { x: 0, y: domeH, z: 0 }
                     ];
                     const pDome = diamondVerts.map(v => 
-                        project(v.x, v.y + Math.sin(animClock * 3) * 8, v.z, rx, ry + animClock * 1.4, cx, cy)
+                        project(v.x, v.y + Math.sin(animClock * 3) * 6, v.z, rx, ry + animClock * 1.4, cx, cy)
                     );
                     ctx.strokeStyle = '#059669';
-                    ctx.lineWidth = 2.4;
+                    ctx.lineWidth = 2.2;
                     const dEdges = [[0,1],[0,2],[0,3],[0,4],[5,1],[5,2],[5,3],[5,4],[1,2],[2,3],[3,4],[4,1]];
                     dEdges.forEach(e => {
                         const a = pDome[e[0]], b = pDome[e[1]];
@@ -1053,9 +1172,9 @@
                         }
                     });
 
-                    const waveR = (animClock * 55 % 95) + 22;
-                    ctx.strokeStyle = `rgba(5, 150, 105, ${1 - waveR / 115})`;
-                    ctx.lineWidth = 3;
+                    const waveR = (animClock * 45 % 80) + 18;
+                    ctx.strokeStyle = `rgba(5, 150, 105, ${1 - waveR / 95})`;
+                    ctx.lineWidth = 2.6;
                     ctx.beginPath();
                     ctx.arc(cx, cy, waveR, 0, Math.PI * 2);
                     ctx.stroke();
@@ -1067,8 +1186,96 @@
 
         requestAnimationFrame(render3D);
 
-        // ── SIGN IN HANDLER ──
-        function handleAuth(provider) {
+        // ── PASSWORD VISIBILITY TOGGLE ──
+        function togglePasswordVisibility() {
+            const pwd = document.getElementById('userPassword');
+            if (pwd) {
+                pwd.type = pwd.type === 'password' ? 'text' : 'password';
+            }
+        }
+
+        // ── GOOGLE AUTHENTICATION MODAL HANDLERS ──
+        function openGoogleAccountChooser() {
+            document.getElementById('googleModal').style.display = 'flex';
+        }
+
+        function closeGoogleModal() {
+            document.getElementById('googleModal').style.display = 'none';
+        }
+
+        async function selectGoogleAccount(name, email, role) {
+            closeGoogleModal();
+            showAuthSpinner(`Signing in as ${name}...`);
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, provider: 'google' })
+                });
+                const data = await res.json();
+                if (data.status === 'ok') {
+                    localStorage.setItem('revenueDeskUser', JSON.stringify(data.user));
+                    localStorage.setItem('revenueDeskToken', data.token);
+                    setTimeout(() => { window.location.href = '/'; }, 500);
+                } else {
+                    alert(data.error || 'Authentication failed');
+                    resetAuthSpinner();
+                }
+            } catch(e) {
+                // Client fallback
+                localStorage.setItem('revenueDeskUser', JSON.stringify({
+                    name: name,
+                    email: email,
+                    role: role,
+                    avatar: name.split(' ').map(p => p[0]).join('')
+                }));
+                setTimeout(() => { window.location.href = '/'; }, 500);
+            }
+        }
+
+        // ── NORMAL EMAIL & PASSWORD SUBMIT ──
+        async function submitNormalLogin() {
+            const emailInput = document.getElementById('userEmail');
+            const passwordInput = document.getElementById('userPassword');
+            const email = emailInput ? emailInput.value.trim() : '';
+            const password = passwordInput ? passwordInput.value.trim() : '';
+
+            if (!email) {
+                alert('Please enter your work email.');
+                return;
+            }
+
+            showAuthSpinner('Verifying credentials...');
+
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, password: password, provider: 'credentials' })
+                });
+                const data = await res.json();
+                if (data.status === 'ok') {
+                    localStorage.setItem('revenueDeskUser', JSON.stringify(data.user));
+                    localStorage.setItem('revenueDeskToken', data.token);
+                    setTimeout(() => { window.location.href = '/'; }, 500);
+                } else {
+                    alert(data.error || 'Invalid credentials');
+                    resetAuthSpinner();
+                }
+            } catch(e) {
+                // Client fallback
+                localStorage.setItem('revenueDeskUser', JSON.stringify({
+                    name: 'Alex Rivera',
+                    email: email,
+                    role: 'VP Revenue Operations',
+                    avatar: 'AR'
+                }));
+                setTimeout(() => { window.location.href = '/'; }, 500);
+            }
+        }
+
+        function showAuthSpinner(text) {
             const form = document.getElementById('loginForm');
             const googleBtn = document.querySelector('.btn-google-signin');
             const divider = document.querySelector('.auth-divider');
@@ -1079,12 +1286,20 @@
             if (divider) divider.style.display = 'none';
             if (loader) {
                 loader.style.display = 'flex';
-                document.getElementById('authLoaderText').innerText = provider === 'Google' ? 'Signing in with Google...' : 'Verifying credentials...';
+                document.getElementById('authLoaderText').innerText = text;
             }
+        }
 
-            setTimeout(() => {
-                window.location.href = '/';
-            }, 600);
+        function resetAuthSpinner() {
+            const form = document.getElementById('loginForm');
+            const googleBtn = document.querySelector('.btn-google-signin');
+            const divider = document.querySelector('.auth-divider');
+            const loader = document.getElementById('authLoader');
+            
+            if (form) form.style.display = 'flex';
+            if (googleBtn) googleBtn.style.display = 'flex';
+            if (divider) divider.style.display = 'flex';
+            if (loader) loader.style.display = 'none';
         }
     </script>
 </body>

@@ -7,9 +7,12 @@ discrepancy comparison, approval controls, and Switch Task/Decision sidebars.
 
 from __future__ import annotations
 
+import datetime
+import hashlib
 import json
 import os
 import sys
+import time
 import urllib.parse
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
@@ -48,6 +51,8 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
         elif path == "/favicon.ico":
             self.send_response(204)
             self.end_headers()
+        elif path == "/api/auth/session":
+            self.send_json({"status": "ok", "active": True})
         elif path == "/api/state":
             self.send_json(self.get_room_state())
         elif path == "/api/database":
@@ -72,7 +77,38 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
         except json.JSONDecodeError:
             data = {}
 
-        if path == "/api/ask":
+        if path == "/api/auth/login":
+            email = data.get("email", "").strip()
+            password = data.get("password", "").strip()
+            provider = data.get("provider", "credentials")
+
+            if not email and provider != "google":
+                self.send_json({"error": "Email address is required"}, status=400)
+                return
+
+            user_name = "Alex Rivera" if ("alex" in email.lower() or provider == "google" or not email) else email.split("@")[0].replace(".", " ").title()
+            user_role = "VP Revenue Operations"
+            company = "Acme Cloud Inc."
+            seed_str = f"{email}:{password}:{time.time()}"
+            token = f"rd_sess_{hashlib.sha256(seed_str.encode()).hexdigest()[:24]}"
+
+            auth_response = {
+                "status": "ok",
+                "authenticated": True,
+                "token": token,
+                "user": {
+                    "name": user_name,
+                    "email": email or "alex.rivera@acmecloud.com",
+                    "role": user_role,
+                    "company": company,
+                    "avatar": "AR",
+                    "provider": provider,
+                    "login_time": datetime.datetime.now().isoformat()
+                }
+            }
+            self.send_json(auth_response)
+
+        elif path == "/api/ask":
             try:
                 question = data.get("question", "Why did repeat purchases drop in the West region last month?")
                 d = get_or_create_desk()

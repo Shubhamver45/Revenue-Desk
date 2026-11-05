@@ -972,7 +972,7 @@
 
             <div class="nav-status">
                 <span class="status-dot"></span>
-                <span>Active Multi-Agent Governance</span>
+                <span>Active Governance & Ledger Sync</span>
             </div>
         </div>
 
@@ -994,6 +994,13 @@
                 <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2.5" fill="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                 Run Live Investigation
             </button>
+
+            <!-- User Profile Pill -->
+            <div id="userProfileNavPill" style="display:flex; align-items:center; gap:8px; padding:4px 10px; background:var(--bg-subtle); border:1px solid var(--border-default); border-radius:var(--radius-sm); font-size:12px; font-weight:700; color:var(--text-heading);">
+                <div style="width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg, #0D9488, #2563EB); color:#fff; display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:800;" id="userNavAvatar">AR</div>
+                <span id="userNavName">Alex Rivera</span>
+                <a href="/landing" title="Switch account / Sign out" style="text-decoration:none; color:var(--text-muted); font-size:12px; margin-left:3px;" onclick="localStorage.removeItem('revenueDeskUser');">↪</a>
+            </div>
         </div>
     </header>
 
@@ -1133,8 +1140,8 @@
                 <div class="room-card">
                     <div class="room-header">
                         <div class="room-title-box">
-                            <span class="room-title">Switch Room — Live Multi-Agent Governance</span>
-                            <span class="room-subtitle">Analyst Agent &bull; Reviewer Auditor &bull; Consensus Engine</span>
+                            <span class="room-title">Switch Room — Live Governance Desk</span>
+                            <span class="room-subtitle">Analyst Ledger &bull; Reviewer Auditor &bull; Consensus Engine</span>
                         </div>
                         <span class="nav-status"><span class="status-dot"></span>Live Stream</span>
                     </div>
@@ -1362,6 +1369,14 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            try {
+                const savedUser = localStorage.getItem('revenueDeskUser');
+                if (savedUser) {
+                    const u = JSON.parse(savedUser);
+                    if (u.name) document.getElementById('userNavName').innerText = u.name;
+                    if (u.avatar) document.getElementById('userNavAvatar').innerText = u.avatar;
+                }
+            } catch(e) {}
             renderChart();
             const area = document.getElementById('canvasAreaContainer');
             if (window.ResizeObserver && area) {
@@ -1499,7 +1514,7 @@
                 // Consensus Proposal
                 const actionText = data.proposed_action ? data.proposed_action : "100% Alignment Reached. Ready to authorize executive action.";
                 let consensusHtml = formatMarkdown(actionText);
-                consensusHtml += `<div class="consensus-banner">100% MULTI-AGENT CONSENSUS &bull; Analyst &check; Reviewer &check; Aligned &check;</div>`;
+                consensusHtml += `<div class="consensus-banner">100% REVENUE CONSENSUS &bull; Analyst &check; Reviewer &check; Aligned &check;</div>`;
 
                 addMessage('Consensus Engine', consensusHtml, '#059669');
 
@@ -1507,9 +1522,9 @@
                 setPipe(2, 'completed');
                 setPipe(3, 'completed');
                 setPipe(4, 'active');
-                addMessage('Analyst Agent', 'Executed query on database accounts.', '#0D9488');
-                addMessage('Reviewer Agent', 'Audit verification completed.', '#D97706');
-                addMessage('Consensus Engine', 'Multi-agent consensus achieved.', '#059669');
+                addMessage('Analyst Engine', 'Executed query on database accounts.', '#0D9488');
+                addMessage('Reviewer Auditor', 'Audit verification completed.', '#D97706');
+                addMessage('Consensus Engine', 'Ledger consensus achieved.', '#059669');
             }
         }
 
