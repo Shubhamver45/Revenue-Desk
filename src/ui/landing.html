@@ -227,15 +227,15 @@
             z-index: 10;
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(16px);
             border: 1px solid var(--border-default);
             border-radius: var(--radius-full);
-            padding: 3px;
-            gap: 3px;
+            padding: 4px;
+            gap: 4px;
             width: fit-content;
             margin: 0 auto 12px auto;
-            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
             flex-shrink: 0;
         }
 
@@ -243,24 +243,26 @@
             background: transparent;
             border: none;
             color: var(--text-secondary);
-            padding: 6px 14px;
+            padding: 7px 15px;
             border-radius: var(--radius-full);
             font-size: 11.5px;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: all 0.16s ease;
+            gap: 7px;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
             font-family: var(--font-sans);
         }
 
+        .mode-tab-pill svg { stroke: currentColor; fill: none; transition: transform 0.15s ease; }
         .mode-tab-pill:hover { color: var(--text-heading); }
         .mode-tab-pill.active {
             background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
             color: #FFFFFF;
-            box-shadow: 0 3px 10px rgba(13, 148, 136, 0.3);
+            box-shadow: 0 3px 12px rgba(13, 148, 136, 0.35);
         }
+        .mode-tab-pill.active svg { stroke: #FFFFFF; }
 
         /* Bottom Floating Telemetry Capsule */
         .hud-telemetry-capsule {
@@ -561,20 +563,57 @@
             text-decoration: underline;
         }
 
+        /* Mobbin-Style Segmented Mode Switcher */
+        .auth-segmented-switch {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #F1F5F9;
+            padding: 4px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-default);
+            gap: 4px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+        }
+
+        .switch-pill-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+            font-family: var(--font-sans);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .switch-pill-btn:hover { color: var(--text-heading); }
+        .switch-pill-btn.active {
+            background: #FFFFFF;
+            color: var(--text-heading);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+        }
+
         /* Direct Demo Link */
         .btn-explore-demo {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 7px;
             font-size: 11.5px;
             font-weight: 700;
             color: var(--text-secondary);
             text-decoration: none;
-            padding: 8px 12px;
+            padding: 9px 14px;
             border-radius: var(--radius-sm);
             border: 1px dashed var(--border-default);
-            transition: all 0.15s ease;
+            transition: all 0.16s ease;
             background: transparent;
             cursor: pointer;
         }
@@ -585,15 +624,35 @@
             background: var(--bg-subtle);
         }
 
-        /* Trust Footprint */
+        /* Mobbin-Style Micro-Chip Trust Strip (Pure SVG, No Emojis) */
         .trust-compliance-strip {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            font-size: 11px;
-            color: var(--text-muted);
+            padding-top: 6px;
             user-select: none;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.1px;
+        }
+
+        .trust-badge-item svg {
+            color: var(--brand-primary);
+            flex-shrink: 0;
+        }
+
+        .trust-dot {
+            color: var(--text-muted);
+            font-size: 11px;
         }
 
         /* Loading State Screen */
@@ -752,15 +811,15 @@
             <!-- 3D Mode Selector -->
             <div class="mode-segmented-dock">
                 <button class="mode-tab-pill active" id="btnModeRevenue" onclick="set3DMode('revenue')">
-                    <span>✨</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                     <span>Revenue Core</span>
                 </button>
                 <button class="mode-tab-pill" id="btnModeRadar" onclick="set3DMode('radar')">
-                    <span>📡</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 6a6 6 0 0 1 6 6"/><circle cx="12" cy="12" r="2"/></svg>
                     <span>Conflict Radar</span>
                 </button>
                 <button class="mode-tab-pill" id="btnModeConsensus" onclick="set3DMode('consensus')">
-                    <span>💎</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 13L2 9z"/></svg>
                     <span>Ledger Consensus</span>
                 </button>
             </div>
@@ -795,6 +854,18 @@
                     </div>
                     <h2 class="auth-title" id="authTitle">Sign In to Revenue Desk</h2>
                     <p class="auth-subtitle" id="authSubtitle">Enter your credentials to access the verified revenue workspace.</p>
+                </div>
+
+                <!-- Mobbin-Style Segmented Mode Switcher -->
+                <div class="auth-segmented-switch">
+                    <button type="button" class="switch-pill-btn active" id="pillBtnLogin" onclick="switchAuthMode('login')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                        <span>Sign In</span>
+                    </button>
+                    <button type="button" class="switch-pill-btn" id="pillBtnSignup" onclick="switchAuthMode('signup')">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                        <span>Create Account</span>
+                    </button>
                 </div>
 
                 <!-- Real Inline Error Message -->
@@ -894,15 +965,25 @@
                 <!-- Direct Demo Access & Trust Strip -->
                 <div style="display:flex; flex-direction:column; gap:8px;">
                     <button type="button" class="btn-explore-demo" onclick="exploreDemo()">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
                         <span>Explore Demo Environment (Direct Access) &rarr;</span>
                     </button>
 
                     <div class="trust-compliance-strip">
-                        <span>🛡️ SOC-2 Type II</span>
-                        <span>&bull;</span>
-                        <span>🔒 256-Bit SSL</span>
-                        <span>&bull;</span>
-                        <span>⚡ 99.99% Uptime</span>
+                        <div class="trust-badge-item">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <span>SOC-2 Type II</span>
+                        </div>
+                        <span class="trust-dot">&bull;</span>
+                        <div class="trust-badge-item">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <span>256-Bit SSL</span>
+                        </div>
+                        <span class="trust-dot">&bull;</span>
+                        <div class="trust-badge-item">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            <span>99.99% SLA Uptime</span>
+                        </div>
                     </div>
                 </div>
 
@@ -1307,8 +1388,8 @@
                     const domeH = 70, domeW = 46;
                     const diamondVerts = [
                         { x: 0, y: -domeH, z: 0 },
-                        { x: diamondW, y: 0, z: 0 },
-                        { x: 0, y: 0, z: diamondW },
+                        { x: domeW, y: 0, z: 0 },
+                        { x: 0, y: 0, z: domeW },
                         { x: -domeW, y: 0, z: 0 },
                         { x: 0, y: 0, z: -domeW },
                         { x: 0, y: domeH, z: 0 }
@@ -1358,9 +1439,9 @@
         }
 
         // ── TOGGLE BETWEEN SIGN IN & SIGN UP (NEW USER) ──
-        function toggleAuthMode() {
+        function switchAuthMode(mode) {
             clearAuthError();
-            isSignupMode = !isSignupMode;
+            isSignupMode = (mode === 'signup');
             const loginForm = document.getElementById('loginForm');
             const signupForm = document.getElementById('signupForm');
             const authTitle = document.getElementById('authTitle');
@@ -1370,28 +1451,38 @@
             const dividerText = document.getElementById('dividerText');
             const switchPrompt = document.getElementById('switchPrompt');
             const switchActionLink = document.getElementById('switchActionLink');
+            const pillLogin = document.getElementById('pillBtnLogin');
+            const pillSignup = document.getElementById('pillBtnSignup');
 
             if (isSignupMode) {
-                loginForm.style.display = 'none';
-                signupForm.style.display = 'flex';
-                authTitle.innerText = 'Create your account';
-                authSubtitle.innerText = 'Start your enterprise trial. Set up your workspace in 30 seconds.';
-                portalBadge.innerHTML = '<span>✦</span><span>NEW WORKSPACE SETUP</span>';
-                googleBtnText.innerText = 'Sign up with Google';
-                dividerText.innerText = 'or sign up with work email';
-                switchPrompt.innerText = 'Already have an account?';
-                switchActionLink.innerText = 'Sign in';
+                if (loginForm) loginForm.style.display = 'none';
+                if (signupForm) signupForm.style.display = 'flex';
+                if (authTitle) authTitle.innerText = 'Create your account';
+                if (authSubtitle) authSubtitle.innerText = 'Start your enterprise trial. Set up your workspace in 30 seconds.';
+                if (portalBadge) portalBadge.innerHTML = '<span>✦</span><span>NEW WORKSPACE SETUP</span>';
+                if (googleBtnText) googleBtnText.innerText = 'Sign up with Google';
+                if (dividerText) dividerText.innerText = 'or sign up with work email';
+                if (switchPrompt) switchPrompt.innerText = 'Already have an account?';
+                if (switchActionLink) switchActionLink.innerText = 'Sign in';
+                if (pillLogin) pillLogin.className = 'switch-pill-btn';
+                if (pillSignup) pillSignup.className = 'switch-pill-btn active';
             } else {
-                loginForm.style.display = 'flex';
-                signupForm.style.display = 'none';
-                authTitle.innerText = 'Sign In to Revenue Desk';
-                authSubtitle.innerText = 'Enter your credentials to access the verified revenue workspace.';
-                portalBadge.innerHTML = '<span>✦</span><span>ENTERPRISE FINANCIAL PORTAL</span>';
-                googleBtnText.innerText = 'Continue with Google';
-                dividerText.innerText = 'or sign in with email';
-                switchPrompt.innerText = "Don't have an account?";
-                switchActionLink.innerText = 'Create an account';
+                if (loginForm) loginForm.style.display = 'flex';
+                if (signupForm) signupForm.style.display = 'none';
+                if (authTitle) authTitle.innerText = 'Sign In to Revenue Desk';
+                if (authSubtitle) authSubtitle.innerText = 'Enter your credentials to access the verified revenue workspace.';
+                if (portalBadge) portalBadge.innerHTML = '<span>✦</span><span>ENTERPRISE FINANCIAL PORTAL</span>';
+                if (googleBtnText) googleBtnText.innerText = 'Continue with Google';
+                if (dividerText) dividerText.innerText = 'or sign in with email';
+                if (switchPrompt) switchPrompt.innerText = "Don't have an account?";
+                if (switchActionLink) switchActionLink.innerText = 'Create an account';
+                if (pillLogin) pillLogin.className = 'switch-pill-btn active';
+                if (pillSignup) pillSignup.className = 'switch-pill-btn';
             }
+        }
+
+        function toggleAuthMode() {
+            switchAuthMode(isSignupMode ? 'login' : 'signup');
         }
 
         // ── PASSWORD VISIBILITY TOGGLE ──

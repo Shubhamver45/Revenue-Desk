@@ -7,6 +7,7 @@ CREATE OR REPLACE FUNCTION exec_sql(query text)
 RETURNS json
 LANGUAGE plpgsql
 SECURITY DEFINER
+SET search_path = public
 AS $$
 DECLARE
     result json;
@@ -15,4 +16,8 @@ BEGIN
     RETURN result;
 END;
 $$;
+
+-- Grant execution permissions to anon, authenticated, and service_role
+GRANT EXECUTE ON FUNCTION exec_sql(text) TO anon, authenticated, service_role;
+
 

@@ -464,6 +464,14 @@ INSERT INTO refunds VALUES (8, 184, 650.00,   'Pricing system glitch — duplica
 -- Total refunded: $20,430.00
 -- These were all "repeat" orders, so they inflate both revenue AND repeat-order counts
 
+-- Ensure API roles have full access to tables and sequences
+GRANT USAGE ON SCHEMA public TO anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO anon, authenticated, service_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO anon, authenticated, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO anon, authenticated, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO anon, authenticated, service_role;
+
+
 
 -- ============================================================
 -- Summary of the baked-in story:
