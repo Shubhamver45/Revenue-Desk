@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Revenue Desk — Multi-Agent Financial Governance</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1000,70 +1000,229 @@
             flex-shrink: 0;
         }
 
+        /* ── Mobile View Segmented Switcher (Visible only on screens <= 768px) ── */
+        .mobile-view-tabs {
+            display: none;
+        }
+
         /* ── RESPONSIVE MEDIA QUERIES (Mobile, Tablet, Laptop, Desktop) ── */
 
         /* 1. Mobile Devices (< 768px: iPhone, Android) */
         @media (max-width: 768px) {
+            html, body {
+                overflow-x: hidden;
+                width: 100%;
+            }
+
+            .mobile-view-tabs {
+                display: flex;
+                background: #FFFFFF;
+                border: 1px solid var(--border-default);
+                border-radius: var(--radius-sm);
+                padding: 3px;
+                gap: 3px;
+                width: 100%;
+                box-sizing: border-box;
+                box-shadow: var(--shadow-subtle);
+                flex-shrink: 0;
+            }
+
+            .m-tab-btn {
+                flex: 1;
+                border: none;
+                background: transparent;
+                padding: 7px 4px;
+                border-radius: 4px;
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--text-muted);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+                transition: all 0.15s ease;
+                white-space: nowrap;
+            }
+
+            .m-tab-btn svg {
+                flex-shrink: 0;
+            }
+
+            .m-tab-btn.active {
+                background: var(--brand-obsidian);
+                color: #FFFFFF;
+                box-shadow: 0 1px 2px rgba(15, 23, 42, 0.15);
+            }
+
+            .m-tab-btn.active svg {
+                stroke: #FFFFFF;
+            }
+
             .navbar {
                 height: auto;
-                padding: 10px 14px;
+                padding: 8px 12px;
                 flex-direction: column;
                 align-items: stretch;
-                gap: 9px;
+                gap: 6px;
+                position: sticky;
+                top: 0;
+                z-index: 50;
+                background: #FFFFFF;
+                border-bottom: 1px solid var(--border-default);
             }
 
             .nav-left {
+                display: flex;
+                align-items: center;
                 justify-content: space-between;
                 width: 100%;
             }
 
-            .nav-divider { display: none; }
+            .brand-logo { gap: 7px; }
+            .brand-icon { width: 24px; height: 24px; }
+            .brand-title { font-size: 13.5px; }
+            .brand-tag { font-size: 9.5px; padding: 1px 5px; }
 
-            .nav-status {
-                font-size: 10px;
-            }
+            .nav-divider, .nav-status, .user-pill { display: none !important; }
 
             .nav-right {
                 width: 100%;
                 display: flex;
-                flex-wrap: wrap;
-                gap: 6px;
+                align-items: center;
+                gap: 5px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding-bottom: 2px;
             }
+            .nav-right::-webkit-scrollbar { display: none; }
 
             .btn-primary {
-                flex: 1 1 100%;
-                justify-content: center;
-                padding: 8px 12px;
+                flex-shrink: 0;
+                padding: 6px 11px;
+                font-size: 11px;
+                border-radius: var(--radius-sm);
+                white-space: nowrap;
             }
 
             .btn-ghost {
-                flex: 1 1 auto;
-                justify-content: center;
-                font-size: 11px;
-                padding: 6px 8px;
-            }
-
-            .user-pill {
-                display: none; /* Removed on mobile to prevent clutter */
+                flex-shrink: 0;
+                padding: 5px 8px;
+                font-size: 10.5px;
+                border-radius: var(--radius-sm);
+                white-space: nowrap;
             }
 
             .workspace {
-                padding: 10px 12px;
-                gap: 10px;
+                padding: 8px 10px;
+                gap: 8px;
+                max-width: 100%;
+                box-sizing: border-box;
+                overflow-x: hidden;
             }
 
             .kpi-row {
-                grid-template-columns: 1fr;
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                gap: 8px;
+                padding-bottom: 4px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .kpi-row::-webkit-scrollbar { display: none; }
+
+            .kpi-card {
+                flex: 0 0 84%;
+                scroll-snap-align: start;
+                padding: 10px 12px;
+                min-width: 0;
+            }
+            .kpi-label { font-size: 10.5px; }
+            .kpi-value { font-size: 20px; }
+            .kpi-meta { font-size: 10px; }
+
+            .grid-workspace {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                min-width: 0;
+            }
+
+            .col-left, .col-right {
+                width: 100%;
+                min-width: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .card {
+                width: 100%;
+                min-width: 0;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+
+            .card-header {
+                padding: 10px 12px;
+                flex-direction: column;
+                align-items: stretch;
                 gap: 8px;
             }
 
-            .grid-workspace {
-                grid-template-columns: 1fr;
-                gap: 12px;
+            .card-title-group {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 6px;
+            }
+
+            .card-title {
+                white-space: normal;
+                word-break: break-word;
+                font-size: 12.5px;
+                line-height: 1.35;
+            }
+
+            .pill-badge {
+                flex-shrink: 0;
+                font-size: 9px;
+            }
+
+            .segment-toggle {
+                width: 100%;
+                display: flex;
+            }
+
+            .segment-btn {
+                flex: 1;
+                justify-content: center;
+                padding: 5px 6px;
+                font-size: 10px;
             }
 
             .canvas-wrap {
-                min-height: 160px;
+                min-height: 180px;
+            }
+
+            .chart-footer {
+                padding: 8px 10px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+                font-size: 10px;
+                word-break: break-word;
+            }
+
+            .gate-header {
+                padding: 10px 12px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
             }
 
             .stepper-desktop {
@@ -1083,7 +1242,11 @@
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
+                padding: 8px 10px;
             }
+
+            .impact-lbl { font-size: 10.5px; }
+            .impact-val { font-size: 12px; }
 
             .gate-actions {
                 flex-direction: column;
@@ -1096,11 +1259,86 @@
             }
 
             .room-card {
-                min-height: 440px;
+                min-height: calc(100dvh - 150px);
+                height: auto;
+            }
+
+            .room-tabs {
+                padding: 0 6px;
+                gap: 2px;
+            }
+
+            .room-tab {
+                padding: 7px 9px;
+                font-size: 10.5px;
+            }
+
+            .feed-container {
+                min-height: 240px;
+                max-height: 52vh;
+                max-height: 52dvh;
+                padding: 10px 10px;
+                gap: 8px;
+            }
+
+            .msg-row { gap: 7px; }
+            .msg-avatar { width: 22px; height: 22px; font-size: 9px; }
+            .msg-content {
+                padding: 8px 10px;
+                font-size: 11.5px;
+                line-height: 1.45;
+                word-break: break-word;
+                overflow-wrap: anywhere;
+            }
+
+            .chat-input-bar {
+                padding: 8px 10px;
+                gap: 6px;
             }
 
             .chat-input {
-                font-size: 16px; /* Prevents iOS auto-zoom */
+                font-size: 16px !important; /* Strict 16px prevents iOS auto-zoom */
+                padding: 8px 10px;
+            }
+
+            .chat-send-btn {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+            }
+
+            .quick-queries-bar {
+                padding: 6px 8px;
+                gap: 4px;
+            }
+
+            .quick-pill {
+                padding: 4px 8px;
+                font-size: 10px;
+            }
+
+            .discrepancy-card {
+                grid-template-columns: 1fr;
+                gap: 4px;
+                text-align: left;
+            }
+
+            .sql-box {
+                padding: 7px 9px;
+                font-size: 10px;
+                white-space: pre-wrap;
+                word-break: break-all;
+            }
+
+            .modal-overlay {
+                padding: 10px;
+            }
+
+            .modal-box {
+                max-height: 92vh;
+                max-height: 92dvh;
+                padding: 14px 12px;
+                border-radius: var(--radius-md);
             }
         }
 
@@ -1218,6 +1456,26 @@
 
     <!-- ── Main Workspace ── -->
     <main class="workspace">
+
+        <!-- ── Mobile View Segmented Switcher (Visible only on screens <= 768px) ── -->
+        <div class="mobile-view-tabs" id="mobileViewTabs">
+            <button class="m-tab-btn active" id="mTabRoom" onclick="setMobileView('room')">
+                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span>Switch Room</span>
+            </button>
+            <button class="m-tab-btn" id="mTabChart" onclick="setMobileView('chart')">
+                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                <span>Chart & KPIs</span>
+            </button>
+            <button class="m-tab-btn" id="mTabGate" onclick="setMobileView('gate')">
+                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Approval Gate</span>
+            </button>
+            <button class="m-tab-btn" id="mTabAll" onclick="setMobileView('all')">
+                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                <span>All</span>
+            </button>
+        </div>
 
         <!-- ── 3 Focused Accounting KPI Cards ── -->
         <section class="kpi-row">
@@ -1764,6 +2022,75 @@
             }
         }
 
+        /* ── Mobile View Segmented Switcher Controls ── */
+        let currentMobileView = "room";
+
+        function setMobileView(view) {
+            currentMobileView = view;
+            if (window.innerWidth > 768) return;
+
+            const tabRoom = document.getElementById("mTabRoom");
+            const tabChart = document.getElementById("mTabChart");
+            const tabGate = document.getElementById("mTabGate");
+            const tabAll = document.getElementById("mTabAll");
+
+            [tabRoom, tabChart, tabGate, tabAll].forEach(t => t && t.classList.remove("active"));
+
+            const kpiSection = document.querySelector(".kpi-row");
+            const chartCard = document.querySelector(".chart-card");
+            const gateCard = document.querySelector(".gate-card");
+            const roomCard = document.querySelector(".room-card");
+
+            if (view === "room") {
+                if (tabRoom) tabRoom.classList.add("active");
+                if (kpiSection) kpiSection.style.display = "none";
+                if (chartCard) chartCard.style.display = "none";
+                if (gateCard) gateCard.style.display = "none";
+                if (roomCard) roomCard.style.display = "flex";
+            } else if (view === "chart") {
+                if (tabChart) tabChart.classList.add("active");
+                if (kpiSection) kpiSection.style.display = "flex";
+                if (chartCard) {
+                    chartCard.style.display = "flex";
+                    setTimeout(() => { if (typeof renderChart === "function") renderChart(); }, 60);
+                }
+                if (gateCard) gateCard.style.display = "none";
+                if (roomCard) roomCard.style.display = "none";
+            } else if (view === "gate") {
+                if (tabGate) tabGate.classList.add("active");
+                if (kpiSection) kpiSection.style.display = "none";
+                if (chartCard) chartCard.style.display = "none";
+                if (gateCard) gateCard.style.display = "flex";
+                if (roomCard) roomCard.style.display = "none";
+            } else { // "all"
+                if (tabAll) tabAll.classList.add("active");
+                if (kpiSection) kpiSection.style.display = "flex";
+                if (chartCard) {
+                    chartCard.style.display = "flex";
+                    setTimeout(() => { if (typeof renderChart === "function") renderChart(); }, 60);
+                }
+                if (gateCard) gateCard.style.display = "flex";
+                if (roomCard) roomCard.style.display = "flex";
+            }
+        }
+
+        function handleResponsiveLayout() {
+            const kpiSection = document.querySelector(".kpi-row");
+            const chartCard = document.querySelector(".chart-card");
+            const gateCard = document.querySelector(".gate-card");
+            const roomCard = document.querySelector(".room-card");
+
+            if (window.innerWidth <= 768) {
+                setMobileView(currentMobileView || "room");
+            } else {
+                if (kpiSection) kpiSection.style.display = "";
+                if (chartCard) chartCard.style.display = "";
+                if (gateCard) gateCard.style.display = "";
+                if (roomCard) roomCard.style.display = "";
+            }
+            if (typeof renderChart === "function") renderChart();
+        }
+
         window.addEventListener("DOMContentLoaded", () => {
             try {
                 let savedUser = localStorage.getItem("revenueDeskUser");
@@ -1778,6 +2105,7 @@
 
             loadLiveMetrics();
             loadSwitchRoomState();
+            handleResponsiveLayout();
 
             const area = document.getElementById("canvasAreaContainer");
             if (window.ResizeObserver && area) {
@@ -1786,7 +2114,7 @@
         });
 
         window.addEventListener("resize", () => {
-            renderChart();
+            handleResponsiveLayout();
         });
 
         /* ── Discount Slider ── */
@@ -1994,6 +2322,26 @@
                 addMessage("Switch Consensus Engine (#revenue-desk)", consensusHtml, "#0F172A");
                 loadSwitchRoomState();
 
+                // Highlight mobile approval gate if on mobile
+                const mTabGate = document.getElementById("mTabGate");
+                if (mTabGate) {
+                    mTabGate.innerHTML = `
+                        <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--color-emerald); margin-right:3px;"></span>
+                        <span>Sign-Off (1)</span>
+                    `;
+                }
+                // Provide 1-click authorize directly in stream for mobile
+                addMessage("System", `
+                    <div style="background:#ECFDF5; border:1px solid #A7F3D0; border-radius:6px; padding:10px; margin-top:4px;">
+                        <div style="font-weight:700; color:#065F46; font-size:11.5px; margin-bottom:4px;">🛡️ Switch Rule #4: Human Lead Authorization Required</div>
+                        <div style="font-size:11px; color:#047857; margin-bottom:8px;">15% Win-back Discount proposed for 5 West Enterprise accounts.</div>
+                        <div style="display:flex; gap:6px;">
+                            <button onclick="approveCampaign()" class="btn-primary" style="flex:1; padding:7px 12px; font-size:11px; justify-content:center; background:#059669; border:none; color:#FFFFFF; border-radius:4px; cursor:pointer; font-weight:700;">✓ Authorize 15% Campaign</button>
+                            <button onclick="setMobileView('gate')" class="btn-ghost" style="padding:7px 10px; font-size:11px; border-radius:4px; cursor:pointer;">Adjust Slider &rarr;</button>
+                        </div>
+                    </div>
+                `, "#059669");
+
             } catch (err) {
                 setPipe(2, "completed");
                 setPipe(3, "completed");
@@ -2028,6 +2376,14 @@
                 addMessage("@manager (Human Lead Sign-Off)", `Authorized execution of Win-Back Campaign at <strong>${discount}% discount</strong> under Switch Rule #4.`, "#0F172A");
                 const resultMsg = data.result || `Campaign created with status 'approved'. 5 enterprise accounts enrolled at ${discount}% discount. Database mutations committed.`;
                 addMessage("@analyst (Revenue Analyst)", resultMsg, "#059669");
+
+                const mTabGate = document.getElementById("mTabGate");
+                if (mTabGate) {
+                    mTabGate.innerHTML = `
+                        <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span>Approval Gate</span>
+                    `;
+                }
 
                 cachedDbData = null;
                 loadSwitchRoomState();

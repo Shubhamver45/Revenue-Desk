@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Revenue Desk — Financial Operations & Ledger Intelligence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -783,9 +783,9 @@
 
         /* Responsive Breakpoints */
         @media (max-width: 960px) {
-            .split-container { grid-template-columns: 1fr; }
+            .split-container { grid-template-columns: 1fr; min-height: 100dvh; }
             .stage-3d-pane { display: none; }
-            .stage-auth-pane { width: 100vw; height: 100vh; padding: 24px; }
+            .stage-auth-pane { width: 100%; min-height: 100dvh; padding: 24px 16px; box-sizing: border-box; }
         }
     </style>
 </head>
