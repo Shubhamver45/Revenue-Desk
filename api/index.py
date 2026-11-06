@@ -14,3 +14,4 @@ from app import SwitchAppHandler
 class handler(SwitchAppHandler):
     """Vercel Serverless Function entry point inheriting from SwitchAppHandler."""
     pass
+

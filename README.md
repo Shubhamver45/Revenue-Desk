@@ -84,10 +84,7 @@ npm install && npm start
 # Step 3: Run the Automated Unit Test Suite (11/11 tests pass in ~1.2s)
 python3 -m unittest discover tests -v
 
-# Step 4: Open Interactive Walkthrough Demo Studio
-open http://localhost:8000/video
-
-# Step 5: Run Terminal Interactive CLI Demo
+# Step 4: Run Terminal Interactive CLI Demo
 python main.py
 ```
 
@@ -132,24 +129,14 @@ python3 app.py
 # Opens http://localhost:8000
 ```
 
-### 4. Interactive Walkthrough & Demo Studio
-
-```bash
-# Direct link to the synchronized demo studio
-open http://localhost:8000/video
-```
-- **Walkthrough**: Synchronized UI simulation demonstrating anomaly diagnosis, ledger audit, and consensus
-- **Duration**: Exactly 2 minutes, 32 seconds (concise, focused overview)
-- **Demo Asset**: Exportable high-resolution recording for offline presentations
-
-### 5. Run Automated Unit Tests (100% Pass Rate)
+### 4. Run Automated Unit Tests (100% Pass Rate)
 
 ```bash
 python3 -m unittest discover tests -v
 ```
 *Executes all 11 unit tests across seed data verification, naive vs audited revenue queries, refund trap detection, and human gate authorization in ~1.2s.*
 
-### 6. Run the CLI Demo (Terminal)
+### 5. Run the CLI Demo (Terminal)
 
 ```bash
 python main.py
@@ -305,7 +292,7 @@ This creates the perfect demo moment — the Analyst reports one number, the Rev
 | **Use of Switch** | **30%** | *Is Switch central, and would the project stop working without it?* | **Structurally Indispensable.** Without Switch multi-agent consensus, a solo AI model misses the refund ledger, assumes 84% customer churn, and burns $-\$9,550$ in margin with an unneeded 25% discount. With Switch room rules (@analyst + @reviewer), it audits processor reversal webhooks, catches the $-\$20,430$ duplicate refund glitch, and Switch Rule #4 blocks database mutation until human approval ($+\$32,470$ net margin). Without Switch, the application literally causes financial loss. |
 | **Technical Execution** | **25%** | *Does it run, and could someone clone the repo and reproduce it?* | **1-Command Reproducibility.** Starts cleanly with `npm start` (Node.js/React 18 gateway) or `python3 app.py` (instant web server). **11/11 automated unit tests pass** (`python3 -m unittest discover tests -v` in 1.2s). Real SQLite and live Supabase queries across 160 transactions and 80 accounts with zero fake mocks. |
 | **Creativity and Impact** | **25%** | *Is it a fresh idea that solves a problem a real team has?* | **Enterprise Financial Governance.** Solves the \#1 blocker preventing CFOs and revenue operations leaders from adopting autonomous AI: fear of unverified hallucinations and unauthorized discounting. Introduces declarative human sign-off gates and an immutable cryptographic decision audit trail. |
-| **Presentation** | **20%** | *Do the demo video and README make clear how Switch is used?* | **Clear Walkthrough & Comprehensive Docs.** Includes a dedicated **Demo Walkthrough Studio** (`http://localhost:8000/video`) with synchronized step-by-step audio narration, running for exactly 2 minutes and 32 seconds (under the 3-minute hard ceiling). README features full architecture diagrams, seed data walkthroughs, and step-by-step verification commands. |
+| **Presentation** | **20%** | *Do the demo video and README make clear how Switch is used?* | **Production-Ready Cockpit & Crystal-Clear Docs.** Features an interactive executive cockpit (`http://localhost:8000`), a comprehensive technical guide (`BLOG.md`), full architecture diagrams, seed data walkthroughs, and one-command reproducibility. |
 
 ### 🔍 How the Tracks are Judged (Our Strategy for All 3 Stages)
 
