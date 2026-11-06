@@ -2,7 +2,8 @@
 
 **Two AI agents and a human manager in one Switch room — analyzing data, catching errors, and taking action together.**
 
-> Built for the [Flip the Switch Hackathon](https://devtoolsacademy.com) (Nov 4–7, 2026)
+> Built for the [Flip the Switch Hackathon](https://devtoolsacademy.com) (Nov 4–7, 2026)  
+> 📖 **In-Depth Guide & Blog Post:** [Read our complete architectural walkthrough in BLOG.md](BLOG.md)
 
 ---
 
