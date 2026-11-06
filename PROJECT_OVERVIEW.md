@@ -126,13 +126,17 @@ The project contains a realistic seed database (80 customers across 4 regions, 1
 ## 🏃 7. Useful Terminal Commands
 
 ```bash
-# 1. Run the live web server (Serves at http://127.0.0.1:8000)
+# 1. Run with Node.js & React 18 SPA (Serves at http://localhost:3000)
+npm start
+# or: node server.js
+
+# 2. Run Python server directly (Serves at http://127.0.0.1:8000)
 python3 app.py
 
-# 2. Run the unit test suite (11/11 tests pass in ~1.1s)
+# 3. Run the unit test suite (11/11 tests pass in ~1.1s)
 python3 -m unittest discover tests -v
 
-# 3. Run the interactive terminal CLI demo
+# 4. Run the interactive terminal CLI demo
 python3 src/cli_demo.py
 ```
 

@@ -73,7 +73,19 @@ Or with uv:
 uv sync
 ```
 
-### 3. Run the CLI Demo
+### 3. Run the Web Cockpit (React.js + Node.js)
+
+```bash
+# Option A: Start with Node.js (React 18 SPA + Gateway)
+npm start
+# Opens http://localhost:3000
+
+# Option B: Start with Python directly
+python3 app.py
+# Opens http://localhost:8000
+```
+
+### 4. Run the CLI Demo (Terminal)
 
 ```bash
 python main.py
