@@ -44,7 +44,7 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
-        if path in ("/", "/index.html", "/dashboard", "/api/index.py", "/api/index"):
+        if path in ("/", "/index.html", "/dashboard"):
             self.serve_ui("index.html")
         elif path in ("/landing", "/landing.html", "/login"):
             self.serve_ui("landing.html")

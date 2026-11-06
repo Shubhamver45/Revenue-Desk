@@ -41,6 +41,18 @@ class handler(SwitchAppHandler):
     def do_GET(self) -> None:
         real_path = self.get_request_path()
         orig_path = self.path
+        if "/api/debug" in orig_path or real_path == "/api/debug":
+            import json
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps({
+                "real_path": real_path,
+                "orig_path": orig_path,
+                "headers": dict(self.headers)
+            }).encode())
+            return
+
         query = urllib.parse.urlparse(orig_path).query
         self.path = real_path + (f"?{query}" if query else "")
         try:
