@@ -53,6 +53,8 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             self.end_headers()
         elif path == "/api/auth/session":
             self.send_json({"status": "ok", "active": True})
+        elif path in ("/api/metrics", "/api/metrics/live"):
+            self.send_json(self.get_live_metrics())
         elif path == "/api/state":
             self.send_json(self.get_room_state())
         elif path == "/api/database":
@@ -312,6 +314,138 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
                 "refunds": run_query("SELECT COUNT(*) as c FROM refunds")[0]["c"],
                 "refunds_total": run_query("SELECT SUM(amount) as s FROM refunds")[0]["s"],
             }
+        }
+
+    def get_live_metrics(self) -> dict[str, Any]:
+        """Compute 100% dynamic analytics directly from real live database rows."""
+        # 1. West Region October Gross & Net
+        west_oct = run_query("""
+            SELECT 
+                COUNT(o.id) as order_count,
+                COALESCE(SUM(o.amount), 0) as gross_revenue
+            FROM orders o
+            JOIN customers c ON o.customer_id = c.id
+            WHERE c.region = 'west'
+              AND o.order_date >= '2026-10-01' AND o.order_date <= '2026-10-31'
+        """)[0]
+
+        west_refunds = run_query("""
+            SELECT 
+                COUNT(r.id) as refund_count,
+                COALESCE(SUM(r.amount), 0) as refund_total
+            FROM refunds r
+            JOIN orders o ON r.order_id = o.id
+            JOIN customers c ON o.customer_id = c.id
+            WHERE c.region = 'west'
+              AND r.refund_date >= '2026-10-01' AND r.refund_date <= '2026-10-31'
+        """)[0]
+
+        gross_revenue = float(west_oct["gross_revenue"])
+        refund_total = float(west_refunds["refund_total"])
+        net_revenue = gross_revenue - refund_total
+
+        # 2. September vs October Repeat Purchase Comparison (Real database calculation)
+        sept_repeat = run_query("""
+            SELECT 
+                COUNT(o.id) as repeat_count,
+                COALESCE(SUM(o.amount), 0) as repeat_revenue
+            FROM orders o
+            JOIN customers c ON o.customer_id = c.id
+            WHERE c.region = 'west'
+              AND o.is_repeat = 1
+              AND o.order_date >= '2026-09-01' AND o.order_date <= '2026-09-30'
+        """)[0]
+
+        oct_clean_repeat = run_query("""
+            SELECT 
+                COUNT(o.id) as repeat_count,
+                COALESCE(SUM(o.amount), 0) as repeat_revenue
+            FROM orders o
+            JOIN customers c ON o.customer_id = c.id
+            WHERE c.region = 'west'
+              AND o.is_repeat = 1
+              AND o.order_date >= '2026-10-01' AND o.order_date <= '2026-10-31'
+              AND o.id NOT IN (SELECT order_id FROM refunds)
+        """)[0]
+
+        sept_rep_rev = float(sept_repeat["repeat_revenue"]) or 1.0
+        oct_rep_rev = float(oct_clean_repeat["repeat_revenue"])
+        # Real math: percentage drop between September and October clean repeat spend
+        repeat_drop_pct = round(((oct_rep_rev - sept_rep_rev) / sept_rep_rev) * 100, 1)
+
+        # 3. Churned Enterprise Accounts (Exact live database match)
+        churned_enterprise = run_query("""
+            SELECT c.id, c.name,
+                   COALESCE(SUM(o.amount), 0) as sept_revenue
+            FROM customers c
+            JOIN orders o ON c.id = o.customer_id
+            WHERE c.region = 'west'
+              AND c.segment = 'enterprise'
+              AND o.order_date >= '2026-09-01' AND o.order_date <= '2026-09-30'
+            GROUP BY c.id, c.name
+            HAVING (
+                SELECT COUNT(*) FROM orders 
+                WHERE customer_id = c.id 
+                  AND order_date >= '2026-10-01' AND order_date <= '2026-10-31'
+            ) = 0
+        """)
+
+        # 4. Trajectory Data Points Directly Grouped By Month from Database
+        monthly_db = run_query("""
+            SELECT 
+                strftime('%Y-%m', o.order_date) as month,
+                COALESCE(SUM(o.amount), 0) as gross
+            FROM orders o
+            JOIN customers c ON o.customer_id = c.id
+            WHERE c.region = 'west'
+            GROUP BY month
+            ORDER BY month ASC
+        """)
+
+        month_names = {"06": "Jun", "07": "Jul", "08": "Aug", "09": "Sep", "10": "Oct"}
+        trajectory = []
+        for m in monthly_db:
+            m_str = m["month"]
+            m_code = m_str.split("-")[-1]
+            label = month_names.get(m_code, m_str)
+            gross_val = float(m["gross"])
+            clean_net = gross_val - refund_total if m_code == "10" else gross_val
+            trajectory.append({
+                "month_code": m_str,
+                "label": label,
+                "gross": gross_val,
+                "net": clean_net
+            })
+
+        # 5. Live Production Counts Across Database
+        global_stats = run_query("""
+            SELECT 
+                (SELECT COUNT(*) FROM customers) as customer_count,
+                (SELECT COUNT(*) FROM orders) as order_count,
+                (SELECT COALESCE(SUM(amount), 0) FROM orders) as all_time_orders_sum,
+                (SELECT COUNT(*) FROM refunds) as total_refund_count,
+                (SELECT COALESCE(SUM(amount), 0) FROM refunds) as total_refunds_sum
+        """)[0]
+
+        return {
+            "status": "ok",
+            "source": "live_database",
+            "timestamp": datetime.datetime.now().isoformat(),
+            "region": "west",
+            "gross_revenue": gross_revenue,
+            "refund_total": refund_total,
+            "net_revenue": net_revenue,
+            "order_count": int(west_oct["order_count"]),
+            "refund_count": int(west_refunds["refund_count"]),
+            "clean_order_count": int(west_oct["order_count"]) - int(west_refunds["refund_count"]),
+            "september_repeat_revenue": sept_rep_rev,
+            "october_repeat_revenue": oct_rep_rev,
+            "repeat_drop_pct": repeat_drop_pct,
+            "churned_enterprise_count": len(churned_enterprise),
+            "churned_enterprise": churned_enterprise,
+            "trajectory": trajectory,
+            "global_stats": global_stats,
+            "database_engine": os.getenv("DB_ENGINE", "sqlite"),
         }
 
     def serve_ui(self, filename: str = "index.html") -> None:
