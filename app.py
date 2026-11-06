@@ -48,6 +48,24 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             self.serve_ui("index.html")
         elif path in ("/landing", "/landing.html", "/login"):
             self.serve_ui("landing.html")
+        elif path in ("/video", "/video.html", "/demo"):
+            self.serve_ui("video.html")
+        elif path.startswith("/audio/"):
+            audio_file = ROOT_DIR / "src" / "ui" / path.lstrip("/")
+            if audio_file.exists():
+                ext = audio_file.suffix.lower()
+                mime = "audio/mp4" if ext in (".m4a", ".mp4") else "audio/wav" if ext == ".wav" else "audio/mpeg"
+                data = audio_file.read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", mime)
+                self.send_header("Content-Length", str(len(data)))
+                self.send_header("Accept-Ranges", "bytes")
+                self.end_headers()
+                self.wfile.write(data)
+                return
+            else:
+                self.send_error(404, "Audio file not found")
+                return
         elif path == "/favicon.ico":
             self.send_response(204)
             self.end_headers()
@@ -468,6 +486,9 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(content)))
+        self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
         self.end_headers()
         self.wfile.write(content)
 

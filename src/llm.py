@@ -118,12 +118,52 @@ def chat_anthropic(system_prompt: str, user_message: str) -> str:
 
 
 def chat_mock(system_prompt: str, user_message: str) -> str:
-    """Realistic dynamic simulation for answering diverse user questions with real SQL and findings."""
+    """Intelligent semantic simulation for answering ANY business/revenue question with real database execution."""
     prompt_str = (system_prompt + " " + user_message).lower()
     
     # Extract the manager's actual question if embedded in a larger prompt
     q_match = re.search(r'(?:manager ask[eds]*:\s*["\']?|question:\s*)([^\n"\']+)', user_message, re.IGNORECASE)
     user_str = (q_match.group(1).strip() if q_match else user_message).lower()
+
+    # Extract limit number if specified (e.g. "last 5", "latest 10")
+    limit = 5
+    num_match = re.search(r'\b(\d+)\b', user_str)
+    if num_match:
+        try:
+            val = int(num_match.group(1))
+            if 1 <= val <= 50:
+                limit = val
+        except Exception:
+            pass
+
+    # Classify the intent
+    if any(k in user_str for k in ['why did repeat', 'repeat purchase drop', 'repeat drop']) or ('west' in user_str and 'drop' in user_str):
+        intent = 'flagship_west_drop'
+    elif any(k in user_str for k in ['profit', 'net revenue', 'margin', 'earnings', 'earn']):
+        intent = 'profit'
+    elif any(k in user_str for k in ['refund', 'glitch', 'duplicate', 'reversal', 'billing error', 'billing glitch']):
+        intent = 'refunds'
+    elif any(k in user_str for k in ['enterprise', 'customer', 'account', 'client', 'who spent', 'who bought']):
+        intent = 'customers'
+    elif any(k in user_str for k in ['region', 'territor', 'east', 'south', 'central', 'breakdown']):
+        intent = 'regions'
+    elif any(k in user_str for k in ['total revenue', 'gross revenue', 'overall sales', 'total sales', 'total volume']):
+        intent = 'total_revenue'
+    elif any(k in user_str for k in ['order', 'last', 'recent', 'latest', 'sales', 'transaction']):
+        intent = 'recent_orders'
+    else:
+        intent = 'general'
+
+    # Extract raw data rows from prompt if present
+    parsed_rows: list[dict[str, Any]] = []
+    json_match = re.search(r'```json\s*(.*?)\s*```', user_message, re.DOTALL)
+    if json_match:
+        try:
+            raw = json.loads(json_match.group(1))
+            if isinstance(raw, list):
+                parsed_rows = raw
+        except Exception:
+            pass
 
     # 1. Campaign execution SQL statements
     if "approved the following action" in prompt_str or "generate the sql statements" in prompt_str:
@@ -143,14 +183,23 @@ VALUES ('Approved West Win-Back Campaign with 15% discount', 'Human Manager', 'R
 
     # 2. Reviewer verification query generation
     if "generate an independent verification query" in prompt_str:
-        if any(w in user_str for w in ["refund", "glitch", "duplicate", "billing", "discrepan"]):
+        if intent == 'profit':
+            return f"""```sql
+SELECT o.id, o.amount as gross_amount, COALESCE(r.amount, 0) as refund_amount,
+       (o.amount - COALESCE(r.amount, 0)) as net_profit
+FROM orders o
+LEFT JOIN refunds r ON o.id = r.order_id
+ORDER BY o.order_date DESC, o.id DESC
+LIMIT {limit};
+```"""
+        elif intent == 'refunds':
             return """```sql
 SELECT r.id, r.order_id, r.amount, r.reason, r.refund_date
 FROM refunds r
 WHERE r.reason LIKE '%Duplicate%' OR r.amount > 1000
 ORDER BY r.amount DESC;
 ```"""
-        elif any(w in user_str for w in ["customer", "account", "client"]):
+        elif intent == 'customers':
             return """```sql
 SELECT c.id, c.name, c.segment, c.region, COUNT(o.id) as orders_count
 FROM customers c
@@ -158,12 +207,25 @@ LEFT JOIN orders o ON c.id = o.customer_id
 GROUP BY c.id
 ORDER BY c.id ASC LIMIT 10;
 ```"""
-        elif any(w in user_str for w in ["region", "east", "south", "central"]):
+        elif intent == 'regions':
             return """```sql
 SELECT c.region, COUNT(o.id) as order_count, SUM(o.amount) as revenue
 FROM customers c
 JOIN orders o ON c.id = o.customer_id
 GROUP BY c.region;
+```"""
+        elif intent == 'total_revenue':
+            return """```sql
+SELECT COUNT(id) as total_orders, SUM(amount) as gross_volume,
+       (SELECT COALESCE(SUM(amount), 0) FROM refunds) as total_refunds
+FROM orders;
+```"""
+        elif intent == 'recent_orders':
+            return f"""```sql
+SELECT o.id, o.customer_id, o.amount, o.order_date
+FROM orders o
+ORDER BY o.order_date DESC, o.id DESC
+LIMIT {limit};
 ```"""
         else:
             return """```sql
@@ -181,18 +243,42 @@ WHERE c.region = 'west' AND o.order_date BETWEEN '2026-10-01' AND '2026-10-31';
 
     # 3. Reviewer comparison / verification flow
     if "quality-assurance agent that independently verifies" in prompt_str or "independently verify" in prompt_str or "compare both results" in prompt_str:
-        if any(w in user_str for w in ["customer", "account", "client"]):
+        if intent == 'profit':
+            return f"""✅ **Verification Confirmed**
+**Independent Audit:** Verified recent order settlement logs against the payment processor refunds register.
+• Cross-checked the last {limit} transactions against ledger records.
+• Net profit calculations (Gross minus Reversals) match database totals with 0 variance.
+• **Status:** Numbers certified with 100% mathematical accuracy."""
+
+        elif intent == 'customers':
             return """✅ **Verification Confirmed**
 **Independent Audit:** Verified customer account directory against order registry.
-- All enterprise account IDs match database master records.
-- 0 data integrity anomalies detected in customer segmentation.
-- **Status:** Numbers certified with 100% accuracy."""
+• All enterprise account IDs match database master records.
+• 0 data integrity anomalies detected in customer segmentation.
+• **Status:** Numbers certified with 100% accuracy."""
 
-        elif any(w in user_str for w in ["region", "east", "south", "central"]):
+        elif intent == 'regions':
             return """✅ **Regional Integrity Verified**
 **Independent Audit:** Regional revenue roll-ups reconciled across all 4 operational territories (West, East, Central, South).
-- Transaction checksums match ledger totals.
-- Cross-verified gross totals against processor records with zero variance."""
+• Transaction checksums match ledger totals.
+• Cross-verified gross totals against processor records with zero variance."""
+
+        elif intent == 'total_revenue':
+            return """✅ **Ledger Volume Certified**
+**Independent Audit:** Reconciled gross sales ledger against processor refund register.
+• Total gross orders (237) and refund transactions verified against SQLite master.
+• Gross minus refunds equals certified net revenue with zero discrepancy."""
+
+        elif intent == 'recent_orders':
+            return f"""✅ **Transaction Order Integrity Verified**
+**Independent Audit:** Reconciled last {limit} orders against live transaction logs.
+• Order timestamps, customer associations, and amounts certified accurate."""
+
+        elif intent == 'refunds':
+            return """⚠️ **Discrepancy Confirmed: Duplicate Gateway Loop Caught**
+**Independent Audit:** Full trace of refunds table confirms unrecorded gateway loops.
+• 8 duplicate refund reversal loops identified across orders #1, #2, and #3.
+• Total processor glitch equals **$20,430.00**; true net revenue is certified at **$3,820.00**."""
 
         else:
             return """⚠️ **Discrepancy Found**
@@ -224,17 +310,58 @@ WHERE c.region = 'west' AND o.order_date BETWEEN '2026-10-01' AND '2026-10-31';
         "propose a business campaign",
         "propose an action"
     ]):
-        if any(w in user_str for w in ["customer", "account", "client"]):
+        if intent == 'profit':
+            return f"""📋 **Proposed Action: Transaction Settlement Audit & Fulfillment Optimization**
+
+**What:** Routine operational verification of recent order settlements and delivery confirmation.
+**Target Scope:** Recent active client accounts across all operational regions.
+**Why:** Real-time margin auditing confirms healthy operational cash flow and protects against dispute leakage.
+**Expected Impact:** Maintain 100% order settlement integrity and safeguard gross margins.
+**Recommended Offer:** Standard delivery confirmation and retention loyalty tier qualification.
+
+⏳ *Awaiting manager approval before execution.*"""
+
+        elif intent == 'customers':
             return """📋 **Proposed Action: Dedicated Enterprise Account Management Outreach**
 
-**What:** Direct account executive contact with the isolated enterprise clients.
+**What:** Direct account executive contact with high-value enterprise clients.
 **Who:** High-value enterprise tier accounts identified in the query.
 **Objective:** Schedule Q4 executive reviews to secure contract renewals.
 **Expected impact:** Prevent contract attrition and safeguard recurring annual contract value.
 
 ⏳ *Awaiting manager approval before execution.*"""
 
-        elif any(w in user_str for w in ["refund", "billing", "glitch", "duplicate"]):
+        elif intent == 'regions':
+            return """📋 **Proposed Action: Cross-Regional Sales Allocation & Territory Optimization**
+
+**What:** Rebalance sales development reps across top-performing regions.
+**Target Scope:** East, Central, and South accounts.
+**Why:** Accelerate revenue momentum where customer demand is growing fastest.
+**Expected Impact:** Capture +15% quarterly expansion volume across leading territories.
+
+⏳ *Awaiting manager approval before execution.*"""
+
+        elif intent == 'total_revenue':
+            return """📋 **Proposed Action: Enterprise Cash Flow Re-Balancing & Ledger Reconciliation**
+
+**What:** Formal sign-off on reconciled quarterly net revenue figures.
+**Target Scope:** All operational transaction streams.
+**Why:** Lock verified gross and net figures into the executive audit log.
+**Expected Impact:** Certify zero financial discrepancy across Q3-Q4 books.
+
+⏳ *Awaiting manager approval before execution.*"""
+
+        elif intent == 'recent_orders':
+            return f"""📋 **Proposed Action: High-Value Order Delivery & Retention Check**
+
+**What:** Proactive post-sale delivery confirmation for the last {limit} transactions.
+**Target Scope:** Clients with recent order settlements.
+**Why:** Ensure immediate customer satisfaction and prevent post-purchase inquiries.
+**Expected Impact:** Maintain zero dispute rate and encourage repeat purchase cycles.
+
+⏳ *Awaiting manager approval before execution.*"""
+
+        elif intent == 'refunds':
             return """📋 **Proposed Action: Automated Gateway Reconciliation & Credit Note Issuance**
 
 **What:** Reconcile all flagged duplicate refund loops and credit affected client accounts.
@@ -266,7 +393,20 @@ WHERE c.region = 'west' AND o.order_date BETWEEN '2026-10-01' AND '2026-10-31';
         "write a single sqlite query",
         "executable sqlite query"
     ]):
-        if any(w in user_str for w in ["refund", "discrepan", "glitch", "loop", "duplicate"]):
+        if intent == 'profit':
+            return f"""```sql
+SELECT o.id, c.name as customer_name, c.region, o.amount as gross_amount,
+       COALESCE(r.amount, 0) as refund_amount,
+       (o.amount - COALESCE(r.amount, 0)) as net_profit,
+       o.order_date
+FROM orders o
+JOIN customers c ON o.customer_id = c.id
+LEFT JOIN refunds r ON o.id = r.order_id
+ORDER BY o.order_date DESC, o.id DESC
+LIMIT {limit};
+```"""
+
+        elif intent == 'refunds':
             return """```sql
 SELECT r.id, r.order_id, c.name as customer_name, r.amount, r.reason, r.refund_date
 FROM refunds r
@@ -275,7 +415,7 @@ JOIN customers c ON o.customer_id = c.id
 ORDER BY r.amount DESC LIMIT 10;
 ```"""
 
-        elif any(w in user_str for w in ["region", "east", "south", "central", "territory"]):
+        elif intent == 'regions':
             return """```sql
 SELECT c.region, COUNT(DISTINCT c.id) as total_customers, COUNT(o.id) as total_orders, SUM(o.amount) as gross_revenue
 FROM customers c
@@ -284,31 +424,45 @@ GROUP BY c.region
 ORDER BY gross_revenue DESC;
 ```"""
 
-        elif any(w in user_str for w in ["top", "order", "highest", "transaction", "sales"]):
-            return """```sql
-SELECT o.id, c.name as customer_name, c.region, o.amount, o.order_date
-FROM orders o
-JOIN customers c ON o.customer_id = c.id
-ORDER BY o.amount DESC LIMIT 10;
-```"""
-
-        elif any(w in user_str for w in ["customer", "account", "client", "who"]):
-            if "enterprise" in user_str:
+        elif intent == 'customers':
+            if "west" in user_str:
                 return """```sql
-SELECT c.id, c.name, c.segment, c.region, c.created_at
+SELECT c.id, c.name, c.segment, c.region, COUNT(o.id) as order_count, COALESCE(SUM(o.amount), 0) as total_spent
 FROM customers c
-WHERE c.segment = 'enterprise'
-ORDER BY c.id ASC LIMIT 10;
+LEFT JOIN orders o ON c.id = o.customer_id
+WHERE c.region = 'west' AND c.segment = 'enterprise'
+GROUP BY c.id
+ORDER BY total_spent DESC;
 ```"""
-            return """```sql
-SELECT c.id, c.name, c.segment, c.region, COUNT(o.id) as total_orders
+            else:
+                return f"""```sql
+SELECT c.id, c.name, c.segment, c.region, COUNT(o.id) as total_orders, COALESCE(SUM(o.amount), 0) as total_spent
 FROM customers c
 LEFT JOIN orders o ON c.id = o.customer_id
 GROUP BY c.id
-ORDER BY total_orders DESC LIMIT 10;
+ORDER BY total_spent DESC LIMIT {limit};
 ```"""
 
-        else:
+        elif intent == 'total_revenue':
+            return """```sql
+SELECT 
+    COUNT(DISTINCT o.id) as total_orders,
+    SUM(o.amount) as gross_revenue,
+    (SELECT COALESCE(SUM(amount), 0) FROM refunds) as total_refunds,
+    SUM(o.amount) - (SELECT COALESCE(SUM(amount), 0) FROM refunds) as net_revenue
+FROM orders o;
+```"""
+
+        elif intent == 'recent_orders':
+            return f"""```sql
+SELECT o.id, c.name as customer_name, c.region, o.amount, o.order_date
+FROM orders o
+JOIN customers c ON o.customer_id = c.id
+ORDER BY o.order_date DESC, o.id DESC
+LIMIT {limit};
+```"""
+
+        elif intent == 'flagship_west_drop':
             return """```sql
 SELECT c.name, c.segment, COUNT(o.id) as order_count, SUM(o.amount) as total_spent
 FROM customers c
@@ -318,14 +472,118 @@ GROUP BY c.id
 ORDER BY total_spent DESC;
 ```"""
 
-    # 6. Analyst Explanation Phase (interpreting real SQLite rows)
+        else:
+            return f"""```sql
+SELECT o.id, c.name as customer_name, c.region, o.amount, o.order_date
+FROM orders o
+JOIN customers c ON o.customer_id = c.id
+ORDER BY o.order_date DESC, o.id DESC
+LIMIT {limit};
+```"""
+
+    # 6. Analyst Explanation Phase (interpreting real SQLite rows dynamically)
     if any(k in prompt_str for k in [
         "analyze these real results",
         "present your findings to the manager",
         "explain the findings",
         "clear summary referencing the exact numbers"
     ]):
-        if any(w in user_str for w in ["refund", "discrepan", "glitch", "loop", "duplicate"]):
+        if intent == 'profit' and parsed_rows:
+            bullets = []
+            total_net = 0.0
+            total_gross = 0.0
+            total_refunds = 0.0
+            for r in parsed_rows:
+                oid = r.get('id', '#')
+                cname = r.get('customer_name', 'Customer')
+                reg = str(r.get('region', '')).title()
+                gross = float(r.get('gross_amount', r.get('amount', 0.0)))
+                ref = float(r.get('refund_amount', 0.0))
+                net = float(r.get('net_profit', gross - ref))
+                odate = r.get('order_date', '')
+                total_net += net
+                total_gross += gross
+                total_refunds += ref
+                bullets.append(f"• **Order #{oid}** — {cname} ({reg}): ${gross:,.2f} gross (${ref:,.2f} refunds) → **Net Profit: ${net:,.2f}** ({odate})")
+            
+            bullet_str = "\n".join(bullets)
+            return f"""**Findings:**
+Executed net profit query across the last {len(parsed_rows)} settled transactions from our live ledger:
+{bullet_str}
+
+**Key Insight:**
+Combined net profit across these {len(parsed_rows)} orders is **${total_net:,.2f}** (Gross: ${total_gross:,.2f}, Total Refunds: ${total_refunds:,.2f}). All transactions are fully settled in the production database with zero active chargeback holds."""
+
+        elif intent == 'recent_orders' and parsed_rows:
+            bullets = []
+            total_vol = 0.0
+            for r in parsed_rows:
+                oid = r.get('id', '#')
+                cname = r.get('customer_name', 'Customer')
+                reg = str(r.get('region', '')).title()
+                amt = float(r.get('amount', 0.0))
+                odate = r.get('order_date', '')
+                total_vol += amt
+                bullets.append(f"• **Order #{oid}**: {cname} ({reg}) — **${amt:,.2f}** on {odate}")
+            
+            bullet_str = "\n".join(bullets)
+            return f"""**Findings:**
+Retrieved the latest {len(parsed_rows)} transactions from the live orders ledger:
+{bullet_str}
+
+**Key Insight:**
+Recent order volume totals **${total_vol:,.2f}**. All orders are registered with valid customer mappings and verified payment timestamps."""
+
+        elif intent == 'customers' and parsed_rows:
+            bullets = []
+            for r in parsed_rows:
+                cname = r.get('name', 'Account')
+                seg = str(r.get('segment', '')).title()
+                reg = str(r.get('region', '')).title()
+                spent = float(r.get('total_spent', 0.0))
+                ocnt = r.get('order_count', 0)
+                bullets.append(f"• **{cname}** ({seg} • {reg}): **${spent:,.2f}** across {ocnt} orders")
+            bullet_str = "\n".join(bullets)
+            return f"""**Findings:**
+Customer ledger analysis returned {len(parsed_rows)} accounts:
+{bullet_str}
+
+**Key Insight:**
+These accounts represent core revenue contributors in their respective segments. Account health scores remain high with active contract registries."""
+
+        elif intent == 'regions' and parsed_rows:
+            bullets = []
+            for r in parsed_rows:
+                reg = str(r.get('region', '')).title()
+                custs = r.get('total_customers', r.get('customer_count', 0))
+                ords = r.get('total_orders', r.get('order_count', 0))
+                rev = float(r.get('gross_revenue', 0.0))
+                bullets.append(f"• **{reg} Region**: **${rev:,.2f}** revenue across {ords} orders ({custs} registered customers)")
+            bullet_str = "\n".join(bullets)
+            return f"""**Findings:**
+Regional transaction breakdown across operational territories:
+{bullet_str}
+
+**Key Insight:**
+East and South regions currently lead in gross volume, while West displays the largest variance due to October transaction reversals."""
+
+        elif intent == 'total_revenue' and parsed_rows:
+            r = parsed_rows[0]
+            t_ord = r.get('total_orders', 0)
+            t_gross = float(r.get('gross_revenue', 0.0))
+            t_ref = float(r.get('total_refunds', 0.0))
+            t_net = float(r.get('net_revenue', t_gross - t_ref))
+            return f"""**Findings:**
+Aggregated transaction database telemetry:
+• **Total Orders**: {t_ord:,} transactions logged across all regions
+• **Reported Gross Volume**: **${t_gross:,.2f}**
+• **Total Refunds & Reversals**: **-${t_ref:,.2f}**
+• **Certified Net Revenue**: **${t_net:,.2f}**
+
+**Key Insight:**
+Net revenue margin is certified at {((t_net/t_gross)*100 if t_gross else 0):.1f}% of gross volume following processor reconciliations."""
+
+        elif intent == 'refunds':
             return """**Findings:**
 Audit of refunds table identified duplicate payment gateway loops:
 - Orders #1, #2, and #3 were each refunded **$6,810.00** twice during processor migration.
@@ -335,32 +593,16 @@ Audit of refunds table identified duplicate payment gateway loops:
 **Key Insight:**
 The recorded drop in revenue was heavily distorted by the $20,430 duplicate refund loop, which masks true operational performance."""
 
-        elif any(w in user_str for w in ["region", "east", "south", "central"]):
-            return """**Findings:**
-Regional transaction breakdown across all 4 territories:
-- **East Region:** Strong performance leading with consistent repeat volume ($41,800).
-- **South & Central Regions:** Operating within normal baseline expectations (~$28,100 & ~$18,300).
-- **West Region:** Significant discrepancy observed due to October transaction reversals ($24,250 gross).
-
-**Key Insight:**
-The performance anomaly is isolated strictly to the West region; East, South, and Central territories remain financially stable."""
-
-        elif any(w in user_str for w in ["customer", "account", "client"]):
-            return """**Findings:**
-Executed query against customer and account records.
-- Found verified enterprise accounts including **Westfield Industries, Pacific Solutions, Golden Gate Corp, Sierra Analytics, and Redwood Partners**.
-- All accounts maintain high contract value and belong to the primary enterprise tier.
-- Database logs show account records are active with registered regional assignments.
-
-**Key Insight:**
-Enterprise accounts are properly registered in the master directory. Targeted communications can be dispatched directly to account leads."""
-
         else:
             return """**Findings:**
 In September 2026, West repeat purchase revenue was $84,680 driven heavily by 5 enterprise accounts (Westfield Industries, Pacific Solutions, Golden Gate Corp, Sierra Analytics, and Redwood Partners). In October 2026, all 5 enterprise accounts logged **0 orders**. Total recorded October West revenue stands at $24,250 across 12 orders.
 
 **Key Insight:**
 Repeat purchase drop in West is primarily caused by 100% inactivity in the enterprise tier (5 lapsed high-value clients)."""
+
+    # Default fallback
+    return """**Query executed successfully:**
+Data returned from transaction database and verified against ledger tables. Reviewer Agent has been notified to cross-verify findings."""
 
     # Default fallback
     return """**Query executed successfully:**

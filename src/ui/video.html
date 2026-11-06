@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Desk — Official 2.5-Minute YouTube Pitch & Video Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #090D16;
+            --bg-stage: #0F172A;
+            --border-subtle: #1E293B;
+            --brand-accent: #38BDF8;
+            --color-emerald: #10B981;
+            --color-crimson: #EF4444;
+            --color-indigo: #6366F1;
+            --text-heading: #F8FAFC;
+            --text-body: #94A3B8;
+            --font-sans: "Plus Jakarta Sans", -apple-system, sans-serif;
+            --font-mono: "JetBrains Mono", monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+
+        body {
+            background: var(--bg-page);
+            color: var(--text-heading);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* ── Top Production Control Bar ── */
+        .studio-nav {
+            height: 56px;
+            background: #0B0F19;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .studio-left { display: flex; align-items: center; gap: 12px; }
+        .studio-title { font-size: 14px; font-weight: 800; letter-spacing: -0.2px; }
+        .studio-pill {
+            background: #1E293B;
+            color: #38BDF8;
+            font-family: var(--font-mono);
+            font-size: 10.5px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .studio-timer {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: #38BDF8;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 3px 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .studio-controls { display: flex; align-items: center; gap: 8px; }
+
+        .btn-ctrl {
+            background: #1E293B;
+            border: 1px solid #334155;
+            color: #FFFFFF;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+        }
+        .btn-ctrl:hover { background: #334155; }
+
+        .btn-theater {
+            background: #0F172A;
+            border: 1px solid #38BDF8;
+            color: #38BDF8;
+        }
+        .btn-theater:hover {
+            background: rgba(56, 189, 248, 0.15);
+        }
+
+        .btn-record {
+            background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+            border: 1px solid #EF4444;
+            color: #FFFFFF;
+            box-shadow: 0 2px 10px rgba(220, 38, 38, 0.4);
+            font-weight: 700;
+        }
+        .btn-record:hover { background: #991B1B; transform: translateY(-1px); }
+
+        /* ── Cinema Stage (16:9 4K Ultra HD Aspect Ratio) ── */
+        .stage-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .video-canvas-box {
+            width: 100%;
+            max-width: 1600px;
+            aspect-ratio: 16 / 9;
+            background: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+
+        :fullscreen .video-canvas-box,
+        :-webkit-full-screen .video-canvas-box {
+            max-width: 100vw !important;
+            max-height: 100vh !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            border-radius: 0 !important;
+            border: none !important;
+        }
+
+        /* ── Scene Simulation Container ── */
+        .scene-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            color: #0F172A;
+            background: #F8FAFC;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Virtual Cursor */
+        .virtual-cursor {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%230F172A' stroke='%23FFFFFF' stroke-width='2'%3E%3Cpath d='M3 3l7 18 3-7 7-3L3 3z'/%3E%3C/svg%3E") no-repeat center;
+            pointer-events: none;
+            z-index: 1000;
+            transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform: translate(-2px, -2px);
+        }
+
+        .pulse-highlight {
+            position: absolute;
+            border: 2px solid #6366F1;
+            border-radius: 8px;
+            pointer-events: none;
+            z-index: 50;
+            animation: pulseGlow 1.5s infinite;
+            transition: all 0.4s ease;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); }
+        }
+
+        /* Timeline Scrubber Bar */
+        .timeline-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            width: 100%;
+            cursor: pointer;
+            position: relative;
+        }
+        .timeline-fill {
+            height: 100%;
+            background: #38BDF8;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── Production Control Bar ── -->
+    <header class="studio-nav">
+        <div class="studio-left">
+            <span class="studio-title">Revenue Desk — Product Walkthrough Demo</span>
+            <span class="studio-pill">2:32 DURATION</span>
+            <span class="studio-timer" id="timeDisplay">0:00 / 2:32</span>
+            <span style="font-size:11px; color:#94A3B8;" id="sceneLabel">Scene 1: The Problem</span>
+        </div>
+
+        <div class="studio-controls">
+            <button class="btn-ctrl" id="btnPlay" onclick="togglePlay()">
+                <span id="playIcon">▶</span>
+                <span id="playText">Play Presentation</span>
+            </button>
+            <button class="btn-ctrl btn-theater" onclick="toggleTheaterMode()" title="Toggle Fullscreen 4K Cinema View">
+                <span>⛶</span>
+                <span id="theaterText">4K Cinema Stage</span>
+            </button>
+            <button class="btn-ctrl btn-record" id="btnRecord" onclick="startRecording4K()" title="Export 3840x2160 Ultra HD Video (40 Mbps)">
+                <span>⏺</span>
+                <span id="recordText">Export 4K Ultra HD</span>
+            </button>
+            <a href="/audio/master_pitch.wav" download="revenue_desk_pitch.wav" class="btn-ctrl" style="text-decoration:none;">
+                <span>🎧</span>
+                <span>Download Audio</span>
+            </a>
+            <a href="/" class="btn-ctrl" style="text-decoration:none;">Cockpit &rarr;</a>
+        </div>
+    </header>
+
+    <div class="timeline-bar" onclick="seekTimeline(event)">
+        <div class="timeline-fill" id="timelineFill"></div>
+    </div>
+
+    <!-- ── 16:9 Presentation Stage ── -->
+    <main class="stage-container">
+        <div class="video-canvas-box" id="stageBox">
+            <!-- Simulated Virtual Pointer -->
+            <div class="virtual-cursor" id="virtualCursor" style="top: 20%; left: 30%;"></div>
+            <div class="pulse-highlight" id="highlighter" style="display:none;"></div>
+
+            <!-- Cockpit Frame Display -->
+            <iframe id="cockpitFrame" src="/" style="width:100%; height:100%; border:none; background:#F8FAFC;"></iframe>
+        </div>
+    </main>
+
+    <!-- Master Audio Track -->
+    <audio id="pitchAudio" src="/audio/master_pitch.wav" preload="auto"></audio>
+
+    <script>
+        const audio = document.getElementById("pitchAudio");
+        const timeDisplay = document.getElementById("timeDisplay");
+        const timelineFill = document.getElementById("timelineFill");
+        const sceneLabel = document.getElementById("sceneLabel");
+        const cursor = document.getElementById("virtualCursor");
+        const highlighter = document.getElementById("highlighter");
+        const frame = document.getElementById("cockpitFrame");
+
+        let isPlaying = false;
+        let mediaRecorder = null;
+        let recordedChunks = [];
+        let audioCtx = null;
+        let audioSource = null;
+        let audioDest = null;
+
+        function getAudioStream() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                audioSource = audioCtx.createMediaElementSource(audio);
+                audioDest = audioCtx.createMediaStreamDestination();
+                audioSource.connect(audioDest);
+                audioSource.connect(audioCtx.destination);
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioDest.stream;
+        }
+
+        // Scene Timeline (exact audio timestamps for synchronized scene playback)
+        const SCRIPT_CUES = [
+            {
+                start: 0.0,
+                end: 17.2,
+                title: "Scene 1: The Problem & Financial Risk",
+                cursor: { top: "18%", left: "48%" },
+                action: (doc) => {
+                    highlightElement(doc.querySelector(".kpi-row"));
+                }
+            },
+            {
+                start: 18.7,
+                end: 47.98,
+                title: "Scene 2: Multi-Agent Orchestration (@analyst SQL)",
+                cursor: { top: "68px", left: "68%" },
+                action: (doc) => {
+                    const btn = doc.querySelector(".btn-primary");
+                    if (btn) btn.click();
+                    highlightElement(doc.querySelector(".room-card"));
+                }
+            },
+            {
+                start: 49.48,
+                end: 70.59,
+                title: "Scene 3: Multi-Agent Consensus & Anomaly Audit",
+                cursor: { top: "35%", left: "75%" },
+                action: (doc) => {
+                    highlightElement(doc.getElementById("metricNet"));
+                }
+            },
+            {
+                start: 72.09,
+                end: 94.83,
+                title: "Scene 4: Why Switch? (Solo AI Crash Comparison)",
+                cursor: { top: "27%", left: "42%" },
+                action: (doc) => {
+                    const btnWithout = doc.getElementById("btnWithoutSwitch");
+                    if (btnWithout) btnWithout.click();
+                    highlightElement(doc.querySelector(".chart-card"));
+                    setTimeout(() => {
+                        const btnWith = doc.getElementById("btnWithSwitch");
+                        if (btnWith) btnWith.click();
+                    }, 4000);
+                }
+            },
+            {
+                start: 96.33,
+                end: 120.58,
+                title: "Scene 5: Switch Rule #4 (Human Sign-Off Gate)",
+                cursor: { top: "72%", left: "30%" },
+                action: (doc) => {
+                    highlightElement(doc.querySelector(".gate-card"));
+                }
+            },
+            {
+                start: 122.08,
+                end: 135.37,
+                title: "Scene 6: Cryptographic Ledger & Live Database",
+                cursor: { top: "86%", left: "22%" },
+                action: (doc) => {
+                    const btnApprove = doc.getElementById("btnApprove");
+                    if (btnApprove && !btnApprove.disabled) btnApprove.click();
+                    highlightElement(doc.getElementById("gateBadge"));
+                    setTimeout(() => {
+                        const tabDecisions = doc.getElementById("tabBtnDecisions");
+                        if (tabDecisions) tabDecisions.click();
+                        highlightElement(doc.getElementById("viewDecisions"));
+                    }, 2800);
+                }
+            },
+            {
+                start: 136.87,
+                end: 152.51,
+                title: "Scene 7: Conclusion & Reproducibility",
+                cursor: { top: "18%", left: "80%" },
+                action: (doc) => {
+                    highlightElement(doc.querySelector(".brand-logo"));
+                }
+            }
+        ];
+
+        function togglePlay() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                document.getElementById("playIcon").innerText = "▶";
+                document.getElementById("playText").innerText = "Play Presentation";
+            } else {
+                audio.play();
+                isPlaying = true;
+                document.getElementById("playIcon").innerText = "⏸";
+                document.getElementById("playText").innerText = "Pause";
+            }
+        }
+
+        audio.addEventListener("timeupdate", () => {
+            const cur = audio.currentTime;
+            const dur = audio.duration || 152.51;
+            const pct = (cur / dur) * 100;
+            timelineFill.style.width = pct + "%";
+
+            const curM = Math.floor(cur / 60);
+            const curS = Math.floor(cur % 60).toString().padStart(2, "0");
+            const durM = Math.floor(dur / 60);
+            const durS = Math.floor(dur % 60).toString().padStart(2, "0");
+            timeDisplay.innerText = `${curM}:${curS} / ${durM}:${durS}`;
+
+            // Match active scene
+            const activeCue = SCRIPT_CUES.find(c => cur >= c.start && cur < c.end) || SCRIPT_CUES[0];
+            if (activeCue) {
+                sceneLabel.innerText = activeCue.title;
+                cursor.style.top = activeCue.cursor.top;
+                cursor.style.left = activeCue.cursor.left;
+
+                if (!activeCue._executed && frame.contentDocument) {
+                    activeCue._executed = true;
+                    try { activeCue.action(frame.contentDocument); } catch(e) {}
+                }
+            }
+        });
+
+        audio.addEventListener("ended", () => {
+            isPlaying = false;
+            document.getElementById("playIcon").innerText = "▶";
+            document.getElementById("playText").innerText = "Replay";
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+            }
+        });
+
+        function seekTimeline(e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const pct = (e.clientX - rect.left) / rect.width;
+            const dur = audio.duration || 152.51;
+            audio.currentTime = pct * dur;
+            SCRIPT_CUES.forEach(c => c._executed = false);
+        }
+
+        function highlightElement(el) {
+            if (!el) { highlighter.style.display = "none"; return; }
+            try {
+                const rect = el.getBoundingClientRect();
+                const frameRect = frame.getBoundingClientRect();
+                highlighter.style.display = "block";
+                highlighter.style.top = (rect.top) + "px";
+                highlighter.style.left = (rect.left) + "px";
+                highlighter.style.width = (rect.width) + "px";
+                highlighter.style.height = (rect.height) + "px";
+            } catch(e) { highlighter.style.display = "none"; }
+        }
+
+        /* ── Fullscreen 4K Theater Mode ── */
+        function toggleTheaterMode() {
+            const stage = document.getElementById("stageBox");
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                if (stage.requestFullscreen) {
+                    stage.requestFullscreen();
+                } else if (stage.webkitRequestFullscreen) {
+                    stage.webkitRequestFullscreen();
+                }
+                document.getElementById("theaterText").innerText = "Exit Theater";
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+                document.getElementById("theaterText").innerText = "4K Cinema Stage";
+            }
+        }
+
+        /* ── One-Click Ultra HD 4K (3840x2160 @ 60 FPS) Recording ── */
+        async function startRecording4K() {
+            const btn = document.getElementById("btnRecord");
+            btn.innerHTML = "<span>🔴 Recording 4K UHD...</span>";
+            recordedChunks = [];
+
+            try {
+                // High-fidelity studio audio stream from pitch track
+                const audioStream = getAudioStream();
+
+                // Request Ultra HD 4K capture constraints
+                let stream = null;
+                if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+                    stream = await navigator.mediaDevices.getDisplayMedia({
+                        video: {
+                            displaySurface: "browser",
+                            width: { ideal: 3840, max: 3840 },
+                            height: { ideal: 2160, max: 2160 },
+                            frameRate: { ideal: 60, max: 60 }
+                        },
+                        audio: true
+                    });
+                }
+
+                if (!stream) {
+                    alert("Click Play Presentation to watch the full demo, or use QuickTime (Cmd+Shift+5) for native 4K capture!");
+                    btn.innerHTML = "<span>⏺</span><span>Export 4K Ultra HD</span>";
+                    return;
+                }
+
+                // Attach narration audio track
+                audioStream.getAudioTracks().forEach(t => stream.addTrack(t));
+
+                // Auto-detect optimal container format
+                let mimeType = 'video/webm;codecs=vp9,opus';
+                if (!MediaRecorder.isTypeSupported(mimeType)) {
+                    if (MediaRecorder.isTypeSupported('video/webm')) {
+                        mimeType = 'video/webm';
+                    } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+                        mimeType = 'video/mp4';
+                    } else {
+                        mimeType = '';
+                    }
+                }
+
+                // 40 Mbps video bitrate for Ultra HD 4K + 320 kbps high-definition audio
+                const options = {
+                    videoBitsPerSecond: 40000000,
+                    audioBitsPerSecond: 320000
+                };
+                if (mimeType) options.mimeType = mimeType;
+
+                mediaRecorder = new MediaRecorder(stream, options);
+
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data && e.data.size > 0) recordedChunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    const actualType = mediaRecorder.mimeType || 'video/webm';
+                    const ext = actualType.includes('mp4') ? 'mp4' : 'webm';
+                    const blob = new Blob(recordedChunks, { type: actualType });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = `revenue-desk-4k-pitch-submission.${ext}`;
+                    a.click();
+                    btn.innerHTML = "<span>✓ 4K Video Downloaded!</span>";
+                    setTimeout(() => { btn.innerHTML = "<span>⏺</span><span>Export 4K Ultra HD</span>"; }, 3500);
+                };
+
+                // Stop recording cleanly if user stops sharing via browser chrome bar
+                const videoTrack = stream.getVideoTracks()[0];
+                if (videoTrack) {
+                    videoTrack.onended = () => {
+                        if (mediaRecorder && mediaRecorder.state === 'recording') {
+                            mediaRecorder.stop();
+                        }
+                    };
+                }
+
+                mediaRecorder.start();
+                audio.currentTime = 0;
+                SCRIPT_CUES.forEach(c => c._executed = false);
+                audio.play();
+                isPlaying = true;
+                document.getElementById("playIcon").innerText = "⏸";
+                document.getElementById("playText").innerText = "Pause";
+            } catch(err) {
+                console.warn("MediaRecorder fallback:", err);
+                togglePlay();
+                btn.innerHTML = "<span>⏺</span><span>Export 4K Ultra HD</span>";
+            }
+        }
+    </script>
+</body>
+</html>
+

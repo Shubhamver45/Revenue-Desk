@@ -25,7 +25,11 @@ const MIME_TYPES = {
     '.svg': 'image/svg+xml',
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
-    '.ico': 'image/x-icon'
+    '.ico': 'image/x-icon',
+    '.m4a': 'audio/mp4',
+    '.wav': 'audio/wav',
+    '.webm': 'video/webm',
+    '.mp4': 'video/mp4'
 };
 
 /**
@@ -67,9 +71,16 @@ function proxyToPython(req, res) {
  * Serve static files for the React.js client
  */
 function serveStaticFile(req, res, pathname) {
-    let filePath = pathname === '/' || pathname === '/index.html' || pathname === '/dashboard'
-        ? path.join(STATIC_DIR, 'index.html')
-        : path.join(STATIC_DIR, pathname.replace(/^\//, ''));
+    let filePath;
+    if (pathname === '/' || pathname === '/index.html' || pathname === '/dashboard') {
+        filePath = path.join(STATIC_DIR, 'index.html');
+    } else if (pathname === '/video' || pathname === '/video.html' || pathname === '/demo') {
+        filePath = path.join(STATIC_DIR, 'video.html');
+    } else if (pathname === '/landing' || pathname === '/landing.html') {
+        filePath = path.join(STATIC_DIR, 'landing.html');
+    } else {
+        filePath = path.join(STATIC_DIR, pathname.replace(/^\//, ''));
+    }
 
     // Check if file exists
     fs.stat(filePath, (err, stats) => {
