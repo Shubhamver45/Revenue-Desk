@@ -45,6 +45,11 @@ class handler(SwitchAppHandler):
         self.path = real_path + (f"?{query}" if query else "")
         try:
             super().do_GET()
+        except Exception as e:
+            self.send_response(500)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(f'{{"error": "{str(e)}", "path": "{self.path}"}}'.encode())
         finally:
             self.path = orig_path
 

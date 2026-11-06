@@ -1,8 +1,25 @@
 {
+  "functions": {
+    "api/**/*.py": {
+      "includeFiles": "{src/**,seed/**,switch/**}"
+    }
+  },
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/(.*)",
       "destination": "/api/index.py"
+    },
+    {
+      "source": "/landing",
+      "destination": "/src/ui/landing.html"
+    },
+    {
+      "source": "/",
+      "destination": "/src/ui/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/src/ui/$1"
     }
   ]
 }
