@@ -63,9 +63,15 @@ def run_supabase_sql(sql: str) -> list[dict[str, Any]]:
     import urllib.request
 
     url = os.getenv("SUPABASE_URL", "").rstrip("/")
-    key = os.getenv("SUPABASE_SECRET_KEY") or os.getenv("SUPABASE_PUBLISHABLE_KEY")
+    key = (
+        os.getenv("SUPABASE_SECRET_KEY")
+        or os.getenv("SUPABASE_KEY")
+        or os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+        or os.getenv("SUPABASE_PUBLISHABLE_KEY")
+        or os.getenv("SUPABASE_ANON_KEY")
+    )
     if not url or not key:
-        raise ValueError("SUPABASE_URL and SUPABASE_SECRET_KEY must be set in .env to use Supabase")
+        raise ValueError("SUPABASE_URL and SUPABASE_SECRET_KEY (or SUPABASE_KEY) must be set in environment to use Supabase")
 
     endpoint = f"{url}/rest/v1/rpc/exec_sql"
     payload = json.dumps({"query": sql}).encode("utf-8")
