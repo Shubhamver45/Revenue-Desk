@@ -1371,12 +1371,14 @@
         window.addEventListener('DOMContentLoaded', () => {
             try {
                 const savedUser = localStorage.getItem('revenueDeskUser');
-                if (savedUser) {
-                    const u = JSON.parse(savedUser);
-                    if (u.name) document.getElementById('userNavName').innerText = u.name;
-                    if (u.avatar) document.getElementById('userNavAvatar').innerText = u.avatar;
-                    if (u.company) document.getElementById('selectedCompanyName').innerText = u.company;
+                if (!savedUser) {
+                    window.location.href = '/landing';
+                    return;
                 }
+                const u = JSON.parse(savedUser);
+                if (u.name) document.getElementById('userNavName').innerText = u.name;
+                if (u.avatar) document.getElementById('userNavAvatar').innerText = u.avatar;
+                if (u.company) document.getElementById('selectedCompanyName').innerText = u.company;
             } catch(e) {}
             renderChart();
             const area = document.getElementById('canvasAreaContainer');

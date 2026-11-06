@@ -22,7 +22,7 @@ from typing import Any
 ROOT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT_DIR))
 
-from src.database import init_database, run_query, run_write
+from src.database import get_connection, init_database, run_query, run_write
 from src.workflow import RevenueDesk, WorkflowState
 
 PORT = int(os.getenv("PORT", "5050"))
@@ -78,7 +78,7 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             data = {}
 
         if path in ("/api/auth/login", "/api/auth/register"):
-            email = data.get("email", "").strip()
+            email = data.get("email", "").strip().lower()
             password = data.get("password", "").strip()
             name = data.get("name", "").strip()
             company = data.get("company", "").strip()
@@ -89,17 +89,81 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
                 self.send_json({"error": "Email address is required"}, status=400)
                 return
 
-            if is_signup:
-                user_name = name or email.split("@")[0].replace(".", " ").title()
-                company_name = company or "My SaaS Inc."
-                user_role = "Revenue Operations Lead"
-            else:
-                user_name = name or ("Alex Rivera" if ("alex" in email.lower() or provider == "google" or not email) else email.split("@")[0].replace(".", " ").title())
-                company_name = company or "Acme Cloud Inc."
-                user_role = "VP Revenue Operations"
+            pwd_hash = hashlib.sha256(password.encode()).hexdigest() if password else ""
 
+            # Real database lookup and mutation
+            with get_connection() as conn:
+                cur = conn.cursor()
+
+                # Ensure users table exists
+                cur.execute('''
+                    CREATE TABLE IF NOT EXISTS users (
+                        id            INTEGER PRIMARY KEY AUTOINCREMENT,
+                        email         TEXT UNIQUE NOT NULL,
+                        password_hash TEXT NOT NULL,
+                        name          TEXT NOT NULL,
+                        company       TEXT NOT NULL DEFAULT 'Acme Cloud Inc.',
+                        role          TEXT NOT NULL DEFAULT 'VP Revenue Operations',
+                        provider      TEXT NOT NULL DEFAULT 'credentials',
+                        created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    );
+                ''')
+
+                if is_signup:
+                    # Check if user already exists
+                    cur.execute("SELECT id FROM users WHERE LOWER(email) = ?", (email,))
+                    if cur.fetchone():
+                        self.send_json({"error": "An account with this email already exists. Please sign in."}, status=400)
+                        return
+
+                    user_name = name or email.split("@")[0].replace(".", " ").title()
+                    company_name = company or "My SaaS Inc."
+                    user_role = "Revenue Operations Lead"
+
+                    cur.execute('''
+                        INSERT INTO users (email, password_hash, name, company, role, provider)
+                        VALUES (?, ?, ?, ?, ?, ?)
+                    ''', (email, pwd_hash, user_name, company_name, user_role, provider))
+                    conn.commit()
+
+                    cur.execute("SELECT * FROM users WHERE LOWER(email) = ?", (email,))
+                    user_row = dict(cur.fetchone())
+
+                elif provider == "google":
+                    # Google Sign-in: lookup or auto-provision
+                    cur.execute("SELECT * FROM users WHERE LOWER(email) = ?", (email,))
+                    row = cur.fetchone()
+                    if row:
+                        user_row = dict(row)
+                    else:
+                        user_name = name or email.split("@")[0].replace(".", " ").title()
+                        company_name = company or "Acme Cloud Inc."
+                        cur.execute('''
+                            INSERT INTO users (email, password_hash, name, company, role, provider)
+                            VALUES (?, ?, ?, ?, ?, ?)
+                        ''', (email, 'google_oauth_hash', user_name, company_name, 'VP Revenue Operations', 'google'))
+                        conn.commit()
+                        cur.execute("SELECT * FROM users WHERE LOWER(email) = ?", (email,))
+                        user_row = dict(cur.fetchone())
+
+                else:
+                    # Normal Credentials Login: real email & password verification
+                    cur.execute("SELECT * FROM users WHERE LOWER(email) = ?", (email,))
+                    row = cur.fetchone()
+                    if not row:
+                        self.send_json({"error": f"No account found for {email}. Please click 'Create an account'."}, status=401)
+                        return
+
+                    user_row = dict(row)
+                    if user_row["password_hash"] != 'google_oauth_hash' and user_row["password_hash"] != pwd_hash:
+                        self.send_json({"error": "Incorrect password. Please verify and try again."}, status=401)
+                        return
+
+            user_name = user_row["name"]
+            company_name = user_row["company"]
+            user_role = user_row["role"]
             avatar = "".join([p[0].upper() for p in user_name.split()[:2]]) or "U"
-            seed_str = f"{email}:{password}:{time.time()}"
+            seed_str = f"{email}:{time.time()}"
             token = f"rd_sess_{hashlib.sha256(seed_str.encode()).hexdigest()[:24]}"
 
             auth_response = {
@@ -108,12 +172,13 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
                 "is_new_user": is_signup,
                 "token": token,
                 "user": {
+                    "id": user_row.get("id"),
                     "name": user_name,
-                    "email": email or "alex.rivera@acmecloud.com",
+                    "email": user_row["email"],
                     "role": user_role,
                     "company": company_name,
                     "avatar": avatar,
-                    "provider": provider,
+                    "provider": user_row["provider"],
                     "login_time": datetime.datetime.now().isoformat()
                 }
             }

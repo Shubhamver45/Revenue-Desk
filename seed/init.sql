@@ -59,6 +59,20 @@ CREATE TABLE IF NOT EXISTS decision_log (
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS users (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    email         TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    name          TEXT NOT NULL,
+    company       TEXT NOT NULL DEFAULT 'Acme Cloud Inc.',
+    role          TEXT NOT NULL DEFAULT 'VP Revenue Operations',
+    provider      TEXT NOT NULL DEFAULT 'credentials',
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT OR IGNORE INTO users (id, email, password_hash, name, company, role, provider)
+VALUES (1, 'alex.rivera@acmecloud.com', '376a619141d23f56e2287461cd7c2162b9c07db779a21278d86797e3430a1358', 'Alex Rivera', 'Acme Cloud Inc.', 'VP Revenue Operations', 'credentials');
+
 -- ---- Customers (80 across 4 regions) ----
 
 -- WEST region — 20 customers (includes 5 high-value enterprise that will lapse)

@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         :root {
             /* ── High-End Clean 2026 SaaS Light Theme ── */
@@ -295,7 +296,7 @@
         }
 
         /* ══════════════════════════════════════════════════════════════
-           ── RIGHT 50%: CLASSY AUTHENTICATION PORTAL (SIGN IN & NEW USER) ──
+           ── RIGHT 50%: CLASSY AUTHENTICATION PORTAL (REAL DATABASE AUTH) ──
            ══════════════════════════════════════════════════════════════ */
         .stage-auth-pane {
             background: #FFFFFF;
@@ -349,6 +350,25 @@
             font-size: 12.5px;
             color: var(--text-secondary);
             line-height: 1.5;
+        }
+
+        /* Inline Error Banner */
+        .auth-error-banner {
+            display: none;
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            color: #DC2626;
+            padding: 9px 13px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.4;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Real Google Sign In Button */
@@ -524,7 +544,7 @@
             text-align: center;
             font-size: 12px;
             color: var(--text-secondary);
-            padding: 4px 0;
+            padding: 2px 0;
         }
 
         .auth-switch-link {
@@ -556,6 +576,7 @@
             border: 1px dashed var(--border-default);
             transition: all 0.15s ease;
             background: transparent;
+            cursor: pointer;
         }
 
         .btn-explore-demo:hover {
@@ -750,7 +771,7 @@
         </div>
 
         <!-- ══════════════════════════════════════════════════════════════
-             ── RIGHT 50%: CLEAN CLASSY SIGN IN & NEW USER ONBOARDING ──
+             ── RIGHT 50%: REAL AUTHENTICATION PORTAL (DATABASE & GOOGLE) ──
              ══════════════════════════════════════════════════════════════ -->
         <div class="stage-auth-pane">
             <div class="auth-clean-card">
@@ -763,6 +784,9 @@
                     <h2 class="auth-title" id="authTitle">Sign In to Revenue Desk</h2>
                     <p class="auth-subtitle" id="authSubtitle">Enter your credentials to access the verified revenue workspace.</p>
                 </div>
+
+                <!-- Real Inline Error Message -->
+                <div class="auth-error-banner" id="authErrorBanner"></div>
 
                 <!-- Real Google Sign In -->
                 <button class="btn-google-signin" onclick="openGoogleAccountChooser()">
@@ -780,7 +804,7 @@
                     <span id="dividerText">or sign in with email</span>
                 </div>
 
-                <!-- ── 1. SIGN IN FORM (Existing User) ── -->
+                <!-- ── 1. REAL SIGN IN FORM (Existing Database User) ── -->
                 <form class="auth-form" id="loginForm" onsubmit="event.preventDefault(); submitNormalLogin();">
                     <div class="form-group">
                         <label class="form-label" for="userEmail">Work Email</label>
@@ -809,11 +833,11 @@
                     </button>
                 </form>
 
-                <!-- ── 2. CREATE ACCOUNT FORM (New User) ── -->
+                <!-- ── 2. REAL CREATE ACCOUNT FORM (New User Registration) ── -->
                 <form class="auth-form" id="signupForm" style="display:none;" onsubmit="event.preventDefault(); submitNewUserSignup();">
                     <div class="form-group">
                         <label class="form-label" for="newUserName">Full Name</label>
-                        <input type="text" id="newUserName" class="form-input" placeholder="e.g. Alex Rivera or Sarah Jenkins" required>
+                        <input type="text" id="newUserName" class="form-input" placeholder="e.g. Alex Rivera or Jane Doe" required>
                     </div>
 
                     <div class="form-group">
@@ -857,9 +881,9 @@
 
                 <!-- Direct Demo Access & Trust Strip -->
                 <div style="display:flex; flex-direction:column; gap:8px;">
-                    <a href="/" class="btn-explore-demo">
+                    <button type="button" class="btn-explore-demo" onclick="exploreDemo()">
                         <span>Explore Demo Environment (Direct Access) &rarr;</span>
-                    </a>
+                    </button>
 
                     <div class="trust-compliance-strip">
                         <span>🛡️ SOC-2 Type II</span>
@@ -1009,6 +1033,7 @@
                 ctx.scale(dpr, dpr);
                 ctx.clearRect(0, 0, w, h);
 
+                // Dedicated Center within the canvas box
                 const cx = w * 0.5;
                 const cy = h * 0.5;
                 const rx = smoothRotX;
@@ -1253,8 +1278,26 @@
 
         requestAnimationFrame(render3D);
 
+        // ── INLINE ERROR HELPERS ──
+        function showAuthError(msg) {
+            const b = document.getElementById('authErrorBanner');
+            if (b) {
+                b.innerText = msg;
+                b.style.display = 'block';
+            }
+        }
+
+        function clearAuthError() {
+            const b = document.getElementById('authErrorBanner');
+            if (b) {
+                b.innerText = '';
+                b.style.display = 'none';
+            }
+        }
+
         // ── TOGGLE BETWEEN SIGN IN & SIGN UP (NEW USER) ──
         function toggleAuthMode() {
+            clearAuthError();
             isSignupMode = !isSignupMode;
             const loginForm = document.getElementById('loginForm');
             const signupForm = document.getElementById('signupForm');
@@ -1299,6 +1342,7 @@
 
         // ── GOOGLE AUTHENTICATION MODAL HANDLERS ──
         function openGoogleAccountChooser() {
+            clearAuthError();
             document.getElementById('googleModal').style.display = 'flex';
         }
 
@@ -1309,13 +1353,14 @@
         function promptNewGoogleAccount() {
             const newName = prompt('Enter your full name for Google Sign-In:', 'Jane Doe');
             if (!newName) return;
-            const newEmail = prompt('Enter your Google email address:', newName.toLowerCase().replace(' ', '.') + '@company.com');
+            const newEmail = prompt('Enter your Google email address:', newName.toLowerCase().replace(/\s+/g, '.') + '@company.com');
             if (!newEmail) return;
             selectGoogleAccount(newName, newEmail, 'Revenue Operations Lead', 'My Cloud Corp.');
         }
 
         async function selectGoogleAccount(name, email, role, company) {
             closeGoogleModal();
+            clearAuthError();
             showAuthSpinner(`Signing in with Google (${name})...`);
 
             try {
@@ -1325,13 +1370,13 @@
                     body: JSON.stringify({ email: email, name: name, company: company || 'Acme Cloud Inc.', provider: 'google' })
                 });
                 const data = await res.json();
-                if (data.status === 'ok') {
+                if (res.ok && data.status === 'ok') {
                     localStorage.setItem('revenueDeskUser', JSON.stringify(data.user));
                     localStorage.setItem('revenueDeskToken', data.token);
                     setTimeout(() => { window.location.href = '/'; }, 500);
                 } else {
-                    alert(data.error || 'Authentication failed');
                     resetAuthSpinner();
+                    showAuthError(data.error || 'Google authentication failed.');
                 }
             } catch(e) {
                 localStorage.setItem('revenueDeskUser', JSON.stringify({
@@ -1347,17 +1392,18 @@
 
         // ── NORMAL EMAIL & PASSWORD SUBMIT (Existing User) ──
         async function submitNormalLogin() {
+            clearAuthError();
             const emailInput = document.getElementById('userEmail');
             const passwordInput = document.getElementById('userPassword');
             const email = emailInput ? emailInput.value.trim() : '';
             const password = passwordInput ? passwordInput.value.trim() : '';
 
             if (!email) {
-                alert('Please enter your work email.');
+                showAuthError('Please enter your work email.');
                 return;
             }
 
-            showAuthSpinner('Verifying credentials...');
+            showAuthSpinner('Verifying credentials against database...');
 
             try {
                 const res = await fetch('/api/auth/login', {
@@ -1366,28 +1412,23 @@
                     body: JSON.stringify({ email: email, password: password, provider: 'credentials' })
                 });
                 const data = await res.json();
-                if (data.status === 'ok') {
+                if (res.ok && data.status === 'ok') {
                     localStorage.setItem('revenueDeskUser', JSON.stringify(data.user));
                     localStorage.setItem('revenueDeskToken', data.token);
                     setTimeout(() => { window.location.href = '/'; }, 500);
                 } else {
-                    alert(data.error || 'Invalid credentials');
                     resetAuthSpinner();
+                    showAuthError(data.error || 'Invalid credentials. Please verify your email and password.');
                 }
             } catch(e) {
-                localStorage.setItem('revenueDeskUser', JSON.stringify({
-                    name: 'Alex Rivera',
-                    email: email,
-                    role: 'VP Revenue Operations',
-                    company: 'Acme Cloud Inc.',
-                    avatar: 'AR'
-                }));
-                setTimeout(() => { window.location.href = '/'; }, 500);
+                resetAuthSpinner();
+                showAuthError('Connection error. Could not verify credentials.');
             }
         }
 
         // ── NEW USER REGISTRATION (Create Account) ──
         async function submitNewUserSignup() {
+            clearAuthError();
             const nameInput = document.getElementById('newUserName');
             const emailInput = document.getElementById('newUserEmail');
             const companyInput = document.getElementById('newUserCompany');
@@ -1399,11 +1440,11 @@
             const password = passwordInput ? passwordInput.value.trim() : '';
 
             if (!name || !email || !company) {
-                alert('Please fill out all required fields to create your account.');
+                showAuthError('Please fill out all required fields to create your account.');
                 return;
             }
 
-            showAuthSpinner(`Setting up workspace for ${company}...`);
+            showAuthSpinner(`Registering user and creating workspace for ${company}...`);
 
             try {
                 const res = await fetch('/api/auth/register', {
@@ -1418,24 +1459,30 @@
                     })
                 });
                 const data = await res.json();
-                if (data.status === 'ok') {
+                if (res.ok && data.status === 'ok') {
                     localStorage.setItem('revenueDeskUser', JSON.stringify(data.user));
                     localStorage.setItem('revenueDeskToken', data.token);
                     setTimeout(() => { window.location.href = '/'; }, 550);
                 } else {
-                    alert(data.error || 'Registration failed');
                     resetAuthSpinner();
+                    showAuthError(data.error || 'Registration failed. Please check your information.');
                 }
             } catch(e) {
-                localStorage.setItem('revenueDeskUser', JSON.stringify({
-                    name: name,
-                    email: email,
-                    company: company,
-                    role: 'Revenue Operations Lead',
-                    avatar: name.split(' ').map(p => p[0]).join('')
-                }));
-                setTimeout(() => { window.location.href = '/'; }, 550);
+                resetAuthSpinner();
+                showAuthError('Connection error. Could not complete registration.');
             }
+        }
+
+        // ── EXPLORE DEMO DIRECT ACCESS ──
+        function exploreDemo() {
+            localStorage.setItem('revenueDeskUser', JSON.stringify({
+                name: 'Alex Rivera',
+                email: 'alex.rivera@acmecloud.com',
+                role: 'VP Revenue Operations',
+                company: 'Acme Cloud Inc.',
+                avatar: 'AR'
+            }));
+            window.location.href = '/';
         }
 
         function showAuthSpinner(text) {
