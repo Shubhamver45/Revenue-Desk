@@ -17,7 +17,7 @@ class handler(SwitchAppHandler):
     """Vercel Serverless Function entry point inheriting from SwitchAppHandler."""
 
     def get_request_path(self) -> str:
-        """Resolve the true client request path from Vercel rewrite headers."""
+        """Resolve the true client request path from Vercel headers or self.path."""
         for header in [
             "x-forwarded-uri",
             "x-matched-path",
@@ -28,40 +28,23 @@ class handler(SwitchAppHandler):
             val = self.headers.get(header)
             if val:
                 p = urllib.parse.urlparse(val).path
-                if p and p not in ("/api/index.py", "/api/index", "/api"):
+                if p and not p.endswith(".py"):
                     return p
 
         # Fallback to self.path
         parsed = urllib.parse.urlparse(self.path)
         p = parsed.path
         if p in ("/api/index.py", "/api/index", "/api", ""):
-            return "/"
+            return "/api/metrics"
         return p
 
     def do_GET(self) -> None:
         real_path = self.get_request_path()
         orig_path = self.path
-        if "/api/debug" in orig_path or real_path == "/api/debug":
-            import json
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            self.wfile.write(json.dumps({
-                "real_path": real_path,
-                "orig_path": orig_path,
-                "headers": dict(self.headers)
-            }).encode())
-            return
-
         query = urllib.parse.urlparse(orig_path).query
         self.path = real_path + (f"?{query}" if query else "")
         try:
             super().do_GET()
-        except Exception as e:
-            self.send_response(500)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            self.wfile.write(f'{{"error": "{str(e)}", "path": "{self.path}"}}'.encode())
         finally:
             self.path = orig_path
 

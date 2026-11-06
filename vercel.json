@@ -6,20 +6,16 @@
   },
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/index.py"
-    },
-    {
       "source": "/landing",
       "destination": "/src/ui/landing.html"
     },
     {
-      "source": "/",
+      "source": "/dashboard",
       "destination": "/src/ui/index.html"
     },
     {
-      "source": "/(.*)",
-      "destination": "/src/ui/$1"
+      "source": "/",
+      "destination": "/src/ui/index.html"
     }
   ]
 }
