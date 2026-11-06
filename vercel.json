@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/**/*.py": {
-      "includeFiles": "{src/**,seed/**,switch/**}"
+      "includeFiles": "{dist/**,src/**,seed/**,switch/**}"
     }
   },
   "rewrites": [

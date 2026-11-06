@@ -44,12 +44,16 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
-        if path in ("/", "/index.html", "/dashboard", "/src/ui/index.html"):
+        clean_p = path.rstrip("/")
+        if path in ("/", "/index.html", "/dashboard", "/src/ui/index.html", "/dist/index.html") or clean_p in ("", "/dashboard"):
             self.serve_ui("index.html")
-        elif path in ("/landing", "/landing.html", "/login", "/src/ui/landing.html"):
+        elif path in ("/landing", "/landing.html", "/login", "/src/ui/landing.html", "/dist/landing.html") or clean_p in ("/landing", "/login"):
             self.serve_ui("landing.html")
-        elif path.startswith("/assets/"):
-            asset_file = ROOT_DIR / "dist" / path.lstrip("/")
+        elif path.startswith("/assets/") or path.startswith("/dist/assets/"):
+            rel_path = path[5:] if path.startswith("/dist") else path
+            asset_file = ROOT_DIR / "dist" / rel_path.lstrip("/")
+            if not asset_file.exists():
+                asset_file = ROOT_DIR / path.lstrip("/")
             if asset_file.exists():
                 ext = asset_file.suffix.lower()
                 content_type = "application/javascript" if ext == ".js" else "text/css" if ext == ".css" else "application/octet-stream"
@@ -474,8 +478,9 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
         }
 
     def serve_ui(self, filename: str = "index.html") -> None:
-        dist_file = ROOT_DIR / "dist" / filename
-        src_file = ROOT_DIR / "src" / "ui" / filename
+        clean_name = Path(filename).name
+        dist_file = ROOT_DIR / "dist" / clean_name
+        src_file = ROOT_DIR / "src" / "ui" / clean_name
         html_file = dist_file if dist_file.exists() else src_file
         if not html_file.exists():
             html_file = src_file if src_file.exists() else dist_file

@@ -54,3 +54,4 @@ export default function MobileViewTabs({ activeView, onViewChange, hasPendingApp
         </div>
     );
 }
+

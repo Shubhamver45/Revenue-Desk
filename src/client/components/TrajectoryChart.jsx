@@ -194,3 +194,4 @@ export default function TrajectoryChart({ mode, onToggleMode, trajectoryData }) 
         </div>
     );
 }
+
