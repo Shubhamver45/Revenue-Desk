@@ -618,7 +618,7 @@
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Real Google Account Chooser Modal */
+        /* Real Google Account Chooser Modal (NO prompt!) */
         .google-modal-overlay {
             position: fixed;
             inset: 0;
@@ -636,7 +636,7 @@
             border-radius: var(--radius-lg);
             border: 1px solid var(--border-default);
             box-shadow: var(--shadow-modal);
-            max-width: 400px;
+            max-width: 420px;
             width: 100%;
             padding: 24px 28px;
             display: flex;
@@ -685,6 +685,18 @@
             color: #FFFFFF;
             font-size: 14px;
             flex-shrink: 0;
+        }
+
+        .inline-google-add {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            background: var(--bg-subtle);
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-default);
+            margin-top: 4px;
+            animation: fadeIn 0.18s ease-out;
         }
 
         /* Responsive Breakpoints */
@@ -824,7 +836,7 @@
                             <input type="checkbox" checked>
                             <span>Remember for 30 days</span>
                         </label>
-                        <a href="#" class="link-forgot" onclick="alert('Password reset instructions sent to your email.'); return false;">Forgot password?</a>
+                        <a href="#" class="link-forgot" onclick="showAuthError('Password reset link sent to registered email.'); return false;">Forgot password?</a>
                     </div>
 
                     <button type="submit" class="btn-primary-signin" id="btnSubmit">
@@ -899,7 +911,7 @@
 
     </div>
 
-    <!-- ── Real Google Account Chooser Modal (With New User Option) ── -->
+    <!-- ── Real Google Account Chooser Modal (NO BROWSER PROMPTS!) ── -->
     <div class="google-modal-overlay" id="googleModal" onclick="if(event.target === this) closeGoogleModal();">
         <div class="google-modal-card">
             <div class="google-modal-header">
@@ -914,6 +926,13 @@
                     <div style="font-size:11px; color:var(--text-secondary);">Choose an account to continue to Revenue Desk</div>
                 </div>
             </div>
+
+            <!-- Direct Supabase Live Google OAuth Link -->
+            <a href="https://fxbldzhqpdbzfzhspaht.supabase.co/auth/v1/authorize?provider=google&redirect_to=http://localhost:8000/landing" 
+               style="display:flex; align-items:center; justify-content:center; gap:8px; padding:10px 14px; background:var(--brand-primary-bg); border:1px solid #CCFBF1; border-radius:var(--radius-sm); color:var(--brand-primary); font-size:12px; font-weight:700; text-decoration:none;">
+                <svg width="15" height="15" viewBox="0 0 24 24"><path fill="#0D9488" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm6 8h-2v-4c0-.55-.45-1-1-1s-1 .45-1 1v4h-2v-6h2v1.1c.5-.7 1.3-1.1 2.2-1.1 1.65 0 2.8 1.15 2.8 2.8V17z"/></svg>
+                <span>Live Supabase Google OAuth Redirect &rarr;</span>
+            </a>
 
             <div style="display:flex; flex-direction:column; gap:6px;">
                 <!-- Account 1: Alex Rivera (Acme Cloud Admin) -->
@@ -934,13 +953,22 @@
                     </div>
                 </div>
 
-                <!-- Account 3: New User Custom Google Account -->
-                <div class="google-account-item" onclick="promptNewGoogleAccount()">
-                    <div class="account-avatar" style="background:var(--bg-subtle); border:1.5px dashed var(--border-default); color:var(--text-secondary); font-size:18px;">+</div>
+                <!-- Account 3: Toggle Inline Input Form (NO browser prompt!) -->
+                <div class="google-account-item" onclick="toggleInlineGoogleAdd()">
+                    <div class="account-avatar" style="background:var(--bg-subtle); border:1.5px dashed var(--border-default); color:var(--text-secondary); font-size:16px;">+</div>
                     <div style="display:flex; flex-direction:column;">
                         <span style="font-size:13px; font-weight:700; color:var(--brand-primary);">Use another Google account</span>
-                        <span style="font-size:11px; color:var(--text-muted);">Sign up or connect a new corporate account</span>
+                        <span style="font-size:11px; color:var(--text-muted);">Enter new account name & email below</span>
                     </div>
+                </div>
+
+                <!-- Inline Custom Google Input Form -->
+                <div class="inline-google-add" id="inlineGoogleForm">
+                    <input type="text" id="customGName" class="form-input" placeholder="Full Name (e.g. Jane Doe)" style="padding:8px 10px; font-size:12px;">
+                    <input type="email" id="customGEmail" class="form-input" placeholder="Google Email (e.g. jane@company.com)" style="padding:8px 10px; font-size:12px;">
+                    <button type="button" class="btn-primary-signin" onclick="submitCustomGoogleAccount()" style="padding:8px; font-size:12px; margin-top:2px;">
+                        <span>Continue with this Account &rarr;</span>
+                    </button>
                 </div>
             </div>
 
@@ -992,7 +1020,42 @@
         }
 
         window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('DOMContentLoaded', resizeCanvas);
+
+        // Supabase OAuth Return Listener
+        window.addEventListener('DOMContentLoaded', () => {
+            resizeCanvas();
+
+            // Check if returning from Supabase Google OAuth (#access_token=...)
+            if (window.location.hash && window.location.hash.includes('access_token')) {
+                const params = new URLSearchParams(window.location.hash.substring(1));
+                const accessToken = params.get('access_token');
+                if (accessToken) {
+                    showAuthSpinner('Verifying Supabase Google OAuth session...');
+                    fetch('https://fxbldzhqpdbzfzhspaht.supabase.co/auth/v1/user', {
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'apikey': 'sb_publishable_sVtwfNk-KS98Pj7t2Uh8yw_rKFiTrdw'
+                        }
+                    })
+                    .then(r => r.json())
+                    .then(u => {
+                        const name = (u.user_metadata && (u.user_metadata.full_name || u.user_metadata.name)) || u.email.split('@')[0];
+                        localStorage.setItem('revenueDeskUser', JSON.stringify({
+                            name: name,
+                            email: u.email,
+                            role: 'VP Revenue Operations',
+                            company: 'Acme Cloud Inc.',
+                            avatar: name.split(' ').map(p => p[0]).join('')
+                        }));
+                        localStorage.setItem('revenueDeskToken', accessToken);
+                        window.location.href = '/';
+                    })
+                    .catch(() => {
+                        window.location.href = '/';
+                    });
+                }
+            }
+        });
 
         window.addEventListener('mousemove', (e) => {
             mouseX = (e.clientX / window.innerWidth - 0.25) * 2;
@@ -1033,7 +1096,6 @@
                 ctx.scale(dpr, dpr);
                 ctx.clearRect(0, 0, w, h);
 
-                // Dedicated Center within the canvas box
                 const cx = w * 0.5;
                 const cy = h * 0.5;
                 const rx = smoothRotX;
@@ -1245,7 +1307,7 @@
                     const domeH = 70, domeW = 46;
                     const diamondVerts = [
                         { x: 0, y: -domeH, z: 0 },
-                        { x: domeW, y: 0, z: 0 },
+                        { x: diamondW, y: 0, z: 0 },
                         { x: 0, y: 0, z: diamondW },
                         { x: -domeW, y: 0, z: 0 },
                         { x: 0, y: 0, z: -domeW },
@@ -1340,7 +1402,7 @@
             }
         }
 
-        // ── GOOGLE AUTHENTICATION MODAL HANDLERS ──
+        // ── GOOGLE AUTHENTICATION MODAL (NO BROWSER PROMPTS!) ──
         function openGoogleAccountChooser() {
             clearAuthError();
             document.getElementById('googleModal').style.display = 'flex';
@@ -1348,14 +1410,25 @@
 
         function closeGoogleModal() {
             document.getElementById('googleModal').style.display = 'none';
+            const f = document.getElementById('inlineGoogleForm');
+            if (f) f.style.display = 'none';
         }
 
-        function promptNewGoogleAccount() {
-            const newName = prompt('Enter your full name for Google Sign-In:', 'Jane Doe');
-            if (!newName) return;
-            const newEmail = prompt('Enter your Google email address:', newName.toLowerCase().replace(/\s+/g, '.') + '@company.com');
-            if (!newEmail) return;
-            selectGoogleAccount(newName, newEmail, 'Revenue Operations Lead', 'My Cloud Corp.');
+        function toggleInlineGoogleAdd() {
+            const f = document.getElementById('inlineGoogleForm');
+            if (f) {
+                f.style.display = f.style.display === 'flex' ? 'none' : 'flex';
+            }
+        }
+
+        function submitCustomGoogleAccount() {
+            const name = (document.getElementById('customGName').value || '').trim();
+            const email = (document.getElementById('customGEmail').value || '').trim();
+            if (!name || !email) {
+                alert('Please enter both name and Google email.');
+                return;
+            }
+            selectGoogleAccount(name, email, 'Revenue Operations Lead', 'My Cloud Corp.');
         }
 
         async function selectGoogleAccount(name, email, role, company) {
