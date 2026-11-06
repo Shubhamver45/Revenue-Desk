@@ -44,9 +44,9 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
-        if path in ("/", "/index.html", "/dashboard"):
+        if path in ("/", "/index.html", "/dashboard", "/src/ui/index.html"):
             self.serve_ui("index.html")
-        elif path in ("/landing", "/landing.html", "/login"):
+        elif path in ("/landing", "/landing.html", "/login", "/src/ui/landing.html"):
             self.serve_ui("landing.html")
         elif path == "/favicon.ico":
             self.send_response(204)
