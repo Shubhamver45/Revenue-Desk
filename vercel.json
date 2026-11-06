@@ -7,15 +7,19 @@
   "rewrites": [
     {
       "source": "/landing",
-      "destination": "/src/ui/landing.html"
+      "destination": "/dist/landing.html"
     },
     {
       "source": "/dashboard",
-      "destination": "/src/ui/index.html"
+      "destination": "/dist/index.html"
+    },
+    {
+      "source": "/assets/(.*)",
+      "destination": "/dist/assets/$1"
     },
     {
       "source": "/",
-      "destination": "/src/ui/index.html"
+      "destination": "/dist/index.html"
     }
   ]
 }

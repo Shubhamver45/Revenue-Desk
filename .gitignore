@@ -1,3 +1,4 @@
+node_modules/
 data/
 *.db
 .env
@@ -5,7 +6,6 @@ __pycache__/
 *.pyc
 .pytest_cache/
 *.egg-info/
-dist/
 build/
 .venv/
-
+.DS_Store

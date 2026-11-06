@@ -234,8 +234,16 @@ MODE=bridge python main.py
 
 ```
 revenue-desk/
-├── main.py               # Entry point (CLI or bridge mode)
+├── server.js              # Node.js application server & API proxy
+├── vite.config.mjs        # Vite + React 18 build configuration
+├── package.json           # Node.js & React 18 dependencies & scripts
+├── index.html             # Vite React 18 SPA entry point
 ├── src/
+│   ├── client/            # ⚛️ React 18 Frontend Application
+│   │   ├── main.jsx       # React DOM root mounting
+│   │   ├── App.jsx        # Top-level state & multi-agent workflow container
+│   │   ├── components/    # Modular React components (Navbar, SwitchRoom, etc.)
+│   │   └── styles/        # Responsive fintech & mobile-optimized CSS
 │   ├── analyst.py         # Analyst agent logic
 │   ├── reviewer.py        # Reviewer agent logic
 │   ├── workflow.py        # Workflow orchestrator (state machine)

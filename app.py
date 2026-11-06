@@ -48,6 +48,21 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             self.serve_ui("index.html")
         elif path in ("/landing", "/landing.html", "/login", "/src/ui/landing.html"):
             self.serve_ui("landing.html")
+        elif path.startswith("/assets/"):
+            asset_file = ROOT_DIR / "dist" / path.lstrip("/")
+            if asset_file.exists():
+                ext = asset_file.suffix.lower()
+                content_type = "application/javascript" if ext == ".js" else "text/css" if ext == ".css" else "application/octet-stream"
+                content = asset_file.read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", content_type)
+                self.send_header("Content-Length", str(len(content)))
+                self.send_header("Cache-Control", "public, max-age=31536000, immutable")
+                self.end_headers()
+                self.wfile.write(content)
+                return
+            else:
+                self.send_error(404, f"Asset not found: {path}")
         elif path == "/favicon.ico":
             self.send_response(204)
             self.end_headers()
@@ -459,7 +474,11 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
         }
 
     def serve_ui(self, filename: str = "index.html") -> None:
-        html_file = ROOT_DIR / "src" / "ui" / filename
+        dist_file = ROOT_DIR / "dist" / filename
+        src_file = ROOT_DIR / "src" / "ui" / filename
+        html_file = dist_file if dist_file.exists() else src_file
+        if not html_file.exists():
+            html_file = src_file if src_file.exists() else dist_file
         if not html_file.exists():
             self.send_error(404, f"{filename} not found")
             return

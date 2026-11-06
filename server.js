@@ -11,7 +11,9 @@ const { spawn } = require('child_process');
 
 const PORT = parseInt(process.env.PORT, 10) || 3000;
 const PYTHON_PORT = parseInt(process.env.PYTHON_PORT, 10) || 8000;
-const STATIC_DIR = path.join(__dirname, 'src', 'ui');
+const DIST_DIR = path.join(__dirname, 'dist');
+const SRC_UI_DIR = path.join(__dirname, 'src', 'ui');
+const STATIC_DIR = fs.existsSync(path.join(DIST_DIR, 'index.html')) ? DIST_DIR : SRC_UI_DIR;
 
 let pythonProcess = null;
 
