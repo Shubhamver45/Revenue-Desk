@@ -180,6 +180,29 @@
             flex-shrink: 0;
         }
 
+        .switch-hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(37, 99, 235, 0.08));
+            border: 1px solid rgba(124, 58, 237, 0.28);
+            color: #6D28D9;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            letter-spacing: 0.6px;
+            width: fit-content;
+            box-shadow: 0 2px 8px rgba(124, 58, 237, 0.08);
+        }
+
+        .switch-hero-pill .switch-zap {
+            color: #7C3AED;
+            display: inline-block;
+            animation: pulseWave 1.8s infinite;
+        }
+
         .stage-hero-heading {
             font-size: clamp(26px, 2.7vw, 36px);
             font-weight: 900;
@@ -789,17 +812,21 @@
 
                 <div class="hud-telemetry-pill">
                     <span class="pulse-beacon"></span>
-                    <span>Live Ledger Active</span>
+                    <span>Switch Room #revenue-desk Active</span>
                 </div>
             </div>
 
             <!-- Clean Hero Block (Completely Clear of 3D Canvas) -->
             <div class="stage-hero-block">
+                <div class="switch-hero-pill">
+                    <span class="switch-zap">⚡</span>
+                    <span>POWERED BY SWITCH AI &bull; MULTI-AGENT WAR ROOM #revenue-desk</span>
+                </div>
                 <h1 class="stage-hero-heading">
                     Turn Ledger Conflicts into <span class="gradient-word">Certified Truth.</span>
                 </h1>
                 <p class="stage-hero-desc">
-                    Continuous automated verification cross-checks PostgreSQL, Stripe, and Shopify pipelines in real time — isolating duplicate refund traps before campaign sign-off.
+                    Autonomous multi-agent orchestration via Switch AI. Continuous SQL verification pairs @analyst and @reviewer with human governance to eliminate duplicate refund traps and guarantee ledger consensus.
                 </p>
             </div>
 
@@ -850,7 +877,7 @@
                 <div class="card-header-clean">
                     <div class="badge-portal" id="portalBadge">
                         <span>✦</span>
-                        <span>ENTERPRISE FINANCIAL PORTAL</span>
+                        <span>ENTERPRISE FINANCIAL PORTAL &bull; SWITCH ROOM ACCESS</span>
                     </div>
                     <h2 class="auth-title" id="authTitle">Sign In to Revenue Desk</h2>
                     <p class="auth-subtitle" id="authSubtitle">Enter your credentials to access the verified revenue workspace.</p>

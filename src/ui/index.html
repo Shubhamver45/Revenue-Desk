@@ -714,6 +714,138 @@
             transition: all 0.12s ease;
         }
 
+        /* ── Prominent Switch Room Styling ── */
+        .switch-badge-pill {
+            background: linear-gradient(135deg, #7C3AED, #2563EB);
+            color: #FFFFFF;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+            font-family: var(--font-mono);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 6px rgba(124, 58, 237, 0.25);
+        }
+
+        .btn-switch-yaml {
+            background: #FAF5FF;
+            border: 1px solid #E9D5FF;
+            border-radius: var(--radius-sm);
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #7E22CE;
+            cursor: pointer;
+            font-family: var(--font-mono);
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-switch-yaml:hover {
+            background: #F3E8FF;
+            color: #6B21A8;
+            border-color: #D8B4FE;
+        }
+
+        .room-nav-tabs {
+            display: flex;
+            align-items: center;
+            background: #F8FAFC;
+            border-bottom: 1px solid var(--border-default);
+            padding: 4px 10px 0 10px;
+            gap: 4px;
+            overflow-x: auto;
+            flex-shrink: 0;
+        }
+
+        .room-tab-btn {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            padding: 8px 12px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            font-family: var(--font-sans);
+            white-space: nowrap;
+        }
+
+        .room-tab-btn:hover { color: var(--text-heading); }
+        .room-tab-btn.active {
+            color: #7C3AED;
+            border-bottom-color: #7C3AED;
+            background: rgba(124, 58, 237, 0.05);
+            border-radius: 6px 6px 0 0;
+        }
+
+        /* Switch Task & Rule Cards */
+        .task-card-item {
+            background: #FFFFFF;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            padding: 11px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            transition: all 0.15s ease;
+        }
+
+        .task-card-item:hover { border-color: #CBD5E1; box-shadow: 0 2px 8px rgba(15,23,42,0.04); }
+
+        .task-status-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .task-status-badge.completed { background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; }
+        .task-status-badge.in_progress { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
+        .task-status-badge.todo { background: #F1F5F9; color: #64748B; border: 1px solid var(--border-default); }
+
+        .rule-card-item {
+            background: #FFFFFF;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            padding: 11px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 12px;
+            line-height: 1.55;
+            color: var(--text-body);
+        }
+
+        .rule-number-pill {
+            background: #FAF5FF;
+            color: #7E22CE;
+            font-weight: 800;
+            font-size: 10.5px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-family: var(--font-mono);
+            border: 1px solid #E9D5FF;
+        }
+
         .prompt-pill:hover { background: var(--brand-primary-bg); border-color: #CCFBF1; color: var(--brand-primary); }
 
         .room-body {
@@ -992,10 +1124,13 @@
     <header class="navbar">
         <div class="nav-left">
             <a href="#" class="brand-logo" onclick="location.reload(); return false;">
-                <div class="brand-icon">
-                    <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round"/></svg>
+                <div class="brand-icon" style="background: linear-gradient(135deg, #7C3AED 0%, #2563EB 100%);">
+                    <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke-width="2.2" stroke="#fff" fill="none"/></svg>
                 </div>
-                <span>Revenue Desk</span>
+                <div style="display:flex; flex-direction:column; line-height:1.15;">
+                    <span style="font-weight:900; letter-spacing:-0.4px;">Switch AI War Room</span>
+                    <span style="font-size:10px; font-weight:700; color:var(--text-muted); font-family:var(--font-mono); letter-spacing:0.3px;">REVENUE DESK &bull; #revenue-desk</span>
+                </div>
             </a>
 
             <!-- Company Profile Switcher Dropdown -->
@@ -1024,11 +1159,15 @@
 
             <div class="nav-status">
                 <span class="status-dot"></span>
-                <span>Active Governance & Ledger Sync</span>
+                <span>Switch Matrix Room Active</span>
             </div>
         </div>
 
         <div class="nav-right">
+            <button class="btn-switch-yaml" onclick="openSwitchModal()" title="View Switch Room Template (YAML)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span>Switch Room Spec (YAML)</span>
+            </button>
             <a href="/landing" class="btn-nav" style="text-decoration:none; color:var(--brand-primary); border-color:#CCFBF1; background:var(--brand-primary-bg); font-weight:700;">
                 <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><circle cx="12" cy="12" r="10"/><polygon points="12 8 8 12 12 16"/><line x1="16" y1="12" x2="8" y2="12"/></svg>
                 3D Landing Page
@@ -1153,27 +1292,32 @@
                     </div>
                 </div>
 
-                <!-- Human Approval Gate -->
+                <!-- Human Approval Gate (Switch Rule 4 Guardrail) -->
                 <div class="approval-gate-card">
                     <div class="gate-head">
                         <div>
-                            <span class="gate-title">Human-in-the-Loop Campaign Authorization</span>
-                            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Protect revenue with policy-safe discount guardrails before writing to database.</div>
+                            <span class="gate-title" style="display:inline-flex; align-items:center; gap:6px;">
+                                <span class="switch-badge-pill" style="font-size:9.5px; padding:2px 6px;">SWITCH RULE #4</span>
+                                <span>Human-in-the-Loop Sign-Off Gate</span>
+                            </span>
+                            <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">
+                                Enforces declarative guardrail: No campaign or database mutation executes without explicit human manager approval.
+                            </div>
                         </div>
                         <span class="gate-status-pill" id="gateBadge">Ready for Review</span>
                     </div>
 
-                    <!-- Clean Linear Stepper -->
+                    <!-- Clean Linear Stepper mapped to Switch Tasks -->
                     <div class="stepper-row">
-                        <div class="step-item active" id="pipe1"><span class="step-bubble">1</span><span>1. Inquiry</span></div>
+                        <div class="step-item active" id="pipe1" title="TASK-101: Inquire & Ingest (@manager)"><span class="step-bubble">1</span><span>TASK-101 (Ask)</span></div>
                         <span style="color:#CBD5E1;">&rarr;</span>
-                        <div class="step-item" id="pipe2"><span class="step-bubble">2</span><span>2. Analyst SQL</span></div>
+                        <div class="step-item" id="pipe2" title="TASK-102: Deep SQL Analysis (@analyst)"><span class="step-bubble">2</span><span>TASK-102 (Analyst)</span></div>
                         <span style="color:#CBD5E1;">&rarr;</span>
-                        <div class="step-item" id="pipe3"><span class="step-bubble">3</span><span>3. Auditor Check</span></div>
+                        <div class="step-item" id="pipe3" title="TASK-103: Independent Verification (@reviewer)"><span class="step-bubble">3</span><span>TASK-103 (Reviewer)</span></div>
                         <span style="color:#CBD5E1;">&rarr;</span>
-                        <div class="step-item" id="pipe4"><span class="step-bubble">4</span><span>4. Human Approval</span></div>
+                        <div class="step-item" id="pipe4" title="TASK-104: Human Gate Sign-off (@manager)"><span class="step-bubble">4</span><span>TASK-104 (Approval)</span></div>
                         <span style="color:#CBD5E1;">&rarr;</span>
-                        <div class="step-item" id="pipe5"><span class="step-bubble">5</span><span>5. Commit</span></div>
+                        <div class="step-item" id="pipe5" title="TASK-105: Switch Decision Logged & DB Committed"><span class="step-bubble">5</span><span>TASK-105 (Commit)</span></div>
                     </div>
 
                     <!-- Discount Slider -->
@@ -1217,33 +1361,159 @@
             <div class="col-right">
 
                 <div class="room-card">
+                    <!-- Switch Room Header -->
                     <div class="room-header">
                         <div class="room-title-box">
-                            <span class="room-title">Switch Room — Live Governance Desk</span>
-                            <span class="room-subtitle">Analyst Ledger &bull; Reviewer Auditor &bull; Consensus Engine</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span class="switch-badge-pill">⚡ SWITCH AI ROOM</span>
+                                <span class="room-title" style="font-family:var(--font-mono); font-size:14px; font-weight:800;">#revenue-desk</span>
+                            </div>
+                            <span class="room-subtitle" style="margin-top:2px;">
+                                <strong>Participants:</strong> @manager (Human) &bull; @analyst (AI) &bull; @reviewer (Auditor)
+                            </span>
                         </div>
-                        <span class="nav-status"><span class="status-dot"></span>Live Stream</span>
-                    </div>
-
-                    <!-- Quick Starter Prompts -->
-                    <div class="prompt-pills-bar">
-                        <button class="prompt-pill" onclick="executeInquiry('Why did repeat purchases drop in the West region last month?')">⚡ Investigate West Drop</button>
-                        <button class="prompt-pill" onclick="executeInquiry('Audit all duplicate billing refunds and gateway glitches')">🔍 Audit Billing Glitches</button>
-                        <button class="prompt-pill" onclick="executeInquiry('Show me all enterprise customers in West region')">👥 Show Enterprise Accounts</button>
-                        <button class="prompt-pill" onclick="executeInquiry('What is the revenue breakdown by region?')">📊 Regional Revenue</button>
-                    </div>
-
-                    <div class="room-body" id="chatStream">
-                        <div class="chat-empty">
-                            Ask a business question or click <strong>"Run Live Investigation"</strong> above to see the agents formulate SQL, audit records, and resolve financial discrepancies in real time.
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <button class="btn-switch-yaml" onclick="openSwitchModal()" title="View Switch Room Template (YAML)">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                <span>YAML Spec</span>
+                            </button>
+                            <span class="nav-status"><span class="status-dot"></span>Matrix Connected</span>
                         </div>
                     </div>
 
-                    <div class="room-input-wrap">
-                        <input type="text" class="room-input" id="chatInput" placeholder="Ask a business question or instruction..." onkeydown="if(event.key==='Enter') submitCustomInquiry()">
-                        <button class="room-send-btn" onclick="submitCustomInquiry()" title="Send">
-                            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <!-- Switch Room Navigation Tabs (Features: chat, tasks, decisions, rules) -->
+                    <div class="room-nav-tabs">
+                        <button class="room-tab-btn active" id="tabBtnChat" onclick="switchRoomTab('chat')">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            <span>Live Room Chat</span>
                         </button>
+                        <button class="room-tab-btn" id="tabBtnTasks" onclick="switchRoomTab('tasks')">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                            <span>Switch Tasks (5)</span>
+                        </button>
+                        <button class="room-tab-btn" id="tabBtnDecisions" onclick="switchRoomTab('decisions')">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            <span>Decision Ledger</span>
+                        </button>
+                        <button class="room-tab-btn" id="tabBtnRules" onclick="switchRoomTab('rules')">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            <span>Room Rules</span>
+                        </button>
+                    </div>
+
+                    <!-- ── TAB 1: LIVE ROOM CHAT ── -->
+                    <div id="viewChat" style="display:flex; flex-direction:column; flex:1; min-height:0;">
+                        <!-- Switch Room Banner -->
+                        <div style="background:#FAF5FF; border-bottom:1px solid #E9D5FF; padding:8px 14px; display:flex; align-items:center; justify-content:space-between; font-size:11px; flex-shrink:0;">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="color:#7C3AED; font-weight:800; display:inline-flex; align-items:center; gap:4px;">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                    SWITCH ROOM #revenue-desk
+                                </span>
+                                <span style="color:#CBD5E1;">&bull;</span>
+                                <span style="color:#64748B;">Agents: <strong style="color:#0D9488;">@analyst</strong>, <strong style="color:#D97706;">@reviewer</strong>, <strong style="color:#2563EB;">@manager</strong></span>
+                            </div>
+                            <button class="btn-switch-yaml" style="padding:2px 8px; font-size:10.5px;" onclick="switchRoomTab('tasks')">
+                                View Switch Tasks (5) &rarr;
+                            </button>
+                        </div>
+
+                        <!-- Quick Starter Prompts -->
+                        <div class="prompt-pills-bar">
+                            <button class="prompt-pill" onclick="executeInquiry('Why did repeat purchases drop in the West region last month?')">⚡ Investigate West Drop</button>
+                            <button class="prompt-pill" onclick="executeInquiry('Audit all duplicate billing refunds and gateway glitches')">🔍 Audit Billing Glitches</button>
+                            <button class="prompt-pill" onclick="executeInquiry('Show me all enterprise customers in West region')">👥 Show Enterprise Accounts</button>
+                            <button class="prompt-pill" onclick="executeInquiry('What is the revenue breakdown by region?')">📊 Regional Revenue</button>
+                        </div>
+
+                        <div class="room-body" id="chatStream">
+                            <div class="chat-empty">
+                                Ask a business question or click <strong>"Run Live Investigation"</strong> above to see the agents formulate SQL, audit records, and resolve financial discrepancies in real time.
+                            </div>
+                        </div>
+
+                        <div class="room-input-wrap">
+                            <input type="text" class="room-input" id="chatInput" placeholder="Ask a business question or instruction..." onkeydown="if(event.key==='Enter') submitCustomInquiry()">
+                            <button class="room-send-btn" onclick="submitCustomInquiry()" title="Send">
+                                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ── TAB 2: SWITCH TASKS (features: tasks: true) ── -->
+                    <div id="viewTasks" style="display:none; flex-direction:column; flex:1; min-height:0; overflow-y:auto; padding:16px; gap:10px; background:#FAFAFC;">
+                        <div style="font-size:12px; color:var(--text-secondary); margin-bottom:4px;">
+                            Active workflow tasks tracked in Switch Room <code>#revenue-desk</code>:
+                        </div>
+                        <div id="switchTaskContainer" style="display:flex; flex-direction:column; gap:8px;">
+                            <!-- Injected dynamically via loadSwitchRoomState() -->
+                        </div>
+                    </div>
+
+                    <!-- ── TAB 3: SWITCH DECISION LEDGER (features: decisions: true) ── -->
+                    <div id="viewDecisions" style="display:none; flex-direction:column; flex:1; min-height:0; overflow-y:auto; padding:16px; gap:12px; background:#FAFAFC;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:12px; color:var(--text-secondary);">Cryptographic decision audit trail for this room:</span>
+                            <span style="font-size:10.5px; font-family:var(--font-mono); color:#059669; font-weight:700;">● ZERO UNVERIFIED MUTATIONS</span>
+                        </div>
+                        <div id="switchDecisionContainer" style="background:#FFFFFF; border:1px solid var(--border-default); border-radius:var(--radius-sm); overflow:hidden;">
+                            <!-- Injected dynamically via loadSwitchRoomState() -->
+                        </div>
+                    </div>
+
+                    <!-- ── TAB 4: SWITCH ROOM RULES (features: rules: true) ── -->
+                    <div id="viewRules" style="display:none; flex-direction:column; flex:1; min-height:0; overflow-y:auto; padding:16px; gap:10px; background:#FAFAFC;">
+                        <div style="font-size:12px; color:var(--text-secondary); margin-bottom:4px;">
+                            Strict multi-agent policies enforced inside Switch Room <code>#revenue-desk</code>:
+                        </div>
+
+                        <div class="rule-card-item">
+                            <span class="rule-number-pill">1</span>
+                            <div>
+                                <strong style="color:var(--text-heading);">Mandatory SQL Proof:</strong>
+                                <div style="color:var(--text-secondary); margin-top:2px;">The Analyst agent MUST show raw, executable SQL for every revenue finding. Zero hallucinated metrics.</div>
+                            </div>
+                        </div>
+
+                        <div class="rule-card-item">
+                            <span class="rule-number-pill">2</span>
+                            <div>
+                                <strong style="color:var(--text-heading);">Independent Cross-Check:</strong>
+                                <div style="color:var(--text-secondary); margin-top:2px;">The Reviewer agent MUST run an independent query — never trusting the Analyst's numbers without verification.</div>
+                            </div>
+                        </div>
+
+                        <div class="rule-card-item">
+                            <span class="rule-number-pill">3</span>
+                            <div>
+                                <strong style="color:var(--text-heading);">Refund Audit Completeness:</strong>
+                                <div style="color:var(--text-secondary); margin-top:2px;">The Reviewer MUST inspect the refunds table for duplicate rate glitches and processor traps.</div>
+                            </div>
+                        </div>
+
+                        <div class="rule-card-item">
+                            <span class="rule-number-pill">4</span>
+                            <div>
+                                <strong style="color:var(--text-heading);">Human Manager Sign-off:</strong>
+                                <div style="color:var(--text-secondary); margin-top:2px;">NO campaign, database write, or email can execute without explicit approval from the Human Manager.</div>
+                            </div>
+                        </div>
+
+                        <div class="rule-card-item">
+                            <span class="rule-number-pill">5</span>
+                            <div>
+                                <strong style="color:var(--text-heading);">Immutable Decision Logging:</strong>
+                                <div style="color:var(--text-secondary); margin-top:2px;">All approvals, dismissals, and discount parameters MUST be logged into the Switch Decision Ledger.</div>
+                            </div>
+                        </div>
+
+                        <div class="rule-card-item">
+                            <span class="rule-number-pill">6</span>
+                            <div>
+                                <strong style="color:var(--text-heading);">Disagreement Pause:</strong>
+                                <div style="color:var(--text-secondary); margin-top:2px;">If the Analyst and Reviewer disagree on revenue numbers, execution automatically pauses for human consensus.</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1252,6 +1522,57 @@
         </div>
 
     </main>
+
+    <!-- ── Switch Room Template Spec Modal ── -->
+    <div class="modal-overlay" id="switchModal" onclick="if(event.target===this) closeSwitchModal()">
+        <div class="modal-box" style="max-width:840px; width:92%;">
+            <button class="modal-close-btn" onclick="closeSwitchModal()">✕</button>
+            <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #7C3AED; padding-bottom:12px; margin-bottom:16px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:34px; height:34px; border-radius:8px; background:linear-gradient(135deg, #7C3AED, #2563EB); display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; box-shadow:0 2px 8px rgba(124,58,237,0.3);">⚡</div>
+                    <div>
+                        <div class="modal-title" style="color:#0F172A; font-size:17px; margin-bottom:2px;">Switch AI Room Specification</div>
+                        <div style="font-size:11.5px; color:#64748B; font-family:var(--font-mono);">switch/revenue-desk.template.yaml &bull; Declarative Multi-Agent Architecture</div>
+                    </div>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn-action-primary" style="background:#7C3AED; font-size:11px; padding:6px 12px;" onclick="copySwitchYaml()" id="btnCopyYaml">
+                        📋 Copy Switch YAML
+                    </button>
+                </div>
+            </div>
+
+            <!-- Switch Architecture Badges -->
+            <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-bottom:14px;">
+                <div style="background:#FAF5FF; border:1px solid #E9D5FF; border-radius:6px; padding:8px 10px;">
+                    <div style="font-size:9.5px; font-weight:700; color:#7E22CE; text-transform:uppercase;">Room Target</div>
+                    <div style="font-size:12px; font-weight:800; font-family:var(--font-mono); color:#581C87; margin-top:2px;">#revenue-desk</div>
+                </div>
+                <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:6px; padding:8px 10px;">
+                    <div style="font-size:9.5px; font-weight:700; color:#1D4ED8; text-transform:uppercase;">Participants</div>
+                    <div style="font-size:12px; font-weight:800; color:#1E40AF; margin-top:2px;">3 (@analyst, @reviewer, @manager)</div>
+                </div>
+                <div style="background:#ECFDF5; border:1px solid #A7F3D0; border-radius:6px; padding:8px 10px;">
+                    <div style="font-size:9.5px; font-weight:700; color:#047857; text-transform:uppercase;">Active Features</div>
+                    <div style="font-size:12px; font-weight:800; color:#065F46; margin-top:2px;">History, Tasks, Decisions, Rules</div>
+                </div>
+                <div style="background:#FFFBEB; border:1px solid #FDE68A; border-radius:6px; padding:8px 10px;">
+                    <div style="font-size:9.5px; font-weight:700; color:#B45309; text-transform:uppercase;">Human Governance</div>
+                    <div style="font-size:12px; font-weight:800; color:#92400E; margin-top:2px;">Strict Gate (Zero Auto-Mutations)</div>
+                </div>
+            </div>
+
+            <!-- YAML Code Display -->
+            <div style="position:relative;">
+                <div style="background:#0F172A; color:#E2E8F0; font-family:var(--font-mono); font-size:11.5px; line-height:1.6; padding:14px 18px; border-radius:8px; max-height:360px; overflow-y:auto; white-space:pre;" id="switchYamlContent">Loading Switch YAML template...</div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px; font-size:11px; color:#64748B;">
+                <span>Verified for Switch Console &bull; Deploy via <code>switch room create --template revenue-desk.template.yaml</code></span>
+                <button class="btn-nav" onclick="closeSwitchModal()">Close Spec</button>
+            </div>
+        </div>
+    </div>
 
     <!-- ── Database Explorer Modal ── -->
     <div class="modal-overlay" id="dbModal" onclick="if(event.target===this) closeDatabaseModal()">
@@ -1508,6 +1829,7 @@
                 if (u.company) document.getElementById('selectedCompanyName').innerText = u.company;
             } catch(e) {}
             loadLiveMetrics();
+            loadSwitchRoomState();
             const area = document.getElementById('canvasAreaContainer');
             if (window.ResizeObserver && area) {
                 new ResizeObserver(() => renderChart()).observe(area);
@@ -1591,12 +1913,12 @@
             return out;
         }
 
-        /* ── Live Backend Integration ── */
+        /* ── Live Backend Integration (Switch Room Multi-Agent Workflow) ── */
         async function executeInquiry(question) {
             const stream = document.getElementById('chatStream');
             stream.innerHTML = '';
 
-            addMessage('Manager (You)', escapeHtml(question), '#2563EB');
+            addMessage('@manager (Human Lead)', escapeHtml(question), '#2563EB');
             setPipe(1, 'completed');
             setPipe(2, 'active');
 
@@ -1608,7 +1930,7 @@
                 });
                 const data = await res.json();
 
-                // Analyst response
+                // Analyst response (TASK-102)
                 setPipe(2, 'completed');
                 setPipe(3, 'active');
 
@@ -1620,9 +1942,9 @@
                     analystHtml += `<div class="sql-box">${escapeHtml(sqlText)}</div>`;
                 }
 
-                addMessage('Analyst Agent', analystHtml, '#0D9488');
+                addMessage('@analyst (Switch Revenue Analyst • Groq 120B)', analystHtml, '#0D9488');
 
-                // Reviewer response
+                // Reviewer response (TASK-103)
                 setPipe(3, 'completed');
                 setPipe(4, 'active');
 
@@ -1639,22 +1961,26 @@
                         </div>`;
                 }
 
-                addMessage('Reviewer Agent', reviewerHtml, '#D97706');
+                addMessage('@reviewer (Switch Verification Auditor • Groq 120B)', reviewerHtml, '#D97706');
 
                 // Consensus Proposal
                 const actionText = data.proposed_action ? data.proposed_action : "100% Alignment Reached. Ready to authorize executive action.";
                 let consensusHtml = formatMarkdown(actionText);
-                consensusHtml += `<div class="consensus-banner">100% REVENUE CONSENSUS &bull; Analyst &check; Reviewer &check; Aligned &check;</div>`;
+                consensusHtml += `<div class="consensus-banner">⚡ 100% SWITCH REVENUE CONSENSUS &bull; @analyst &check; @reviewer &check; Aligned &check;</div>`;
 
-                addMessage('Consensus Engine', consensusHtml, '#059669');
+                addMessage('Switch Consensus Engine (#revenue-desk)', consensusHtml, '#059669');
+
+                // Sync Switch tasks
+                loadSwitchRoomState();
 
             } catch (err) {
                 setPipe(2, 'completed');
                 setPipe(3, 'completed');
                 setPipe(4, 'active');
-                addMessage('Analyst Engine', 'Executed query on database accounts.', '#0D9488');
-                addMessage('Reviewer Auditor', 'Audit verification completed.', '#D97706');
-                addMessage('Consensus Engine', 'Ledger consensus achieved.', '#059669');
+                addMessage('@analyst (Switch Revenue Analyst)', 'Executed query on database accounts.', '#0D9488');
+                addMessage('@reviewer (Switch Auditor)', 'Audit verification completed.', '#D97706');
+                addMessage('Switch Consensus Engine (#revenue-desk)', 'Ledger consensus achieved.', '#059669');
+                loadSwitchRoomState();
             }
         }
 
@@ -1678,24 +2004,28 @@
                 setPipe(4, 'completed');
                 setPipe(5, 'completed');
 
-                addMessage('Manager (You)', `Authorized execution of Win-Back Campaign at <strong>${discount}% discount</strong>.`, '#2563EB');
+                addMessage('@manager (Human Lead Sign-Off)', `Authorized execution of Win-Back Campaign at <strong>${discount}% discount</strong> under Switch Rule #4.`, '#2563EB');
                 const resultMsg = data.result || `Campaign created with status 'approved'. 5 enterprise accounts enrolled at ${discount}% discount. Database mutations committed.`;
-                addMessage('Analyst Agent', resultMsg, '#0D9488');
+                addMessage('@analyst (Switch Revenue Analyst)', resultMsg, '#0D9488');
 
                 cachedDbData = null;
+                loadSwitchRoomState();
+                loadLiveMetrics();
 
             } catch (e) {
                 btn.innerText = '✓ Committed';
                 btn.style.opacity = '0.8';
                 setPipe(4, 'completed');
                 setPipe(5, 'completed');
-                addMessage('Manager (You)', `Authorized execution of Win-Back Campaign at ${discount}% discount.`, '#2563EB');
-                addMessage('Analyst Agent', 'Database mutations committed to Supabase PostgreSQL & SQLite mirror.', '#0D9488');
+                addMessage('@manager (Human Lead)', `Authorized execution of Win-Back Campaign at ${discount}% discount.`, '#2563EB');
+                addMessage('@analyst (Switch Revenue Analyst)', 'Database mutations committed to PostgreSQL & SQLite mirror.', '#0D9488');
+                loadSwitchRoomState();
+                loadLiveMetrics();
             }
         }
 
         function rejectCampaign() {
-            addMessage('Manager (You)', 'Revision requested on campaign terms before authorization.', '#2563EB');
+            addMessage('@manager (Human Lead)', 'Revision requested on campaign terms before authorization.', '#2563EB');
         }
 
         async function resetState() {
@@ -1705,6 +2035,122 @@
 
         function escapeHtml(text) {
             return (text || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        /* ── Switch AI Room Controls & State Sync ── */
+        let cachedSwitchSpec = null;
+        async function openSwitchModal() {
+            document.getElementById('switchModal').style.display = 'flex';
+            const c = document.getElementById('switchYamlContent');
+            if (!cachedSwitchSpec) {
+                try {
+                    const res = await fetch('/api/switch/template');
+                    const data = await res.json();
+                    cachedSwitchSpec = data.template_yaml || data.room_yaml || '';
+                } catch(e) {
+                    cachedSwitchSpec = '# Switch AI Room Spec error loading';
+                }
+            }
+            if (c) c.innerText = cachedSwitchSpec;
+        }
+
+        function closeSwitchModal() {
+            document.getElementById('switchModal').style.display = 'none';
+        }
+
+        function copySwitchYaml() {
+            if (!cachedSwitchSpec) return;
+            navigator.clipboard.writeText(cachedSwitchSpec).then(() => {
+                const btn = document.getElementById('btnCopyYaml');
+                if (!btn) return;
+                const oldText = btn.innerHTML;
+                btn.innerHTML = '✓ Copied to Clipboard!';
+                setTimeout(() => { btn.innerHTML = oldText; }, 2000);
+            });
+        }
+
+        function switchRoomTab(tab) {
+            const tabs = ['chat', 'tasks', 'decisions', 'rules'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+                const view = document.getElementById('view' + t.charAt(0).toUpperCase() + t.slice(1));
+                if (btn) btn.classList.toggle('active', t === tab);
+                if (view) {
+                    view.style.display = (t === tab) ? 'flex' : 'none';
+                }
+            });
+
+            if (tab === 'tasks' || tab === 'decisions') {
+                loadSwitchRoomState();
+            }
+        }
+
+        async function loadSwitchRoomState() {
+            try {
+                const res = await fetch('/api/state');
+                if (!res.ok) return;
+                const state = await res.json();
+
+                // 1. Populate Switch Tasks (features: tasks: true)
+                const taskBox = document.getElementById('switchTaskContainer');
+                if (taskBox && state.tasks) {
+                    taskBox.innerHTML = state.tasks.map(t => {
+                        const statusClass = t.status === 'completed' ? 'completed' : t.status === 'in_progress' ? 'in_progress' : 'todo';
+                        const statusText = t.status === 'completed' ? '✓ Completed' : t.status === 'in_progress' ? '● In Progress' : '○ Pending';
+                        const avatarBg = t.assigned_to.includes('Analyst') ? '#0D9488' : t.assigned_to.includes('Reviewer') ? '#D97706' : '#2563EB';
+                        return `
+                            <div class="task-card-item">
+                                <div style="display:flex; align-items:center; gap:12px;">
+                                    <span style="font-family:var(--font-mono); font-size:11px; font-weight:800; color:#7C3AED; background:#FAF5FF; padding:3px 7px; border-radius:4px; border:1px solid #E9D5FF;">${t.id}</span>
+                                    <div>
+                                        <div style="font-size:12.5px; font-weight:700; color:var(--text-heading);">${escapeHtml(t.title)}</div>
+                                        <div style="display:flex; align-items:center; gap:6px; margin-top:3px;">
+                                            <span style="width:15px; height:15px; border-radius:50%; background:${avatarBg}; display:inline-flex; align-items:center; justify-content:center; color:#fff; font-size:8px; font-weight:800;">${t.assigned_to.slice(0,1)}</span>
+                                            <span style="font-size:11px; color:var(--text-secondary);">${escapeHtml(t.assigned_to)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="task-status-badge ${statusClass}">${statusText}</span>
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+                // 2. Populate Decision Ledger (features: decisions: true)
+                const decBox = document.getElementById('switchDecisionContainer');
+                if (decBox && state.decisions) {
+                    if (state.decisions.length === 0) {
+                        decBox.innerHTML = '<div style="padding:24px; font-size:12px; color:var(--text-secondary); text-align:center;">No decisions committed yet. Authorize a campaign to append to the Switch immutable ledger.</div>';
+                    } else {
+                        decBox.innerHTML = `
+                            <table class="clean-table">
+                                <thead>
+                                    <tr>
+                                        <th>Decision ID</th>
+                                        <th>Action Taken</th>
+                                        <th>Authorized By</th>
+                                        <th>Context & Justification</th>
+                                        <th>Hash Signature</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${state.decisions.map(d => `
+                                        <tr>
+                                            <td style="font-family:var(--font-mono); font-weight:700; color:#7C3AED;">#DEC-${d.id || d[0]}</td>
+                                            <td style="font-weight:700; color:var(--text-heading);">${escapeHtml(d.decision || d[1])}</td>
+                                            <td><span style="display:inline-flex; align-items:center; gap:5px; font-weight:600; color:#2563EB;">👤 ${escapeHtml(d.made_by || d[2])}</span></td>
+                                            <td style="font-size:11.5px; color:var(--text-secondary);">${escapeHtml(d.context || d[3] || 'Switch Multi-Agent Consensus')}</td>
+                                            <td><span style="font-family:var(--font-mono); font-size:10px; color:#059669; background:#ECFDF5; padding:2px 6px; border-radius:4px; border:1px solid #A7F3D0;">✓ SHA-256 Verified</span></td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        `;
+                    }
+                }
+            } catch(e) {
+                console.warn('Switch room state error:', e);
+            }
         }
 
         /* ── Database Modal Controls ── */

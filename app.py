@@ -55,6 +55,16 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             self.send_json({"status": "ok", "active": True})
         elif path in ("/api/metrics", "/api/metrics/live"):
             self.send_json(self.get_live_metrics())
+        elif path == "/api/switch/template":
+            yaml_path = ROOT_DIR / "switch" / "revenue-desk.template.yaml"
+            room_path = ROOT_DIR / "switch" / "room.yaml"
+            yaml_content = yaml_path.read_text() if yaml_path.exists() else ""
+            room_content = room_path.read_text() if room_path.exists() else ""
+            self.send_json({
+                "status": "ok",
+                "template_yaml": yaml_content,
+                "room_yaml": room_content
+            })
         elif path == "/api/state":
             self.send_json(self.get_room_state())
         elif path == "/api/database":
