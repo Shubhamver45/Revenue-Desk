@@ -49,6 +49,8 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             self.serve_ui("index.html")
         elif path in ("/landing", "/landing.html", "/login", "/src/ui/landing.html", "/dist/landing.html") or clean_p in ("/landing", "/login"):
             self.serve_ui("landing.html")
+        elif path in ("/blog", "/blog.html", "/src/ui/blog.html", "/dist/blog.html") or clean_p in ("/blog",):
+            self.serve_ui("blog.html")
         elif path.startswith("/assets/") or path.startswith("/dist/assets/"):
             rel_path = path[5:] if path.startswith("/dist") else path
             asset_file = ROOT_DIR / "dist" / rel_path.lstrip("/")

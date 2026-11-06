@@ -6,6 +6,14 @@
   },
   "rewrites": [
     {
+      "source": "/blog",
+      "destination": "/dist/blog.html"
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/dist/blog.html"
+    },
+    {
       "source": "/landing",
       "destination": "/dist/landing.html"
     },

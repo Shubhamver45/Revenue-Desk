@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Building Revenue Desk: Governed Multi-Agent Teams with Switch</title>
+    <meta name="description" content="A practical guide to building collaborative multi-agent Switch Rooms where humans and AI work together to run high-stakes business operations without hallucinations.">
+    <meta name="author" content="Shubham Vernekar">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #0B0F17;
+            --bg-card: #111827;
+            --bg-subtle: #1E293B;
+            --border-default: #334155;
+            --border-highlight: #059669;
+            --brand-primary: #10B981;
+            --brand-primary-hover: #34D399;
+            --brand-glow: rgba(16, 185, 129, 0.15);
+            --brand-accent: #38BDF8;
+            --color-red: #F87171;
+            --color-gold: #FBBF24;
+            --text-heading: #F8FAFC;
+            --text-body: #E2E8F0;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+            --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-body);
+            font-family: var(--font-sans);
+            line-height: 1.75;
+            font-size: 17px;
+            padding-bottom: 80px;
+        }
+
+        /* Top sticky navigation */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: rgba(11, 15, 23, 0.85);
+            border-bottom: 1px solid var(--border-default);
+            padding: 14px 24px;
+        }
+
+        .nav-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-heading);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .brand-badge {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: var(--brand-primary);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: var(--radius-full);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--brand-primary);
+            color: #064E3B;
+            border: 1px solid var(--brand-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--brand-primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: var(--bg-card);
+            color: var(--text-heading);
+            border: 1px solid var(--border-default);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text-secondary);
+            background: var(--bg-subtle);
+        }
+
+        /* Article layout */
+        .article-wrap {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Article header */
+        .article-header {
+            margin-bottom: 44px;
+            border-bottom: 1px solid var(--border-default);
+            padding-bottom: 32px;
+        }
+
+        .topic-pill {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--brand-accent);
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .article-title {
+            font-size: 38px;
+            line-height: 1.25;
+            font-weight: 800;
+            color: var(--text-heading);
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+
+        .article-lead {
+            font-size: 19px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .author-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+        }
+
+        .author-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-full);
+            background: linear-gradient(135deg, #10B981, #0284C7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #FFFFFF;
+            font-size: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .author-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-heading);
+        }
+
+        .author-role {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .article-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        /* Typography & Content Elements */
+        h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-top: 48px;
+            margin-bottom: 18px;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-top: 28px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: var(--text-body);
+        }
+
+        strong {
+            color: var(--text-heading);
+            font-weight: 600;
+        }
+
+        a {
+            color: var(--brand-primary);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--brand-primary);
+        }
+
+        a:hover {
+            color: var(--brand-primary-hover);
+            border-bottom-style: solid;
+        }
+
+        ul, ol {
+            margin-left: 24px;
+            margin-bottom: 24px;
+            color: var(--text-body);
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding-left: 4px;
+        }
+
+        /* Callout Box */
+        .callout {
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 4px solid var(--brand-primary);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 16px 20px;
+            margin: 28px 0;
+            color: var(--text-body);
+        }
+
+        .callout-warning {
+            background: rgba(248, 113, 113, 0.08);
+            border-left-color: var(--color-red);
+        }
+
+        .callout-info {
+            background: rgba(56, 189, 248, 0.08);
+            border-left-color: var(--brand-accent);
+        }
+
+        /* Code snippets */
+        code {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #38BDF8;
+        }
+
+        pre {
+            background: #0D1117;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            overflow-x: auto;
+            margin: 24px 0;
+            box-shadow: var(--shadow-subtle);
+            position: relative;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #E2E8F0;
+            font-size: 13.5px;
+            line-height: 1.65;
+            display: block;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #161B22;
+            border: 1px solid var(--border-default);
+            border-bottom: none;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            padding: 8px 16px;
+            margin-top: 24px;
+            margin-bottom: -24px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--border-default);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--bg-subtle);
+            color: var(--text-heading);
+            border-color: var(--text-secondary);
+        }
+
+        /* Architecture ASCII Card */
+        .diagram-card {
+            background: #090D14;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.05);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 28px 0;
+            overflow-x: auto;
+        }
+
+        .diagram-card pre {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            box-shadow: none;
+        }
+
+        .diagram-card pre code {
+            color: #A7F3D0;
+            font-size: 12.5px;
+            line-height: 1.45;
+        }
+
+        /* Feature Cards Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin: 28px 0;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--brand-primary);
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 0;
+        }
+
+        /* Bottom CTA */
+        .cta-banner {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(2, 132, 199, 0.15));
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            border-radius: var(--radius-lg);
+            padding: 36px 32px;
+            text-align: center;
+            margin-top: 56px;
+        }
+
+        .cta-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 10px;
+        }
+
+        .cta-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 24px auto;
+            font-size: 15px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .footer {
+            max-width: 820px;
+            margin: 40px auto 0 auto;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-default);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .article-title { font-size: 28px; }
+            .article-lead { font-size: 16px; }
+            .article-wrap { padding: 24px 16px; }
+            .top-nav { padding: 12px 16px; }
+            pre { padding: 14px; }
+            .card-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Top Navigation -->
+    <header class="top-nav">
+        <div class="nav-container">
+            <a href="/" class="brand-link">
+                <span style="font-size: 20px;">⚡</span>
+                <span>Revenue Desk</span>
+                <span class="brand-badge">Switch AI</span>
+            </a>
+            <div class="nav-actions">
+                <a href="/" class="btn-nav btn-primary">
+                    <span>⚡ Launch Cockpit</span>
+                </a>
+                <a href="https://github.com/Shubhamver45/Revenue-Desk" target="_blank" rel="noopener noreferrer" class="btn-nav btn-outline">
+                    <span>GitHub</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Article Body -->
+    <main class="article-wrap">
+        <article>
+            <header class="article-header">
+                <div class="topic-pill">Tutorial & Engineering Case Study</div>
+                <h1 class="article-title">Building Revenue Desk: How to Build Governed Multi-Agent Teams with Switch</h1>
+                <p class="article-lead">
+                    A practical guide to building collaborative multi-agent Switch Rooms where humans and AI work together to run high-stakes business operations without hallucinations.
+                </p>
+
+                <div class="author-card">
+                    <div class="author-info">
+                        <div class="author-avatar">SV</div>
+                        <div>
+                            <div class="author-name">Shubham Vernekar</div>
+                            <div class="author-role">Lead Builder, Revenue Desk</div>
+                        </div>
+                    </div>
+                    <div class="article-meta">
+                        <span>November 6, 2026</span> • <span>8 min read</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Section 1 -->
+            <h2>📌 Introduction: The Multi-Agent Reliability Crisis</h2>
+            <p>
+                Large Language Models (LLMs) can now write complex SQL queries, summarize revenue metrics, and draft client communications in seconds. But in mission-critical business operations—especially finance—<strong>an autonomous AI operating in isolation is dangerous.</strong>
+            </p>
+            <p>
+                Consider a common scenario: An executive asks an AI agent, <em>"Why did repeat purchases drop in the West region last month?"</em>
+            </p>
+            <ol>
+                <li>The AI queries the <code>orders</code> table.</li>
+                <li>It sees that order volume dropped by 84%.</li>
+                <li>It immediately concludes: <em>"Your enterprise customers are churning! You should offer a panic-driven 25% discount to win them back."</em></li>
+            </ol>
+
+            <div class="callout callout-warning">
+                <strong>The Cost of Naive AI:</strong> What the solo agent missed was the payment processor's <code>refunds</code> ledger, where an unannounced payment gateway migration caused <strong>$20,430 in duplicate refund reversals</strong>. The customers never churned—they experienced a temporary billing glitch! By giving away a 25% discount, the company would have burned thousands in unnecessary margin.
+            </div>
+
+            <p>
+                To solve this, we built <strong>Revenue Desk</strong> using <a href="https://switchagents.ai" target="_blank" rel="noopener noreferrer">Switch</a> — open-source infrastructure designed specifically for collaborative AI teammate workflows.
+            </p>
+            <p>
+                In this tutorial, we will walk you through how to use Switch to build a multi-agent financial command center with <strong>independent peer verification, declarative governance rules, and human sign-off gates</strong>.
+            </p>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-default); margin: 40px 0;">
+
+            <!-- Section 2 -->
+            <h2>🏗️ The Architecture: Two Agents, One Room, Total Transparency</h2>
+            <p>
+                Instead of building a lonely single-agent chatbot, Switch allows you to create a <strong>shared collaborative room</strong> (<code>#revenue-desk</code>) where multiple specialized agents and human teammates converse in real time.
+            </p>
+
+            <div class="diagram-card">
+<pre><code>                  ┌───────────────────────────────┐
+                  │    Human Manager (@manager)   │
+                  └──────────────┬────────────────┘
+                                 │ Questions & Sign-Off
+                                 ▼
+   ┌─────────────────────────────────────────────────────────────┐
+   │                 SWITCH ROOM: #revenue-desk                  │
+   │                                                             │
+   │   Enforcing 5 Declarative Rules:                            │
+   │   • rule-independent-audit     • rule-dual-agent-consensus  │
+   │   • rule-human-in-the-loop     • rule-tamper-evident-audit  │
+   │   • rule-read-only-sandbox                                  │
+   │                                                             │
+   │   ┌──────────────────────┐       ┌──────────────────────┐   │
+   │   │    @analyst Agent    │◄─────►│   @reviewer Agent    │   │
+   │   │  (SQL Query Engine)  │       │ (Independent Audit)  │   │
+   │   └──────────┬───────────┘       └──────────┬───────────┘   │
+   │              │                              │               │
+   │              │   Consensus Protocol Engine  │               │
+   │              └──────────────►◄──────────────┘               │
+   │                              │                              │
+   │                              ▼                              │
+   │                 100% Verified Proposal Card                 │
+   └──────────────────────────────┬──────────────────────────────┘
+                                  │
+                                  ▼
+                     ┌──────────────────────────┐
+                     │   Human Approval Gate    │
+                     │  (Approve / Modify / Reject)
+                     └────────────┬─────────────┘
+                                  │
+                                  ▼
+                     ┌──────────────────────────┐
+                     │ Atomic Database Mutation │
+                     │ & SHA-256 Decision Log   │
+                     └──────────────────────────┘</code></pre>
+            </div>
+
+            <h3>The Three Roles in the Room:</h3>
+            <div class="card-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👤</div>
+                    <div class="feature-title">@manager (Human Lead)</div>
+                    <p class="feature-desc">Sets strategic objectives, inspects discrepancy diffs, adjusts discount parameters, and retains final authorization power.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">@analyst (Data Engine)</div>
+                    <p class="feature-desc">Translates plain English questions into read-only SQL, queries the live transaction database, and formulates remediation proposals.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-title">@reviewer (Audit Guard)</div>
+                    <p class="feature-desc">Adversarial auditor that never trusts the Analyst blindly. Runs independent cross-checks on secondary ledgers to detect anomalies.</p>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-default); margin: 40px 0;">
+
+            <!-- Section 3 -->
+            <h2>🛠️ Step 1: Setting Up Your Switch Room</h2>
+            <p>
+                In Switch, rooms are defined declaratively. You specify who can join the room, what roles they play, and what rules govern their interactions.
+            </p>
+            <p>
+                Here is the <code>switch/room.yaml</code> configuration for Revenue Desk:
+            </p>
+
+            <div class="code-header">
+                <span>switch/room.yaml</span>
+                <button class="copy-btn" onclick="copyCode('code-room')">Copy</button>
+            </div>
+            <pre><code id="code-room">room:
+  id: "!revenue-desk:switch.local"
+  name: "#revenue-desk"
+  topic: "Governed Financial Operations & Revenue Intelligence"
+  visibility: private
+  encryption: true
+
+agents:
+  - id: "@analyst:switch.local"
+    display_name: "Analyst Agent"
+    role: "financial_analyst"
+    model: "groq/llama-3.3-70b"
+    capabilities:
+      - "sql_generation"
+      - "ledger_analysis"
+
+  - id: "@reviewer:switch.local"
+    display_name: "Reviewer Agent"
+    role: "audit_guardrail"
+    model: "gemini/gemini-2.0-flash"
+    capabilities:
+      - "independent_verification"
+      - "discrepancy_detection"
+
+members:
+  - id: "@manager:switch.local"
+    role: "human_lead"
+    permissions:
+      - "approve_campaigns"
+      - "execute_mutations"</code></pre>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-default); margin: 40px 0;">
+
+            <!-- Section 4 -->
+            <h2>📜 Step 2: Defining Declarative Governance Rules</h2>
+            <p>
+                The real superpower of Switch is that <strong>governance is enforced by the room, not by hoping an LLM behaves.</strong>
+            </p>
+            <p>
+                We configured <strong>5 Declarative Rules</strong> in <code>switch/rules.yaml</code>:
+            </p>
+
+            <div class="code-header">
+                <span>switch/rules.yaml</span>
+                <button class="copy-btn" onclick="copyCode('code-rules')">Copy</button>
+            </div>
+            <pre><code id="code-rules">rules:
+  # Rule 1: Every analysis must be independently verified
+  - id: "rule-independent-audit"
+    trigger: "event.type == 'analyst.findings'"
+    action: "invoke_agent"
+    target: "@reviewer"
+    payload:
+      task: "verify_findings"
+      strict_mode: true
+
+  # Rule 2: Both agents must reach consensus before a proposal is formed
+  - id: "rule-dual-agent-consensus"
+    condition: "analyst.net_revenue == reviewer.net_revenue"
+    on_failure: "block_proposal"
+
+  # Rule 3: No external action without human sign-off
+  - id: "rule-human-in-the-loop"
+    trigger: "event.type == 'campaign.proposal'"
+    enforce: "require_approval"
+    approver: "@manager"
+
+  # Rule 4: Cryptographic decision ledger
+  - id: "rule-tamper-evident-audit"
+    on_event: "*"
+    action: "append_sha256_audit_trail"
+
+  # Rule 5: Database security sandbox
+  - id: "rule-read-only-sandbox"
+    enforce: "disallow_sql_mutation_for_agents"</code></pre>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-default); margin: 40px 0;">
+
+            <!-- Section 5 -->
+            <h2>💡 Step 3: Implementing the Dual-Agent Consensus Workflow</h2>
+            <p>
+                Let's look at how the verification loop works in Python using Switch's state machine:
+            </p>
+
+            <div class="code-header">
+                <span>src/workflow.py</span>
+                <button class="copy-btn" onclick="copyCode('code-py')">Copy</button>
+            </div>
+            <pre><code id="code-py">from src.workflow import RevenueDesk, WorkflowState
+
+# 1. Initialize the Switch Room workflow
+desk = RevenueDesk()
+
+# 2. Human Manager asks a question in the room
+context = desk.ask("Why did repeat purchases drop in the West region last month?")
+
+# 3. Analyst Agent generates query and analyzes findings
+print("Analyst Findings:", context.analyst_findings)
+# Output: Identifies 5 lapsed enterprise accounts in West region
+
+# 4. Reviewer Agent independently queries secondary tables
+print("Reviewer Audit:", context.reviewer_audit)
+# Output: Detects $20,430 duplicate refund glitch on orders #1, #2, and #3
+
+# 5. Consensus Engine reconciles numbers
+if desk.check_consensus(context):
+    print("✅ Multi-Agent Consensus Sealed: 100% mathematical alignment.")
+    
+# 6. Human Approval Gate
+# The action CANNOT execute until @manager signs off
+desk.approve(context, campaign_id="CAMP-2026-WEST", modified_discount=15)
+print("🚀 Campaign Executed with Manager Sign-off!")</code></pre>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-default); margin: 40px 0;">
+
+            <!-- Section 6 -->
+            <h2>🎯 What First-Time Switch Builders Should Know</h2>
+            <p>
+                If you are building your first multi-agent workflow on Switch, keep these three lessons in mind:
+            </p>
+
+            <div class="card-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">1️⃣</div>
+                    <div class="feature-title">Separate Analysis from Verification</div>
+                    <p class="feature-desc">Never ask a single LLM to "double-check its own answer." In Switch, spin up <strong>two distinct agent personas</strong> with separate prompt contexts. Have the reviewer write its own SQL query from scratch.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">2️⃣</div>
+                    <div class="feature-title">Use Switch Tasks to Stop Context Rot</div>
+                    <p class="feature-desc">Long chats cause context decay. Revenue Desk uses explicit Switch Tasks (<code>TASK-101</code> through <code>TASK-105</code>) to anchor state transitions across turns cleanly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">3️⃣</div>
+                    <div class="feature-title">Anchor Decisions in an Immutable Ledger</div>
+                    <p class="feature-desc">Executives need compliance proof. Every authorized proposal is committed with a cryptographic SHA-256 hash logging who queried, audited, and approved.</p>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-default); margin: 40px 0;">
+
+            <!-- Section 7 -->
+            <h2>🚀 How to Run Revenue Desk Locally</h2>
+            <p>
+                Revenue Desk is built to be 100% reproducible with zero configuration:
+            </p>
+
+            <div class="code-header">
+                <span>Terminal</span>
+                <button class="copy-btn" onclick="copyCode('code-bash')">Copy</button>
+            </div>
+            <pre><code id="code-bash"># 1. Clone the repository
+git clone https://github.com/Shubhamver45/Revenue-Desk.git
+cd Revenue-Desk
+
+# 2. Start the executive cockpit (Python / Node.js)
+python3 app.py
+# Or using modern full-stack gateway: npm install && npm start
+
+# 3. Open in your browser
+open http://localhost:8000
+
+# 4. Run the automated test suite (11/11 tests pass in 1.2s)
+python3 -m unittest discover tests -v</code></pre>
+
+            <div class="callout callout-info">
+                <strong>Test Suite Verification:</strong> <code>Ran 11 tests in 1.182s — OK</code>. Every step of the Switch Room protocol, governance rules, and ledger hashing is fully covered.
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-default); margin: 40px 0;">
+
+            <!-- Section 8 -->
+            <h2>🏁 Conclusion: The Future of Governed AI Workflows</h2>
+            <p>
+                The real potential of AI teammates is not replacing humans, but amplifying human decision-making with <strong>speed, mathematical accuracy, and ironclad governance</strong>.
+            </p>
+            <p>
+                Switch provides the missing foundation that makes multi-agent workflows viable for real-world enterprise operations. By combining room-based collaboration, declarative rules, and human-in-the-loop controls, you can deploy AI agents that your CFO, legal team, and executive leadership can genuinely trust.
+            </p>
+
+            <!-- Bottom CTA Banner -->
+            <div class="cta-banner">
+                <div class="cta-title">Explore Revenue Desk in Action</div>
+                <p class="cta-desc">
+                    Try the interactive dual-agent Switch Room live in your browser, inspect the real-time SQL audits, and test the human approval gate.
+                </p>
+                <div class="cta-buttons">
+                    <a href="/" class="btn-nav btn-primary" style="font-size: 15px; padding: 10px 22px;">
+                        <span>🚀 Launch Live Cockpit</span>
+                    </a>
+                    <a href="https://github.com/Shubhamver45/Revenue-Desk" target="_blank" rel="noopener noreferrer" class="btn-nav btn-outline" style="font-size: 15px; padding: 10px 22px;">
+                        <span>⭐ Star on GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div>
+                © 2026 <strong>Revenue Desk</strong> • Built with <a href="https://switchagents.ai" target="_blank">Switch AI</a> by Shubham Vernekar
+            </div>
+            <div>
+                Flip the Switch AI Hackathon Entry
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        function copyCode(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            navigator.clipboard.writeText(el.innerText).then(() => {
+                const btn = event.target;
+                const orig = btn.innerText;
+                btn.innerText = "Copied!";
+                btn.style.color = "#10B981";
+                setTimeout(() => {
+                    btn.innerText = orig;
+                    btn.style.color = "";
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

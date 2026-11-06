@@ -74,6 +74,8 @@ function serveStaticFile(req, res, pathname) {
         filePath = path.join(STATIC_DIR, 'index.html');
     } else if (pathname === '/landing' || pathname === '/landing.html') {
         filePath = path.join(STATIC_DIR, 'landing.html');
+    } else if (pathname === '/blog' || pathname === '/blog.html') {
+        filePath = path.join(STATIC_DIR, 'blog.html');
     } else {
         filePath = path.join(STATIC_DIR, pathname.replace(/^\//, ''));
     }

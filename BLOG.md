@@ -1,6 +1,11 @@
 # 🚀 Building Revenue Desk: How to Build Governed Multi-Agent Teams with Switch
 
 > **A practical guide to building collaborative multi-agent Switch Rooms where humans and AI work together to run high-stakes business operations without hallucinations.**
+>
+> 👤 **Author:** Shubham Vernekar  
+> ⚡ **Live Cockpit:** [https://revenue-desk-gamma.vercel.app](https://revenue-desk-gamma.vercel.app)  
+> 🌐 **Interactive Blog Post:** [https://revenue-desk-gamma.vercel.app/blog](https://revenue-desk-gamma.vercel.app/blog)  
+> 🏆 **Event:** Flip the Switch AI Hackathon 2026
 
 ---
 
