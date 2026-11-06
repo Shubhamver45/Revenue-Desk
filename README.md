@@ -47,6 +47,52 @@ Without Switch, this is three disconnected tools. With Switch:
 
 ---
 
+## 🔌 How We Used Switch
+
+### 1. Which Agents We Connected
+* **`@manager` (Human Operations Lead)**: Poses business inquiries, reviews side-by-side discrepancy diffs, and holds strict final veto/approval authority before any action or database mutation executes.
+* **`@analyst` (Data Engine)**: Powered by Groq (LLaMA 3.3 70B) & Google Gemini (2.0 Flash). Translates natural language questions into read-only analytical SQL queries and formulates data-backed remediation campaigns.
+* **`@reviewer` (Audit Guardrail)**: Powered by Groq (LLaMA 3.3 70B) & Google Gemini (2.0 Flash). Automatically triggers on Analyst findings and writes independent verification queries against secondary payment processor ledgers and refund tables without trusting the Analyst blindly.
+
+### 2. How the Channel / Room is Set Up
+* **Room Identity**: `#revenue-desk` (`!revenue-desk:switch.local`), defined declaratively in `switch/room.yaml` and `switch/agents.yaml`.
+* **Protocol Bridge**: Built natively on Switch's Matrix-compatible room protocol using `matrix-nio` (`src/switch_bridge.py`), exposed through a modern web cockpit with webhook event listeners adaptable for Slack, Teams, and Discord.
+* **5 Declarative Governance Rules (`switch/rules.yaml`)**:
+  1. `rule-independent-audit`: Forces independent verification of underlying database tables before findings are accepted.
+  2. `rule-dual-agent-consensus`: Requires 100% mathematical alignment between Analyst and Reviewer before proposals can be generated.
+  3. `rule-human-in-the-loop`: Mandates explicit human manager sign-off before executing campaigns or mutating data.
+  4. `rule-tamper-evident-audit`: Appends every message, query, and consensus seal to an immutable SHA-256 cryptographic audit trail.
+  5. `rule-read-only-sandbox`: Restricts raw agent execution to read-only analytical queries.
+* **Switch Native Tasks**: Tracks workflow progression across 5 stateful tasks (`TASK-101` to `TASK-105`) in an interactive Kanban sidebar.
+* **Switch Decision Ledger**: Logs all approved actions (`DECISION-401`) with cryptographic timestamps and parameters.
+
+### 3. How to Run It (Step-by-Step)
+
+```bash
+# Step 1: Clone the repository
+git clone https://github.com/Shubhamver45/Revenue-Desk.git
+cd Revenue-Desk
+
+# Step 2: Run the Web Cockpit (Zero external configuration required)
+python3 app.py
+# Serves the full interactive Switch Room cockpit at http://localhost:8000
+
+# Optional: Run via Node.js Gateway & React 18 SPA
+npm install && npm start
+# Serves at http://localhost:3000
+
+# Step 3: Run the Automated Unit Test Suite (11/11 tests pass in ~1.2s)
+python3 -m unittest discover tests -v
+
+# Step 4: Open Interactive Walkthrough Demo Studio
+open http://localhost:8000/video
+
+# Step 5: Run Terminal Interactive CLI Demo
+python main.py
+```
+
+---
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -57,8 +103,8 @@ Without Switch, this is three disconnected tools. With Switch:
 ### 1. Clone & Setup
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/revenue-desk.git
-cd revenue-desk
+git clone https://github.com/Shubhamver45/Revenue-Desk.git
+cd Revenue-Desk
 cp .env.example .env
 # Edit .env and add your ANTHROPIC_API_KEY
 ```
