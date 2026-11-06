@@ -267,6 +267,58 @@
             box-sizing: border-box;
         }
 
+        /* ── Mercury / Ramp Style Command Telemetry Strip ── */
+        .mercury-command-strip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #FFFFFF;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            padding: 8px 16px;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+            flex-shrink: 0;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .command-stat-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 11.5px;
+        }
+
+        .command-stat-divider {
+            width: 1px;
+            height: 16px;
+            background: var(--border-default);
+        }
+
+        .cmd-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #10B981;
+        }
+        .cmd-dot.live { animation: pulse 2s infinite; }
+
+        .cmd-lbl {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: var(--font-mono);
+        }
+
+        .cmd-val {
+            font-weight: 700;
+            color: var(--text-heading);
+            font-size: 11.5px;
+            font-family: var(--font-mono);
+        }
+
         /* ── 3 Focused KPI Cards ── */
         .kpi-row {
             display: grid;
@@ -1006,6 +1058,33 @@
 
     <!-- ── Main Workspace ── -->
     <main class="app-container">
+
+        <!-- ── Mercury / Ramp Style Command Telemetry Strip ── -->
+        <div class="mercury-command-strip">
+            <div class="command-stat-item">
+                <span class="cmd-dot live"></span>
+                <span class="cmd-lbl">LEDGER CONSENSUS</span>
+                <span class="cmd-val" style="color:var(--color-green);">100% Certified</span>
+            </div>
+            <div class="command-stat-divider"></div>
+            <div class="command-stat-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                <span class="cmd-lbl">POSTGRESQL</span>
+                <span class="cmd-val">Synced (12ms)</span>
+            </div>
+            <div class="command-stat-divider"></div>
+            <div class="command-stat-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                <span class="cmd-lbl">STRIPE BILLING</span>
+                <span class="cmd-val">$112,450 Verified</span>
+            </div>
+            <div class="command-stat-divider"></div>
+            <div class="command-stat-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#E11D48" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span class="cmd-lbl">INTERCEPTED TRAP</span>
+                <span class="cmd-val" style="color:#DC2626;">-$20,430 Duplicate Loop</span>
+            </div>
+        </div>
 
         <!-- ── 3 Focused KPI Cards ── -->
         <section class="kpi-row">
