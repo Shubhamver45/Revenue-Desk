@@ -1292,40 +1292,40 @@
         <section class="kpi-row">
             <div class="kpi-card kpi-teal">
                 <div class="kpi-top">
-                    <span class="kpi-label">Reported October Gross</span>
+                    <span class="kpi-label">Reported October Gross Volume</span>
                     <div class="kpi-icon-pill" style="background:#EFF6FF;">
-                        <svg viewBox="0 0 24 24" style="stroke:#2563EB"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="#2563EB" stroke-width="2" fill="none"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                     </div>
                 </div>
-                <span class="kpi-num" id="metricGross" style="color:#2563EB;">$24,250</span>
+                <span class="kpi-num" id="metricGross" style="color:#2563EB;">$24,250.00</span>
                 <div class="kpi-sub" style="color:var(--text-secondary);">
-                    <span>15 Gross Orders &bull; Apparent -84.2% drop</span>
+                    <span>15 transactions logged &bull; Apparent -84.2% drop</span>
                 </div>
             </div>
 
             <div class="kpi-card kpi-amber">
                 <div class="kpi-top">
-                    <span class="kpi-label">Caught Duplicate Refund Trap</span>
+                    <span class="kpi-label">Unreconciled Processor Glitch</span>
                     <div class="kpi-icon-pill" style="background:#FEF2F2;">
-                        <svg viewBox="0 0 24 24" style="stroke:#DC2626"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="#DC2626" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                     </div>
                 </div>
-                <span class="kpi-num" style="color:#DC2626;" id="metricNet">-$20,430</span>
+                <span class="kpi-num" style="color:#DC2626;" id="metricNet">-$20,430.00</span>
                 <div class="kpi-sub" style="color:#DC2626;">
-                    <span>8 Duplicate Processor Reversals (Orders #1–#3)</span>
+                    <span>8 duplicate refund reversals across orders #1–#3</span>
                 </div>
             </div>
 
             <div class="kpi-card kpi-teal">
                 <div class="kpi-top">
-                    <span class="kpi-label">Certified True Net Baseline</span>
+                    <span class="kpi-label">Certified Net Revenue Truth</span>
                     <div class="kpi-icon-pill" style="background:#ECFDF5;">
-                        <svg viewBox="0 0 24 24" style="stroke:#059669"><polyline points="20 6 9 17 4 12"/></svg>
+                        <svg viewBox="0 0 24 24" width="14" height="14" stroke="#059669" stroke-width="2" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
                 </div>
-                <span class="kpi-num" style="color:#059669;" id="metricTrueNet">+$3,820</span>
+                <span class="kpi-num" style="color:#059669;" id="metricTrueNet">+$3,820.00</span>
                 <div class="kpi-sub" style="color:#059669;">
-                    <span>7 Valid Clean Orders &bull; 100% Consensus Proof</span>
+                    <span>7 verified clean orders &bull; Reconciled via Switch</span>
                 </div>
             </div>
         </section>
@@ -1347,10 +1347,10 @@
                         <!-- "Why Switch?" Comparative Mode Switcher -->
                         <div class="why-switch-pill-wrap" title="Compare Multi-Agent Governance vs Unverified AI">
                             <button class="why-switch-pill active" id="btnWithSwitch" onclick="setSwitchComparisonMode('with')">
-                                🟢 With Switch AI
+                                <span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:#059669; margin-right:5px;"></span>With Switch AI
                             </button>
                             <button class="why-switch-pill" id="btnWithoutSwitch" onclick="setSwitchComparisonMode('without')">
-                                🔴 Without Switch (Solo AI)
+                                <span style="display:inline-block; width:7px; height:7px; border-radius:50%; background:#DC2626; margin-right:5px;"></span>Without Switch (Solo AI)
                             </button>
                         </div>
                     </div>
@@ -1358,7 +1358,7 @@
                     <div class="canvas-area" id="canvasAreaContainer">
                         <canvas id="revenueCanvas"></canvas>
                         <div class="chart-callout-pill" id="chartCallout">
-                            <span style="color:#DC2626; font-weight:800;">Caught Glitch:</span> -$20,430 duplicate refunds &bull; <span style="color:#059669; font-weight:800;">Certified Net: $3,820</span>
+                            <span style="color:#DC2626; font-weight:700;">Caught Glitch:</span> -$20,430.00 duplicate refunds &bull; <span style="color:#059669; font-weight:700;">Certified Net: $3,820.00</span>
                         </div>
                     </div>
                 </div>
@@ -1367,12 +1367,12 @@
                 <div class="approval-gate-card">
                     <div class="gate-head">
                         <div>
-                            <span class="gate-title" style="display:inline-flex; align-items:center; gap:6px;">
-                                <span class="switch-badge-pill" style="font-size:9.5px; padding:2px 6px;">SWITCH RULE #4</span>
+                            <span class="gate-title" style="display:inline-flex; align-items:center; gap:8px;">
+                                <span class="switch-badge-pill" style="font-size:9.5px; padding:2px 7px;">SWITCH RULE #4</span>
                                 <span>Human-in-the-Loop Sign-Off Gate</span>
                             </span>
                             <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">
-                                Enforces declarative guardrail: No campaign or database mutation executes without explicit human manager approval.
+                                Declarative guardrail: Database write blocked until Human Manager explicitly signs off.
                             </div>
                         </div>
                         <span class="gate-status-pill" id="gateBadge">Ready for Review</span>
@@ -1382,11 +1382,11 @@
                     <div class="stepper-row">
                         <div class="step-item active" id="pipe1" title="TASK-101: Inquire & Ingest (@manager)"><span class="step-bubble">1</span><span>TASK-101 (Ask)</span></div>
                         <span style="color:#CBD5E1;">&rarr;</span>
-                        <div class="step-item" id="pipe2" title="TASK-102: Deep SQL Analysis (@analyst)"><span class="step-bubble">2</span><span>TASK-102 (Analyst)</span></div>
+                        <div class="step-item" id="pipe2" title="TASK-102: Deep SQL Analysis (@analyst)"><span class="step-bubble">2</span><span>TASK-102 (SQL)</span></div>
                         <span style="color:#CBD5E1;">&rarr;</span>
-                        <div class="step-item" id="pipe3" title="TASK-103: Independent Verification (@reviewer)"><span class="step-bubble">3</span><span>TASK-103 (Reviewer)</span></div>
+                        <div class="step-item" id="pipe3" title="TASK-103: Independent Verification (@reviewer)"><span class="step-bubble">3</span><span>TASK-103 (Audit)</span></div>
                         <span style="color:#CBD5E1;">&rarr;</span>
-                        <div class="step-item" id="pipe4" title="TASK-104: Human Gate Sign-off (@manager)"><span class="step-bubble">4</span><span>TASK-104 (Approval)</span></div>
+                        <div class="step-item" id="pipe4" title="TASK-104: Human Gate Sign-off (@manager)"><span class="step-bubble">4</span><span>TASK-104 (Sign-Off)</span></div>
                         <span style="color:#CBD5E1;">&rarr;</span>
                         <div class="step-item" id="pipe5" title="TASK-105: Switch Decision Logged & DB Committed"><span class="step-bubble">5</span><span>TASK-105 (Commit)</span></div>
                     </div>
@@ -1394,7 +1394,7 @@
                     <!-- Discount Slider -->
                     <div class="slider-wrap">
                         <div class="slider-header">
-                            <span>Adjust Renewal Incentive:</span>
+                            <span>Calibrate Renewal Incentive:</span>
                             <span class="slider-pct" id="sliderValue">15%</span>
                         </div>
                         <input type="range" min="5" max="25" step="5" value="15" id="discountInput" oninput="updateDiscount(this.value)">
@@ -1411,7 +1411,7 @@
                             <span class="impact-col-val" style="color:#DC2626;" id="costText">-$5,730.00</span>
                         </div>
                         <div class="impact-col">
-                            <span class="impact-col-lbl">Net Projected Gain</span>
+                            <span class="impact-col-lbl">Net Projected Margin</span>
                             <span class="impact-col-val" style="color:#0F766E;" id="gainText">+$32,470.00</span>
                         </div>
                     </div>
@@ -1420,7 +1420,7 @@
                     <div class="gate-actions">
                         <button class="btn-authorize" id="btnApprove" onclick="approveCampaign()">
                             <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.5" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
-                            Approve & Execute Campaign
+                            Authorize Campaign Execution
                         </button>
                         <button class="btn-dismiss" onclick="rejectCampaign()">Dismiss</button>
                     </div>
@@ -1436,11 +1436,11 @@
                     <div class="room-header">
                         <div class="room-title-box">
                             <div style="display:flex; align-items:center; gap:8px;">
-                                <span class="switch-badge-pill">⚡ SWITCH AI ROOM</span>
+                                <span class="switch-badge-pill">SWITCH ROOM</span>
                                 <span class="room-title" style="font-family:var(--font-mono); font-size:14px; font-weight:800;">#revenue-desk</span>
                             </div>
                             <span class="room-subtitle" style="margin-top:2px;">
-                                <strong>Participants:</strong> @manager (Human) &bull; @analyst (AI) &bull; @reviewer (Auditor)
+                                <strong>Participants:</strong> @manager (Lead) &bull; @analyst (Groq 120B) &bull; @reviewer (Groq 120B)
                             </span>
                         </div>
                         <div style="display:flex; align-items:center; gap:8px;">
@@ -1448,7 +1448,7 @@
                                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                                 <span>YAML Spec</span>
                             </button>
-                            <span class="nav-status"><span class="status-dot"></span>Matrix Connected</span>
+                            <span class="nav-status"><span class="status-dot"></span>Synchronized</span>
                         </div>
                     </div>
 
@@ -1456,7 +1456,7 @@
                     <div class="room-nav-tabs">
                         <button class="room-tab-btn active" id="tabBtnChat" onclick="switchRoomTab('chat')">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                            <span>Live Room Chat</span>
+                            <span>Live Room Feed</span>
                         </button>
                         <button class="room-tab-btn" id="tabBtnTasks" onclick="switchRoomTab('tasks')">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
@@ -1468,7 +1468,7 @@
                         </button>
                         <button class="room-tab-btn" id="tabBtnRules" onclick="switchRoomTab('rules')">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                            <span>Room Rules</span>
+                            <span>Governance Rules</span>
                         </button>
                     </div>
 
@@ -1491,10 +1491,10 @@
 
                         <!-- Quick Starter Prompts -->
                         <div class="prompt-pills-bar">
-                            <button class="prompt-pill" onclick="executeInquiry('Why did repeat purchases drop in the West region last month?')">⚡ Investigate West Drop</button>
-                            <button class="prompt-pill" onclick="executeInquiry('Audit all duplicate billing refunds and gateway glitches')">🔍 Audit Billing Glitches</button>
-                            <button class="prompt-pill" onclick="executeInquiry('Show me all enterprise customers in West region')">👥 Show Enterprise Accounts</button>
-                            <button class="prompt-pill" onclick="executeInquiry('What is the revenue breakdown by region?')">📊 Regional Revenue</button>
+                            <button class="prompt-pill" onclick="executeInquiry('Why did repeat purchases drop in the West region last month?')">Investigate West Drop</button>
+                            <button class="prompt-pill" onclick="executeInquiry('Audit all duplicate billing refunds and gateway glitches')">Audit Billing Glitches</button>
+                            <button class="prompt-pill" onclick="executeInquiry('Show me all enterprise customers in West region')">Show Enterprise Accounts</button>
+                            <button class="prompt-pill" onclick="executeInquiry('What is the revenue breakdown by region?')">Regional Breakdown</button>
                         </div>
 
                         <div class="room-body" id="chatStream">
