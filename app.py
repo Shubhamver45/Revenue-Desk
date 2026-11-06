@@ -76,7 +76,7 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             desk = RevenueDesk()
             self.send_json({"status": "ok", "message": "Room state reset."})
         else:
-            self.send_error(404, "Endpoint not found")
+            self.send_error(404, f"Endpoint not found: path={path}, self_path={self.path}")
 
     def do_POST(self) -> None:
         parsed = urllib.parse.urlparse(self.path)
@@ -221,7 +221,7 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
                 self.send_json({"error": str(e), "state": self.get_room_state()})
 
         else:
-            self.send_error(404, "Endpoint not found")
+            self.send_error(404, f"Endpoint not found: path={path}, self_path={self.path}")
 
     def send_json(self, data: Any, status: int = 200) -> None:
         content = json.dumps(data, default=str).encode("utf-8")
