@@ -10,7 +10,11 @@ sys.path.insert(0, str(ROOT_DIR))
 # On Vercel serverless environments, redirect SQLite database to writable /tmp
 os.environ.setdefault("DB_PATH", "/tmp/revenue_desk.db")
 
+from src.database import init_database
 from app import SwitchAppHandler
+
+# Ensure database is seeded on lambda cold start
+init_database()
 
 
 class handler(SwitchAppHandler):
