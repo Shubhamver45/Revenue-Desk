@@ -6,6 +6,10 @@
   },
   "rewrites": [
     {
+      "source": "/api/(.*)",
+      "destination": "/api"
+    },
+    {
       "source": "/blog",
       "destination": "/dist/blog.html"
     },
