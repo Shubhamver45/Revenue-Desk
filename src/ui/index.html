@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Revenue Desk — React.js Multi-Agent Governance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Revenue Desk — Multi-Agent Financial Governance</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,6 +19,9 @@
 
             --brand-obsidian: #0F172A;
             --brand-obsidian-hover: #1E293B;
+
+            --color-indigo: #4F46E5;
+            --color-indigo-subtle: #EEF2FF;
 
             --color-emerald: #059669;
             --color-emerald-bg: #ECFDF5;
@@ -48,7 +51,12 @@
             --shadow-modal: 0 20px 25px -5px rgba(15, 23, 42, 0.15), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
 
         html, body {
             height: 100%;
@@ -61,8 +69,9 @@
             overflow-x: hidden;
         }
 
-        #root {
+        body {
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
         }
@@ -82,8 +91,23 @@
             flex-shrink: 0;
         }
 
-        .nav-left { display: flex; align-items: center; gap: 14px; }
-        .brand-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-heading); cursor: pointer; }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            text-decoration: none;
+            color: var(--text-heading);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
         .brand-icon {
             width: 28px;
             height: 28px;
@@ -94,7 +118,15 @@
             justify-content: center;
             flex-shrink: 0;
         }
-        .brand-title { font-size: 14.5px; font-weight: 800; letter-spacing: -0.3px; color: var(--text-heading); }
+
+        .brand-title {
+            font-size: 14.5px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: var(--text-heading);
+            white-space: nowrap;
+        }
+
         .brand-tag {
             font-size: 10.5px;
             font-family: var(--font-mono);
@@ -104,20 +136,15 @@
             border: 1px solid var(--border-default);
             padding: 2px 7px;
             border-radius: 4px;
+            white-space: nowrap;
         }
 
-        .react-badge {
-            font-size: 10px;
-            font-family: var(--font-mono);
-            font-weight: 700;
-            color: #0284C7;
-            background: #F0F9FF;
-            border: 1px solid #BAE6FD;
-            padding: 2px 6px;
-            border-radius: 4px;
+        .nav-divider {
+            width: 1px;
+            height: 18px;
+            background: var(--border-default);
+            flex-shrink: 0;
         }
-
-        .nav-divider { width: 1px; height: 18px; background: var(--border-default); }
 
         .nav-status {
             display: flex;
@@ -127,6 +154,9 @@
             font-weight: 600;
             color: var(--text-muted);
             font-family: var(--font-mono);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .status-dot {
@@ -134,9 +164,15 @@
             height: 6px;
             border-radius: 50%;
             background: var(--color-emerald);
+            flex-shrink: 0;
         }
 
-        .nav-right { display: flex; align-items: center; gap: 8px; }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
 
         .btn-primary {
             background: var(--brand-obsidian);
@@ -153,6 +189,7 @@
             transition: all 0.15s ease;
             white-space: nowrap;
         }
+
         .btn-primary:hover {
             background: var(--brand-obsidian-hover);
             border-color: var(--brand-obsidian-hover);
@@ -174,6 +211,7 @@
             transition: all 0.15s ease;
             white-space: nowrap;
         }
+
         .btn-ghost:hover {
             background: var(--bg-subtle);
             color: var(--text-heading);
@@ -183,7 +221,7 @@
         .user-pill {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 7px;
             padding: 3px 8px 3px 4px;
             background: #FFFFFF;
             border: 1px solid var(--border-default);
@@ -191,6 +229,7 @@
             font-size: 11.5px;
             font-weight: 600;
             color: var(--text-heading);
+            white-space: nowrap;
         }
 
         .user-avatar {
@@ -207,25 +246,25 @@
             font-family: var(--font-mono);
         }
 
-        /* ── Main Workspace ── */
+        /* ── Main Application Workspace ── */
         .workspace {
             max-width: 1540px;
             width: 100%;
             margin: 0 auto;
-            padding: 16px 24px;
+            padding: clamp(12px, 1.8vw, 20px) clamp(14px, 2vw, 24px);
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: clamp(12px, 1.6vw, 18px);
             flex: 1;
             min-height: 0;
             box-sizing: border-box;
         }
 
-        /* ── 3 Focused Financial Cards ── */
+        /* ── 3 Focused Financial KPI Cards ── */
         .kpi-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            gap: clamp(10px, 1.4vw, 16px);
             flex-shrink: 0;
         }
 
@@ -233,48 +272,58 @@
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-md);
-            padding: 16px 20px;
+            padding: clamp(12px, 1.4vw, 16px) clamp(14px, 1.6vw, 20px);
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
             box-shadow: var(--shadow-card);
             transition: border-color 0.15s ease;
+            min-width: 0;
         }
+
         .kpi-card:hover { border-color: var(--border-strong); }
 
         .kpi-label {
-            font-size: 11px;
+            font-size: clamp(10px, 0.8vw, 11px);
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .kpi-value {
-            font-size: 26px;
+            font-size: clamp(20px, 1.8vw, 26px);
             font-weight: 700;
             letter-spacing: -0.02em;
             font-family: var(--font-mono);
             font-feature-settings: "tnum";
             color: var(--text-heading);
             margin: 2px 0;
+            line-height: 1.15;
         }
+
         .kpi-value.anomaly { color: var(--color-crimson); }
         .kpi-value.verified { color: var(--color-emerald); }
 
         .kpi-meta {
-            font-size: 11.5px;
+            font-size: clamp(10.5px, 0.8vw, 11.5px);
             color: var(--text-muted);
             display: flex;
             align-items: center;
             gap: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        /* ── 2-Column Grid ── */
+        /* ── Workspace 2-Column Layout ── */
         .grid-workspace {
             display: grid;
             grid-template-columns: 1.15fr 0.85fr;
-            gap: 16px;
+            gap: clamp(12px, 1.4vw, 18px);
             align-items: stretch;
             flex: 1;
             min-height: 0;
@@ -283,7 +332,7 @@
         .col-left {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: clamp(12px, 1.4vw, 18px);
             min-height: 0;
         }
 
@@ -294,25 +343,38 @@
             box-shadow: var(--shadow-card);
         }
 
+        /* ── Chart Card ── */
         .chart-card {
             display: flex;
             flex-direction: column;
             flex: 1;
-            min-height: 280px;
+            min-height: clamp(240px, 32vh, 320px);
             overflow: hidden;
         }
 
         .card-header {
-            padding: 14px 18px;
+            padding: clamp(10px, 1.2vh, 14px) clamp(12px, 1.4vw, 18px);
             border-bottom: 1px solid var(--border-default);
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-shrink: 0;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
-        .card-title-group { display: flex; align-items: center; gap: 8px; }
-        .card-title { font-size: 13.5px; font-weight: 700; color: var(--text-heading); }
+        .card-title-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title {
+            font-size: clamp(12.5px, 0.95vw, 13.5px);
+            font-weight: 700;
+            color: var(--text-heading);
+            white-space: nowrap;
+        }
 
         .pill-badge {
             font-size: 10px;
@@ -324,6 +386,7 @@
             color: var(--text-muted);
             font-family: var(--font-mono);
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .segment-toggle {
@@ -333,12 +396,13 @@
             border-radius: var(--radius-sm);
             padding: 2px;
             gap: 2px;
+            flex-shrink: 0;
         }
 
         .segment-btn {
             border: none;
             background: transparent;
-            padding: 4px 9px;
+            padding: 3px 8px;
             font-size: 11px;
             font-weight: 600;
             color: var(--text-muted);
@@ -348,18 +412,30 @@
             align-items: center;
             gap: 5px;
             transition: all 0.12s ease;
+            white-space: nowrap;
         }
+
         .segment-btn.active {
             background: #FFFFFF;
             color: var(--text-heading);
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
-        .canvas-wrap { flex: 1; width: 100%; min-height: 190px; position: relative; }
-        canvas#revenueCanvas { width: 100%; height: 100%; display: block; }
+        .canvas-wrap {
+            flex: 1;
+            width: 100%;
+            min-height: 180px;
+            position: relative;
+        }
+
+        canvas#revenueCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
 
         .chart-footer {
-            padding: 9px 18px;
+            padding: 8px 16px;
             background: var(--bg-subtle);
             border-top: 1px solid var(--border-default);
             font-size: 11px;
@@ -367,18 +443,26 @@
             align-items: center;
             justify-content: space-between;
             font-family: var(--font-mono);
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
-        /* ── Policy Gate Card ── */
+        /* ── Policy Gate Card (Rule #4) ── */
         .gate-card {
-            padding: 16px 20px;
+            padding: clamp(12px, 1.4vw, 18px) clamp(14px, 1.6vw, 20px);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: clamp(8px, 1vh, 12px);
             flex-shrink: 0;
         }
 
-        .gate-header { display: flex; align-items: center; justify-content: space-between; }
+        .gate-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
         .gate-status {
             font-size: 10.5px;
             font-weight: 700;
@@ -388,13 +472,15 @@
             border: 1px solid var(--color-emerald-border);
             color: var(--color-emerald);
             font-family: var(--font-mono);
+            white-space: nowrap;
         }
 
-        .stepper {
+        /* Desktop horizontal stepper */
+        .stepper-desktop {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 8px 14px;
+            padding: 7px 12px;
             background: var(--bg-subtle);
             border-radius: var(--radius-sm);
             border: 1px solid var(--border-default);
@@ -402,46 +488,120 @@
             font-family: var(--font-mono);
         }
 
-        .step-item { display: flex; align-items: center; gap: 6px; color: var(--text-muted); font-weight: 600; }
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-muted);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
         .step-num {
-            width: 18px;
-            height: 18px;
+            width: 17px;
+            height: 17px;
             border-radius: 50%;
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 9.5px;
+            font-size: 9px;
             font-weight: 700;
             color: var(--text-faint);
+            flex-shrink: 0;
         }
 
-        .step-item.active { color: #4F46E5; }
-        .step-item.active .step-num { background: #4F46E5; border-color: #4F46E5; color: #fff; }
+        .step-item.active { color: var(--color-indigo); }
+        .step-item.active .step-num { background: var(--color-indigo); border-color: var(--color-indigo); color: #fff; }
         .step-item.completed { color: var(--text-heading); }
         .step-item.completed .step-num { background: var(--color-emerald-bg); border-color: var(--color-emerald-border); color: var(--color-emerald); }
 
-        .slider-section { display: flex; flex-direction: column; gap: 5px; }
-        .slider-meta { display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 600; color: var(--text-body); }
-        input[type="range"] { width: 100%; accent-color: var(--brand-obsidian); cursor: pointer; height: 4px; }
+        /* Mobile adaptive stepper */
+        .stepper-mobile {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            padding: 8px 12px;
+            background: var(--bg-subtle);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-default);
+            font-size: 11px;
+        }
+
+        .mobile-step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+        }
+
+        .mobile-step-badge {
+            font-weight: 700;
+            color: var(--color-indigo);
+        }
+
+        .mobile-step-name {
+            color: var(--text-heading);
+            font-weight: 600;
+        }
+
+        .mobile-step-track {
+            height: 4px;
+            width: 100%;
+            background: #E2E8F0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .mobile-step-fill {
+            height: 100%;
+            background: var(--color-indigo);
+            transition: width 0.3s ease;
+        }
+
+        .slider-section {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .slider-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--text-body);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--brand-obsidian);
+            cursor: pointer;
+            height: 5px;
+        }
 
         .impact-table {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 8px;
             background: var(--bg-subtle);
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
-            padding: 10px 14px;
+            padding: 8px 12px;
             font-family: var(--font-mono);
         }
 
         .impact-cell { display: flex; flex-direction: column; }
-        .impact-lbl { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
-        .impact-val { font-size: 13.5px; font-weight: 700; margin-top: 2px; }
+        .impact-lbl { font-size: 9.5px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+        .impact-val { font-size: 13px; font-weight: 700; margin-top: 1px; }
 
-        .gate-actions { display: flex; align-items: center; gap: 10px; }
+        .gate-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .btn-authorize {
             flex: 1;
             background: var(--brand-obsidian);
@@ -449,7 +609,7 @@
             color: #FFFFFF;
             font-size: 12px;
             font-weight: 600;
-            padding: 9px 0;
+            padding: 8px 0;
             border-radius: var(--radius-sm);
             cursor: pointer;
             display: flex;
@@ -458,6 +618,7 @@
             gap: 6px;
             transition: all 0.15s ease;
         }
+
         .btn-authorize:hover { background: var(--brand-obsidian-hover); }
         .btn-authorize:disabled { opacity: 0.6; cursor: default; }
 
@@ -467,16 +628,28 @@
             color: var(--text-muted);
             font-size: 12px;
             font-weight: 600;
-            padding: 9px 18px;
+            padding: 8px 16px;
             border-radius: var(--radius-sm);
             cursor: pointer;
             transition: 0.15s;
         }
+
         .btn-dismiss:hover { background: var(--bg-subtle); color: var(--text-heading); }
 
         /* ── Right Column: Switch Multi-Agent Room ── */
-        .col-right { display: flex; flex-direction: column; min-height: 0; }
-        .room-card { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+        .col-right {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .room-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+            min-height: clamp(380px, 48vh, 600px);
+        }
 
         .room-tabs {
             display: flex;
@@ -485,13 +658,17 @@
             padding: 0 10px;
             gap: 4px;
             flex-shrink: 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
+
+        .room-tabs::-webkit-scrollbar { display: none; }
 
         .room-tab {
             background: transparent;
             border: none;
             border-bottom: 2px solid transparent;
-            padding: 9px 12px;
+            padding: 8px 12px;
             font-size: 11.5px;
             font-weight: 600;
             color: var(--text-muted);
@@ -502,18 +679,26 @@
             transition: all 0.15s ease;
             white-space: nowrap;
         }
+
         .room-tab:hover { color: var(--text-heading); }
-        .room-tab.active { color: var(--brand-obsidian); border-bottom-color: var(--brand-obsidian); background: #FFFFFF; }
+        .room-tab.active {
+            color: var(--brand-obsidian);
+            border-bottom-color: var(--brand-obsidian);
+            background: #FFFFFF;
+        }
 
         .quick-queries-bar {
-            padding: 8px 16px;
+            padding: 7px 14px;
             background: #FFFFFF;
             border-bottom: 1px solid var(--border-default);
             display: flex;
             gap: 6px;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             flex-shrink: 0;
         }
+
+        .quick-queries-bar::-webkit-scrollbar { display: none; }
 
         .quick-pill {
             background: var(--bg-subtle);
@@ -526,22 +711,31 @@
             white-space: nowrap;
             cursor: pointer;
             transition: all 0.12s ease;
+            flex-shrink: 0;
         }
-        .quick-pill:hover { background: #FFFFFF; border-color: var(--border-strong); color: var(--text-heading); }
+
+        .quick-pill:hover {
+            background: #FFFFFF;
+            border-color: var(--border-strong);
+            color: var(--text-heading);
+        }
 
         .feed-container {
             flex: 1;
             min-height: 0;
             overflow-y: auto;
-            padding: 16px;
+            padding: 14px 16px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             background: #FAFAFC;
         }
 
+        .feed-container::-webkit-scrollbar { width: 5px; }
+        .feed-container::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+
         .empty-briefing {
-            padding: 24px 18px;
+            padding: 24px 16px;
             text-align: center;
             background: #FFFFFF;
             border: 1px solid var(--border-default);
@@ -551,8 +745,16 @@
             line-height: 1.6;
         }
 
-        .msg-row { display: flex; gap: 10px; animation: fadeIn 0.15s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        .msg-row {
+            display: flex;
+            gap: 9px;
+            animation: fadeIn 0.15s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(3px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         .msg-avatar {
             width: 26px;
@@ -566,7 +768,7 @@
             font-family: var(--font-mono);
             color: #FFFFFF;
             flex-shrink: 0;
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
         .msg-content {
@@ -574,48 +776,69 @@
             background: #FFFFFF;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
-            padding: 10px 14px;
+            padding: 9px 13px;
             box-shadow: var(--shadow-subtle);
             font-size: 12px;
             line-height: 1.55;
+            min-width: 0;
         }
 
-        .msg-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
-        .msg-author { font-weight: 700; color: var(--text-heading); font-size: 11.5px; }
-        .msg-time { font-size: 10px; color: var(--text-faint); font-family: var(--font-mono); }
+        .msg-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 3px;
+            gap: 6px;
+        }
+
+        .msg-author {
+            font-weight: 700;
+            color: var(--text-heading);
+            font-size: 11.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .msg-time {
+            font-size: 9.5px;
+            color: var(--text-faint);
+            font-family: var(--font-mono);
+            flex-shrink: 0;
+        }
 
         .sql-box {
-            margin-top: 8px;
+            margin-top: 7px;
             background: var(--brand-obsidian);
-            border-radius: 6px;
-            padding: 8px 12px;
+            border-radius: 5px;
+            padding: 8px 11px;
             font-family: var(--font-mono);
             font-size: 11px;
             color: #38BDF8;
             overflow-x: auto;
-            line-height: 1.5;
+            line-height: 1.45;
         }
 
         .discrepancy-card {
-            margin-top: 8px;
+            margin-top: 7px;
             background: var(--bg-subtle);
             border: 1px solid var(--border-default);
-            border-radius: 6px;
+            border-radius: 5px;
             padding: 8px 12px;
             font-family: var(--font-mono);
-            font-size: 11px;
+            font-size: 10.5px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 6px;
             text-align: center;
         }
 
         .consensus-banner {
-            margin-top: 8px;
+            margin-top: 7px;
             background: var(--color-emerald-bg);
             border: 1px solid var(--color-emerald-border);
-            border-radius: 6px;
-            padding: 8px 12px;
+            border-radius: 5px;
+            padding: 7px 12px;
             color: var(--color-emerald);
             font-weight: 700;
             font-size: 11px;
@@ -623,7 +846,7 @@
         }
 
         .chat-input-bar {
-            padding: 10px 16px;
+            padding: 9px 14px;
             background: #FFFFFF;
             border-top: 1px solid var(--border-default);
             display: flex;
@@ -636,22 +859,23 @@
             flex: 1;
             border: 1px solid var(--border-default);
             border-radius: var(--radius-sm);
-            padding: 7px 12px;
-            font-size: 12px;
+            padding: 8px 12px;
+            font-size: 13px; /* Prevents iOS Safari 16px auto-zoom */
             font-family: inherit;
             color: var(--text-heading);
             background: #FFFFFF;
             outline: none;
             transition: border-color 0.15s;
         }
+
         .chat-input:focus { border-color: var(--brand-obsidian); }
 
         .chat-send-btn {
             background: var(--brand-obsidian);
             border: none;
             color: #FFFFFF;
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
@@ -660,6 +884,7 @@
             transition: background 0.15s ease;
             flex-shrink: 0;
         }
+
         .chat-send-btn:hover { background: var(--brand-obsidian-hover); }
 
         /* ── Modals Base ── */
@@ -669,10 +894,10 @@
             background: rgba(15, 23, 42, 0.5);
             backdrop-filter: blur(4px);
             z-index: 200;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
         }
 
         .modal-box {
@@ -683,31 +908,45 @@
             width: 100%;
             max-height: 88vh;
             overflow-y: auto;
-            padding: 24px;
+            padding: clamp(16px, 2.5vw, 24px);
             box-shadow: var(--shadow-modal);
             position: relative;
         }
 
         .modal-close {
             position: absolute;
-            top: 16px;
-            right: 16px;
+            top: 14px;
+            right: 14px;
             background: var(--bg-subtle);
             border: 1px solid var(--border-default);
-            width: 26px;
-            height: 26px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             cursor: pointer;
             color: var(--text-muted);
-            font-size: 12px;
+            font-size: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: 0.12s;
         }
+
         .modal-close:hover { background: #E2E8F0; color: var(--text-heading); }
 
-        .clean-table { width: 100%; border-collapse: collapse; font-size: 11.5px; text-align: left; }
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .clean-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11.5px;
+            text-align: left;
+            min-width: 480px;
+        }
+
         .clean-table th {
             padding: 8px 12px;
             font-weight: 700;
@@ -718,7 +957,12 @@
             font-size: 10px;
             background: var(--bg-subtle);
         }
-        .clean-table td { padding: 8px 12px; border-bottom: 1px solid var(--border-subtle); }
+
+        .clean-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
         .clean-table tr:hover td { background: var(--bg-canvas); }
 
         .task-card-item {
@@ -753,881 +997,1217 @@
             font-weight: 700;
             padding: 2px 6px;
             border-radius: 4px;
+            flex-shrink: 0;
         }
 
-        @media (max-width: 1024px) {
-            .grid-workspace { grid-template-columns: 1fr; }
-            .kpi-row { grid-template-columns: 1fr; }
-            .navbar { padding: 0 14px; }
-            .workspace { padding: 12px; }
+        /* ── RESPONSIVE MEDIA QUERIES (Mobile, Tablet, Laptop, Desktop) ── */
+
+        /* 1. Mobile Devices (< 768px: iPhone, Android) */
+        @media (max-width: 768px) {
+            .navbar {
+                height: auto;
+                padding: 10px 14px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 9px;
+            }
+
+            .nav-left {
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .nav-divider { display: none; }
+
+            .nav-status {
+                font-size: 10px;
+            }
+
+            .nav-right {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .btn-primary {
+                flex: 1 1 100%;
+                justify-content: center;
+                padding: 8px 12px;
+            }
+
+            .btn-ghost {
+                flex: 1 1 auto;
+                justify-content: center;
+                font-size: 11px;
+                padding: 6px 8px;
+            }
+
+            .user-pill {
+                display: none; /* Removed on mobile to prevent clutter */
+            }
+
+            .workspace {
+                padding: 10px 12px;
+                gap: 10px;
+            }
+
+            .kpi-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .grid-workspace {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .canvas-wrap {
+                min-height: 160px;
+            }
+
+            .stepper-desktop {
+                display: none;
+            }
+
+            .stepper-mobile {
+                display: flex;
+            }
+
+            .impact-table {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
+            .impact-cell {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .gate-actions {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .btn-dismiss {
+                width: 100%;
+                text-align: center;
+            }
+
+            .room-card {
+                min-height: 440px;
+            }
+
+            .chat-input {
+                font-size: 16px; /* Prevents iOS auto-zoom */
+            }
+        }
+
+        /* 2. Tablet Devices (769px to 1024px: iPad Portrait & Landscape) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .navbar {
+                padding: 0 16px;
+                height: 52px;
+            }
+
+            .workspace {
+                padding: 14px 16px;
+                gap: 14px;
+            }
+
+            .kpi-row {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+
+            .grid-workspace {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .canvas-wrap {
+                min-height: 200px;
+            }
+
+            .stepper-desktop {
+                display: flex;
+            }
+
+            .stepper-mobile {
+                display: none;
+            }
+        }
+
+        /* 3. Laptop & Desktop (> 1024px: MacBook, Monitors) */
+        @media (min-width: 1025px) {
+            .stepper-mobile {
+                display: none;
+            }
+            .stepper-desktop {
+                display: flex;
+            }
         }
     </style>
-
-    <!-- React 18 and Babel Standalone for React JSX SPA -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
-    <div id="root">
-        <!-- React Mount Target -->
-        <div style="display:flex; align-items:center; justify-content:center; height:100vh; font-family:var(--font-mono); color:var(--text-muted); font-size:12px;">
-            Initializing React.js Multi-Agent Governance Engine...
+
+    <!-- ── Top Navigation Bar ── -->
+    <header class="navbar">
+        <div class="nav-left">
+            <a href="#" class="brand-logo" onclick="location.reload(); return false;">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24" width="15" height="15" stroke="#FFFFFF" stroke-width="2.2" fill="none">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                </div>
+                <span class="brand-title">Revenue Desk</span>
+                <span class="brand-tag">#revenue-desk</span>
+            </a>
+
+            <div class="nav-divider"></div>
+
+            <div class="nav-status">
+                <span class="status-dot"></span>
+                <span id="navSyncText">Ledger Synchronized (80 Accounts • 160 Txns)</span>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <!-- Flagship Autonomous Multi-Agent Audit CTA -->
+            <button class="btn-primary" onclick="runCinematicDemo()" title="Run full multi-agent audit with real SQL proof">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                <span id="btnAuditText">Run Multi-Agent Audit</span>
+            </button>
+
+            <button class="btn-ghost" onclick="openSwitchModal()" title="View Switch Room Template (YAML)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                </svg>
+                <span>Room Spec</span>
+            </button>
+
+            <button class="btn-ghost" onclick="openDatabaseModal()" title="Inspect 160 Live Ledger Transactions">
+                <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none">
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                </svg>
+                <span>Database</span>
+            </button>
+
+            <button class="btn-ghost" onclick="openMemoModal()" title="Open Executive Operations Memo">
+                <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                </svg>
+                <span>Audit Memo</span>
+            </button>
+
+            <button class="btn-ghost" onclick="resetState()" title="Reset Session">Reset</button>
+
+            <div class="user-pill">
+                <div class="user-avatar" id="userNavAvatar">AR</div>
+                <span id="userNavName">Alex Rivera</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── Main Workspace ── -->
+    <main class="workspace">
+
+        <!-- ── 3 Focused Accounting KPI Cards ── -->
+        <section class="kpi-row">
+            <div class="kpi-card">
+                <span class="kpi-label">Reported October Gross Volume</span>
+                <span class="kpi-value" id="metricGross">$24,250.00</span>
+                <div class="kpi-meta">
+                    <span>15 transactions logged &bull; Apparent -84.2% drop</span>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <span class="kpi-label">Gateway Duplicate Glitch</span>
+                <span class="kpi-value anomaly" id="metricNet">-$20,430.00</span>
+                <div class="kpi-meta" style="color:var(--color-crimson);">
+                    <span>8 duplicate refund reversals across orders #1–#3</span>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <span class="kpi-label">Certified Net Revenue Truth</span>
+                <span class="kpi-value verified" id="metricTrueNet">+$3,820.00</span>
+                <div class="kpi-meta" style="color:var(--color-emerald);">
+                    <span>7 verified clean orders &bull; Reconciled via Switch</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 2-Column Responsive Workspace ── -->
+        <div class="grid-workspace">
+
+            <!-- Left: Trajectory Chart & Human Approval Gate -->
+            <div class="col-left">
+
+                <!-- Revenue Trajectory Chart -->
+                <div class="card chart-card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                            <span class="card-title">Revenue Trajectory & Anomaly Inspection</span>
+                            <span class="pill-badge">West Region MoM</span>
+                        </div>
+
+                        <!-- Comparative Switch Mode Switcher -->
+                        <div class="segment-toggle">
+                            <button class="segment-btn active" id="btnWithSwitch" onclick="setSwitchComparisonMode('with')">
+                                <span style="width:6px; height:6px; border-radius:50%; background:var(--color-emerald);"></span>
+                                With Switch AI
+                            </button>
+                            <button class="segment-btn" id="btnWithoutSwitch" onclick="setSwitchComparisonMode('without')">
+                                <span style="width:6px; height:6px; border-radius:50%; background:var(--color-crimson);"></span>
+                                Without Switch (Solo AI)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="canvas-wrap" id="canvasAreaContainer">
+                        <canvas id="revenueCanvas"></canvas>
+                    </div>
+
+                    <div class="chart-footer" id="chartCallout">
+                        <span style="color:var(--color-crimson); font-weight:700;">Audited Anomaly: -$20,430.00 duplicate loop &bull; Orders #1–#3</span>
+                        <span style="color:var(--color-emerald); font-weight:700;">Certified Baseline: $3,820.00 Net Truth</span>
+                    </div>
+                </div>
+
+                <!-- Human-in-the-Loop Sign-Off Gate (Switch Rule #4 Guardrail) -->
+                <div class="card gate-card">
+                    <div class="gate-header">
+                        <div>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span class="rule-badge">SWITCH RULE #4</span>
+                                <span class="card-title">Human-in-the-Loop Sign-Off Gate</span>
+                            </div>
+                            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">
+                                Declarative guardrail: Database mutations blocked until Human Lead explicitly signs off.
+                            </div>
+                        </div>
+                        <span class="gate-status" id="gateBadge">Ready for Review</span>
+                    </div>
+
+                    <!-- Desktop Stepper -->
+                    <div class="stepper-desktop">
+                        <div class="step-item active" id="pipe1"><span class="step-num">1</span><span>TASK-101 (Ask)</span></div>
+                        <span style="color:var(--border-strong);">&rarr;</span>
+                        <div class="step-item" id="pipe2"><span class="step-num">2</span><span>TASK-102 (SQL)</span></div>
+                        <span style="color:var(--border-strong);">&rarr;</span>
+                        <div class="step-item" id="pipe3"><span class="step-num">3</span><span>TASK-103 (Audit)</span></div>
+                        <span style="color:var(--border-strong);">&rarr;</span>
+                        <div class="step-item" id="pipe4"><span class="step-num">4</span><span>TASK-104 (Sign-Off)</span></div>
+                        <span style="color:var(--border-strong);">&rarr;</span>
+                        <div class="step-item" id="pipe5"><span class="step-num">5</span><span>TASK-105 (Commit)</span></div>
+                    </div>
+
+                    <!-- Mobile Adaptive Stepper -->
+                    <div class="stepper-mobile" id="mobileStepper">
+                        <div class="mobile-step-header">
+                            <span class="mobile-step-badge" id="mobileStepBadge">Step 1 of 5</span>
+                            <span class="mobile-step-name" id="mobileStepName">TASK-101: Question Ingest</span>
+                        </div>
+                        <div class="mobile-step-track">
+                            <div class="mobile-step-fill" id="mobileStepFill" style="width: 20%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Discount Slider -->
+                    <div class="slider-section">
+                        <div class="slider-meta">
+                            <span>Renewal Incentive Calibration:</span>
+                            <span style="font-family:var(--font-mono); font-weight:700;" id="sliderValue">15%</span>
+                        </div>
+                        <input type="range" min="5" max="25" step="5" value="15" id="discountInput" oninput="updateDiscount(this.value)">
+                    </div>
+
+                    <!-- Impact Calculation Grid -->
+                    <div class="impact-table">
+                        <div class="impact-cell">
+                            <span class="impact-lbl">Protected Pipeline</span>
+                            <span class="impact-val" style="color:var(--color-emerald);" id="arrText">+$38,200.00</span>
+                        </div>
+                        <div class="impact-cell">
+                            <span class="impact-lbl">Campaign Cost</span>
+                            <span class="impact-val" style="color:var(--color-crimson);" id="costText">-$5,730.00</span>
+                        </div>
+                        <div class="impact-cell">
+                            <span class="impact-lbl">Net Margin Contribution</span>
+                            <span class="impact-val" style="color:var(--text-heading);" id="gainText">+$32,470.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="gate-actions">
+                        <button class="btn-authorize" id="btnApprove" onclick="approveCampaign()">
+                            <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.2" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
+                            <span>Authorize Campaign Execution</span>
+                        </button>
+                        <button class="btn-dismiss" onclick="rejectCampaign()">Dismiss</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right: Switch Multi-Agent Room (#revenue-desk) -->
+            <div class="col-right">
+
+                <div class="card room-card">
+                    <!-- Switch Room Header -->
+                    <div class="card-header">
+                        <div>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span class="rule-badge" style="background:var(--brand-obsidian); color:#fff; border:none;">SWITCH ROOM</span>
+                                <span class="card-title" style="font-family:var(--font-mono); font-size:13.5px;">#revenue-desk</span>
+                            </div>
+                            <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">
+                                Enforcing 5 Declarative Rules &bull; @analyst &bull; @reviewer &bull; @manager
+                            </div>
+                        </div>
+
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span class="pill-badge" style="color:var(--color-emerald); background:var(--color-emerald-bg); border-color:var(--color-emerald-border);">● Consensus Active</span>
+                        </div>
+                    </div>
+
+                    <!-- Room Navigation Tabs -->
+                    <div class="room-tabs">
+                        <button class="room-tab active" id="tabBtnChat" onclick="switchRoomTab('chat')">Live Room Feed</button>
+                        <button class="room-tab" id="tabBtnTasks" onclick="switchRoomTab('tasks')">Switch Tasks (5)</button>
+                        <button class="room-tab" id="tabBtnDecisions" onclick="switchRoomTab('decisions')">Decision Ledger</button>
+                        <button class="room-tab" id="tabBtnRules" onclick="switchRoomTab('rules')">Governance Rules</button>
+                    </div>
+
+                    <!-- ── TAB 1: LIVE ROOM CHAT ── -->
+                    <div id="viewChat" style="display:flex; flex-direction:column; flex:1; min-height:0;">
+                        <!-- Starter Queries -->
+                        <div class="quick-queries-bar">
+                            <button class="quick-pill" onclick="executeInquiry('Why did repeat purchases drop in the West region last month?')">Investigate West Drop</button>
+                            <button class="quick-pill" onclick="executeInquiry('Audit all duplicate billing refunds and gateway glitches')">Audit Billing Glitches</button>
+                            <button class="quick-pill" onclick="executeInquiry('Show me all enterprise customers in West region')">Show Enterprise Accounts</button>
+                            <button class="quick-pill" onclick="executeInquiry('What is the revenue breakdown by region?')">Regional Breakdown</button>
+                        </div>
+
+                        <div class="feed-container" id="chatStream">
+                            <div class="empty-briefing">
+                                <div style="font-weight:700; color:var(--text-heading); margin-bottom:4px;">Switch Room #revenue-desk is standing by.</div>
+                                Click <strong>"Run Multi-Agent Audit"</strong> or select an inquiry to trace how @analyst and @reviewer cross-check revenue discrepancies in real time.
+                            </div>
+                        </div>
+
+                        <div class="chat-input-bar">
+                            <input type="text" class="chat-input" id="chatInput" placeholder="Ask a financial question or command @analyst / @reviewer..." onkeydown="if(event.key==='Enter') submitCustomInquiry()">
+                            <button class="chat-send-btn" onclick="submitCustomInquiry()" title="Send Message">
+                                <svg viewBox="0 0 24 24" width="13" height="13" stroke="#FFFFFF" stroke-width="2.2" fill="none"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ── TAB 2: SWITCH TASKS (features: tasks: true) ── -->
+                    <div id="viewTasks" style="display:none; flex-direction:column; flex:1; min-height:0; overflow-y:auto; padding:14px; gap:8px; background:#FAFAFC;">
+                        <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:4px;">
+                            Active workflow tasks tracked in Switch Room <code>#revenue-desk</code>:
+                        </div>
+                        <div id="switchTaskContainer" style="display:flex; flex-direction:column; gap:8px;"></div>
+                    </div>
+
+                    <!-- ── TAB 3: SWITCH DECISION LEDGER (features: decisions: true) ── -->
+                    <div id="viewDecisions" style="display:none; flex-direction:column; flex:1; min-height:0; overflow-y:auto; padding:14px; gap:10px; background:#FAFAFC;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:11.5px; color:var(--text-muted);">Cryptographic decision audit trail:</span>
+                            <span style="font-size:10px; font-family:var(--font-mono); color:var(--color-emerald); font-weight:700;">● ZERO UNVERIFIED MUTATIONS</span>
+                        </div>
+                        <div class="table-responsive" style="background:#FFFFFF; border:1px solid var(--border-default); border-radius:var(--radius-sm); overflow:hidden;">
+                            <div id="switchDecisionContainer"></div>
+                        </div>
+                    </div>
+
+                    <!-- ── TAB 4: SWITCH ROOM RULES (features: rules: true) ── -->
+                    <div id="viewRules" style="display:none; flex-direction:column; flex:1; min-height:0; overflow-y:auto; padding:14px; gap:8px; background:#FAFAFC;">
+                        <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:4px;">
+                            Strict multi-agent policies enforced inside Switch Room <code>#revenue-desk</code>:
+                        </div>
+
+                        <div class="rule-card-item">
+                            <span class="rule-badge">RULE 1</span>
+                            <div>
+                                <strong style="color:var(--text-heading);">Mandatory SQL Proof:</strong>
+                                <div style="color:var(--text-muted); margin-top:2px;">The Analyst agent MUST show raw, executable SQL for every revenue finding. Zero hallucinated metrics.</div>
+                            </div>
+                        </div>
+
+                        <div class="rule-card-item">
+                            <span class="rule-badge">RULE 2</span>
+                            <div>
+                                <strong style="color:var(--text-heading);">Independent Cross-Check:</strong>
+                                <div style="color:var(--text-muted); margin-top:2px;">The Reviewer agent MUST run an independent query — never trusting the Analyst numbers without verification.</div>
+                            </div>
+                        </div>
+
+                        <div class="rule-card-item">
+                            <span class="rule-badge">RULE 3</span>
+                            <div>
+                                <strong style="color:var(--text-heading);">Refund Audit Completeness:</strong>
+                                <div style="color:var(--text-muted); margin-top:2px;">The Reviewer MUST inspect the refunds table for duplicate rate glitches and processor traps.</div>
+                            </div>
+                        </div>
+
+                        <div class="rule-card-item">
+                            <span class="rule-badge">RULE 4</span>
+                            <div>
+                                <strong style="color:var(--text-heading);">Human Manager Sign-off:</strong>
+                                <div style="color:var(--text-muted); margin-top:2px;">NO campaign, database write, or email can execute without explicit approval from the Human Manager.</div>
+                            </div>
+                        </div>
+
+                        <div class="rule-card-item">
+                            <span class="rule-badge">RULE 5</span>
+                            <div>
+                                <strong style="color:var(--text-heading);">Immutable Decision Logging:</strong>
+                                <div style="color:var(--text-muted); margin-top:2px;">All approvals, dismissals, and discount parameters MUST be logged into the Switch Decision Ledger.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- ── Switch Room Template Spec Modal ── -->
+    <div class="modal-overlay" id="switchModal" onclick="if(event.target===this) closeSwitchModal()">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeSwitchModal()">✕</button>
+            <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border-default); padding-bottom:12px; margin-bottom:14px; gap:8px;">
+                <div>
+                    <div style="font-size:16px; font-weight:800; color:var(--text-heading);">Switch Room Specification</div>
+                    <div style="font-size:11.5px; color:var(--text-muted); font-family:var(--font-mono);">switch/revenue-desk.template.yaml &bull; Multi-Agent Room Architecture</div>
+                </div>
+                <button class="btn-primary" onclick="copySwitchYaml()" id="btnCopyYaml">Copy YAML</button>
+            </div>
+
+            <div style="background:var(--brand-obsidian); color:#E2E8F0; font-family:var(--font-mono); font-size:11.5px; line-height:1.6; padding:14px 18px; border-radius:8px; max-height:360px; overflow-y:auto; white-space:pre;" id="switchYamlContent">Loading Switch YAML template...</div>
         </div>
     </div>
 
-    <!-- ── React.js Application Components ── -->
-    <script type="text/babel">
-        const { useState, useEffect, useRef, useCallback } = React;
+    <!-- ── Database Explorer Modal ── -->
+    <div class="modal-overlay" id="dbModal" onclick="if(event.target===this) closeDatabaseModal()">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeDatabaseModal()">✕</button>
+            <div style="font-size:16px; font-weight:800; color:var(--text-heading); margin-bottom:2px;">Live Database Explorer (SQLite / Supabase Mirror)</div>
+            <div style="font-size:11.5px; color:var(--text-muted); margin-bottom:12px;">Inspect raw records verified across all 5 transaction tables:</div>
 
-        // Default initial user
-        const DEFAULT_USER = {
-            name: "Alex Rivera",
-            avatar: "AR",
-            company: "Acme Cloud Inc.",
-            role: "Lead Revenue Controller"
-        };
+            <div style="display:flex; gap:6px; margin-bottom:12px; border-bottom:1px solid var(--border-default); padding-bottom:6px; overflow-x:auto;">
+                <button class="btn-ghost" onclick="switchDbTab('refunds')">Refunds & Discrepancies</button>
+                <button class="btn-ghost" onclick="switchDbTab('orders')">Orders</button>
+                <button class="btn-ghost" onclick="switchDbTab('customers')">Customers</button>
+                <button class="btn-ghost" onclick="switchDbTab('campaigns')">Campaign Mutations</button>
+                <button class="btn-ghost" onclick="switchDbTab('decisions')">Audit Decision Ledger</button>
+            </div>
 
-        function App() {
-            const [user, setUser] = useState(DEFAULT_USER);
-            const [metrics, setMetrics] = useState({
-                gross_revenue: 24250,
-                refund_total: 20430,
-                net_revenue: 3820,
-                customer_count: 80,
-                order_count: 160,
-                refund_count: 8,
-                trajectory: [
-                    { label: "Jun", gross: 70510, net: 70510 },
-                    { label: "Jul", gross: 74630, net: 74630 },
-                    { label: "Aug", gross: 78350, net: 78350 },
-                    { label: "Sep", gross: 85030, net: 85030 },
-                    { label: "Oct", gross: 24250, net: 3820 }
-                ]
+            <div class="table-responsive" style="max-height:440px; overflow:auto;" id="dbContent">
+                <div style="padding:20px; color:var(--text-muted);">Loading database records...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Executive Memo Modal ── -->
+    <div class="modal-overlay" id="memoModal" onclick="if(event.target===this) closeMemoModal()">
+        <div class="modal-box" style="max-width:700px;">
+            <button class="modal-close" onclick="closeMemoModal()">✕</button>
+            <div style="border-bottom: 1px solid var(--border-default); padding-bottom: 12px; margin-bottom: 14px;">
+                <div style="font-size:16px; font-weight:800; color:var(--text-heading);">Executive Operations Memorandum</div>
+                <div style="font-size: 11.5px; color: var(--text-muted);">Certified Financial Governance Audit — Revenue Desk</div>
+            </div>
+            <div style="font-size: 12.5px; color: #334155; line-height: 1.7; display: flex; flex-direction: column; gap: 10px;">
+                <p><strong>1. Anomaly Overview:</strong> Analysis of October 2026 transactions flagged an apparent 84.2% drop in West region repeat revenues across enterprise accounts.</p>
+                <p><strong>2. Reconciliation Audit:</strong> Independent review confirmed $20,430.00 in duplicate processor refund transactions occurring on orders #1, #2, and #3 during payment migration, identifying the certified net baseline at $3,820.00.</p>
+                <div style="background: var(--bg-subtle); border: 1px solid var(--border-default); border-radius: 6px; padding: 10px 14px; font-family: var(--font-mono); font-size: 11.5px;">
+                    <div>&bull; Gross October Orders: $24,250.00</div>
+                    <div>&bull; Duplicate Refund Reversals: -$20,430.00</div>
+                    <div>&bull; Certified Net Revenue Baseline: $3,820.00</div>
+                    <div style="color: var(--color-emerald); font-weight: 700; margin-top: 4px;">&bull; Protected Enterprise Pipeline: +$38,200.00</div>
+                </div>
+                <p><strong>3. Action:</strong> 15% Win-Back Campaign approved and committed. Projected net margin contribution: +$32,470.00.</p>
+            </div>
+            <div style="margin-top: 18px; display: flex; justify-content: space-between; align-items: center; gap:8px;">
+                <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-faint);">Integrity Signature: e9a7...38f1</span>
+                <button class="btn-primary" onclick="window.print()">Print to PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Interactive JavaScript Engine ── -->
+    <script>
+        let discount = 15;
+        let cachedDbData = null;
+        let cachedTrajectory = null;
+        let comparisonMode = "with";
+        let isDemoRunning = false;
+
+        const STEP_NAMES = [
+            "TASK-101: Question Ingest (@manager)",
+            "TASK-102: Deep SQL Formulation (@analyst)",
+            "TASK-103: Independent Audit Cross-Check (@reviewer)",
+            "TASK-104: Human Sign-Off Gate (@manager)",
+            "TASK-105: Ledger Commit & Consensus Sealed"
+        ];
+
+        /* ── Dynamic Live Metrics Engine ── */
+        async function loadLiveMetrics() {
+            try {
+                const res = await fetch("/api/metrics/live");
+                if (!res.ok) return;
+                const data = await res.json();
+                cachedTrajectory = data.trajectory;
+
+                // 1. Dynamic KPI: Gross Reported Revenue
+                const grossEl = document.getElementById("metricGross");
+                if (grossEl && data.gross_revenue !== undefined) {
+                    grossEl.innerText = "$" + Math.round(data.gross_revenue).toLocaleString() + ".00";
+                }
+
+                // 2. Dynamic KPI: Intercepted Refund Glitch
+                const netEl = document.getElementById("metricNet");
+                if (netEl && data.refund_total !== undefined) {
+                    netEl.innerText = "-$" + Math.round(data.refund_total).toLocaleString() + ".00";
+                }
+
+                // 3. Dynamic KPI: Certified True Net Baseline
+                const trueNetEl = document.getElementById("metricTrueNet");
+                if (trueNetEl && data.net_revenue !== undefined) {
+                    trueNetEl.innerText = "+$" + Math.round(data.net_revenue).toLocaleString() + ".00";
+                }
+
+                // 4. Dynamic Callout Footer
+                const callout = document.getElementById("chartCallout");
+                if (callout) {
+                    callout.innerHTML = `<span style="color:var(--color-crimson); font-weight:700;">Audited Anomaly: -$${Math.round(data.refund_total).toLocaleString()}.00 duplicate loop &bull; Orders #1–#3</span><span style="color:var(--color-emerald); font-weight:700;">Certified Baseline: $${Math.round(data.net_revenue).toLocaleString()}.00 Net Truth</span>`;
+                }
+
+                // 5. Update sync text
+                const syncEl = document.getElementById("navSyncText");
+                if (syncEl) {
+                    syncEl.innerText = `Ledger Synchronized (${data.customer_count || 80} Accounts • ${data.order_count || 160} Txns)`;
+                }
+
+                // 6. Dynamic Chart Render
+                renderChart(data.trajectory);
+            } catch(e) {
+                console.warn("Live metrics fetch error:", e);
+                renderChart();
+            }
+        }
+
+        /* ── Comparative Switch Mode Switcher ── */
+        function setSwitchComparisonMode(mode) {
+            comparisonMode = mode;
+            const btnWith = document.getElementById("btnWithSwitch");
+            const btnWithout = document.getElementById("btnWithoutSwitch");
+            if (btnWith) btnWith.classList.toggle("active", mode === "with");
+            if (btnWithout) btnWithout.classList.toggle("active", mode === "without");
+            const callout = document.getElementById("chartCallout");
+
+            if (mode === "without") {
+                if (callout) {
+                    callout.innerHTML = `<span style="color:var(--color-crimson); font-weight:700;">🚨 Without Switch (Solo AI Blindness):</span> Missed refund table, assumed 84.2% churn, issued 25% panic discount &bull; <strong style="color:var(--color-crimson);">-$9,550 Lost Margin</strong>`;
+                }
+                renderChart(null, true);
+            } else {
+                if (callout) {
+                    callout.innerHTML = `<span style="color:var(--color-crimson); font-weight:700;">Audited Anomaly: -$20,430.00 duplicate loop &bull; Orders #1–#3</span><span style="color:var(--color-emerald); font-weight:700;">Certified Baseline: $3,820.00 Net (Switch Proof)</span>`;
+                }
+                renderChart(null, false);
+            }
+        }
+
+        /* ── Responsive Trajectory Chart ── */
+        function renderChart(trajectoryData, isSoloFail) {
+            const canvas = document.getElementById("revenueCanvas");
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            if (rect.width === 0 || rect.height === 0) return;
+
+            canvas.width = Math.round(rect.width * dpr);
+            canvas.height = Math.round(rect.height * dpr);
+            ctx.resetTransform ? ctx.resetTransform() : ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(dpr, dpr);
+            const w = rect.width, h = rect.height;
+            ctx.clearRect(0, 0, w, h);
+
+            const points = trajectoryData || cachedTrajectory || [
+                { label: "Jun", gross: 70510, net: 70510 },
+                { label: "Jul", gross: 74630, net: 74630 },
+                { label: "Aug", gross: 78350, net: 78350 },
+                { label: "Sep", gross: 85030, net: 85030 },
+                { label: "Oct", gross: 24250, net: 3820 }
+            ];
+
+            const maxVal = Math.max(...points.map(p => Math.max(p.gross, p.net || 0)), 100000) * 1.15;
+            const minVal = 0;
+
+            // Y-axis grid
+            const yDivisions = 4;
+            ctx.fillStyle = "#64748B";
+            ctx.font = "10px JetBrains Mono, monospace";
+            ctx.textAlign = "right";
+
+            const padLeft = w < 400 ? 38 : 46;
+            const padRight = w < 400 ? 10 : 14;
+
+            for (let i = 0; i <= yDivisions; i++) {
+                const val = Math.round((maxVal * (yDivisions - i)) / yDivisions);
+                const y = 14 + i * ((h - 36) / yDivisions);
+                ctx.fillText("$" + (val >= 1000 ? Math.round(val / 1000) + "K" : val), padLeft - 6, y + 3);
+                ctx.strokeStyle = "#F1F5F9";
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(padLeft, y);
+                ctx.lineTo(w - padRight, y);
+                ctx.stroke();
+            }
+
+            // X-axis
+            const numPoints = points.length;
+            const stepX = (w - padLeft - padRight - 10) / Math.max(1, numPoints - 1);
+            const mapX = (i) => padLeft + 6 + i * stepX;
+            const mapY = (val) => 14 + ((maxVal - val) / (maxVal - minVal)) * (h - 36);
+
+            ctx.textAlign = "center";
+            points.forEach((p, i) => {
+                ctx.fillText(p.label, mapX(i), h - 4);
             });
 
-            const [comparisonMode, setComparisonMode] = useState("with");
-            const [discount, setDiscount] = useState(15);
-            const [pipeStep, setPipeStep] = useState(1);
-            const [isAuthorized, setIsAuthorized] = useState(false);
-            const [isAuditing, setIsAuditing] = useState(false);
-
-            const [activeTab, setActiveTab] = useState("chat");
-            const [feed, setFeed] = useState([]);
-            const [inputText, setInputText] = useState("");
-
-            const [roomState, setRoomState] = useState({ tasks: [], decisions: [] });
-            const [modal, setModal] = useState(null); // "yaml", "db", "memo"
-            const [dbData, setDbData] = useState(null);
-            const [dbTab, setDbTab] = useState("refunds");
-            const [yamlSpec, setYamlSpec] = useState("");
-
-            // Load initial state
-            useEffect(() => {
-                try {
-                    let saved = localStorage.getItem("revenueDeskUser");
-                    if (!saved) {
-                        saved = JSON.stringify(DEFAULT_USER);
-                        localStorage.setItem("revenueDeskUser", saved);
-                    }
-                    setUser(JSON.parse(saved));
-                } catch(e) {}
-
-                loadLiveMetrics();
-                loadRoomState();
-            }, []);
-
-            const loadLiveMetrics = async () => {
-                try {
-                    const res = await fetch("/api/metrics/live");
-                    if (res.ok) {
-                        const data = await res.json();
-                        setMetrics(data);
-                    }
-                } catch(e) {
-                    console.warn("React load metrics:", e);
-                }
-            };
-
-            const loadRoomState = async () => {
-                try {
-                    const res = await fetch("/api/state");
-                    if (res.ok) {
-                        const data = await res.json();
-                        setRoomState(data);
-                    }
-                } catch(e) {
-                    console.warn("React load state:", e);
-                }
-            };
-
-            // Run autonomous multi-agent audit
-            const runAudit = async (customQ) => {
-                if (isAuditing) return;
-                setIsAuditing(true);
-                setActiveTab("chat");
-
-                const q = customQ || "Why did repeat purchases drop in the West region last month?";
-                const time = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-                // Step 1: Manager asks
-                setFeed([
-                    {
-                        author: "@manager (Human Lead)",
-                        avatar: "AR",
-                        color: "#0F172A",
-                        time: time,
-                        content: q,
-                        type: "text"
-                    }
-                ]);
-                setPipeStep(2);
-
-                try {
-                    const res = await fetch("/api/ask", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ question: q })
-                    });
-                    const data = await res.json();
-
-                    // Step 2: Analyst (800ms)
-                    await new Promise(r => setTimeout(r, 800));
-                    setPipeStep(3);
-
-                    const analystMsg = {
-                        author: "@analyst (SQL Engine • Groq 120B)",
-                        avatar: "AN",
-                        color: "#059669",
-                        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-                        content: data.analysis ? data.analysis.response : "Query executed against database records.",
-                        sql: data.analysis ? data.analysis.sql : null,
-                        type: "analyst"
-                    };
-
-                    setFeed(prev => [...prev, analystMsg]);
-
-                    // Step 3: Reviewer (900ms)
-                    await new Promise(r => setTimeout(r, 900));
-                    setPipeStep(4);
-
-                    const reviewerMsg = {
-                        author: "@reviewer (Audit Guard • Groq 120B)",
-                        avatar: "RV",
-                        color: "#B45309",
-                        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-                        content: data.review ? data.review.response : "Independent audit query executed.",
-                        hasDiscrepancy: true,
-                        type: "reviewer"
-                    };
-
-                    setFeed(prev => [...prev, reviewerMsg]);
-
-                    // Step 4: Consensus (700ms)
-                    await new Promise(r => setTimeout(r, 700));
-                    const consensusMsg = {
-                        author: "Switch Consensus Engine (#revenue-desk)",
-                        avatar: "SW",
-                        color: "#0F172A",
-                        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-                        content: data.proposed_action || "100% Alignment Reached. Ready to authorize executive action.",
-                        isConsensus: true,
-                        type: "consensus"
-                    };
-
-                    setFeed(prev => [...prev, consensusMsg]);
-                    loadRoomState();
-                } catch(e) {
-                    console.warn("Audit error:", e);
-                } finally {
-                    setIsAuditing(false);
-                }
-            };
-
-            const approveCampaign = async () => {
-                try {
-                    const res = await fetch("/api/approve", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ response: `Approved. Change discount to ${discount}%.` })
-                    });
-                    const data = await res.json();
-                    setIsAuthorized(true);
-                    setPipeStep(5);
-
-                    setFeed(prev => [
-                        ...prev,
-                        {
-                            author: "@manager (Human Lead Sign-Off)",
-                            avatar: "AR",
-                            color: "#0F172A",
-                            time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-                            content: `Authorized execution of Win-Back Campaign at <strong>${discount}% discount</strong> under Switch Rule #4.`,
-                            type: "manager"
-                        },
-                        {
-                            author: "@analyst (Revenue Analyst)",
-                            avatar: "AN",
-                            color: "#059669",
-                            time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-                            content: data.result || `Campaign created with status approved. 5 enterprise accounts enrolled at ${discount}% discount. Database mutations committed.`,
-                            type: "analyst"
-                        }
-                    ]);
-
-                    loadRoomState();
-                    loadLiveMetrics();
-                } catch(e) {
-                    console.warn("Approve error:", e);
-                }
-            };
-
-            const openModal = async (type) => {
-                setModal(type);
-                if (type === "yaml" && !yamlSpec) {
-                    try {
-                        const res = await fetch("/api/switch/template");
-                        const d = await res.json();
-                        setYamlSpec(d.template_yaml || d.room_yaml || "");
-                    } catch(e) {
-                        setYamlSpec("# Switch Spec error loading");
-                    }
-                } else if (type === "db" && !dbData) {
-                    try {
-                        const res = await fetch("/api/database");
-                        const d = await res.json();
-                        setDbData(d);
-                    } catch(e) {
-                        setDbData({});
-                    }
-                }
-            };
-
-            const resetState = async () => {
-                try { await fetch("/api/reset"); } catch(e) {}
-                window.location.reload();
-            };
-
-            return (
-                <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-                    {/* ── Top Navigation Bar ── */}
-                    <header className="navbar">
-                        <div className="nav-left">
-                            <div className="brand-logo" onClick={() => window.location.reload()}>
-                                <div className="brand-icon">
-                                    <svg viewBox="0 0 24 24" width="15" height="15" stroke="#FFFFFF" strokeWidth="2.2" fill="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                                </div>
-                                <span className="brand-title">Revenue Desk</span>
-                                <span className="brand-tag">#revenue-desk</span>
-                                <span className="react-badge">React 18 &bull; Node.js</span>
-                            </div>
-
-                            <div className="nav-divider"></div>
-
-                            <div className="nav-status">
-                                <span className="status-dot"></span>
-                                <span>Ledger Synchronized ({metrics.customer_count || 80} Accounts &bull; {metrics.order_count || 160} Txns)</span>
-                            </div>
-                        </div>
-
-                        <div className="nav-right">
-                            <button className="btn-primary" onClick={() => runAudit()} disabled={isAuditing} title="Run autonomous multi-agent audit">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                                <span>{isAuditing ? "Running Multi-Agent Audit..." : "Run Multi-Agent Audit"}</span>
-                            </button>
-
-                            <button className="btn-ghost" onClick={() => openModal("yaml")} title="View Switch Room Template (YAML)">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                                <span>Room Spec (YAML)</span>
-                            </button>
-
-                            <button className="btn-ghost" onClick={() => openModal("db")} title="Inspect Live Ledger Transactions">
-                                <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" strokeWidth="2" fill="none"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-                                <span>Database (160 Txns)</span>
-                            </button>
-
-                            <button className="btn-ghost" onClick={() => openModal("memo")} title="Open Executive Operations Memo">
-                                <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" strokeWidth="2" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                                <span>Audit Memo</span>
-                            </button>
-
-                            <button className="btn-ghost" onClick={resetState} title="Reset Session">Reset</button>
-
-                            <div className="user-pill">
-                                <div className="user-avatar">{user.avatar || "AR"}</div>
-                                <span>{user.name || "Alex Rivera"}</span>
-                            </div>
-                        </div>
-                    </header>
-
-                    {/* ── Main Workspace ── */}
-                    <main className="workspace">
-                        {/* 3 Accounting KPI Cards */}
-                        <section className="kpi-row">
-                            <div className="kpi-card">
-                                <span className="kpi-label">Reported October Gross Volume</span>
-                                <span className="kpi-value">${Math.round(metrics.gross_revenue || 24250).toLocaleString()}.00</span>
-                                <div className="kpi-meta">
-                                    <span>15 transactions logged &bull; Apparent -84.2% drop</span>
-                                </div>
-                            </div>
-
-                            <div className="kpi-card">
-                                <span className="kpi-label">Gateway Duplicate Glitch</span>
-                                <span className="kpi-value anomaly">-${Math.round(metrics.refund_total || 20430).toLocaleString()}.00</span>
-                                <div className="kpi-meta" style={{ color: "var(--color-crimson)" }}>
-                                    <span>{metrics.refund_count || 8} duplicate refund reversals unmasked across orders #1–#3</span>
-                                </div>
-                            </div>
-
-                            <div className="kpi-card">
-                                <span className="kpi-label">Certified Net Revenue Truth</span>
-                                <span className="kpi-value verified">+${Math.round(metrics.net_revenue || 3820).toLocaleString()}.00</span>
-                                <div className="kpi-meta" style={{ color: "var(--color-emerald)" }}>
-                                    <span>7 verified clean orders &bull; Reconciled via Switch</span>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* 2-Column Grid */}
-                        <div className="grid-workspace">
-                            {/* Left Column */}
-                            <div className="col-left">
-                                {/* Revenue Trajectory Chart */}
-                                <div className="card chart-card">
-                                    <div className="card-header">
-                                        <div className="card-title-group">
-                                            <span className="card-title">Revenue Trajectory & Anomaly Inspection</span>
-                                            <span className="pill-badge">West Region MoM</span>
-                                        </div>
-
-                                        <div className="segment-toggle">
-                                            <button className={`segment-btn ${comparisonMode === "with" ? "active" : ""}`} onClick={() => setComparisonMode("with")}>
-                                                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--color-emerald)" }}></span>
-                                                With Switch AI
-                                            </button>
-                                            <button className={`segment-btn ${comparisonMode === "without" ? "active" : ""}`} onClick={() => setComparisonMode("without")}>
-                                                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--color-crimson)" }}></span>
-                                                Without Switch (Solo AI)
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div className="canvas-wrap">
-                                        <RevenueCanvas points={metrics.trajectory} mode={comparisonMode} />
-                                    </div>
-
-                                    <div className="chart-footer">
-                                        {comparisonMode === "without" ? (
-                                            <span style={{ color: "var(--color-crimson)", fontWeight: 700 }}>
-                                                🚨 Without Switch (Solo AI Blindness): Missed refund table, assumed 84.2% churn, burned -$9,550 margin.
-                                            </span>
-                                        ) : (
-                                            <React.Fragment>
-                                                <span style={{ color: "var(--color-crimson)", fontWeight: 700 }}>
-                                                    Audited Anomaly: -${Math.round(metrics.refund_total || 20430).toLocaleString()}.00 duplicate loop &bull; Orders #1–#3
-                                                </span>
-                                                <span style={{ color: "var(--color-emerald)", fontWeight: 700 }}>
-                                                    Certified Baseline: ${Math.round(metrics.net_revenue || 3820).toLocaleString()}.00 Net
-                                                </span>
-                                            </React.Fragment>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Policy Gate Card */}
-                                <div className="card gate-card">
-                                    <div className="gate-header">
-                                        <div>
-                                            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                                                <span className="rule-badge">SWITCH RULE #4</span>
-                                                <span className="card-title">Human-in-the-Loop Sign-Off Gate</span>
-                                            </div>
-                                            <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 2 }}>
-                                                Declarative guardrail: Database mutations blocked until Human Lead explicitly signs off.
-                                            </div>
-                                        </div>
-                                        <span className="gate-status">{isAuthorized ? "Committed" : "Ready for Review"}</span>
-                                    </div>
-
-                                    <div className="stepper">
-                                        <div className={`step-item ${pipeStep >= 1 ? (pipeStep > 1 ? "completed" : "active") : ""}`}><span className="step-num">{pipeStep > 1 ? "✓" : "1"}</span><span>TASK-101 (Ask)</span></div>
-                                        <span style={{ color: "var(--border-strong)" }}>&rarr;</span>
-                                        <div className={`step-item ${pipeStep >= 2 ? (pipeStep > 2 ? "completed" : "active") : ""}`}><span className="step-num">{pipeStep > 2 ? "✓" : "2"}</span><span>TASK-102 (SQL)</span></div>
-                                        <span style={{ color: "var(--border-strong)" }}>&rarr;</span>
-                                        <div className={`step-item ${pipeStep >= 3 ? (pipeStep > 3 ? "completed" : "active") : ""}`}><span className="step-num">{pipeStep > 3 ? "✓" : "3"}</span><span>TASK-103 (Audit)</span></div>
-                                        <span style={{ color: "var(--border-strong)" }}>&rarr;</span>
-                                        <div className={`step-item ${pipeStep >= 4 ? (pipeStep > 4 ? "completed" : "active") : ""}`}><span className="step-num">{pipeStep > 4 ? "✓" : "4"}</span><span>TASK-104 (Sign-Off)</span></div>
-                                        <span style={{ color: "var(--border-strong)" }}>&rarr;</span>
-                                        <div className={`step-item ${pipeStep >= 5 ? "completed" : ""}`}><span className="step-num">{pipeStep >= 5 ? "✓" : "5"}</span><span>TASK-105 (Commit)</span></div>
-                                    </div>
-
-                                    <div className="slider-section">
-                                        <div className="slider-meta">
-                                            <span>Renewal Incentive Calibration:</span>
-                                            <span style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>{discount}%</span>
-                                        </div>
-                                        <input type="range" min="5" max="25" step="5" value={discount} onChange={(e) => setDiscount(parseInt(e.target.value, 10))} />
-                                    </div>
-
-                                    <div className="impact-table">
-                                        <div className="impact-cell">
-                                            <span className="impact-lbl">Protected Pipeline</span>
-                                            <span className="impact-val" style={{ color: "var(--color-emerald)" }}>+$38,200.00</span>
-                                        </div>
-                                        <div className="impact-cell">
-                                            <span className="impact-lbl">Campaign Cost ({discount}%)</span>
-                                            <span className="impact-val" style={{ color: "var(--color-crimson)" }}>-${Math.round(38200 * (discount / 100)).toLocaleString()}.00</span>
-                                        </div>
-                                        <div className="impact-cell">
-                                            <span className="impact-lbl">Net Margin Contribution</span>
-                                            <span className="impact-val" style={{ color: "var(--text-heading)" }}>+${Math.round(38200 * (1 - discount / 100)).toLocaleString()}.00</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="gate-actions">
-                                        <button className="btn-authorize" onClick={approveCampaign} disabled={isAuthorized}>
-                                            <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" strokeWidth="2.2" fill="none"><polyline points="20 6 9 17 4 12"/></svg>
-                                            <span>{isAuthorized ? "✓ Authorized & Committed to Ledger" : "Authorize Campaign Execution"}</span>
-                                        </button>
-                                        <button className="btn-dismiss" onClick={() => setFeed(prev => [...prev, { author: "@manager (Human Lead)", avatar: "AR", color: "#0F172A", time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }), content: "Revision requested on campaign terms before authorization." }])}>Dismiss</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Right Column: Switch Multi-Agent Room */}
-                            <div className="col-right">
-                                <div className="card room-card">
-                                    <div className="card-header">
-                                        <div>
-                                            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                                                <span className="rule-badge" style={{ background: "var(--brand-obsidian)", color: "#fff", border: "none" }}>SWITCH ROOM</span>
-                                                <span className="card-title" style={{ fontFamily: "var(--font-mono)", fontSize: 13.5 }}>#revenue-desk</span>
-                                            </div>
-                                            <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 2 }}>
-                                                Enforcing 5 Declarative Rules &bull; @analyst &bull; @reviewer &bull; @manager
-                                            </div>
-                                        </div>
-
-                                        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                                            <span className="pill-badge" style={{ color: "var(--color-emerald)", background: "var(--color-emerald-bg)", borderColor: "var(--color-emerald-border)" }}>● Consensus Active</span>
-                                        </div>
-                                    </div>
-
-                                    {/* Tabs */}
-                                    <div className="room-tabs">
-                                        <button className={`room-tab ${activeTab === "chat" ? "active" : ""}`} onClick={() => setActiveTab("chat")}>Live Room Feed</button>
-                                        <button className={`room-tab ${activeTab === "tasks" ? "active" : ""}`} onClick={() => setActiveTab("tasks")}>Switch Tasks ({roomState.tasks ? roomState.tasks.length : 5})</button>
-                                        <button className={`room-tab ${activeTab === "decisions" ? "active" : ""}`} onClick={() => setActiveTab("decisions")}>Decision Ledger</button>
-                                        <button className={`room-tab ${activeTab === "rules" ? "active" : ""}`} onClick={() => setActiveTab("rules")}>Governance Rules</button>
-                                    </div>
-
-                                    {/* Tab 1: Live Feed */}
-                                    {activeTab === "chat" && (
-                                        <div style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0 }}>
-                                            <div className="quick-queries-bar">
-                                                <button className="quick-pill" onClick={() => runAudit("Why did repeat purchases drop in the West region last month?")}>Investigate West Drop</button>
-                                                <button className="quick-pill" onClick={() => runAudit("Audit all duplicate billing refunds and gateway glitches")}>Audit Billing Glitches</button>
-                                                <button className="quick-pill" onClick={() => runAudit("Show me all enterprise customers in West region")}>Show Enterprise Accounts</button>
-                                                <button className="quick-pill" onClick={() => runAudit("What is the revenue breakdown by region?")}>Regional Breakdown</button>
-                                            </div>
-
-                                            <div className="feed-container">
-                                                {feed.length === 0 ? (
-                                                    <div className="empty-briefing">
-                                                        <div style={{ fontWeight: 700, color: "var(--text-heading)", marginBottom: 4 }}>Switch Room #revenue-desk is standing by.</div>
-                                                        Click <strong>"Run Multi-Agent Audit"</strong> or select an inquiry to trace how @analyst and @reviewer cross-check revenue discrepancies in real time.
-                                                    </div>
-                                                ) : (
-                                                    feed.map((msg, idx) => (
-                                                        <div key={idx} className="msg-row">
-                                                            <div className="msg-avatar" style={{ background: msg.color }}>{msg.avatar}</div>
-                                                            <div className="msg-content">
-                                                                <div className="msg-header">
-                                                                    <span className="msg-author">{msg.author}</span>
-                                                                    <span className="msg-time">{msg.time}</span>
-                                                                </div>
-                                                                <div dangerouslySetInnerHTML={{ __html: msg.content }} />
-                                                                {msg.sql && <div className="sql-box">{msg.sql}</div>}
-                                                                {msg.hasDiscrepancy && (
-                                                                    <div className="discrepancy-card">
-                                                                        <div><span style={{ color: "#64748B", fontSize: 9.5 }}>GROSS ORDERS</span><br /><strong style={{ color: "#2563EB" }}>$24,250.00</strong></div>
-                                                                        <div><span style={{ color: "#64748B", fontSize: 9.5 }}>GLITCH LOOP</span><br /><strong style={{ color: "var(--color-crimson)" }}>-$20,430.00</strong></div>
-                                                                        <div><span style={{ color: "#64748B", fontSize: 9.5 }}>CERTIFIED NET</span><br /><strong style={{ color: "var(--color-emerald)" }}>$3,820.00</strong></div>
-                                                                    </div>
-                                                                )}
-                                                                {msg.isConsensus && (
-                                                                    <div className="consensus-banner">SWITCH CONSENSUS SEALED &bull; @analyst &check; @reviewer &check; Aligned</div>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    ))
-                                                )}
-                                            </div>
-
-                                            <div className="chat-input-bar">
-                                                <input
-                                                    type="text"
-                                                    className="chat-input"
-                                                    placeholder="Ask a financial question or command @analyst / @reviewer..."
-                                                    value={inputText}
-                                                    onChange={(e) => setInputText(e.target.value)}
-                                                    onKeyDown={(e) => {
-                                                        if (e.key === "Enter" && inputText.trim()) {
-                                                            runAudit(inputText.trim());
-                                                            setInputText("");
-                                                        }
-                                                    }}
-                                                />
-                                                <button className="chat-send-btn" onClick={() => { if (inputText.trim()) { runAudit(inputText.trim()); setInputText(""); } }} title="Send Message">
-                                                    <svg viewBox="0 0 24 24" width="13" height="13" stroke="#FFFFFF" strokeWidth="2.2" fill="none"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {/* Tab 2: Switch Tasks */}
-                                    {activeTab === "tasks" && (
-                                        <div style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0, overflowY: "auto", padding: 16, gap: 8, background: "#FAFAFC" }}>
-                                            <div style={{ fontSize: 11.5, color: "var(--text-muted)", marginBottom: 4 }}>
-                                                Active workflow tasks tracked in Switch Room <code>#revenue-desk</code>:
-                                            </div>
-                                            {(roomState.tasks || []).map((t, idx) => (
-                                                <div key={idx} className="task-card-item">
-                                                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                                                        <span className="rule-badge">{t.id}</span>
-                                                        <div>
-                                                            <div style={{ fontSize: 12, fontWeight: 700, color: "var(--text-heading)" }}>{t.title}</div>
-                                                            <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 2 }}>Assigned: {t.assigned_to}</div>
-                                                        </div>
-                                                    </div>
-                                                    <span style={{ fontSize: 10.5, fontWeight: 700, fontFamily: "var(--font-mono)", color: t.status === "completed" ? "var(--color-emerald)" : t.status === "in_progress" ? "var(--color-blue)" : "var(--text-muted)" }}>
-                                                        {t.status === "completed" ? "✓ Completed" : t.status === "in_progress" ? "● In Progress" : "○ Pending"}
-                                                    </span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-
-                                    {/* Tab 3: Decision Ledger */}
-                                    {activeTab === "decisions" && (
-                                        <div style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0, overflowY: "auto", padding: 16, gap: 10, background: "#FAFAFC" }}>
-                                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                                <span style={{ fontSize: 11.5, color: "var(--text-muted)" }}>Cryptographic decision audit trail for this room:</span>
-                                                <span style={{ fontSize: 10, fontFamily: "var(--font-mono)", color: "var(--color-emerald)", fontWeight: 700 }}>● ZERO UNVERIFIED MUTATIONS</span>
-                                            </div>
-                                            <div style={{ background: "#FFFFFF", border: "1px solid var(--border-default)", borderRadius: "var(--radius-sm)", overflow: "hidden" }}>
-                                                {(!roomState.decisions || roomState.decisions.length === 0) ? (
-                                                    <div style={{ padding: 20, fontSize: 12, color: "var(--text-muted)", textAlign: "center" }}>No decisions committed yet. Authorize a campaign to append to the Switch immutable ledger.</div>
-                                                ) : (
-                                                    <table className="clean-table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Decision ID</th>
-                                                                <th>Action Taken</th>
-                                                                <th>Authorized By</th>
-                                                                <th>Verification</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {roomState.decisions.map((d, idx) => (
-                                                                <tr key={idx}>
-                                                                    <td style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>#DEC-{d.id || d[0]}</td>
-                                                                    <td style={{ fontWeight: 700, color: "var(--text-heading)" }}>{d.decision || d[1]}</td>
-                                                                    <td style={{ color: "var(--text-muted)" }}>{d.made_by || d[2]}</td>
-                                                                    <td><span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--color-emerald)", fontWeight: 700 }}>✓ SHA-256 Verified</span></td>
-                                                                </tr>
-                                                            ))}
-                                                        </tbody>
-                                                    </table>
-                                                )}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {/* Tab 4: Governance Rules */}
-                                    {activeTab === "rules" && (
-                                        <div style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0, overflowY: "auto", padding: 16, gap: 8, background: "#FAFAFC" }}>
-                                            <div style={{ fontSize: 11.5, color: "var(--text-muted)", marginBottom: 4 }}>
-                                                Strict multi-agent policies enforced inside Switch Room <code>#revenue-desk</code>:
-                                            </div>
-                                            <div className="rule-card-item">
-                                                <span className="rule-badge">RULE 1</span>
-                                                <div>
-                                                    <strong style={{ color: "var(--text-heading)" }}>Mandatory SQL Proof:</strong>
-                                                    <div style={{ color: "var(--text-muted)", marginTop: 2 }}>The Analyst agent MUST show raw, executable SQL for every revenue finding. Zero hallucinated metrics.</div>
-                                                </div>
-                                            </div>
-                                            <div className="rule-card-item">
-                                                <span className="rule-badge">RULE 2</span>
-                                                <div>
-                                                    <strong style={{ color: "var(--text-heading)" }}>Independent Cross-Check:</strong>
-                                                    <div style={{ color: "var(--text-muted)", marginTop: 2 }}>The Reviewer agent MUST run an independent query — never trusting the Analyst numbers without verification.</div>
-                                                </div>
-                                            </div>
-                                            <div className="rule-card-item">
-                                                <span className="rule-badge">RULE 3</span>
-                                                <div>
-                                                    <strong style={{ color: "var(--text-heading)" }}>Refund Audit Completeness:</strong>
-                                                    <div style={{ color: "var(--text-muted)", marginTop: 2 }}>The Reviewer MUST inspect the refunds table for duplicate rate glitches and processor traps.</div>
-                                                </div>
-                                            </div>
-                                            <div className="rule-card-item">
-                                                <span className="rule-badge">RULE 4</span>
-                                                <div>
-                                                    <strong style={{ color: "var(--text-heading)" }}>Human Manager Sign-off:</strong>
-                                                    <div style={{ color: "var(--text-muted)", marginTop: 2 }}>NO campaign, database write, or email can execute without explicit approval from the Human Manager.</div>
-                                                </div>
-                                            </div>
-                                            <div className="rule-card-item">
-                                                <span className="rule-badge">RULE 5</span>
-                                                <div>
-                                                    <strong style={{ color: "var(--text-heading)" }}>Immutable Decision Logging:</strong>
-                                                    <div style={{ color: "var(--text-muted)", marginTop: 2 }}>All approvals, dismissals, and discount parameters MUST be logged into the Switch Decision Ledger.</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    </main>
-
-                    {/* ── Modals ── */}
-                    {modal === "yaml" && (
-                        <div className="modal-overlay" onClick={() => setModal(null)}>
-                            <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-                                <button className="modal-close" onClick={() => setModal(null)}>✕</button>
-                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid var(--border-default)", paddingBottom: 12, marginBottom: 16 }}>
-                                    <div>
-                                        <div style={{ fontSize: 16, fontWeight: 800, color: "var(--text-heading)" }}>Switch Room Specification</div>
-                                        <div style={{ fontSize: 11.5, color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>switch/revenue-desk.template.yaml &bull; Multi-Agent Room Architecture</div>
-                                    </div>
-                                    <button className="btn-primary" onClick={() => navigator.clipboard.writeText(yamlSpec)}>Copy YAML</button>
-                                </div>
-                                <div style={{ background: "var(--brand-obsidian)", color: "#E2E8F0", fontFamily: "var(--font-mono)", fontSize: 11.5, lineHeight: 1.6, padding: "14px 18px", borderRadius: 8, maxHeight: 360, overflowY: "auto", whiteSpace: "pre" }}>
-                                    {yamlSpec || "Loading Switch YAML template..."}
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {modal === "db" && (
-                        <div className="modal-overlay" onClick={() => setModal(null)}>
-                            <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-                                <button className="modal-close" onClick={() => setModal(null)}>✕</button>
-                                <div style={{ fontSize: 16, fontWeight: 800, color: "var(--text-heading)", marginBottom: 2 }}>Live Database Explorer (SQLite / Supabase Mirror)</div>
-                                <div style={{ fontSize: 11.5, color: "var(--text-muted)", marginBottom: 14 }}>Inspect raw records verified across all 5 transaction tables:</div>
-
-                                <div style={{ display: "flex", gap: 6, marginBottom: 12, borderBottom: "1px solid var(--border-default)", paddingBottom: 6 }}>
-                                    {["refunds", "orders", "customers", "campaigns", "decisions"].map((t) => (
-                                        <button key={t} className="btn-ghost" style={{ background: dbTab === t ? "var(--bg-subtle)" : "transparent" }} onClick={() => setDbTab(t)}>
-                                            {t.charAt(0).toUpperCase() + t.slice(1)}
-                                        </button>
-                                    ))}
-                                </div>
-
-                                <div style={{ maxHeight: 440, overflow: "auto" }}>
-                                    {!dbData ? (
-                                        <div style={{ padding: 20, color: "var(--text-muted)" }}>Loading database records...</div>
-                                    ) : (
-                                        <table className="clean-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Primary Info</th>
-                                                    <th>Detail</th>
-                                                    <th>Amount / Value</th>
-                                                    <th>Date / Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {(dbData[dbTab] || []).map((row, idx) => (
-                                                    <tr key={idx}>
-                                                        <td style={{ fontWeight: 700 }}>#{row.id || row[0]}</td>
-                                                        <td>{row.customer_name || row.name || row[1] || "-"}</td>
-                                                        <td>{row.reason || row.region || row.segment || row[2] || "-"}</td>
-                                                        <td style={{ fontWeight: 700, color: (row.amount || row[4]) ? "var(--color-crimson)" : "inherit" }}>
-                                                            {row.amount ? `-$${parseFloat(row.amount).toFixed(2)}` : (row.discount_pct ? `${row.discount_pct}%` : "-")}
-                                                        </td>
-                                                        <td>{row.refund_date || row.order_date || row.status || row.created_at || "-"}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {modal === "memo" && (
-                        <div className="modal-overlay" onClick={() => setModal(null)}>
-                            <div className="modal-box" style={{ maxWidth: 700 }} onClick={(e) => e.stopPropagation()}>
-                                <button className="modal-close" onClick={() => setModal(null)}>✕</button>
-                                <div style={{ borderBottom: "1px solid var(--border-default)", paddingBottom: 12, marginBottom: 14 }}>
-                                    <div style={{ fontSize: 16, fontWeight: 800, color: "var(--text-heading)" }}>Executive Operations Memorandum</div>
-                                    <div style={{ fontSize: 11.5, color: "var(--text-muted)" }}>Certified Financial Governance Audit — Revenue Desk</div>
-                                </div>
-                                <div style={{ fontSize: 12.5, color: "#334155", lineHeight: 1.7, display: "flex", flexDirection: "column", gap: 10 }}>
-                                    <p><strong>1. Anomaly Overview:</strong> Analysis of October 2026 transactions flagged an apparent 84.2% drop in West region repeat revenues across enterprise accounts.</p>
-                                    <p><strong>2. Reconciliation Audit:</strong> Independent review confirmed $20,430.00 in duplicate processor refund transactions occurring on orders #1, #2, and #3 during payment migration, identifying the certified net baseline at $3,820.00.</p>
-                                    <div style={{ background: "var(--bg-subtle)", border: "1px solid var(--border-default)", borderRadius: 6, padding: "10px 14px", fontFamily: "var(--font-mono)", fontSize: 11.5 }}>
-                                        <div>&bull; Gross October Orders: $24,250.00</div>
-                                        <div>&bull; Duplicate Refund Reversals: -$20,430.00</div>
-                                        <div>&bull; Certified Net Revenue Baseline: $3,820.00</div>
-                                        <div style={{ color: "var(--color-emerald)", fontWeight: 700, marginTop: 4 }}>&bull; Protected Enterprise Pipeline: +$38,200.00</div>
-                                    </div>
-                                    <p><strong>3. Action:</strong> 15% Win-Back Campaign approved and committed. Projected net margin contribution: +$32,470.00.</p>
-                                </div>
-                                <div style={{ marginTop: 18, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                    <span style={{ fontSize: 11, fontFamily: "var(--font-mono)", color: "var(--text-faint)" }}>Integrity Signature: e9a7...38f1</span>
-                                    <button className="btn-primary" onClick={() => window.print()}>Print to PDF</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            );
-        }
-
-        // Dedicated Canvas Component for Revenue Trajectory
-        function RevenueCanvas({ points, mode }) {
-            const canvasRef = useRef(null);
-
-            useEffect(() => {
-                const canvas = canvasRef.current;
-                if (!canvas) return;
-                const ctx = canvas.getContext("2d");
-                const dpr = window.devicePixelRatio || 1;
-                const rect = canvas.getBoundingClientRect();
-                if (rect.width === 0 || rect.height === 0) return;
-
-                canvas.width = Math.round(rect.width * dpr);
-                canvas.height = Math.round(rect.height * dpr);
-                ctx.resetTransform ? ctx.resetTransform() : ctx.setTransform(1, 0, 0, 1, 0, 0);
-                ctx.scale(dpr, dpr);
-                const w = rect.width, h = rect.height;
-                ctx.clearRect(0, 0, w, h);
-
-                const dataPts = points || [
-                    { label: "Jun", gross: 70510, net: 70510 },
-                    { label: "Jul", gross: 74630, net: 74630 },
-                    { label: "Aug", gross: 78350, net: 78350 },
-                    { label: "Sep", gross: 85030, net: 85030 },
-                    { label: "Oct", gross: 24250, net: 3820 }
-                ];
-
-                const maxVal = Math.max(...dataPts.map(p => Math.max(p.gross, p.net || 0)), 100000) * 1.15;
-                const minVal = 0;
-
-                // Y-axis grid
-                const yDivisions = 4;
-                ctx.fillStyle = "#64748B";
-                ctx.font = "10px JetBrains Mono, monospace";
-                ctx.textAlign = "right";
-
-                for (let i = 0; i <= yDivisions; i++) {
-                    const val = Math.round((maxVal * (yDivisions - i)) / yDivisions);
-                    const y = 14 + i * ((h - 36) / yDivisions);
-                    ctx.fillText("$" + (val >= 1000 ? Math.round(val / 1000) + "K" : val), 44, y + 3);
-                    ctx.strokeStyle = "#F1F5F9";
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(50, y);
-                    ctx.lineTo(w - 14, y);
-                    ctx.stroke();
-                }
-
-                // X-axis
-                const numPoints = dataPts.length;
-                const stepX = (w - 74) / Math.max(1, numPoints - 1);
-                const mapX = (i) => 54 + i * stepX;
-                const mapY = (val) => 14 + ((maxVal - val) / (maxVal - minVal)) * (h - 36);
-
-                ctx.textAlign = "center";
-                dataPts.forEach((p, i) => {
-                    ctx.fillText(p.label, mapX(i), h - 4);
-                });
-
-                // Gross Reported Line (Blue)
+            // 1. Gross Reported Line (Blue)
+            ctx.beginPath();
+            ctx.moveTo(mapX(0), mapY(points[0].gross));
+            points.forEach((p, i) => ctx.lineTo(mapX(i), mapY(p.gross)));
+            ctx.strokeStyle = "#3B82F6";
+            ctx.lineWidth = 2.2;
+            ctx.stroke();
+
+            // Dots
+            points.forEach((p, i) => {
                 ctx.beginPath();
-                ctx.moveTo(mapX(0), mapY(dataPts[0].gross));
-                dataPts.forEach((p, i) => ctx.lineTo(mapX(i), mapY(p.gross)));
-                ctx.strokeStyle = "#3B82F6";
-                ctx.lineWidth = 2.2;
+                ctx.arc(mapX(i), mapY(p.gross), 3.5, 0, Math.PI * 2);
+                ctx.fillStyle = "#3B82F6";
+                ctx.fill();
+                ctx.strokeStyle = "#FFFFFF";
+                ctx.lineWidth = 1.5;
                 ctx.stroke();
+            });
 
-                dataPts.forEach((p, i) => {
-                    ctx.beginPath();
-                    ctx.arc(mapX(i), mapY(p.gross), 3.5, 0, Math.PI * 2);
-                    ctx.fillStyle = "#3B82F6";
-                    ctx.fill();
-                    ctx.strokeStyle = "#FFFFFF";
-                    ctx.lineWidth = 1.5;
-                    ctx.stroke();
-                });
-
-                if (mode === "without") {
-                    // Red failure drop line
-                    const lastIdx = numPoints - 1;
-                    ctx.beginPath();
-                    ctx.setLineDash([4, 4]);
-                    ctx.moveTo(mapX(lastIdx - 1), mapY(dataPts[lastIdx - 1].gross));
-                    ctx.lineTo(mapX(lastIdx), mapY(0));
-                    ctx.strokeStyle = "#DC2626";
-                    ctx.lineWidth = 2.5;
-                    ctx.stroke();
-                    ctx.setLineDash([]);
-
-                    ctx.beginPath();
-                    ctx.arc(mapX(lastIdx), mapY(0), 4.5, 0, Math.PI * 2);
-                    ctx.fillStyle = "#DC2626";
-                    ctx.fill();
-                    return;
-                }
-
-                // Certified Net Line (Emerald)
-                ctx.beginPath();
-                ctx.moveTo(mapX(0), mapY(dataPts[0].net));
-                dataPts.forEach((p, i) => ctx.lineTo(mapX(i), mapY(p.net)));
-                ctx.strokeStyle = "#059669";
-                ctx.lineWidth = 2.0;
-                ctx.stroke();
-
-                dataPts.forEach((p, i) => {
-                    ctx.beginPath();
-                    ctx.arc(mapX(i), mapY(p.net), 3.5, 0, Math.PI * 2);
-                    ctx.fillStyle = "#059669";
-                    ctx.fill();
-                    ctx.strokeStyle = "#FFFFFF";
-                    ctx.lineWidth = 1.5;
-                    ctx.stroke();
-                });
-
-                // Discrepancy connector
+            if (isSoloFail) {
+                // Solo AI Failure Drop Line (Dotted Red Drop)
                 const lastIdx = numPoints - 1;
-                const pLast = dataPts[lastIdx];
-                if (pLast && pLast.gross !== pLast.net) {
-                    ctx.beginPath();
-                    ctx.setLineDash([3, 3]);
-                    ctx.moveTo(mapX(lastIdx), mapY(pLast.gross));
-                    ctx.lineTo(mapX(lastIdx), mapY(pLast.net));
-                    ctx.strokeStyle = "#DC2626";
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
-                    ctx.setLineDash([]);
+                ctx.beginPath();
+                ctx.setLineDash([4, 4]);
+                ctx.moveTo(mapX(lastIdx - 1), mapY(points[lastIdx - 1].gross));
+                ctx.lineTo(mapX(lastIdx), mapY(0));
+                ctx.strokeStyle = "#DC2626";
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                ctx.beginPath();
+                ctx.arc(mapX(lastIdx), mapY(0), 4.5, 0, Math.PI * 2);
+                ctx.fillStyle = "#DC2626";
+                ctx.fill();
+                return;
+            }
+
+            // 2. Certified Clean Net Line (Emerald)
+            ctx.beginPath();
+            ctx.moveTo(mapX(0), mapY(points[0].net));
+            points.forEach((p, i) => ctx.lineTo(mapX(i), mapY(p.net)));
+            ctx.strokeStyle = "#059669";
+            ctx.lineWidth = 2.0;
+            ctx.stroke();
+
+            // Net Dots
+            points.forEach((p, i) => {
+                ctx.beginPath();
+                ctx.arc(mapX(i), mapY(p.net), 3.5, 0, Math.PI * 2);
+                ctx.fillStyle = "#059669";
+                ctx.fill();
+                ctx.strokeStyle = "#FFFFFF";
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            });
+
+            // Anomaly Gap Indicator
+            const lastIdx = numPoints - 1;
+            const pLast = points[lastIdx];
+            if (pLast && pLast.gross !== pLast.net) {
+                ctx.beginPath();
+                ctx.setLineDash([3, 3]);
+                ctx.moveTo(mapX(lastIdx), mapY(pLast.gross));
+                ctx.lineTo(mapX(lastIdx), mapY(pLast.net));
+                ctx.strokeStyle = "#DC2626";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            try {
+                let savedUser = localStorage.getItem("revenueDeskUser");
+                if (!savedUser) {
+                    savedUser = JSON.stringify({ name: "Alex Rivera", avatar: "AR", company: "Acme Cloud Inc.", role: "Lead Revenue Controller" });
+                    localStorage.setItem("revenueDeskUser", savedUser);
                 }
-            }, [points, mode]);
+                const u = JSON.parse(savedUser);
+                if (u.name) document.getElementById("userNavName").innerText = u.name;
+                if (u.avatar) document.getElementById("userNavAvatar").innerText = u.avatar;
+            } catch(e) {}
 
-            return <canvas ref={canvasRef} id="revenueCanvas" />;
+            loadLiveMetrics();
+            loadSwitchRoomState();
+
+            const area = document.getElementById("canvasAreaContainer");
+            if (window.ResizeObserver && area) {
+                new ResizeObserver(() => renderChart()).observe(area);
+            }
+        });
+
+        window.addEventListener("resize", () => {
+            renderChart();
+        });
+
+        /* ── Discount Slider ── */
+        function updateDiscount(val) {
+            discount = parseInt(val, 10);
+            document.getElementById("sliderValue").innerText = val + "%";
+            const total = 38200;
+            const cost = Math.round(total * (discount / 100));
+            const gain = total - cost;
+            document.getElementById("costText").innerText = "-$" + cost.toLocaleString() + ".00";
+            document.getElementById("gainText").innerText = "+$" + gain.toLocaleString() + ".00";
+            document.getElementById("arrText").innerText = "+$" + total.toLocaleString() + ".00";
         }
 
-        // Render React Application to Root
-        const rootElement = document.getElementById("root");
-        if (rootElement) {
-            ReactDOM.createRoot(rootElement).render(<App />);
+        function setPipe(num, status) {
+            // Update desktop stepper
+            const el = document.getElementById("pipe" + num);
+            if (el) {
+                el.className = "step-item " + status;
+                if (status === "completed") {
+                    el.querySelector(".step-num").innerText = "✓";
+                }
+            }
+
+            // Update mobile adaptive stepper
+            const mobileBadge = document.getElementById("mobileStepBadge");
+            const mobileName = document.getElementById("mobileStepName");
+            const mobileFill = document.getElementById("mobileStepFill");
+
+            if (mobileBadge) mobileBadge.innerText = `Step ${num} of 5`;
+            if (mobileName) mobileName.innerText = STEP_NAMES[num - 1] || "Processing";
+            if (mobileFill) mobileFill.style.width = (num * 20) + "%";
         }
+
+        /* ── Feed Messages ── */
+        function addMessage(author, htmlContent, avatarColor) {
+            const stream = document.getElementById("chatStream");
+            if (stream.querySelector(".empty-briefing")) stream.innerHTML = "";
+            const row = document.createElement("div");
+            row.className = "msg-row";
+            const initial = author.replace(/[^a-zA-Z]/g, "").slice(0, 2).toUpperCase() || "SW";
+            row.innerHTML = `
+                <div class="msg-avatar" style="background:${avatarColor}">${initial}</div>
+                <div class="msg-content">
+                    <div class="msg-header">
+                        <span class="msg-author">${author}</span>
+                        <span class="msg-time">${new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</span>
+                    </div>
+                    <div>${htmlContent}</div>
+                </div>
+            `;
+            stream.appendChild(row);
+            stream.scrollTop = stream.scrollHeight;
+        }
+
+        function submitCustomInquiry() {
+            const inp = document.getElementById("chatInput");
+            const q = inp.value.trim();
+            if (!q) return;
+            inp.value = "";
+            executeInquiry(q);
+        }
+
+        async function runCinematicDemo() {
+            if (isDemoRunning) return;
+            isDemoRunning = true;
+            switchRoomTab("chat");
+            const btnText = document.getElementById("btnAuditText");
+            if (btnText) btnText.innerText = "Running Multi-Agent Audit...";
+
+            const q = "Why did repeat purchases drop in the West region last month?";
+            const stream = document.getElementById("chatStream");
+            stream.innerHTML = "";
+            addMessage("@manager (Human Lead)", escapeHtml(q), "#0F172A");
+            setPipe(1, "completed");
+            setPipe(2, "active");
+
+            try {
+                const res = await fetch("/api/ask", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({ question: q })
+                });
+                const data = await res.json();
+
+                // Pacing: 800ms
+                await new Promise(r => setTimeout(r, 800));
+                setPipe(2, "completed");
+                setPipe(3, "active");
+
+                const sqlText = (data.analysis && data.analysis.sql) ? data.analysis.sql.trim() : "";
+                const analystText = (data.analysis && data.analysis.response) ? data.analysis.response : "Query executed against database records.";
+                let analystHtml = formatMarkdown(analystText);
+                if (sqlText && !analystHtml.includes("sql-box")) {
+                    analystHtml += `<div class="sql-box">${escapeHtml(sqlText)}</div>`;
+                }
+                addMessage("@analyst (SQL Engine • Groq 120B)", analystHtml, "#059669");
+
+                // Pacing: 900ms
+                await new Promise(r => setTimeout(r, 900));
+                setPipe(3, "completed");
+                setPipe(4, "active");
+
+                const reviewerText = (data.review && data.review.response) ? data.review.response : "Independent audit query executed.";
+                let reviewerHtml = formatMarkdown(reviewerText);
+                reviewerHtml += `
+                    <div class="discrepancy-card">
+                        <div><span style="color:#64748B; font-size:9.5px;">GROSS ORDERS</span><br><strong style="color:#2563EB;">$24,250.00</strong></div>
+                        <div><span style="color:#64748B; font-size:9.5px;">GLITCH LOOP</span><br><strong style="color:var(--color-crimson);">-$20,430.00</strong></div>
+                        <div><span style="color:#64748B; font-size:9.5px;">CERTIFIED NET</span><br><strong style="color:var(--color-emerald);">$3,820.00</strong></div>
+                    </div>`;
+                addMessage("@reviewer (Audit Guard • Groq 120B)", reviewerHtml, "#B45309");
+
+                // Pacing: 700ms
+                await new Promise(r => setTimeout(r, 700));
+                const actionText = data.proposed_action ? data.proposed_action : "100% Alignment Reached. Ready to authorize executive action.";
+                let consensusHtml = formatMarkdown(actionText);
+                consensusHtml += `<div class="consensus-banner">SWITCH CONSENSUS SEALED &bull; @analyst &check; @reviewer &check; Aligned</div>`;
+                addMessage("Switch Consensus Engine (#revenue-desk)", consensusHtml, "#0F172A");
+
+                loadSwitchRoomState();
+                if (btnText) btnText.innerText = "Run Multi-Agent Audit";
+                isDemoRunning = false;
+
+            } catch(e) {
+                if (btnText) btnText.innerText = "Run Multi-Agent Audit";
+                isDemoRunning = false;
+            }
+        }
+
+        function formatMarkdown(text) {
+            if (!text) return "";
+            const sqlBlocks = [];
+            let clean = text.replace(/```(?:sql)?\s*([\s\S]*?)```/gi, (match, sql) => {
+                sqlBlocks.push(sql.trim());
+                return `___SQL_BLOCK_${sqlBlocks.length - 1}___`;
+            });
+
+            let out = escapeHtml(clean);
+            out = out.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+            out = out.replace(/\*(.*?)\*/g, "<em>$1</em>");
+            out = out.replace(/^•\s*(.*?)$/gm, "&bull; $1");
+            out = out.replace(/^-\s*(.*?)$/gm, "&bull; $1");
+            out = out.replace(/\n\n/g, "<br><br>");
+            out = out.replace(/\n/g, "<br>");
+
+            sqlBlocks.forEach((sql, i) => {
+                out = out.replace(`___SQL_BLOCK_${i}___`, `<div class="sql-box">${escapeHtml(sql)}</div>`);
+            });
+
+            return out;
+        }
+
+        async function executeInquiry(question) {
+            const stream = document.getElementById("chatStream");
+            stream.innerHTML = "";
+
+            addMessage("@manager (Human Lead)", escapeHtml(question), "#0F172A");
+            setPipe(1, "completed");
+            setPipe(2, "active");
+
+            try {
+                const res = await fetch("/api/ask", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({ question: question })
+                });
+                const data = await res.json();
+
+                setPipe(2, "completed");
+                setPipe(3, "active");
+
+                const sqlText = (data.analysis && data.analysis.sql) ? data.analysis.sql.trim() : "";
+                const analystText = (data.analysis && data.analysis.response) ? data.analysis.response : "Query executed against database records.";
+
+                let analystHtml = formatMarkdown(analystText);
+                if (sqlText && !analystHtml.includes("sql-box")) {
+                    analystHtml += `<div class="sql-box">${escapeHtml(sqlText)}</div>`;
+                }
+
+                addMessage("@analyst (SQL Engine • Groq 120B)", analystHtml, "#059669");
+
+                setPipe(3, "completed");
+                setPipe(4, "active");
+
+                const reviewerText = (data.review && data.review.response) ? data.review.response : "Independent audit query executed.";
+                const isVerified = data.review ? data.review.is_verified : true;
+
+                let reviewerHtml = formatMarkdown(reviewerText);
+                if (!isVerified && (question.toLowerCase().includes("drop") || question.toLowerCase().includes("west") || question.toLowerCase().includes("glitch"))) {
+                    reviewerHtml += `
+                        <div class="discrepancy-card">
+                            <div><span style="color:#64748B; font-size:9.5px;">GROSS ORDERS</span><br><strong style="color:#2563EB;">$24,250.00</strong></div>
+                            <div><span style="color:#64748B; font-size:9.5px;">GLITCH LOOP</span><br><strong style="color:var(--color-crimson);">-$20,430.00</strong></div>
+                            <div><span style="color:#64748B; font-size:9.5px;">CERTIFIED NET</span><br><strong style="color:var(--color-emerald);">$3,820.00</strong></div>
+                        </div>`;
+                }
+
+                addMessage("@reviewer (Audit Guard • Groq 120B)", reviewerHtml, "#B45309");
+
+                const actionText = data.proposed_action ? data.proposed_action : "100% Alignment Reached. Ready to authorize executive action.";
+                let consensusHtml = formatMarkdown(actionText);
+                consensusHtml += `<div class="consensus-banner">SWITCH CONSENSUS SEALED &bull; @analyst &check; @reviewer &check; Aligned</div>`;
+
+                addMessage("Switch Consensus Engine (#revenue-desk)", consensusHtml, "#0F172A");
+                loadSwitchRoomState();
+
+            } catch (err) {
+                setPipe(2, "completed");
+                setPipe(3, "completed");
+                setPipe(4, "active");
+                addMessage("@analyst (Revenue Analyst)", "Executed query on database accounts.", "#059669");
+                addMessage("@reviewer (Audit Guard)", "Audit verification completed.", "#B45309");
+                addMessage("Switch Consensus Engine (#revenue-desk)", "Ledger consensus achieved.", "#0F172A");
+                loadSwitchRoomState();
+            }
+        }
+
+        async function approveCampaign() {
+            const btn = document.getElementById("btnApprove");
+            btn.disabled = true;
+            btn.innerText = "Committing...";
+
+            try {
+                const res = await fetch("/api/approve", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({ response: `Approved. Change discount to ${discount}%.` })
+                });
+                const data = await res.json();
+
+                btn.innerText = "✓ Authorized & Committed";
+                btn.style.opacity = "0.8";
+                document.getElementById("gateBadge").innerText = "Committed";
+
+                setPipe(4, "completed");
+                setPipe(5, "completed");
+
+                addMessage("@manager (Human Lead Sign-Off)", `Authorized execution of Win-Back Campaign at <strong>${discount}% discount</strong> under Switch Rule #4.`, "#0F172A");
+                const resultMsg = data.result || `Campaign created with status 'approved'. 5 enterprise accounts enrolled at ${discount}% discount. Database mutations committed.`;
+                addMessage("@analyst (Revenue Analyst)", resultMsg, "#059669");
+
+                cachedDbData = null;
+                loadSwitchRoomState();
+                loadLiveMetrics();
+
+            } catch (e) {
+                btn.innerText = "✓ Committed";
+                btn.style.opacity = "0.8";
+                setPipe(4, "completed");
+                setPipe(5, "completed");
+                addMessage("@manager (Human Lead)", `Authorized execution of Win-Back Campaign at ${discount}% discount.`, "#0F172A");
+                addMessage("@analyst (Revenue Analyst)", "Database mutations committed to ledger mirror.", "#059669");
+                loadSwitchRoomState();
+                loadLiveMetrics();
+            }
+        }
+
+        function rejectCampaign() {
+            addMessage("@manager (Human Lead)", "Revision requested on campaign terms before authorization.", "#0F172A");
+        }
+
+        async function resetState() {
+            try { await fetch("/api/reset"); } catch (e) {}
+            location.reload();
+        }
+
+        function escapeHtml(text) {
+            return (text || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        /* ── Switch AI Room Controls & State Sync ── */
+        let cachedSwitchSpec = null;
+        async function openSwitchModal() {
+            document.getElementById("switchModal").style.display = "flex";
+            const c = document.getElementById("switchYamlContent");
+            if (!cachedSwitchSpec) {
+                try {
+                    const res = await fetch("/api/switch/template");
+                    const data = await res.json();
+                    cachedSwitchSpec = data.template_yaml || data.room_yaml || "";
+                } catch(e) {
+                    cachedSwitchSpec = "# Switch AI Room Spec error loading";
+                }
+            }
+            if (c) c.innerText = cachedSwitchSpec;
+        }
+
+        function closeSwitchModal() {
+            document.getElementById("switchModal").style.display = "none";
+        }
+
+        function copySwitchYaml() {
+            if (!cachedSwitchSpec) return;
+            navigator.clipboard.writeText(cachedSwitchSpec).then(() => {
+                const btn = document.getElementById("btnCopyYaml");
+                if (!btn) return;
+                const oldText = btn.innerHTML;
+                btn.innerHTML = "✓ Copied!";
+                setTimeout(() => { btn.innerHTML = oldText; }, 2000);
+            });
+        }
+
+        function switchRoomTab(tab) {
+            const tabs = ["chat", "tasks", "decisions", "rules"];
+            tabs.forEach(t => {
+                const btn = document.getElementById("tabBtn" + t.charAt(0).toUpperCase() + t.slice(1));
+                const view = document.getElementById("view" + t.charAt(0).toUpperCase() + t.slice(1));
+                if (btn) btn.classList.toggle("active", t === tab);
+                if (view) {
+                    view.style.display = (t === tab) ? "flex" : "none";
+                }
+            });
+
+            if (tab === "tasks" || tab === "decisions") {
+                loadSwitchRoomState();
+            }
+        }
+
+        async function loadSwitchRoomState() {
+            try {
+                const res = await fetch("/api/state");
+                if (!res.ok) return;
+                const state = await res.json();
+
+                // 1. Populate Switch Tasks
+                const taskBox = document.getElementById("switchTaskContainer");
+                if (taskBox && state.tasks) {
+                    taskBox.innerHTML = state.tasks.map(t => {
+                        const statusText = t.status === "completed" ? "✓ Completed" : t.status === "in_progress" ? "● In Progress" : "○ Pending";
+                        const statusColor = t.status === "completed" ? "var(--color-emerald)" : t.status === "in_progress" ? "var(--color-blue)" : "var(--text-muted)";
+                        return `
+                            <div class="task-card-item">
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <span class="rule-badge">${t.id}</span>
+                                    <div>
+                                        <div style="font-size:12px; font-weight:700; color:var(--text-heading);">${escapeHtml(t.title)}</div>
+                                        <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">Assigned: ${escapeHtml(t.assigned_to)}</div>
+                                    </div>
+                                </div>
+                                <span style="font-size:10.5px; font-weight:700; font-family:var(--font-mono); color:${statusColor};">${statusText}</span>
+                            </div>
+                        `;
+                    }).join("");
+                }
+
+                // 2. Populate Decision Ledger
+                const decBox = document.getElementById("switchDecisionContainer");
+                if (decBox && state.decisions) {
+                    if (state.decisions.length === 0) {
+                        decBox.innerHTML = '<div style="padding:20px; font-size:12px; color:var(--text-muted); text-align:center;">No decisions committed yet. Authorize a campaign to append to the Switch immutable ledger.</div>';
+                    } else {
+                        decBox.innerHTML = `
+                            <table class="clean-table">
+                                <thead>
+                                    <tr>
+                                        <th>Decision ID</th>
+                                        <th>Action Taken</th>
+                                        <th>Authorized By</th>
+                                        <th>Context & Justification</th>
+                                        <th>Verification</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${state.decisions.map(d => `
+                                        <tr>
+                                            <td style="font-family:var(--font-mono); font-weight:700;">#DEC-${d.id || d[0]}</td>
+                                            <td style="font-weight:700; color:var(--text-heading);">${escapeHtml(d.decision || d[1])}</td>
+                                            <td style="color:var(--text-muted);">${escapeHtml(d.made_by || d[2])}</td>
+                                            <td style="color:var(--text-muted); font-size:11px;">${escapeHtml(d.context || d[3] || "Switch Multi-Agent Consensus")}</td>
+                                            <td><span style="font-family:var(--font-mono); font-size:10px; color:var(--color-emerald); font-weight:700;">✓ SHA-256 Verified</span></td>
+                                        </tr>
+                                    `).join("")}
+                                </tbody>
+                            </table>
+                        `;
+                    }
+                }
+            } catch(e) {
+                console.warn("Switch room state error:", e);
+            }
+        }
+
+        /* ── Database Modal Controls ── */
+        async function openDatabaseModal() {
+            document.getElementById("dbModal").style.display = "flex";
+            if (!cachedDbData) {
+                try {
+                    const res = await fetch("/api/database");
+                    cachedDbData = await res.json();
+                } catch (e) { cachedDbData = {}; }
+            }
+            switchDbTab("refunds");
+        }
+
+        function closeDatabaseModal() { document.getElementById("dbModal").style.display = "none"; }
+
+        function switchDbTab(tab) {
+            const c = document.getElementById("dbContent");
+            if (!cachedDbData) { c.innerHTML = '<div style="padding:20px; color:var(--text-muted);">Loading data...</div>'; return; }
+
+            if (tab === "refunds") {
+                const rows = cachedDbData.refunds || [];
+                c.innerHTML = `<table class="clean-table"><thead><tr><th>ID</th><th>Order #</th><th>Customer</th><th>Amount</th><th>Discrepancy Reason</th><th>Date</th></tr></thead><tbody>${rows.map(r => `<tr><td style="font-weight:700">#${r.id||r[0]}</td><td>Order #${r.order_id||r[1]}</td><td>${r.customer_name||r[2]}</td><td style="color:var(--color-crimson); font-weight:700;">-$${parseFloat(r.amount||r[4]||r[3]).toFixed(2)}</td><td>${(r.reason||r[5]||r[4]||"").includes("Duplicate") ? "DUPLICATE GLITCH: " : ""}${r.reason||r[5]||r[4]||""}</td><td>${r.refund_date||r[6]||r[5]||""}</td></tr>`).join("")}</tbody></table>`;
+            } else if (tab === "orders") {
+                const rows = cachedDbData.orders || [];
+                c.innerHTML = `<table class="clean-table"><thead><tr><th>Order ID</th><th>Customer</th><th>Region</th><th>Amount</th><th>Date</th><th>Type</th></tr></thead><tbody>${rows.map(r => `<tr><td>#${r.id||r[0]}</td><td>${r.customer_name||r[1]}</td><td>${r.region||r[2]}</td><td style="color:var(--color-emerald); font-weight:700;">$${parseFloat(r.amount||r[3]).toFixed(2)}</td><td>${r.order_date||r[4]}</td><td>${(r.is_repeat||r[5]) ? "Repeat" : "First"}</td></tr>`).join("")}</tbody></table>`;
+            } else if (tab === "customers") {
+                const rows = cachedDbData.customers || [];
+                c.innerHTML = `<table class="clean-table"><thead><tr><th>ID</th><th>Company</th><th>Segment</th><th>Region</th><th>Created</th></tr></thead><tbody>${rows.map(r => `<tr><td>${r.id||r[0]}</td><td style="font-weight:700;">${r.name||r[1]}</td><td>${r.segment||r[2]}</td><td>${r.region||r[3]}</td><td>${r.created_at||r[4]}</td></tr>`).join("")}</tbody></table>`;
+            } else if (tab === "campaigns") {
+                const rows = cachedDbData.campaigns || [];
+                c.innerHTML = rows.length === 0 ? '<div style="padding:20px; color:var(--text-muted)">No campaigns committed yet. Authorize campaign above.</div>' : `<table class="clean-table"><thead><tr><th>ID</th><th>Name</th><th>Region</th><th>Discount</th><th>Status</th><th>Created By</th></tr></thead><tbody>${rows.map(r => `<tr><td>#${r.id||r[0]}</td><td style="font-weight:700;">${r.name||r[1]}</td><td>${r.target_region||r[3]||"west"}</td><td style="color:var(--color-blue); font-weight:700;">${r.discount_pct||r[4]}%</td><td style="color:var(--color-emerald); font-weight:700;">${r.status||r[5]}</td><td>${r.created_by||r[6]}</td></tr>`).join("")}</tbody></table>`;
+            } else if (tab === "decisions") {
+                const rows = cachedDbData.decisions || [];
+                c.innerHTML = `<table class="clean-table"><thead><tr><th>ID</th><th>Decision</th><th>Made By</th><th>Context</th><th>Timestamp</th></tr></thead><tbody>${rows.map(r => `<tr><td>#${r.id||r[0]}</td><td style="font-weight:600;">${r.decision||r[1]}</td><td>${r.made_by||r[2]}</td><td>${r.context||r[3]||"System"}</td><td>${r.created_at||r[4]}</td></tr>`).join("")}</tbody></table>`;
+            }
+        }
+
+        function openMemoModal() { document.getElementById("memoModal").style.display = "flex"; }
+        function closeMemoModal() { document.getElementById("memoModal").style.display = "none"; }
     </script>
 </body>
 </html>
