@@ -226,7 +226,7 @@ python3 app.py
 # 3. Open in your browser
 open http://localhost:8000
 
-# 4. Run the automated test suite (11/11 tests pass in 1.2s)
+# 4. Run the automated test suite (17/17 tests pass in 2.5s)
 python3 -m unittest discover tests -v
 ```
 

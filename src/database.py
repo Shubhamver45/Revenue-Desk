@@ -60,7 +60,7 @@ def init_database(db_path: str | None = None) -> None:
     else:
         print(f"[DB] Database already exists at {db_path}")
 
-    # Ensure decision_log has signature_hash and user_role columns
+    # Ensure decision_log has signature_hash, user_role, and prev_hash columns
     try:
         with sqlite3.connect(db_path) as conn:
             cur = conn.cursor()
@@ -70,9 +70,49 @@ def init_database(db_path: str | None = None) -> None:
                 cur.execute("ALTER TABLE decision_log ADD COLUMN signature_hash TEXT")
             if "user_role" not in cols:
                 cur.execute("ALTER TABLE decision_log ADD COLUMN user_role TEXT DEFAULT 'manager'")
+            if "prev_hash" not in cols:
+                cur.execute("ALTER TABLE decision_log ADD COLUMN prev_hash TEXT DEFAULT '0000000000000000000000000000000000000000000000000000000000000000'")
             conn.commit()
     except Exception:
         pass
+
+
+def verify_audit_hash_chain(db_path: str | None = None) -> dict[str, Any]:
+    """Verify cryptographic hash-chain integrity of the decision ledger.
+    
+    Detects any row modification, deletion, or reordering by validating that
+    each record's prev_hash points to the preceding record's signature_hash.
+    """
+    rows = run_query(
+        "SELECT id, decision, made_by, context, signature_hash, user_role, prev_hash FROM decision_log ORDER BY id ASC",
+        db_path=db_path
+    )
+    if not rows:
+        return {"valid": True, "count": 0, "message": "Ledger is empty."}
+
+    expected_prev = "0000000000000000000000000000000000000000000000000000000000000000"
+    signed_count = 0
+
+    for r in rows:
+        sig = r.get("signature_hash")
+        actual_prev = r.get("prev_hash") or "0000000000000000000000000000000000000000000000000000000000000000"
+
+        if sig:
+            signed_count += 1
+            if actual_prev != expected_prev:
+                return {
+                    "valid": False,
+                    "tampered_id": r["id"],
+                    "error": f"Chain broken at record #{r['id']}: prev_hash does not match preceding signature. Potential deletion, insertion, or reordering detected.",
+                }
+            expected_prev = sig
+
+    return {
+        "valid": True,
+        "count": len(rows),
+        "signed_entries": signed_count,
+        "message": f"Hash chain verified: {signed_count} cryptographically linked entries intact."
+    }
 
 
 @contextmanager

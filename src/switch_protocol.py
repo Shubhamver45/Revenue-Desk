@@ -299,3 +299,4 @@ class SwitchUnavailableError(RuntimeError):
 
 # Global singleton instance
 switch_engine = SwitchProtocolEngine()
+

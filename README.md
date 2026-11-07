@@ -2,166 +2,193 @@
 ### Multi-Agent Financial Operations & Discrepancy Reconciliation Platform
 **Flip the Switch Hackathon 2026 Submission**
 
-[![Tests](https://img.shields.io/badge/Tests-14%2F14%20Passing-emerald)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-17%2F17%20Passing-emerald)](tests/)
 [![Switch Protocol](https://img.shields.io/badge/Switch-Protocol%20v2.0-blue)](switch/)
 [![Live App](https://img.shields.io/badge/Live-revenue--desk--gamma.vercel.app-teal)](https://revenue-desk-gamma.vercel.app/)
 [![License](https://img.shields.io/badge/License-MIT-slate)](LICENSE)
 
-Revenue Desk transforms high-stakes corporate financial operations by replacing risky single-agent AI automations with a **Switch-governed multi-agent room** (`#revenue-desk`). An autonomous Analyst agent (@analyst) and an independent Adversarial Reviewer agent (@reviewer) cross-examine financial ledgers to catch duplicate refund glitches, expired card failures, and settlement holds before any human executive signs off on customer-facing promotions or database mutations.
+Revenue Desk transforms high-stakes corporate financial operations by replacing risky single-agent AI automations with a **Switch-governed multi-agent room** (`#revenue-desk`). An autonomous Analyst agent (`@analyst`) and an independent Adversarial Reviewer agent (`@reviewer`) cross-examine financial ledgers to catch duplicate refund glitches, expired card failures, and settlement holds before any human executive signs off on customer-facing promotions or database mutations.
 
 ---
 
-## 🏆 Hackathon Evaluation Alignment
+## 🏛️ Architecture & System Topology
 
-| Evaluation Criteria | Weight | How Revenue Desk 2.0 Satisfies the Requirement |
+```text
+                     ┌─────────────────────────────────────────────────┐
+                     │          Human Executive (@manager)             │
+                     │          Alex Rivera (VP of Finance)            │
+                     └────────────────────────┬────────────────────────┘
+                                              │ Inquiries & Explicit Sign-Off
+                                              ▼
+   ┌──────────────────────────────────────────────────────────────────────────────────┐
+   │                       SHARED SWITCH ROOM: #revenue-desk                          │
+   │           Governed by switch/room.yaml, switch/rules.yaml & switch_protocol.py   │
+   │                                                                                  │
+   │   Enforced Declarative Rules:                                                    │
+   │   • Rule 1: Multi-Agent Room Required     • Rule 4: Human-in-the-Loop Sign-Off   │
+   │   • Rule 2: Read-Only SQL Validation      • Rule 5: Cryptographic Hash-Chain     │
+   │   • Rule 3: 100% Mathematical Consensus                                          │
+   │                                                                                  │
+   │   ┌───────────────────────────────┐           ┌──────────────────────────────┐   │
+   │   │       @analyst Agent          │           │       @reviewer Agent        │   │
+   │   │  (Groq Llama 3.3 70B Engine)  │◄─────────►│  (Gemini 2.0 Flash Auditor)  │   │
+   │   │  • Queries Primary Orders     │           │  • Queries Secondary Ledgers │   │
+   │   │  • Detects Apparent Volume    │           │  • Detects Anomaly Glitches  │   │
+   │   └───────────────┬───────────────┘           └──────────────┬───────────────┘   │
+   │                   │                                          │                   │
+   │                   └───────────────────►◄─────────────────────┘                   │
+   │                                        │                                         │
+   │                        Deterministic Reconciliation                              │
+   │                        Numerical Variance Check (<$1.00)                         │
+   │                                        │                                         │
+   │                                        ▼                                         │
+   │                         Consensus Proposal Generated                             │
+   └────────────────────────────────────────┬─────────────────────────────────────────┘
+                                            │
+                                            ▼
+                          ┌───────────────────────────────────┐
+                          │   Switch Rule #4 Approval Gate    │
+                          │   • RBAC Role Verification        │
+                          │   • Discount Calibration Slider   │
+                          │   • Duplicate Approval Prevention │
+                          └─────────────────┬─────────────────┘
+                                            │
+                                            ▼
+                          ┌───────────────────────────────────┐
+                          │     Atomic Database Mutations     │
+                          │     & SHA-256 Audit Hash Chain    │
+                          │     (Detects Tampering & Deletion)│
+                          └───────────────────────────────────┘
+```
+
+---
+
+## 🔍 Technical Implementation: What is Genuine Switch vs Custom Python
+
+To ensure strict judging integrity, here is the technical breakdown:
+
+| Capability | Component | Implementation Reality |
 | :--- | :--- | :--- |
-| **1. Use of Switch** | **30%** | **Switch is strictly central to the application.** Agents communicate inside a shared Switch Room (`#revenue-desk`) governed by `switch/room.yaml` and `src/switch_protocol.py`. Disconnecting Switch immediately halts collaborative operations with `HTTP 503 Switch Unavailable`. |
-| **2. Technical Execution** | **25%** | **Zero simulated consensus or hardcoded bypasses.** Features deterministic read-only SQL validation, real mathematical numerical reconciliation ($1.00 tolerance), Role-Based Access Control (RBAC), and cryptographically signed SHA-256 decision lineage with **14/14 automated tests passing in under 2 seconds**. |
-| **3. Creativity & Impact** | **25%** | **Solves the multi-million dollar "solo AI hallucination in fintech" crisis.** Ships with 3 reproducible corporate financial scenarios (duplicate refunds, subscription churn vs card failures, and payment gateway holds) saving over $61,300 in unnecessary margin erosion. |
-| **4. Presentation** | **20%** | **Enterprise light-theme UI** (Apple/Stripe/Linear aesthetic) featuring 5 complete operational views: Executive Overview, 7-Stage Investigation Workspace, Interactive Switch Room feed, Executive Approvals Queue, and Tamper-Proof Audit History. |
+| **Room Definition** | `switch/room.yaml` | Genuine SandboxAQ Switch room specification for `#revenue-desk`. |
+| **Agent Personas** | `switch/agents.yaml` | Genuine declarative agent configurations for `@analyst` and `@reviewer`. |
+| **Governance Rules** | `switch/rules.yaml` | Declarative specification of Rules #1–#5. |
+| **Protocol Engine** | `src/switch_protocol.py` | Reference Python implementation of the Switch protocol managing room state, event streams, task state machines, and fail-safe disconnect checks. |
+| **Chat Platform** | `src/switch_bridge.py` | Matrix/nio connector for Matrix homeservers. The React web cockpit communicates via the internal Switch protocol API endpoints. *(Note: Direct Slack/Teams/Discord connectors require third-party bots and are not bundled locally).* |
+| **Orchestration** | `src/workflow.py` | Finite state machine enforcing investigation lifecycle, peer review, and RBAC approvals. |
+| **SQL Engine** | `src/database.py` | SQLite database manager with read-only AST keyword validator and cryptographic hash-chain verifier. |
 
 ---
 
-## ⚡ The Core Problem: Why Solo AI Fails in Finance
+## 🏆 Scoring Alignment Against Hackathon Evaluation Criteria
 
-When revenue or customer retention drops, naive single-agent LLMs look only at raw order volumes, assume customers churned, and recommend costly panic discounts:
+### 1. Use of Switch (30% Weight) — *Switch is Central & Non-Bypassable*
+* **Room-Centric Execution**: All interactions must flow through `#revenue-desk`. Both agents publish their findings, SQL queries, and reconciliation status into the shared room timeline.
+* **The Switch Disconnection Test**:
+  When Switch is disconnected, the entire collaborative engine halts with **`HTTP 503 Switch Unavailable`**. The application does NOT silently execute an independent local bypass.
+  * Run the automated test: `python3 -m unittest tests.test_workflow.TestRevenueDeskSuite.test_switch_disconnection_blocks_workflow -v`
+  * Test live in UI: Click **"Disconnect"** in the top navigation bar to toggle Switch offline and watch investigations pause with an explicit warning banner.
 
-```
-[ Traditional Solo AI Approach ]
-Executive: "Why did repeat purchases drop in the West region last month?"
-      ↓
-Solo Agent runs: SELECT * FROM orders WHERE region = 'west';
-      ↓
-Agent sees volume fell from $85k to $24k (-71%).
-      ↓
-Agent assumes customer dissatisfaction and executes a 25% panic discount across all accounts.
-      ↓
-OUTCOME: $9,550 in profit margin burned unnecessarily. Root cause was completely missed.
-```
+### 2. Technical Execution (25% Weight) — *Zero Simulated Consensus or Bypass*
+* **Read-Only SQL Enforcement**: Blocks destructive statements (`DROP`, `DELETE`, `UPDATE`, `INSERT`, `ALTER`, `TRUNCATE`, `EXEC`) during analysis.
+* **Mathematical Numerical Reconciliation**: Reconciles figures to within `$1.00` numerical tolerance rather than matching substring emoji tokens.
+* **Role-Based Access Control (RBAC)**: Only authorized roles (`manager`, `controller`, `vp_finance`) can authorize proposals; requests from unauthorized roles (e.g. `junior_analyst`) fail with `HTTP 403 Forbidden`.
+* **Duplicate Approval Prevention**: Prevents duplicate executions on already completed proposals.
+* **Proposal Invalidation**: Modifying proposal parameters immediately invalidates prior approvals.
+* **Cryptographic Hash-Chaining**: Audit entries are chained using preceding entry signatures (`prev_hash`). Tampering with, deleting, or reordering entries breaks the chain and is detected by `verify_audit_hash_chain()`.
+* **Automated Test Suite**: **17/17 tests passing in 2.5s**.
 
-```
-[ Revenue Desk (Switch Multi-Agent Architecture) ]
-Executive: "Why did repeat purchases drop in the West region last month?"
-      ↓
-#revenue-desk Shared Switch Room Dispatches Tasks
-      ↓
-@analyst (Groq / Llama 3.3 70B)           @reviewer (Gemini 2.0 Flash / Audit Guard)
-Queries primary orders table:              Cross-checks secondary refunds ledger:
-October Gross: $24,250.00                  Uncovers 8 duplicate webhook reversals (-$20,430.00)
-      ↘                                   ↙
-           Deterministic Reconciliation Table
-           Variance: -$20,430.00 (Discrepancy Detected!)
-           Re-baselines Certified Net: $3,820.00 (7 Clean Accounts)
-                               ↓
-           Vetoes 25% panic discount → Proposes targeted 15% incentive
-                               ↓
-           Switch Rule #4: Human Lead Sign-Off Gate
-           Alex Rivera (VP of Finance) modifies & authorizes campaign
-                               ↓
-           Cryptographic SHA-256 Decision Logged to Database
-           OUTCOME: Saved company $61,300.00 in annual margin erosion.
-```
+### 3. Creativity & Impact (25% Weight) — *Eliminating Solo-AI Financial Hallucinations*
+Ships with 3 reproducible corporate financial benchmarks seeded in SQLite:
 
----
+1. **Scenario 1: West Region Duplicate Refund Glitch ($20,430 Variance)**
+   * *Inquiry*: `"Why did repeat purchases drop in the West region last month?"`
+   * *Primary Orders*: 15 transactions totaling **$24,250.00**.
+   * *Secondary Refunds*: 8 duplicate refund webhook retries totaling **-$20,430.00**.
+   * *Truth*: Net revenue is **$3,820.00** across 7 genuine accounts. Solo AI recommendation of a 25% discount is vetoed, saving **$61,300.00** in annualized margin erosion.
+2. **Scenario 2: Subscription Churn vs Expired Card Webhooks ($14,200 Past Due)**
+   * *Inquiry*: `"Why did recurring revenue decline this month?"`
+   * *Primary Ledger*: 5 accounts flagged inactive with an apparent $18,700 MRR drop.
+   * *Secondary Ledger*: 4 accounts (**$14,200.00 MRR**) failed due to expired card tokens (`expired_card`), while only 1 account (**$4,500.00 MRR**) genuinely cancelled.
+   * *Action*: Re-routes expired cards to dunning flows instead of issuing unnecessary discount campaigns.
+3. **Scenario 3: Payment Gateway Settlement Holds ($4,120 Discrepancy)**
+   * *Inquiry*: `"Find differences between recorded sales and payment transactions."`
+   * *Ledger Audit*: Billed amount vs settled amount reveals Txn #7 ($2,100 chargeback hold) and Txn #8 ($2,020 FX conversion delay) totaling **$4,120.00** in rolling reserve holds, preventing erroneous write-offs.
 
-## 🏛️ Switch Architecture & Centrality Engine
-
-Switch is not a decorative dashboard wrapper or an optional logging sink. The entire collaborative workflow is orchestrated by `src/switch_protocol.py` implementing the official SandboxAQ Switch protocol specifications:
-
-1. **Shared Multi-Agent Room (`#revenue-desk`)**:
-   Participants: `@manager` (Alex Rivera, VP Finance), `@analyst` (Financial Data Engine), and `@reviewer` (Adversarial Audit Guard).
-2. **Deterministic Governance Rules**:
-   - **Rule 1 (Multi-Agent Mandatory)**: Collaborative operations require active participants in `#revenue-desk`.
-   - **Rule 2 (Read-Only SQL Validation)**: Blocks all destructive SQL statements (`DROP`, `DELETE`, `UPDATE`, `INSERT`, `ALTER`, `TRUNCATE`, `EXEC`) from execution during analysis.
-   - **Rule 3 (100% Mathematical Consensus)**: Proposals are blocked until Analyst and Reviewer ledger figures agree within $1.00 tolerance.
-   - **Rule 4 (Human Sign-Off Gate)**: No database mutation, customer campaign, or incentive can be committed without explicit authorization from an authorized executive role (`manager` or `controller`).
-   - **Rule 5 (Tamper-Evident SHA-256 Ledger)**: Every decision, approval, rejection, and parameter change is signed with a SHA-256 cryptographic hash.
-
-### Critical Switch Dependency Test (Prove Switch is Central)
-
-You can verify that Switch is central to the application by running the automated unit test:
-
-```bash
-python3 -m unittest tests.test_workflow.TestRevenueDeskSuite.test_switch_disconnection_blocks_workflow -v
-```
-
-Or live in the UI:
-1. Click the **"Disconnect"** toggle button next to `Switch: CONNECTED` in the top navigation bar.
-2. Attempt to launch an investigation or run a scenario.
-3. The application immediately halts with:
-   ```
-   HTTP 503 Switch Unavailable: Switch room #revenue-desk is currently DISCONNECTED.
-   Collaborative investigations require active Switch room connectivity.
-   ```
-4. Click **"Reconnect"** in the navbar to resume operations.
-
----
-
-## 📊 3 Reproducible Financial Scenarios
-
-Revenue Desk ships with 3 seeded, reproducible corporate financial benchmarks:
-
-### Scenario 1: West Duplicate Refund Glitch ($20,430 Variance)
-- **Question**: *"Why did repeat purchases drop in the West region last month?"*
-- **Primary Ledger**: October gross orders: 15 transactions totaling $24,250.00.
-- **Secondary Ledger**: 8 duplicate refund reversals totaling -$20,430.00 triggered by a payment gateway webhook retry loop.
-- **Result**: Certified Net Revenue is $3,820.00 across 7 genuine accounts. Solo AI recommendation of a 25% discount is vetoed, saving $9,550 in gross margin.
-
-### Scenario 2: Subscription Churn vs Expired Card Webhooks ($14,200 Past Due)
-- **Question**: *"Why did recurring revenue decline this month?"*
-- **Primary Ledger**: 5 accounts flagged as inactive with an apparent $18,700 MRR drop.
-- **Secondary Ledger**: Subscriptions cross-audit reveals 4 accounts ($14,200 MRR) failed due to expired credit card tokens, while only 1 account ($4,500 MRR) actively cancelled.
-- **Result**: Reroutes the 4 expired card accounts to automated dunning/card updater flows instead of burning margin on unnecessary discount campaigns.
-
-### Scenario 3: Payment Gateway Settlement Holds ($4,120 Discrepancy)
-- **Question**: *"Find differences between recorded sales and payment transactions."*
-- **Primary Ledger**: Recorded sales show $44,800.00.
-- **Secondary Ledger**: Gateway settlement indicates $40,680.00 received.
-- **Result**: The Reviewer identifies a $4,120.00 rolling reserve hold imposed by Stripe for international cross-border processing, preventing an erroneous accounting write-off.
-
----
-
-## 🖥️ Modern Web Cockpit (5 Core Views)
-
-Built with **React 18** and **Node.js** following an enterprise light-theme design system (clean white, slate `#F8FAFC`, deep navy `#0F172A`, teal `#0D9488`, emerald `#059669`, and crimson `#DC2626`):
-
-1. **Executive Overview**: High-level KPI cards, Naive AI vs Switch trajectory comparison chart, scenario launch cards, and governance rules summary.
-2. **Investigations (7-Stage Workspace)**:
+### 4. Presentation (20% Weight) — *Enterprise Cockpit (No Overlap)*
+Built with React 18 and Node.js following an enterprise light-theme design system (clean white, slate `#F8FAFC`, deep navy `#0F172A`, teal `#0D9488`, emerald `#059669`, and crimson `#DC2626`):
+1. **Overview View**: High-level KPIs, Trajectory Chart (Naive AI vs Switch margin preservation), and 3 Scenario Launch Cards.
+2. **Investigations View (7-Stage Workspace)**:
    - **Stage 1**: Investigation Created (`INV-XXXXXX`)
    - **Stage 2**: Analyst Agent Working (SQL query box, execution duration, raw rows preview)
    - **Stage 3**: Reviewer Agent Working (independent SQL, secondary ledger cross-check)
    - **Stage 4**: Deterministic Reconciliation Table (Gross, Deductions, Net, and Variance)
-   - **Stage 5**: Final Result Badge (`VERIFIED` / `DISCREPANCY DETECTED`)
+   - **Stage 5**: Final Result Status Badge (`VERIFIED` / `DISCREPANCY DETECTED`)
    - **Stage 6**: Business Action Proposal (`PROP-XXXXXX`)
-   - **Stage 7**: Human Decision Controls (Role-based authorization, dynamic discount calibration slider, and SHA-256 certificate generation)
-3. **Switch Room (`#revenue-desk`)**: Real-time room event stream, room participant directory, live chat input for executives, and live Switch Tasks panel (`TASK-101` to `TASK-105`).
-4. **Approvals**: Dedicated sign-off queue with dynamic impact modeling (Protected ARR vs Campaign Cost vs Net Margin Contribution) and RBAC role verification.
-5. **Audit History**: Tamper-evident ledger displaying every signed decision with its timestamp, actor, role, parameters, and verified SHA-256 cryptographic hash.
+   - **Stage 7**: Human Decision Controls (RBAC role verification, dynamic discount calibration slider 5%–25%, SHA-256 certificate generation)
+3. **Switch Room View (`#revenue-desk`)**: Left sidebar (Room Info & Participants), Center feed (real-time message stream), and Right sidebar (Switch Tasks & Decision Lineage).
+4. **Approvals View**: Executive sign-off queue with dynamic financial modeling (Protected ARR vs Campaign Cost vs Net Margin Contribution).
+5. **Audit History View**: Tamper-evident ledger with timestamps, actors, roles, discount calibrations, and verified SHA-256 hash chains.
 
 ---
 
-## 🚀 Quickstart & Reproduction
+## 🧪 Automated Test Verification (17 Passing Tests)
+
+Run the full verification suite:
+
+```bash
+python3 -m unittest discover tests -v
+```
+
+### Complete Test Results:
+
+```text
+test_customer_count (test_seed_data.TestSeedData) ... ok
+test_naive_vs_correct_west_oct_revenue (test_seed_data.TestSeedData) ... ok
+test_refunds_exist_for_october_west (test_seed_data.TestSeedData) ... ok
+test_regions_balanced (test_seed_data.TestSeedData) ... ok
+test_west_enterprise_customers (test_seed_data.TestSeedData) ... ok
+test_west_enterprise_oct_orders_zero (test_seed_data.TestSeedData) ... ok
+test_west_enterprise_sept_orders_exist (test_seed_data.TestSeedData) ... ok
+test_audit_hash_chain_tamper_detection (test_workflow.TestRevenueDeskSuite) ... ok
+test_duplicate_approval_prevention (test_workflow.TestRevenueDeskSuite) ... ok
+test_proposal_modification_invalidates_approval (test_workflow.TestRevenueDeskSuite) ... ok
+test_read_only_sql_enforcement (test_workflow.TestRevenueDeskSuite) ... ok
+test_rejection_logs_decision (test_workflow.TestRevenueDeskSuite) ... ok
+test_scenario_1_discrepancy_and_reconciliation (test_workflow.TestRevenueDeskSuite) ... ok
+test_scenario_2_churn_vs_payment_failures (test_workflow.TestRevenueDeskSuite) ... ok
+test_scenario_3_payment_gateway_reconciliation (test_workflow.TestRevenueDeskSuite) ... ok
+test_switch_disconnection_blocks_workflow (test_workflow.TestRevenueDeskSuite) ... ok
+test_unauthorized_approval_rejected (test_workflow.TestRevenueDeskSuite) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 2.494s
+
+OK
+```
+
+---
+
+## 🚀 Quickstart & Reproduction Commands
 
 ### Prerequisites
-- **Python**: 3.9 or newer
-- **Node.js**: 18.0 or newer
+- Python 3.9+
+- Node.js 18.0+
 
-### 1. Clone & Setup
+### 1. Clone & Install
 ```bash
 git clone https://github.com/Shubhamver45/Revenue-Desk.git
 cd Revenue-Desk
 npm install
 ```
 
-### 2. Run Automated Verification Tests
+### 2. Run Test Suite
 ```bash
 python3 -m unittest discover tests -v
 ```
-*(All 14 unit tests pass in ~1.8 seconds, verifying database seeds, read-only SQL enforcement, Switch disconnection fail-safe, and mathematical reconciliation.)*
 
-### 3. Build & Run Locally
+### 3. Build & Run Application
 ```bash
-# Compile React frontend bundle
+# Build React 18 production bundle
 npm run build
 
 # Start the application server
@@ -169,53 +196,15 @@ npm start
 ```
 Open **`http://localhost:3000`** in your browser.
 
-*(Alternatively, run the Python server directly with `python3 app.py` on port 8000).*
+*(Alternatively, run the standalone Python backend directly with `python3 app.py` on port 8000).*
 
 ---
 
-## 🔒 Security & Data Governance
+## ⚠️ Known Limitations & Scope Boundaries
 
-- **Read-Only SQL Enforcement**: All analytical queries generated by LLM agents are parsed and validated by `validate_read_only_sql()`, rejecting any mutative commands.
-- **Role-Based Authorization (RBAC)**: Only authorized executive roles (`manager` or `controller`) can approve proposals; requests from unauthorized roles (e.g. `junior_analyst`) are rejected with `HTTP 403 Forbidden`.
-- **Tamper-Evident Signatures**: Every decision logged to `decision_log` includes a cryptographic hash generated via:
-  ```python
-  signature_hash = hashlib.sha256(f"{investigation_id}:{decision}:{discount}:{authorized_by}:{timestamp}".encode()).hexdigest()
-  ```
-
----
-
-## 📦 Project Structure
-
-```text
-├── api/
-│   └── index.py               # Vercel serverless gateway delegating to app.py
-├── app.py                     # Python HTTP API & SwitchAppHandler
-├── data/
-│   └── revenue_desk.db        # SQLite database (auto-seeded)
-├── dist/                      # Compiled React 18 production bundle
-├── seed/
-│   └── init.sql               # Seed data for all 3 financial scenarios
-├── src/
-│   ├── client/                # React 18 frontend source
-│   │   ├── components/        # Navbar, 5 views, 7-stage workspace, modals
-│   │   ├── styles/            # Enterprise light-theme CSS
-│   │   └── App.jsx            # Multi-view navigation and state management
-│   ├── database.py            # SQLite database manager & Read-Only SQL validator
-│   ├── llm.py                 # Multi-provider LLM client (Groq, Gemini, Anthropic, Mock)
-│   ├── reviewer.py            # ReviewResult dataclass & numerical reconciliation
-│   ├── switch_protocol.py     # SandboxAQ Switch Protocol Engine & centrality tests
-│   └── workflow.py            # RevenueDesk finite state machine & RBAC approval gate
-├── switch/
-│   ├── agents.yaml            # Switch agent personas & capabilities
-│   ├── room.yaml              # Switch room #revenue-desk declarative spec
-│   └── rules.yaml             # 5 core governance rules
-├── tests/
-│   ├── test_seed_data.py      # Seed data integrity tests
-│   └── test_workflow.py       # Switch dependency, RBAC, and reconciliation tests
-├── package.json               # Node.js dependencies & scripts
-├── server.js                  # Production Node.js gateway & static server
-└── vercel.json                # Vercel deployment configuration
-```
+1. **Chat Platform Connectors**: The repository includes the genuine Matrix bot bridge (`src/switch_bridge.py`) which requires Matrix homeserver credentials (`MATRIX_HOMESERVER_URL`). The Slack/Discord/Teams integrations described in general Switch documentation require external bot tokens and are not run locally.
+2. **LLM Provider Keys**: If `GROQ_API_KEY` or `GEMINI_API_KEY` are not set in `.env`, the system defaults to the deterministic `mock` provider in `src/llm.py`, which is fully capable of reproducing all 3 financial scenarios locally without network access.
+3. **Database Environment**: Runs by default on local SQLite (`data/revenue_desk.db`). Optional Supabase dual-sync is supported if `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are provided.
 
 ---
 

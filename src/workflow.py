@@ -61,7 +61,7 @@ class Proposal:
 
 @dataclass
 class ApprovalRecord:
-    """Tamper-evident record of human authorization decision."""
+    """Tamper-evident record of human authorization decision in an audit hash-chain."""
     investigation_id: str
     proposal_id: str
     authorized_by: str
@@ -69,13 +69,14 @@ class ApprovalRecord:
     decision: str  # APPROVE, REJECT, REQUEST_CHANGES
     approved_discount: float
     notes: str
+    prev_hash: str = "0000000000000000000000000000000000000000000000000000000000000000"
     timestamp: str = field(default_factory=lambda: datetime.now().isoformat())
     signature_hash: str = field(default="")
 
     def __post_init__(self):
         if not self.signature_hash:
             import hashlib
-            raw = f"{self.investigation_id}:{self.proposal_id}:{self.authorized_by}:{self.decision}:{self.approved_discount}:{self.timestamp}"
+            raw = f"{self.prev_hash}:{self.investigation_id}:{self.proposal_id}:{self.authorized_by}:{self.decision}:{self.approved_discount}:{self.timestamp}"
             self.signature_hash = hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
 
@@ -413,6 +414,13 @@ class RevenueDesk:
             user_role = decision_data.get("user_role", user_role)
             notes = decision_data.get("notes", "")
 
+        # Duplicate Approval Prevention Check
+        if self.current.state in (WorkflowState.COMPLETED, WorkflowState.APPROVED, WorkflowState.EXECUTING):
+            raise ValueError(f"Duplicate approval rejected: Investigation {self.current.investigation_id} is already in state '{self.current.state.name}'.")
+
+        if self.current.state not in (WorkflowState.AWAITING_APPROVAL, WorkflowState.PROPOSAL_READY):
+            raise ValueError(f"Invalid approval: Workflow is in state '{self.current.state.name}', not awaiting approval.")
+
         # 1. Role Authorization Check
         if user_role.lower() not in ("manager", "human_lead", "admin", "vp_finance"):
             raise PermissionError(f"Access Denied: Role '{user_role}' is not authorized to approve financial actions.")
@@ -422,6 +430,10 @@ class RevenueDesk:
             raise ValueError(f"Proposal mismatch: Provided {prop_id} does not match active proposal {self.current.proposal.id}.")
 
         inv_id = self.current.investigation_id
+
+        # Query preceding entry's signature_hash for cryptographic audit hash-chaining
+        prev_rows = run_query("SELECT signature_hash FROM decision_log WHERE signature_hash IS NOT NULL AND signature_hash != '' ORDER BY id DESC LIMIT 1")
+        prev_hash = prev_rows[0]["signature_hash"] if prev_rows and prev_rows[0].get("signature_hash") else "0000000000000000000000000000000000000000000000000000000000000000"
 
         # 3. Handle Rejection
         if decision == "REJECT":
@@ -434,14 +446,15 @@ class RevenueDesk:
                 decision="REJECTED",
                 approved_discount=0.0,
                 notes=notes,
+                prev_hash=prev_hash,
             )
             self.current.approval_record = record
             self.current.completed_at = datetime.now()
 
-            # Persist rejection to database with SHA-256 signature
+            # Persist rejection to database with SHA-256 signature and prev_hash
             run_write(
-                "INSERT INTO decision_log (decision, made_by, context, signature_hash, user_role) VALUES (?, ?, ?, ?, ?)",
-                (f"REJECTED: Proposal #{prop_id}", authorized_by, f"Investigation #{inv_id}: {notes}", record.signature_hash, user_role),
+                "INSERT INTO decision_log (decision, made_by, context, signature_hash, user_role, prev_hash) VALUES (?, ?, ?, ?, ?, ?)",
+                (f"REJECTED: Proposal #{prop_id}", authorized_by, f"Investigation #{inv_id}: {notes}", record.signature_hash, user_role, record.prev_hash),
             )
 
             switch_engine.update_task(
@@ -458,10 +471,10 @@ class RevenueDesk:
                 sender_label=f"@manager ({authorized_by})",
                 content=msg,
                 event_type=SwitchEventType.APPROVAL_DECISION,
-                metadata={"decision": "REJECTED", "proposal_id": prop_id},
+                metadata={"decision": "REJECTED", "proposal_id": prop_id, "signature": record.signature_hash, "prev_hash": record.prev_hash},
             )
             self.history.append(self.current)
-            return {"status": "rejected", "investigation_id": inv_id, "proposal_id": prop_id}
+            return {"status": "rejected", "investigation_id": inv_id, "proposal_id": prop_id, "signature_hash": record.signature_hash}
 
         # 4. Handle Approval & Execution
         self.current.state = WorkflowState.APPROVED
@@ -473,13 +486,14 @@ class RevenueDesk:
             decision="APPROVED",
             approved_discount=discount,
             notes=notes,
+            prev_hash=prev_hash,
         )
         self.current.approval_record = record
 
-        # Persist approval to decision ledger with SHA-256 signature
+        # Persist approval to decision ledger with SHA-256 signature and prev_hash
         run_write(
-            "INSERT INTO decision_log (decision, made_by, context, signature_hash, user_role) VALUES (?, ?, ?, ?, ?)",
-            (f"APPROVED: Proposal #{prop_id} with {discount:.0f}% discount", authorized_by, f"Investigation #{inv_id}: Campaign authorized at {discount:.0f}% discount", record.signature_hash, user_role),
+            "INSERT INTO decision_log (decision, made_by, context, signature_hash, user_role, prev_hash) VALUES (?, ?, ?, ?, ?, ?)",
+            (f"APPROVED: Proposal #{prop_id} with {discount:.0f}% discount", authorized_by, f"Investigation #{inv_id}: Campaign authorized at {discount:.0f}% discount", record.signature_hash, user_role, record.prev_hash),
         )
 
         self._post(
@@ -533,6 +547,18 @@ class RevenueDesk:
             "signature_hash": record.signature_hash,
             "result": exec_summary,
         }
+
+    def modify_proposal(self, new_discount: float, reason: str = "Manager requested terms adjustment") -> WorkflowContext:
+        """Modify an active proposal. Invalidates any prior approval and resets state to AWAITING_APPROVAL."""
+        if not self.current or not self.current.proposal:
+            raise ValueError("No active proposal exists to modify.")
+        
+        old_discount = self.current.proposal.recommended_discount
+        self.current.proposal.recommended_discount = float(new_discount)
+        self.current.proposal.summary += f" [Adjusted from {old_discount:.0f}% to {new_discount:.0f}%: {reason}]"
+        self.current.approval_record = None  # Invalidate any prior approval
+        self.current.state = WorkflowState.AWAITING_APPROVAL
+        return self.current
 
     def get_status(self) -> str:
         if not self.current:

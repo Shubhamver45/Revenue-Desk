@@ -22,7 +22,7 @@ from pathlib import Path
 # Add project root to sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src.database import init_database, run_query, run_write, validate_read_only_sql
+from src.database import init_database, run_query, run_write, validate_read_only_sql, verify_audit_hash_chain
 from src.workflow import RevenueDesk, WorkflowState
 from src.switch_protocol import switch_engine, SwitchUnavailableError, SwitchConnectionState
 
@@ -177,6 +177,57 @@ class TestRevenueDeskSuite(unittest.TestCase):
         total_variance = sum(d["diff"] for d in disputed)
         # 6200 - 4100 = 2100, 5400 - 3380 = 2020 -> Total 4120.00
         self.assertAlmostEqual(total_variance, 4120.0, places=2)
+
+    # ── Test 8: Duplicate Approval Prevention ──
+
+    def test_duplicate_approval_prevention(self):
+        """Once approved, a proposal cannot be approved again."""
+        desk = RevenueDesk()
+        desk.ask("Investigate the revenue discrepancy in the West region.")
+        
+        # First approval succeeds
+        res = desk.approve("Approved with 15%", user_role="manager")
+        self.assertEqual(res["status"], "completed")
+        self.assertEqual(desk.current.state, WorkflowState.COMPLETED)
+
+        # Second approval MUST be rejected with ValueError
+        with self.assertRaises(ValueError):
+            desk.approve("Approved with 15%", user_role="manager")
+
+    # ── Test 9: Proposal Modification Invalidates Approval ──
+
+    def test_proposal_modification_invalidates_approval(self):
+        """Modifying proposal parameters invalidates any prior approval and resets state."""
+        desk = RevenueDesk()
+        desk.ask("Investigate the revenue discrepancy in the West region.")
+        
+        self.assertEqual(desk.current.proposal.recommended_discount, 15.0)
+        desk.modify_proposal(new_discount=10.0, reason="CFO requested lower discount")
+
+        self.assertEqual(desk.current.proposal.recommended_discount, 10.0)
+        self.assertIsNone(desk.current.approval_record)
+        self.assertEqual(desk.current.state, WorkflowState.AWAITING_APPROVAL)
+
+    # ── Test 10: Cryptographic Audit Hash-Chain Integrity ──
+
+    def test_audit_hash_chain_tamper_detection(self):
+        """Verifies that tampering with, deleting, or reordering audit entries breaks the hash-chain."""
+        desk = RevenueDesk()
+        desk.ask("Investigate the revenue discrepancy in the West region.")
+        desk.approve("Approved with 15%", user_role="manager")
+
+        # Clean ledger passes verification
+        res = verify_audit_hash_chain(db_path=TEST_DB)
+        self.assertTrue(res["valid"])
+        self.assertGreaterEqual(res["signed_entries"], 1)
+
+        # Simulate tampering: directly alter an entry's prev_hash in SQLite
+        run_write("UPDATE decision_log SET prev_hash = 'TAMPERED_HASH_BAD_LINK' WHERE signature_hash IS NOT NULL", db_path=TEST_DB)
+        
+        # Tampered ledger MUST fail verification
+        tampered_res = verify_audit_hash_chain(db_path=TEST_DB)
+        self.assertFalse(tampered_res["valid"])
+        self.assertIn("Chain broken", tampered_res["error"])
 
 
 if __name__ == "__main__":
