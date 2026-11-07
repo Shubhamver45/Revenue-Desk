@@ -6,7 +6,9 @@ export default function OverviewView({
     investigationData,
     tasks = [],
     decisions = [],
+    messages = [],
     onNavigate,
+    onLaunchScenario,
     comparisonMode,
     onToggleMode,
     switchConnected
@@ -19,7 +21,15 @@ export default function OverviewView({
     const invId = inv.investigation_id || "INV-84912";
     const invQuestion = inv.question || "Why did repeat purchases drop in the West region last month?";
     const isReconciled = inv.review?.is_verified ?? true;
-    const hasPendingApproval = inv.proposal && !inv.approval_record;
+
+    // Use live messages from room if available, otherwise fallback to standard audited baseline events
+    const timelineEvents = (messages && messages.length > 0) ? messages.slice(-5) : [
+        { id: 1, author: '@manager (Alex Rivera)', role: 'manager', avatar: 'AR', bg: 'bg-navy', time: '10:04 AM', text: 'Inquired why repeat purchases dropped in the West region.' },
+        { id: 2, author: '@analyst (Groq / Llama 3.3)', role: 'analyst', avatar: 'AN', bg: 'bg-emerald', time: '10:04 AM', text: 'Queried sales_orders: reported Gross $24,250.00 across 15 accounts.' },
+        { id: 3, author: '@reviewer (Gemini 2.0 Flash)', role: 'reviewer', avatar: 'RV', bg: 'bg-amber', time: '10:05 AM', text: 'Cross-audited refund_transactions: detected 8 duplicate webhook retries (-$20,430.00).' },
+        { id: 4, author: 'Switch Protocol Gate', role: 'switch', avatar: 'SW', bg: 'bg-teal', time: '10:05 AM', text: 'Consensus verified ($0.00 variance). Proposal submitted to Human Approval Gate.' },
+        { id: 5, author: '@manager (VP Finance)', role: 'manager', avatar: 'AR', bg: 'bg-navy', time: '10:06 AM', text: 'Calibrated discount to 15%, signed block into SHA-256 ledger.' }
+    ];
 
     return (
         <div className="overview-container">
@@ -70,18 +80,18 @@ export default function OverviewView({
                 </div>
             </section>
 
-            {/* ── 2-Column Responsive Workspace: Fit for 1440 × 900 ── */}
+            {/* ── 2-Column Full-Screen Operational Grid ── */}
             <div className="overview-grid">
-                {/* ── LEFT COLUMN: Compact Chart + Switch Protocol Health Bar ── */}
+                {/* ── LEFT COLUMN: Full-Height Dynamic Chart + Switch Protocol Bar ── */}
                 <div className="overview-left-col">
-                    {/* Section B: Compact Revenue Performance Chart */}
+                    {/* Section B: Dynamic Revenue Performance Chart */}
                     <TrajectoryChart 
                         mode={comparisonMode}
                         onToggleMode={onToggleMode}
                         trajectoryData={metrics?.trajectory}
                     />
 
-                    {/* Section E: Compact Switch Protocol Health & Governance Bar */}
+                    {/* Section C: Switch Protocol Health & Governance Bar */}
                     <div className="card switch-health-bar">
                         <div className="switch-health-header">
                             <div className="switch-health-title-group">
@@ -128,9 +138,9 @@ export default function OverviewView({
                     </div>
                 </div>
 
-                {/* ── RIGHT COLUMN: Investigation Summary + Recent Activity Feed ── */}
+                {/* ── RIGHT COLUMN: Active Investigation + 3 Live Benchmarks + Activity Feed ── */}
                 <div className="overview-right-col">
-                    {/* Section C: Investigation Summary Card */}
+                    {/* Section D: Active Investigation Summary Card */}
                     <div className="card overview-summary-card">
                         <div className="card-header-compact">
                             <div className="card-title-group">
@@ -177,12 +187,69 @@ export default function OverviewView({
                         </div>
                     </div>
 
-                    {/* Section D: Recent Multi-Agent Room Activity Feed */}
+                    {/* Section E: 3 Live Reproducible Financial Benchmarks */}
+                    <div className="card overview-benchmarks-card">
+                        <div className="card-header-compact">
+                            <div className="card-title-group">
+                                <span className="card-title-sm">Live Reproducible Benchmarks</span>
+                                <span className="activity-count-badge">3 Scenarios</span>
+                            </div>
+                            <span className="status-chip-mono" style={{ fontSize: '9.5px' }}>SQLite Seeded</span>
+                        </div>
+                        <div className="quick-scenarios-list">
+                            <div 
+                                className={`quick-scenario-item ${invQuestion.includes('West') ? 'active' : ''}`}
+                                onClick={() => onLaunchScenario ? onLaunchScenario('duplicate_refunds') : onNavigate('investigations')}
+                                title="Run Scenario 1: West Duplicate Refund Glitch"
+                            >
+                                <div className="scenario-item-left">
+                                    <span className="scenario-dot dot-danger"></span>
+                                    <div style={{ minWidth: 0 }}>
+                                        <div className="scenario-item-title">1. West Duplicate Refund Glitch</div>
+                                        <div className="scenario-item-sub">8 duplicate refund webhooks • Prevents 25% panic discount</div>
+                                    </div>
+                                </div>
+                                <span className="scenario-pill pill-danger">-$20,430</span>
+                            </div>
+
+                            <div 
+                                className={`quick-scenario-item ${invQuestion.includes('recurring') || invQuestion.includes('decline') ? 'active' : ''}`}
+                                onClick={() => onLaunchScenario ? onLaunchScenario('churn_vs_failures') : onNavigate('investigations')}
+                                title="Run Scenario 2: Churn vs Payment Failures"
+                            >
+                                <div className="scenario-item-left">
+                                    <span className="scenario-dot dot-amber"></span>
+                                    <div style={{ minWidth: 0 }}>
+                                        <div className="scenario-item-title">2. Churn vs Payment Failures</div>
+                                        <div className="scenario-item-sub">4 expired card retries misattributed to customer churn</div>
+                                    </div>
+                                </div>
+                                <span className="scenario-pill pill-amber">$14,200</span>
+                            </div>
+
+                            <div 
+                                className={`quick-scenario-item ${invQuestion.includes('settlement') || invQuestion.includes('differences') ? 'active' : ''}`}
+                                onClick={() => onLaunchScenario ? onLaunchScenario('payment_reconciliation') : onNavigate('investigations')}
+                                title="Run Scenario 3: Gateway Settlement Reconciliation"
+                            >
+                                <div className="scenario-item-left">
+                                    <span className="scenario-dot dot-brand"></span>
+                                    <div style={{ minWidth: 0 }}>
+                                        <div className="scenario-item-title">3. Gateway Settlement Reconciliation</div>
+                                        <div className="scenario-item-sub">Catches rolling reserve chargeback holds before write-off</div>
+                                    </div>
+                                </div>
+                                <span className="scenario-pill pill-brand">$4,120</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Section F: Full-Height Recent Multi-Agent Room Activity Feed */}
                     <div className="card overview-activity-card">
                         <div className="card-header-compact">
                             <div className="card-title-group">
                                 <span className="card-title-sm">Recent Agent Activity</span>
-                                <span className="activity-count-badge">5 Events</span>
+                                <span className="activity-count-badge">{timelineEvents.length} Events</span>
                             </div>
                             <button 
                                 className="link-action-sm" 
@@ -194,60 +261,30 @@ export default function OverviewView({
                         </div>
 
                         <div className="activity-timeline-compact">
-                            <div className="timeline-item">
-                                <div className="timeline-icon bg-navy">AR</div>
-                                <div className="timeline-content">
-                                    <div className="timeline-header">
-                                        <span className="timeline-author">@manager (Alex Rivera)</span>
-                                        <span className="timeline-time">10:04 AM</span>
-                                    </div>
-                                    <p className="timeline-text">Inquired why repeat purchases dropped in the West region.</p>
-                                </div>
-                            </div>
+                            {timelineEvents.map((evt, idx) => {
+                                const author = evt.author || (evt.sender ? `@${evt.sender}` : 'System');
+                                const text = evt.text || evt.content || '';
+                                const time = evt.time || evt.timestamp || '10:05 AM';
+                                const avatar = evt.avatar || (evt.sender ? evt.sender.slice(0, 2).toUpperCase() : 'SW');
+                                const bgClass = evt.bg || (
+                                    evt.sender === 'manager' ? 'bg-navy' :
+                                    evt.sender === 'analyst' ? 'bg-emerald' :
+                                    evt.sender === 'reviewer' ? 'bg-amber' : 'bg-teal'
+                                );
 
-                            <div className="timeline-item">
-                                <div className="timeline-icon bg-emerald">AN</div>
-                                <div className="timeline-content">
-                                    <div className="timeline-header">
-                                        <span className="timeline-author">@analyst (Groq / Llama 3.3)</span>
-                                        <span className="timeline-time">10:04 AM</span>
+                                return (
+                                    <div className="timeline-item" key={evt.id || idx}>
+                                        <div className={`timeline-icon ${bgClass}`}>{avatar}</div>
+                                        <div className="timeline-content">
+                                            <div className="timeline-header">
+                                                <span className="timeline-author">{author}</span>
+                                                <span className="timeline-time">{time}</span>
+                                            </div>
+                                            <p className="timeline-text">{text}</p>
+                                        </div>
                                     </div>
-                                    <p className="timeline-text">Queried <code>sales_orders</code>: reported Gross $24,250.00 across 15 accounts.</p>
-                                </div>
-                            </div>
-
-                            <div className="timeline-item">
-                                <div className="timeline-icon bg-amber">RV</div>
-                                <div className="timeline-content">
-                                    <div className="timeline-header">
-                                        <span className="timeline-author">@reviewer (Gemini 2.0 Flash)</span>
-                                        <span className="timeline-time">10:05 AM</span>
-                                    </div>
-                                    <p className="timeline-text">Cross-audited <code>refund_transactions</code>: detected 8 duplicate webhook retries (-$20,430.00).</p>
-                                </div>
-                            </div>
-
-                            <div className="timeline-item">
-                                <div className="timeline-icon bg-teal">SW</div>
-                                <div className="timeline-content">
-                                    <div className="timeline-header">
-                                        <span className="timeline-author">Switch Protocol Gate</span>
-                                        <span className="timeline-time">10:05 AM</span>
-                                    </div>
-                                    <p className="timeline-text">Consensus verified ($0.00 variance). Proposal submitted to Human Approval Gate.</p>
-                                </div>
-                            </div>
-
-                            <div className="timeline-item">
-                                <div className="timeline-icon bg-navy">AR</div>
-                                <div className="timeline-content">
-                                    <div className="timeline-header">
-                                        <span className="timeline-author">@manager (VP Finance)</span>
-                                        <span className="timeline-time">10:06 AM</span>
-                                    </div>
-                                    <p className="timeline-text">Calibrated discount to 15%, signed block into SHA-256 ledger.</p>
-                                </div>
-                            </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

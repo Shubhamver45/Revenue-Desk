@@ -195,8 +195,18 @@ export default function TrajectoryChart({ mode, onToggleMode, trajectoryData }) 
         renderChart();
         const handleResize = () => renderChart();
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [mode, trajectoryData, tooltip]);
+
+        let ro = null;
+        if (typeof ResizeObserver !== 'undefined' && containerRef.current) {
+            ro = new ResizeObserver(() => renderChart());
+            ro.observe(containerRef.current);
+        }
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            if (ro) ro.disconnect();
+        };
+    }, [mode, trajectoryData]);
 
     return (
         <div className="card chart-card-compact" ref={containerRef}>

@@ -310,6 +310,7 @@ export default function App() {
                         investigationData={investigationData}
                         tasks={tasks}
                         decisions={decisions}
+                        messages={messages}
                         onLaunchScenario={handleLaunchScenario}
                         onNavigate={handleViewChange}
                         comparisonMode={comparisonMode}
