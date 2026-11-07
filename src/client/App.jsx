@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
-import MobileViewTabs from './components/MobileViewTabs';
-import KpiRow from './components/KpiRow';
-import TrajectoryChart from './components/TrajectoryChart';
-import ApprovalGate from './components/ApprovalGate';
+import OverviewView from './components/OverviewView';
+import InvestigationsView from './components/InvestigationsView';
+import ApprovalsView from './components/ApprovalsView';
+import AuditView from './components/AuditView';
 import SwitchRoom from './components/SwitchRoom';
 import DatabaseModal from './components/DatabaseModal';
 import RoomSpecModal from './components/RoomSpecModal';
@@ -11,30 +11,50 @@ import AuditMemoModal from './components/AuditMemoModal';
 
 export default function App() {
     // ── Application State ──
+    const [activeView, setActiveView] = useState('overview');
+    const [switchConnected, setSwitchConnected] = useState(true);
     const [metrics, setMetrics] = useState(null);
-    const [tasks, setTasks] = useState([
-        { id: "TASK-101", title: "Investigate West region repeat purchase decline", assigned_to: "Analyst Agent", status: "todo" },
-        { id: "TASK-102", title: "Audit October revenue, refunds & billing anomalies", assigned_to: "Reviewer Agent", status: "todo" },
-        { id: "TASK-103", title: "Synthesize findings & propose win-back campaign", assigned_to: "Analyst Agent", status: "todo" },
-        { id: "TASK-104", title: "Human manager approval gate for campaign launch", assigned_to: "Human Manager", status: "todo" },
-        { id: "TASK-105", title: "Execute campaign mutations & record Switch decision lineage", assigned_to: "Analyst Agent", status: "todo" }
-    ]);
-    const [decisions, setDecisions] = useState([]);
+    const [investigationData, setInvestigationData] = useState(null);
     const [messages, setMessages] = useState([]);
-
-    const [activeMobileTab, setActiveMobileTab] = useState('room');
-    const [comparisonMode, setComparisonMode] = useState('with');
-    const [discount, setDiscount] = useState(15);
-    const [pipelineState, setPipelineState] = useState({ 1: 'active', 2: 'todo', 3: 'todo', 4: 'todo', 5: 'todo' });
-    const [gateStatus, setGateStatus] = useState('Ready for Review');
+    const [tasks, setTasks] = useState([]);
+    const [decisions, setDecisions] = useState([]);
     const [roomTab, setRoomTab] = useState('chat');
     const [activeModal, setActiveModal] = useState(null);
-    const [isAuditRunning, setIsAuditRunning] = useState(false);
-    const [isCommitting, setIsCommitting] = useState(false);
+    const [isRunning, setIsRunning] = useState(false);
+    const [comparisonMode, setComparisonMode] = useState('with');
+    const [toastMessage, setToastMessage] = useState(null);
 
-    const hasPendingApproval = gateStatus === 'Awaiting Sign-Off';
+    // Show temporary banner / toast
+    const showToast = (text, type = 'info') => {
+        setToastMessage({ text, type });
+        setTimeout(() => setToastMessage(null), 5000);
+    };
 
-    // ── Fetch Initial Data ──
+    // ── Fetch Initial State ──
+    const fetchState = async () => {
+        try {
+            const res = await fetch('/api/state');
+            if (res.ok) {
+                const data = await res.json();
+                setInvestigationData(data);
+                if (data.is_switch_connected !== undefined) {
+                    setSwitchConnected(data.is_switch_connected);
+                }
+                if (data.messages && data.messages.length > 0) {
+                    setMessages(data.messages);
+                }
+                if (data.tasks) {
+                    setTasks(data.tasks);
+                }
+                if (data.decisions) {
+                    setDecisions(data.decisions);
+                }
+            }
+        } catch (e) {
+            console.warn("Could not fetch /api/state", e);
+        }
+    };
+
     const fetchMetrics = async () => {
         try {
             const res = await fetch('/api/metrics');
@@ -47,240 +67,358 @@ export default function App() {
         }
     };
 
-    const fetchState = async () => {
+    useEffect(() => {
+        fetchState();
+        fetchMetrics();
+    }, []);
+
+    // ── Toggle Switch Connection (Dependency Test) ──
+    const handleToggleSwitch = async () => {
         try {
-            const res = await fetch('/api/state');
-            if (res.ok) {
-                const data = await res.json();
-                if (data.tasks) setTasks(data.tasks);
-                if (data.decisions) setDecisions(data.decisions);
+            const res = await fetch('/api/switch/toggle', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'toggle' })
+            });
+            const data = await res.json();
+            setSwitchConnected(data.is_connected);
+            if (!data.is_connected) {
+                showToast("⚠️ Switch Engine DISCONNECTED. Multi-agent rooms are paused (demonstrating criteria 1 Switch dependency).", "warning");
+            } else {
+                showToast("✓ Switch Engine RECONNECTED. Multi-agent rooms are active.", "success");
             }
+            fetchState();
         } catch (e) {
-            console.warn("Could not fetch /api/state", e);
+            console.warn("Failed to toggle Switch", e);
         }
     };
 
-    useEffect(() => {
-        fetchMetrics();
-        fetchState();
-    }, []);
+    // ── Launch Benchmark Scenario ──
+    const handleLaunchScenario = async (scenarioId) => {
+        setActiveView('investigations');
+        setIsRunning(true);
+        try {
+            const res = await fetch('/api/scenarios/run', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ scenario_id: scenarioId })
+            });
 
-    // Helper to append message
-    const addMsg = (sender, content, avatarColor, extra = {}) => {
-        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        setMessages(prev => [...prev, { sender, content, avatarColor, time, ...extra }]);
+            if (res.status === 503) {
+                const err = await res.json();
+                showToast(`Switch Dependency Block: ${err.error}`, "warning");
+                setIsRunning(false);
+                return;
+            }
+
+            const data = await res.json();
+            if (data.state) {
+                setInvestigationData(data.state);
+                if (data.state.messages) setMessages(data.state.messages);
+                if (data.state.tasks) setTasks(data.state.tasks);
+                if (data.state.decisions) setDecisions(data.state.decisions);
+            }
+            showToast("✓ Investigation completed via Switch dual-agent room stream.", "success");
+        } catch (e) {
+            console.warn("Scenario run failed", e);
+            showToast(`Error: ${e.message}`, "warning");
+        } finally {
+            setIsRunning(false);
+            fetchMetrics();
+        }
     };
 
-    // ── Execute Inquiry (POST /api/ask) ──
-    const handleExecuteInquiry = async (question) => {
-        setActiveMobileTab('room');
-        setRoomTab('chat');
-        setMessages([]);
-        addMsg("@manager (Human Lead)", question, "#0F172A");
-        setPipelineState({ 1: 'completed', 2: 'active', 3: 'todo', 4: 'todo', 5: 'todo' });
-
+    // ── Run Custom Natural Language Inquiry ──
+    const handleRunCustomInquiry = async (question) => {
+        setIsRunning(true);
         try {
             const res = await fetch('/api/ask', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ question })
+                body: JSON.stringify({ question, initiator: "@manager (Alex Rivera • VP Finance)" })
             });
+
+            if (res.status === 503) {
+                const err = await res.json();
+                showToast(`Switch Dependency Block: ${err.error}`, "warning");
+                setIsRunning(false);
+                return;
+            }
+
             const data = await res.json();
-
-            setPipelineState({ 1: 'completed', 2: 'completed', 3: 'completed', 4: 'active', 5: 'todo' });
-            setGateStatus('Awaiting Sign-Off');
-
-            const analystText = data?.analysis?.response || "Query executed against database records.";
-            const sqlText = data?.analysis?.sql ? data.analysis.sql.trim() : "";
-            addMsg("@analyst (SQL Engine • Groq 120B)", analystText, "#059669", { sql: sqlText });
-
-            const reviewerText = data?.review?.response || "Independent audit query executed.";
-            const isVerified = data?.review ? data.review.is_verified : true;
-            addMsg("@reviewer (Audit Guard • Groq 120B)", reviewerText, "#B45309", {
-                hasDiscrepancy: !isVerified
-            });
-
-            const actionText = data?.proposed_action || "100% Alignment Reached. Ready to authorize executive action.";
-            addMsg("Switch Consensus Engine (#revenue-desk)", actionText, "#0F172A", { isConsensus: true });
-
-            fetchState();
+            setInvestigationData(data);
+            if (data.messages) setMessages(data.messages);
+            if (data.tasks) setTasks(data.tasks);
+            if (data.decisions) setDecisions(data.decisions);
+            showToast("✓ Inquiry executed & cross-audited in #revenue-desk.", "success");
         } catch (e) {
-            setPipelineState({ 1: 'completed', 2: 'completed', 3: 'completed', 4: 'active', 5: 'todo' });
-            setGateStatus('Awaiting Sign-Off');
-            addMsg("@analyst (Revenue Analyst)", "Executed query on database accounts.", "#059669");
-            addMsg("@reviewer (Audit Guard)", "Audit verification completed.", "#B45309");
-            addMsg("Switch Consensus Engine (#revenue-desk)", "Ledger consensus achieved.", "#0F172A", { isConsensus: true });
+            console.warn("Inquiry failed", e);
+            showToast(`Error: ${e.message}`, "warning");
+        } finally {
+            setIsRunning(false);
+            fetchMetrics();
         }
     };
 
-    // ── Run Full Cinematic Demo ──
-    const handleRunCinematicDemo = async () => {
-        if (isAuditRunning) return;
-        setIsAuditRunning(true);
-        setActiveMobileTab('room');
-        setRoomTab('chat');
-        setMessages([]);
-
-        const q = "Why did repeat purchases drop in the West region last month?";
-        addMsg("@manager (Human Lead)", q, "#0F172A");
-        setPipelineState({ 1: 'completed', 2: 'active', 3: 'todo', 4: 'todo', 5: 'todo' });
-
-        setTimeout(() => {
-            addMsg("@analyst (Revenue Analyst • Claude 3.5)", 
-                "**Initial Findings (Naive Gross Orders)**\n" +
-                "• October Gross Orders for West: **15 transactions totaling $24,250.00**.\n" +
-                "• Apparent volume drop: **-84.2%** vs September ($85,030.00).\n" +
-                "• Proposed Initial Action: Launch 25% Win-Back discount campaign to stem account churn.", 
-                "#059669", 
-                { sql: "SELECT order_id, customer_id, amount FROM orders WHERE region = 'west' AND order_date >= '2026-10-01';" }
-            );
-            setPipelineState({ 1: 'completed', 2: 'completed', 3: 'active', 4: 'todo', 5: 'todo' });
-
-            setTimeout(() => {
-                addMsg("@reviewer (Audit Controller • Claude 3.5)", 
-                    "⚠️ **DISCREPANCY DETECTED: Solo AI False Alarm**\n" +
-                    "• The Analyst query ignored the `refunds` ledger.\n" +
-                    "• Found **8 duplicate refund reversals totaling -$20,430.00** across orders #1–#3 due to a payment gateway retry loop.\n" +
-                    "• Clean October Net Revenue is **+$3,820.00** across 7 genuine accounts. Churn did NOT spike.\n" +
-                    "• A 25% discount would erode $9,550 in gross margin. Vetoing 25% discount.", 
-                    "#B45309",
-                    {
-                        sql: "SELECT r.order_id, count(*), sum(r.amount) FROM refunds r JOIN orders o ON r.order_id = o.id WHERE o.region = 'west' GROUP BY r.order_id;",
-                        hasDiscrepancy: true
-                    }
-                );
-                setPipelineState({ 1: 'completed', 2: 'completed', 3: 'completed', 4: 'active', 5: 'todo' });
-                setGateStatus('Awaiting Sign-Off');
-
-                setTimeout(() => {
-                    addMsg("Switch Consensus Engine (#revenue-desk)",
-                        "**Peer Review Accepted & Re-baselined**\n" +
-                        "• Multi-Agent Consensus: 100% Alignment Reached.\n" +
-                        "• Recalibrated Recommendation: Propose **15% targeted incentive** to retain 5 key accounts, preserving unit economics.",
-                        "#0F172A",
-                        { isConsensus: true }
-                    );
-                    setIsAuditRunning(false);
-                    fetchState();
-                }, 1200);
-            }, 1400);
-        }, 900);
-    };
-
-    // ── Approve Campaign (POST /api/approve) ──
-    const handleAuthorize = async () => {
-        setIsCommitting(true);
+    // ── Authorize Proposal ──
+    const handleAuthorize = async (discount, userRole) => {
         try {
             const res = await fetch('/api/approve', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ response: `Approved. Change discount to ${discount}%.` })
+                body: JSON.stringify({
+                    response: `Approved. Change discount to ${discount}%.`,
+                    discount: discount,
+                    user_role: userRole,
+                    authorized_by: userRole === 'manager' ? "Alex Rivera (VP Finance)" : "Staff Member"
+                })
             });
+
+            if (res.status === 403) {
+                const errData = await res.json();
+                showToast(`Security Check: ${errData.error}`, "warning");
+                throw new Error(errData.error);
+            }
+
+            if (res.status === 503) {
+                const errData = await res.json();
+                showToast(`Switch Unavailable: ${errData.error}`, "warning");
+                throw new Error(errData.error);
+            }
+
             const data = await res.json();
-            setIsCommitting(false);
-            setGateStatus('Committed');
-            setPipelineState({ 1: 'completed', 2: 'completed', 3: 'completed', 4: 'completed', 5: 'completed' });
-
-            addMsg("@manager (Human Lead Sign-Off)", 
-                `Authorized execution of Win-Back Campaign at **${discount}% discount** under Switch Rule #4.`, 
-                "#0F172A"
-            );
-            const resultMsg = data?.result || `Campaign created with status 'approved'. 5 enterprise accounts enrolled at ${discount}% discount. Database mutations committed.`;
-            addMsg("@analyst (Revenue Analyst)", resultMsg, "#059669");
-
-            fetchState();
+            if (data.state) {
+                setInvestigationData(data.state);
+                if (data.state.messages) setMessages(data.state.messages);
+                if (data.state.decisions) setDecisions(data.state.decisions);
+            }
+            showToast(`✓ Campaign authorized at ${discount}% and committed to SHA-256 decision ledger.`, "success");
             fetchMetrics();
         } catch (e) {
-            setIsCommitting(false);
-            setGateStatus('Committed');
-            setPipelineState({ 1: 'completed', 2: 'completed', 3: 'completed', 4: 'completed', 5: 'completed' });
-            addMsg("@manager (Human Lead Sign-Off)", `Authorized execution of Win-Back Campaign at ${discount}% discount.`, "#0F172A");
-            addMsg("@analyst (Revenue Analyst)", "Database mutations committed to ledger mirror.", "#059669");
-            fetchState();
-            fetchMetrics();
+            console.warn("Authorization error", e);
+            throw e;
         }
     };
 
-    const handleDismiss = () => {
-        addMsg("@manager (Human Lead)", "Revision requested on campaign terms before authorization.", "#0F172A");
+    // ── Reject Proposal ──
+    const handleReject = async (userRole) => {
+        try {
+            const res = await fetch('/api/approve', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    decision: "rejected",
+                    user_role: userRole,
+                    authorized_by: "Alex Rivera (VP Finance)"
+                })
+            });
+
+            if (res.status === 403) {
+                const errData = await res.json();
+                showToast(`Security Check: ${errData.error}`, "warning");
+                throw new Error(errData.error);
+            }
+
+            const data = await res.json();
+            if (data.state) {
+                setInvestigationData(data.state);
+                if (data.state.decisions) setDecisions(data.state.decisions);
+            }
+            showToast("✓ Proposal rejected. Recorded in tamper-evident decision log.", "info");
+        } catch (e) {
+            console.warn("Rejection error", e);
+            throw e;
+        }
     };
 
+    // ── Reset Session ──
     const handleReset = async () => {
-        try { await fetch('/api/reset'); } catch (e) {}
-        window.location.reload();
+        try {
+            await fetch('/api/reset');
+            showToast("Room state reset to clean baseline.", "info");
+            fetchState();
+            fetchMetrics();
+        } catch (e) {
+            window.location.reload();
+        }
     };
 
-    // Determine layout visibility on mobile
-    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-    const showKpis = !isMobile || activeMobileTab === 'chart' || activeMobileTab === 'all';
-    const showChart = !isMobile || activeMobileTab === 'chart' || activeMobileTab === 'all';
-    const showGate = !isMobile || activeMobileTab === 'gate' || activeMobileTab === 'all';
-    const showRoom = !isMobile || activeMobileTab === 'room' || activeMobileTab === 'all';
+    const pendingApprovalsCount = (investigationData?.proposal && !investigationData?.approval_record) ? 1 : 0;
 
     return (
         <>
             <Navbar 
-                onRunAudit={handleRunCinematicDemo}
+                activeView={activeView}
+                onViewChange={setActiveView}
+                switchConnected={switchConnected}
+                onToggleSwitch={handleToggleSwitch}
+                pendingApprovalsCount={pendingApprovalsCount}
                 onOpenModal={setActiveModal}
                 onReset={handleReset}
-                isAuditRunning={isAuditRunning}
             />
 
-            <main className="workspace">
-                {/* Mobile View Switcher */}
-                <MobileViewTabs 
-                    activeView={activeMobileTab} 
-                    onViewChange={setActiveMobileTab}
-                    hasPendingApproval={hasPendingApproval}
-                />
+            {/* Notification Toast */}
+            {toastMessage && (
+                <div style={{
+                    position: 'fixed',
+                    top: 64,
+                    right: 24,
+                    zIndex: 100,
+                    padding: '10px 16px',
+                    borderRadius: 'var(--radius-sm)',
+                    fontSize: 12.5,
+                    fontWeight: 600,
+                    boxShadow: 'var(--shadow-modal)',
+                    background: toastMessage.type === 'warning' ? '#FEF2F2' : toastMessage.type === 'success' ? '#ECFDF5' : '#EFF6FF',
+                    color: toastMessage.type === 'warning' ? '#991B1B' : toastMessage.type === 'success' ? '#065F46' : '#1E40AF',
+                    border: `1px solid ${toastMessage.type === 'warning' ? '#FECACA' : toastMessage.type === 'success' ? '#A7F3D0' : '#BFDBFE'}`,
+                    animation: 'fadeIn 0.2s ease-out'
+                }}>
+                    {toastMessage.text}
+                </div>
+            )}
 
-                {/* 3 Accounting KPI Cards */}
-                {showKpis && <KpiRow metrics={metrics} />}
+            <main className="workspace" style={{ padding: '20px 24px', maxWidth: 1440, margin: '0 auto', width: '100%' }}>
+                {/* VIEW 1: OVERVIEW */}
+                {activeView === 'overview' && (
+                    <OverviewView 
+                        metrics={metrics}
+                        onLaunchScenario={handleLaunchScenario}
+                        onNavigate={setActiveView}
+                        comparisonMode={comparisonMode}
+                        onToggleMode={setComparisonMode}
+                        switchConnected={switchConnected}
+                    />
+                )}
 
-                {/* 2-Column Responsive Workspace */}
-                <div className="grid-workspace">
-                    {/* Left Column: Chart & Approval Gate */}
-                    {(showChart || showGate) && (
-                        <div className="col-left">
-                            {showChart && (
-                                <TrajectoryChart 
-                                    mode={comparisonMode}
-                                    onToggleMode={setComparisonMode}
-                                    trajectoryData={metrics?.trajectory}
-                                />
-                            )}
-                            {showGate && (
-                                <ApprovalGate 
-                                    discount={discount}
-                                    onDiscountChange={setDiscount}
-                                    pipelineState={pipelineState}
-                                    gateStatus={gateStatus}
-                                    onAuthorize={handleAuthorize}
-                                    onDismiss={handleDismiss}
-                                    isCommitting={isCommitting}
-                                />
-                            )}
+                {/* VIEW 2: INVESTIGATIONS */}
+                {activeView === 'investigations' && (
+                    <InvestigationsView 
+                        investigationData={investigationData}
+                        onRunScenario={handleLaunchScenario}
+                        onRunCustomInquiry={handleRunCustomInquiry}
+                        isRunning={isRunning}
+                        switchConnected={switchConnected}
+                        onAuthorize={handleAuthorize}
+                        onReject={handleReject}
+                        onOpenAudit={() => setActiveView('audit')}
+                    />
+                )}
+
+                {/* VIEW 3: SWITCH ROOM */}
+                {activeView === 'room' && (
+                    <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr 280px', gap: 16, height: 'calc(100vh - 100px)' }}>
+                        {/* Left Pane: Room Details & Participants */}
+                        <div className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 14 }}>
+                            <div>
+                                <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>ROOM SPECIFICATION</div>
+                                <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-heading)', marginTop: 2 }}>#revenue-desk</div>
+                                <div style={{ fontSize: 11, color: 'var(--color-emerald)', marginTop: 2 }}>● Switch v2.0 Protocol Engine</div>
+                            </div>
+
+                            <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 12 }}>
+                                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 8 }}>PARTICIPANTS (3)</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                        <div className="msg-avatar" style={{ background: '#0F172A', width: 26, height: 26, fontSize: 10 }}>AR</div>
+                                        <div>
+                                            <div style={{ fontSize: 12, fontWeight: 600 }}>Alex Rivera</div>
+                                            <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>Human Lead (VP Finance)</div>
+                                        </div>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                        <div className="msg-avatar" style={{ background: '#059669', width: 26, height: 26, fontSize: 10 }}>AN</div>
+                                        <div>
+                                            <div style={{ fontSize: 12, fontWeight: 600 }}>@analyst</div>
+                                            <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>Groq Llama 3.3 70B • SQL Engine</div>
+                                        </div>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                        <div className="msg-avatar" style={{ background: '#B45309', width: 26, height: 26, fontSize: 10 }}>RV</div>
+                                        <div>
+                                            <div style={{ fontSize: 12, fontWeight: 600 }}>@reviewer</div>
+                                            <div style={{ fontSize: 10, color: 'var(--text-muted)' }}>Gemini 2.0 Flash • Audit Guard</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 12 }}>
+                                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 8 }}>ROOM GOVERNANCE</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 11, color: 'var(--text-body)' }}>
+                                    <div>✓ Rule 1: Multi-Agent Required</div>
+                                    <div>✓ Rule 2: Read-Only Queries</div>
+                                    <div>✓ Rule 3: 100% Consensus</div>
+                                    <div>✓ Rule 4: Human Sign-Off Gate</div>
+                                    <div>✓ Rule 5: SHA-256 Signatures</div>
+                                </div>
+                            </div>
                         </div>
-                    )}
 
-                    {/* Right Column: Switch Multi-Agent Room */}
-                    {showRoom && (
-                        <div className="col-right">
+                        {/* Center Pane: Real-Time Stream */}
+                        <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                             <SwitchRoom 
                                 roomTab={roomTab}
                                 onTabChange={setRoomTab}
                                 messages={messages}
                                 tasks={tasks}
                                 decisions={decisions}
-                                onSendMessage={handleExecuteInquiry}
-                                onQuickInquiry={handleExecuteInquiry}
-                                hasPendingApproval={hasPendingApproval}
-                                onAuthorize={handleAuthorize}
-                                onOpenGateView={() => setActiveMobileTab('gate')}
+                                onSendMessage={handleRunCustomInquiry}
+                                onQuickInquiry={handleRunCustomInquiry}
+                                hasPendingApproval={pendingApprovalsCount > 0}
+                                onAuthorize={() => handleAuthorize(15, 'manager')}
+                                onOpenGateView={() => setActiveView('approvals')}
                             />
                         </div>
-                    )}
-                </div>
+
+                        {/* Right Pane: Switch Tasks & Lineage */}
+                        <div className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 14 }}>
+                            <div>
+                                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 6 }}>SWITCH TASKS</div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                                    {tasks.map(t => (
+                                        <div key={t.id} style={{ background: 'var(--bg-subtle)', padding: '8px 10px', borderRadius: 6, border: '1px solid var(--border-subtle)' }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <span style={{ fontSize: 10.5, fontFamily: 'var(--font-mono)', fontWeight: 700 }}>{t.id}</span>
+                                                <span style={{ fontSize: 10, color: t.status === 'completed' ? 'var(--color-emerald)' : 'var(--text-muted)', fontWeight: 600 }}>
+                                                    {t.status === 'completed' ? '✓ DONE' : '○ PENDING'}
+                                                </span>
+                                            </div>
+                                            <div style={{ fontSize: 11, color: 'var(--text-heading)', marginTop: 2, fontWeight: 600 }}>{t.title}</div>
+                                            <div style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 2 }}>{t.assigned_to}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 12 }}>
+                                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 6 }}>DECISION LINAGE</div>
+                                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                                    {decisions.length} cryptographic decisions recorded in current session.
+                                </div>
+                                <button className="btn-ghost" style={{ marginTop: 8, fontSize: 11, width: '100%', justifyContent: 'center' }} onClick={() => setActiveView('audit')}>
+                                    Open Full Audit Ledger &rarr;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* VIEW 4: APPROVALS */}
+                {activeView === 'approvals' && (
+                    <ApprovalsView 
+                        investigationData={investigationData}
+                        onAuthorize={handleAuthorize}
+                        onReject={handleReject}
+                        switchConnected={switchConnected}
+                        onOpenAudit={() => setActiveView('audit')}
+                    />
+                )}
+
+                {/* VIEW 5: AUDIT HISTORY */}
+                {activeView === 'audit' && (
+                    <AuditView />
+                )}
             </main>
 
             {/* Modals */}
@@ -299,4 +437,3 @@ export default function App() {
         </>
     );
 }
-

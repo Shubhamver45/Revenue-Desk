@@ -15,6 +15,31 @@ except ImportError:
 
 SEED_SQL_PATH = Path(__file__).resolve().parent.parent / "seed" / "init.sql"
 
+import re
+
+FORBIDDEN_SQL_KEYWORDS = (
+    "DROP", "DELETE", "UPDATE", "INSERT", "ALTER", "ATTACH", "DETACH",
+    "CREATE", "REPLACE", "TRUNCATE", "PRAGMA", "EXEC"
+)
+
+def validate_read_only_sql(sql: str) -> None:
+    """Enforce strict read-only access for analytical queries.
+    Blocks any SQL query that attempts schema modification or data mutation.
+    """
+    clean = re.sub(r"--.*?$|/\*.*?\*/", "", sql, flags=re.MULTILINE).strip()
+    if not clean:
+        raise ValueError("Empty SQL query is not allowed.")
+    
+    # Must start with SELECT, WITH, or EXPLAIN
+    if not re.match(r"^(SELECT|WITH|EXPLAIN)\b", clean, re.IGNORECASE):
+        raise PermissionError("Database Security Violation: Analytical queries must be read-only (SELECT / WITH).")
+    
+    for kw in FORBIDDEN_SQL_KEYWORDS:
+        # Match as discrete keyword
+        if re.search(rf"\b{kw}\b", clean, re.IGNORECASE):
+            raise PermissionError(f"Database Security Violation: Analytical query contains forbidden mutation keyword '{kw}'.")
+
+
 
 def get_db_path() -> str:
     return os.getenv("DB_PATH", "data/revenue_desk.db")
@@ -100,7 +125,10 @@ def run_supabase_sql(sql: str) -> list[dict[str, Any]]:
 
 
 def run_query(sql: str, params: tuple[Any, ...] = (), db_path: str | None = None) -> list[dict[str, Any]]:
-    """Execute a read-only SQL query and return results as list of dicts."""
+    """Execute a read-only SQL query and return results as list of dicts.
+    Strictly enforces read-only safety checks.
+    """
+    validate_read_only_sql(sql)
     if os.getenv("DB_ENGINE", "sqlite").lower() == "supabase":
         final_sql = sql
         for p in params:
@@ -216,6 +244,25 @@ Tables:
    - made_by (TEXT)
    - context (TEXT)
    - created_at (TIMESTAMP)
+
+7. subscriptions
+   - id (INTEGER PK)
+   - customer_id (INTEGER FK → customers.id)
+   - mrr_amount (REAL)
+   - status (TEXT) — 'active', 'past_due', or 'cancelled'
+   - billing_cycle (TEXT)
+   - updated_at (DATE)
+
+8. payment_transactions
+   - id (INTEGER PK)
+   - order_id (INTEGER FK → orders.id)
+   - customer_id (INTEGER FK → customers.id)
+   - amount (REAL) — requested payment
+   - settled_amount (REAL) — actual settled amount
+   - status (TEXT) — 'settled', 'failed', 'processing', 'disputed'
+   - gateway (TEXT) — 'stripe', 'adyen'
+   - failure_reason (TEXT) — e.g. 'expired_card', 'chargeback_hold'
+   - transaction_date (DATE)
 
 Date range: June 2026 – October 2026
 Regions: west, east, central, south

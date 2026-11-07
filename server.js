@@ -158,7 +158,7 @@ function startPythonBackend() {
             pythonProcess = spawn('python3', ['app.py'], {
                 cwd: __dirname,
                 stdio: 'inherit',
-                env: process.env
+                env: { ...process.env, PORT: String(PYTHON_PORT) }
             });
 
             pythonProcess.on('error', (err) => {

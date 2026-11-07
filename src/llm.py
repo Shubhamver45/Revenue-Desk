@@ -137,7 +137,7 @@ def chat_mock(system_prompt: str, user_message: str) -> str:
             pass
 
     # Classify the intent
-    if any(k in user_str for k in ['why did repeat', 'repeat purchase drop', 'repeat drop']) or ('west' in user_str and 'drop' in user_str):
+    if any(k in user_str for k in ['why did repeat', 'repeat purchase drop', 'repeat drop', 'discrepancy']) or ('west' in user_str and any(w in user_str for w in ['drop', 'discrepancy', 'revenue', 'investigate', 'repeat'])):
         intent = 'flagship_west_drop'
     elif any(k in user_str for k in ['profit', 'net revenue', 'margin', 'earnings', 'earn']):
         intent = 'profit'

@@ -70,6 +70,27 @@ CREATE TABLE IF NOT EXISTS users (
     created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS subscriptions (
+    id              INTEGER PRIMARY KEY,
+    customer_id     INTEGER NOT NULL REFERENCES customers(id),
+    mrr_amount      REAL    NOT NULL,
+    status          TEXT    NOT NULL CHECK (status IN ('active','past_due','cancelled')),
+    billing_cycle   TEXT    NOT NULL DEFAULT 'monthly',
+    updated_at      DATE    NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS payment_transactions (
+    id               INTEGER PRIMARY KEY,
+    order_id         INTEGER REFERENCES orders(id),
+    customer_id      INTEGER NOT NULL REFERENCES customers(id),
+    amount           REAL    NOT NULL,
+    settled_amount   REAL    NOT NULL,
+    status           TEXT    NOT NULL CHECK (status IN ('settled','failed','processing','disputed')),
+    gateway          TEXT    NOT NULL DEFAULT 'stripe',
+    failure_reason   TEXT,
+    transaction_date DATE    NOT NULL
+);
+
 INSERT OR IGNORE INTO users (id, email, password_hash, name, company, role, provider)
 VALUES (1, 'alex.rivera@acmecloud.com', '376a619141d23f56e2287461cd7c2162b9c07db779a21278d86797e3430a1358', 'Alex Rivera', 'Acme Cloud Inc.', 'VP Revenue Operations', 'credentials');
 
@@ -491,4 +512,34 @@ INSERT INTO refunds VALUES (8, 184, 650.00,   'Pricing system glitch — duplica
 -- refunded, leaving only $3,820 net revenue and 4 real repeat orders.
 -- The true story is even worse than the Analyst initially reports.
 -- ============================================================
+
+-- ============================================================
+-- SCENARIO 2: Subscriptions & Recurring Revenue (Churn vs Payment Failures)
+-- 4 enterprise accounts (IDs 1-4) marked past_due in October
+-- because of expired card webhook failures ($14,200 MRR total), NOT actual cancellation.
+-- ============================================================
+
+INSERT INTO subscriptions VALUES (1, 1, 3500.00, 'past_due',  'monthly', '2026-10-12');
+INSERT INTO subscriptions VALUES (2, 2, 4200.00, 'past_due',  'monthly', '2026-10-14');
+INSERT INTO subscriptions VALUES (3, 3, 3800.00, 'past_due',  'monthly', '2026-10-15');
+INSERT INTO subscriptions VALUES (4, 4, 2700.00, 'past_due',  'monthly', '2026-10-18');
+INSERT INTO subscriptions VALUES (5, 5, 4500.00, 'cancelled', 'monthly', '2026-10-02');
+INSERT INTO subscriptions VALUES (6, 6, 1200.00, 'active',    'monthly', '2026-10-01');
+INSERT INTO subscriptions VALUES (7, 7, 1800.00, 'active',    'monthly', '2026-10-01');
+INSERT INTO subscriptions VALUES (8, 8, 2200.00, 'active',    'monthly', '2026-10-01');
+INSERT INTO subscriptions VALUES (9, 9, 1500.00, 'active',    'monthly', '2026-10-01');
+INSERT INTO subscriptions VALUES (10, 10, 1900.00, 'active',   'monthly', '2026-10-01');
+
+-- Payment transactions for Scenario 2 & 3:
+INSERT INTO payment_transactions VALUES (1, 177, 1, 3500.00, 0.00,    'failed',     'stripe', 'expired_card',        '2026-10-12');
+INSERT INTO payment_transactions VALUES (2, 178, 2, 4200.00, 0.00,    'failed',     'stripe', 'expired_card',        '2026-10-14');
+INSERT INTO payment_transactions VALUES (3, 179, 3, 3800.00, 0.00,    'failed',     'stripe', 'expired_card',        '2026-10-15');
+INSERT INTO payment_transactions VALUES (4, 180, 4, 2700.00, 0.00,    'failed',     'stripe', 'expired_card',        '2026-10-18');
+INSERT INTO payment_transactions VALUES (5, 185, 6, 1200.00, 1200.00, 'settled',    'stripe', NULL,                  '2026-10-01');
+INSERT INTO payment_transactions VALUES (6, 186, 7, 1800.00, 1800.00, 'settled',    'stripe', NULL,                  '2026-10-01');
+
+-- SCENARIO 3: Sales ledger vs Payment gateway reconciliation differences ($4,120 discrepancy)
+INSERT INTO payment_transactions VALUES (7, 201, 21, 6200.00, 4100.00, 'disputed',   'adyen',  'chargeback_hold',     '2026-10-08');
+INSERT INTO payment_transactions VALUES (8, 202, 22, 5400.00, 3380.00, 'processing', 'adyen',  'fx_conversion_delay', '2026-10-11');
+
 

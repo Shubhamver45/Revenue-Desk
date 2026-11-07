@@ -24,8 +24,9 @@ sys.path.insert(0, str(ROOT_DIR))
 
 from src.database import get_connection, init_database, run_query, run_write
 from src.workflow import RevenueDesk, WorkflowState
+from src.switch_protocol import switch_engine, SwitchUnavailableError
 
-PORT = int(os.getenv("PORT", "5050"))
+PORT = int(os.getenv("PORT", os.getenv("PYTHON_PORT", "8000")))
 desk: RevenueDesk | None = None
 
 
@@ -88,6 +89,80 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             })
         elif path == "/api/state":
             self.send_json(self.get_room_state())
+        elif path == "/api/switch/room":
+            self.send_json(switch_engine.get_room_state())
+        elif path == "/api/investigations":
+            d = get_or_create_desk()
+            items = []
+            if d.current:
+                items.append(d.current.to_dict())
+            for h in reversed(d.history):
+                items.append(h.to_dict())
+            self.send_json({"investigations": items, "total": len(items)})
+        elif path.startswith("/api/investigations/"):
+            inv_id = path.replace("/api/investigations/", "").strip()
+            d = get_or_create_desk()
+            found = None
+            if d.current and d.current.investigation_id == inv_id:
+                found = d.current.to_dict()
+            else:
+                for h in d.history:
+                    if h.investigation_id == inv_id:
+                        found = h.to_dict()
+                        break
+            if found:
+                self.send_json({"investigation": found})
+            else:
+                self.send_error(404, f"Investigation {inv_id} not found")
+        elif path == "/api/approvals":
+            d = get_or_create_desk()
+            approvals = []
+            if d.current and d.current.proposal and d.current.state.name == "AWAITING_APPROVAL":
+                approvals.append({
+                    "investigation_id": d.current.investigation_id,
+                    "proposal": d.current.proposal.__dict__,
+                    "review": d.current.review.to_dict() if d.current.review else None,
+                    "analysis": {
+                        "sql": d.current.analysis.sql_query if d.current.analysis else None,
+                        "finding": d.current.analysis.llm_response if d.current.analysis else None,
+                    } if d.current.analysis else None
+                })
+            self.send_json({"approvals": approvals, "count": len(approvals)})
+        elif path == "/api/audit":
+            decisions = run_query("SELECT * FROM decision_log ORDER BY id DESC LIMIT 50")
+            campaigns = run_query("SELECT * FROM campaigns ORDER BY id DESC LIMIT 20")
+            self.send_json({
+                "decisions": decisions,
+                "campaigns": campaigns,
+                "total_decisions": len(decisions),
+                "total_campaigns": len(campaigns)
+            })
+        elif path == "/api/scenarios":
+            self.send_json({
+                "scenarios": [
+                    {
+                        "id": "duplicate_refunds",
+                        "title": "Scenario 1: Duplicate Refund Investigation",
+                        "question": "Investigate the revenue discrepancy in the West region.",
+                        "expected_variance": 20430.00,
+                        "description": "Cross-audits West region orders against refunds ledger to detect $20,430 duplicate refund glitch."
+                    },
+                    {
+                        "id": "churn_vs_payment_failures",
+                        "title": "Scenario 2: Churn vs Payment Failures",
+                        "question": "Why did recurring revenue decline this month?",
+                        "expected_variance": 14200.00,
+                        "description": "Distinguishes actual subscription churn from $14,200 in past-due expired card webhook retry failures."
+                    },
+                    {
+                        "id": "payment_reconciliation",
+                        "title": "Scenario 3: Payment Gateway Reconciliation",
+                        "question": "Find differences between recorded sales and payment transactions.",
+                        "expected_variance": 4120.00,
+                        "description": "Audits sales ledger against payment transactions to find unsettled chargeback holds and FX conversion delays."
+                    }
+                ]
+            })
         elif path == "/api/database":
             self.send_json(self.get_database_dump())
         elif path == "/api/reset":
@@ -220,26 +295,75 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
         elif path == "/api/ask":
             try:
                 question = data.get("question", "Why did repeat purchases drop in the West region last month?")
+                initiator = data.get("initiator", "@manager (Alex Rivera • VP Finance)")
                 d = get_or_create_desk()
-                ctx = d.ask(question)
+                ctx = d.ask(question, initiator=initiator)
                 self.send_json(self.get_room_state())
+            except SwitchUnavailableError as sue:
+                self.send_json({
+                    "error": str(sue),
+                    "switch_connected": False,
+                    "state": self.get_room_state()
+                }, status=503)
             except Exception as e:
                 import traceback
                 traceback.print_exc()
-                d = get_or_create_desk()
-                d._post("System", f"⚠️ Notice during execution: {str(e)}")
-                self.send_json(self.get_room_state())
+                self.send_json({"error": str(e), "state": self.get_room_state()}, status=400)
 
         elif path == "/api/approve":
             try:
-                response = data.get("response", "Approved. Change discount to 15%.")
                 d = get_or_create_desk()
-                result = d.approve(response)
+                user_role = data.get("user_role", "manager")
+                authorized_by = data.get("authorized_by", "Alex Rivera (VP Revenue Operations)")
+                result = d.approve(data if isinstance(data, dict) and "decision" in data else data.get("response", "Approved. Change discount to 15%."), user_role=user_role, authorized_by=authorized_by)
                 self.send_json({"result": result, "state": self.get_room_state()})
+            except SwitchUnavailableError as sue:
+                self.send_json({"error": str(sue), "switch_connected": False}, status=503)
+            except PermissionError as pe:
+                self.send_json({"error": str(pe), "code": "UNAUTHORIZED"}, status=403)
             except Exception as e:
                 import traceback
                 traceback.print_exc()
-                self.send_json({"error": str(e), "state": self.get_room_state()})
+                self.send_json({"error": str(e), "state": self.get_room_state()}, status=400)
+
+        elif path == "/api/switch/toggle":
+            action = data.get("action", "toggle")
+            if action == "disconnect":
+                switch_engine.disconnect(reason="Manual test disconnect")
+            elif action == "connect":
+                switch_engine.connect()
+            else:
+                if switch_engine.is_connected():
+                    switch_engine.disconnect(reason="Toggled from dashboard")
+                else:
+                    switch_engine.connect()
+            self.send_json({
+                "status": "ok",
+                "is_connected": switch_engine.is_connected(),
+                "switch_status": switch_engine.state.name
+            })
+
+        elif path == "/api/scenarios/run":
+            scenario_id = data.get("scenario_id", "duplicate_refunds")
+            d = get_or_create_desk()
+            scenarios = {
+                "duplicate_refunds": "Investigate the revenue discrepancy in the West region.",
+                "churn_vs_payment_failures": "Why did recurring revenue decline this month?",
+                "payment_reconciliation": "Find differences between recorded sales and payment transactions."
+            }
+            question = scenarios.get(scenario_id, scenarios["duplicate_refunds"])
+            try:
+                ctx = d.ask(question)
+                self.send_json({
+                    "status": "ok",
+                    "scenario_id": scenario_id,
+                    "investigation_id": ctx.investigation_id,
+                    "state": self.get_room_state()
+                })
+            except SwitchUnavailableError as sue:
+                self.send_json({"error": str(sue), "switch_connected": False}, status=503)
+            except Exception as e:
+                self.send_json({"error": str(e), "state": self.get_room_state()}, status=400)
 
         else:
             self.send_error(404, f"Endpoint not found: path={path}, self_path={self.path}")
@@ -267,58 +391,80 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             ORDER BY ct.id ASC LIMIT 10
         """)
 
+        # Get tasks from switch engine or build state-aligned tasks
+        tasks = []
+        if switch_engine.tasks:
+            tasks = [t.to_dict() for t in switch_engine.tasks.values()]
+        else:
+            tasks = [
+                {
+                    "id": "TASK-101",
+                    "title": "Investigate revenue variance & generate SQL",
+                    "assigned_to": "Analyst Agent",
+                    "status": "completed" if ctx and ctx.analysis else "in_progress" if ctx else "todo",
+                },
+                {
+                    "id": "TASK-102",
+                    "title": "Audit secondary ledgers & verify reconciliation",
+                    "assigned_to": "Reviewer Agent",
+                    "status": "completed" if ctx and ctx.review else "in_progress" if ctx and ctx.state.name == "REVIEWING" else "todo",
+                },
+                {
+                    "id": "TASK-103",
+                    "title": "Formulate verified remediation proposal",
+                    "assigned_to": "Analyst Agent",
+                    "status": "completed" if ctx and ctx.proposal else "todo",
+                },
+                {
+                    "id": "TASK-104",
+                    "title": "Human manager approval gate for campaign launch",
+                    "assigned_to": "Human Manager",
+                    "status": "completed" if ctx and ctx.state.name in ("COMPLETED", "APPROVED") else "in_progress" if ctx and ctx.state.name == "AWAITING_APPROVAL" else "todo",
+                },
+                {
+                    "id": "TASK-105",
+                    "title": "Commit database mutations & sign cryptographic decision lineage",
+                    "assigned_to": "Analyst Agent",
+                    "status": "completed" if ctx and ctx.execution_result else "todo",
+                },
+            ]
+
         return {
             "current_state": ctx.state.name if ctx else "IDLE",
+            "investigation_id": ctx.investigation_id if ctx else None,
             "question": ctx.question if ctx else None,
+            "initiator": ctx.initiator if ctx else None,
             "messages": ctx.messages if ctx else [],
             "analysis": {
                 "sql": ctx.analysis.sql_query if ctx and ctx.analysis else None,
                 "response": ctx.analysis.llm_response if ctx and ctx.analysis else None,
                 "raw_data": ctx.analysis.raw_data if ctx and ctx.analysis else [],
             } if ctx and ctx.analysis else None,
-            "review": {
-                "sql": ctx.review.reviewer_sql if ctx and ctx.review else None,
-                "response": ctx.review.llm_response if ctx and ctx.review else None,
-                "is_verified": ctx.review.is_verified if ctx and ctx.review else None,
-                "raw_data": ctx.review.reviewer_data if ctx and ctx.review else [],
-            } if ctx and ctx.review else None,
-            "proposed_action": ctx.proposed_action if ctx else None,
+            "review": ctx.review.to_dict() if ctx and ctx.review else None,
+            "proposal": {
+                "id": ctx.proposal.id,
+                "title": ctx.proposal.title,
+                "summary": ctx.proposal.summary,
+                "discount": ctx.proposal.recommended_discount,
+                "impact": ctx.proposal.expected_impact,
+                "status": ctx.proposal.status,
+            } if ctx and ctx.proposal else None,
+            "proposed_action": ctx.proposal.summary if ctx and ctx.proposal else None,
+            "approval_record": {
+                "authorized_by": ctx.approval_record.authorized_by,
+                "decision": ctx.approval_record.decision,
+                "discount": ctx.approval_record.approved_discount,
+                "timestamp": ctx.approval_record.timestamp,
+                "signature_hash": ctx.approval_record.signature_hash,
+            } if ctx and ctx.approval_record else None,
             "execution_result": ctx.execution_result if ctx else None,
             "decisions": decisions,
             "campaigns": campaigns,
             "targets": targets,
-            "tasks": [
-                {
-                    "id": "TASK-101",
-                    "title": "Investigate West region repeat purchase decline",
-                    "assigned_to": "Analyst Agent",
-                    "status": "completed" if ctx and ctx.analysis else "in_progress" if ctx else "todo",
-                },
-                {
-                    "id": "TASK-102",
-                    "title": "Audit October revenue, refunds & billing anomalies",
-                    "assigned_to": "Reviewer Agent",
-                    "status": "completed" if ctx and ctx.review else "in_progress" if ctx and ctx.state.name == "REVIEWING" else "todo",
-                },
-                {
-                    "id": "TASK-103",
-                    "title": "Synthesize findings & propose win-back campaign",
-                    "assigned_to": "Analyst Agent",
-                    "status": "completed" if ctx and ctx.proposed_action else "todo",
-                },
-                {
-                    "id": "TASK-104",
-                    "title": "Human manager approval gate for campaign launch",
-                    "assigned_to": "Human Manager",
-                    "status": "completed" if ctx and ctx.state.name == "COMPLETE" else "in_progress" if ctx and ctx.state.name == "AWAITING_APPROVAL" else "todo",
-                },
-                {
-                    "id": "TASK-105",
-                    "title": "Execute campaign mutations & record Switch decision lineage",
-                    "assigned_to": "Analyst Agent",
-                    "status": "completed" if ctx and ctx.execution_result else "todo",
-                },
-            ]
+            "tasks": tasks,
+            "is_switch_connected": switch_engine.is_connected(),
+            "switch_status": switch_engine.state.name,
+            "switch_room_id": switch_engine.room_id,
         }
 
     def get_database_dump(self) -> dict[str, Any]:

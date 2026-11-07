@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Revenue Desk: Governed Multi-Agent Teams with Switch</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 18mm 20mm 18mm;
+        }
+
+        :root {
+            --text-main: #1A1A1A;
+            --text-secondary: #555555;
+            --text-muted: #777777;
+            --brand-primary: #0D9488;
+            --border-color: #E5E7EB;
+            --bg-code: #F8FAFC;
+            --bg-callout: #F0FDFA;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-main);
+            background-color: #FFFFFF;
+            line-height: 1.65;
+            font-size: 15px;
+            padding: 0;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        /* Publication Header */
+        .article-header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 24px;
+            margin-bottom: 32px;
+        }
+
+        .category-tag {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--brand-primary);
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        h1 {
+            font-size: 32px;
+            line-height: 1.25;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 14px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 17px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .meta-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 14px;
+        }
+
+        .meta-author strong {
+            color: #111827;
+        }
+
+        /* Headings */
+        h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #111827;
+            margin-top: 36px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            letter-spacing: -0.2px;
+        }
+
+        h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1F2937;
+            margin-top: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        /* Callout / Quote */
+        .callout {
+            background-color: var(--bg-callout);
+            border-left: 4px solid var(--brand-primary);
+            padding: 16px 18px;
+            margin: 22px 0;
+            border-radius: 0 6px 6px 0;
+            font-size: 14.5px;
+        }
+
+        .callout strong {
+            color: #0F766E;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-left: 24px;
+            margin-bottom: 18px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Links */
+        a {
+            color: var(--brand-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Code Blocks */
+        pre {
+            background-color: var(--bg-code);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 14px 16px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: "SF Mono", Monaco, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: #0F172A;
+            page-break-inside: avoid;
+        }
+
+        code {
+            font-family: "SF Mono", Monaco, Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 13px;
+            background-color: #F1F5F9;
+            padding: 2px 5px;
+            border-radius: 4px;
+            color: #0F766E;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Architecture ASCII box */
+        .architecture-box {
+            background: #FAFAFA;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 22px 0;
+            font-family: "SF Mono", Monaco, monospace;
+            font-size: 11.5px;
+            line-height: 1.35;
+            color: #111827;
+            overflow-x: auto;
+            page-break-inside: avoid;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13.5px;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #F8FAFC;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 12.5px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="article-header">
+        <span class="category-tag">Engineering Case Study & Tutorial • Switch AI Hackathon 2026</span>
+        <h1>Building Revenue Desk: How to Build Governed Multi-Agent Teams with Switch</h1>
+        <p class="subtitle">
+            A practical guide to building collaborative multi-agent Switch Rooms where humans and AI work together to run high-stakes business operations without hallucinations.
+        </p>
+        <div class="meta-bar">
+            <span class="meta-author">By <strong>Shubham Vernekar</strong> • Lead Builder</span>
+            <span>Published: November 6, 2026 • 8 min read</span>
+        </div>
+    </header>
+
+    <section>
+        <h2>1. What I Built</h2>
+        <p>
+            <strong>Revenue Desk</strong> is a governed financial operations cockpit powered by multi-agent AI. In high-stakes enterprise environments, an autonomous AI operating in isolation is dangerous—a naive LLM looking at raw transaction tables can easily mistake a temporary payment processor glitch for a customer churn crisis and recommend margin-destroying discounts.
+        </p>
+        <p>
+            Revenue Desk solves this by placing multiple specialized AI agents inside a collaborative <strong>Switch Room</strong> (<code>#revenue-desk</code>) governed by declarative operational rules, adversarial peer verification, and human-in-the-loop sign-off gates.
+        </p>
+        <ul>
+            <li><strong>The Problem:</strong> Single-agent financial assistants suffer from self-confirmation bias and hallucination traps when diagnosing revenue drops across disparate ledgers.</li>
+            <li><strong>Who It Is For:</strong> VP of Finance, Revenue Operations (RevOps) leads, and Chief Financial Officers managing mission-critical enterprise billing.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>2. Live Demo & Project Resources</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Resource</th>
+                    <th>Link / Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Live Interactive Cockpit</strong></td>
+                    <td><a href="https://revenue-desk-gamma.vercel.app">https://revenue-desk-gamma.vercel.app</a></td>
+                </tr>
+                <tr>
+                    <td><strong>GitHub Repository</strong></td>
+                    <td><a href="https://github.com/Shubhamver45/Revenue-Desk">https://github.com/Shubhamver45/Revenue-Desk</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Switch Framework</strong></td>
+                    <td><a href="https://switchagents.ai">https://switchagents.ai</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>3. The Problem: The Multi-Agent Reliability Crisis</h2>
+        <p>
+            Consider a real-world scenario: An executive asks an AI agent, <em>"Why did repeat purchases drop in the West region last month?"</em>
+        </p>
+        <ol>
+            <li>The AI queries the primary <code>orders</code> table.</li>
+            <li>It observes that order volume plummeted by 84%.</li>
+            <li>It immediately jumps to a flawed conclusion: <em>"Your top 5 enterprise accounts are churning! Issue an emergency 25% discount campaign immediately."</em></li>
+        </ol>
+        <div class="callout">
+            <strong>The Anomaly Trap:</strong> What the solo AI missed was the secondary <code>refunds</code> ledger. An unannounced payment gateway migration had caused <strong>$20,430 in duplicate refund reversals</strong>. The accounts never churned—they experienced a transient billing issue! Giving away a 25% discount would have burned thousands in profit margin for zero benefit.
+        </div>
+    </section>
+
+    <section>
+        <h2>4. The Architecture: Two Agents, One Room, Total Governance</h2>
+        <p>
+            Instead of relying on a lonely chatbot, Revenue Desk leverages Switch's collaborative room infrastructure. The room acts as a neutral arbiter enforcing strict protocols between teammates.
+        </p>
+
+        <div class="architecture-box">
+                  ┌───────────────────────────────┐
+                  │    Human Manager (@manager)   │
+                  └──────────────┬────────────────┘
+                                 │ Inquiries & Final Authorization
+                                 ▼
+   ┌─────────────────────────────────────────────────────────────┐
+   │                 SWITCH ROOM: #revenue-desk                  │
+   │                                                             │
+   │   Enforces 5 Declarative Rules:                             │
+   │   • rule-independent-audit     • rule-dual-agent-consensus  │
+   │   • rule-human-in-the-loop     • rule-tamper-evident-audit  │
+   │   • rule-read-only-sandbox                                  │
+   │                                                             │
+   │   ┌──────────────────────┐       ┌──────────────────────┐   │
+   │   │    @analyst Agent    │◄─────►│   @reviewer Agent    │   │
+   │   │  (SQL Query Engine)  │       │ (Independent Audit)  │   │
+   │   └──────────┬───────────┘       └──────────┬───────────┘   │
+   │              │                              │               │
+   │              │   Consensus Protocol Engine  │               │
+   │              └──────────────►◄──────────────┘               │
+   │                              │                              │
+   │                              ▼                              │
+   │                 100% Verified Proposal Card                 │
+   └──────────────────────────────┬──────────────────────────────┘
+                                  │
+                                  ▼
+                     ┌──────────────────────────┐
+                     │   Human Approval Gate    │
+                     │  (Approve / Modify / Reject)
+                     └────────────┬─────────────┘
+                                  │
+                                  ▼
+                     ┌──────────────────────────┐
+                     │ Atomic Database Mutation │
+                     │ & SHA-256 Decision Log   │
+                     └──────────────────────────┘
+        </div>
+
+        <h3>The Three Roles in the Room:</h3>
+        <ul>
+            <li><strong>@manager (Human Lead):</strong> Poses operational inquiries, inspects discrepancy diffs, adjusts remediation parameters, and retains final authorization authority.</li>
+            <li><strong>@analyst (Data Engine):</strong> Translates natural language inquiries into read-only SQL, aggregates transactions, and drafts initial findings.</li>
+            <li><strong>@reviewer (Audit Guard):</strong> An adversarial AI auditor that never trusts the Analyst blindly. It queries secondary tables (refunds, fees, system logs) to detect unhandled anomalies.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>5. Declarative Governance Rules</h2>
+        <p>
+            In Switch, governance is declarative and enforceable at the room layer. We defined five core rules in <code>switch/rules.yaml</code>:
+        </p>
+
+<pre><code>rules:
+  # Rule 1: Every analysis must be independently verified
+  - id: "rule-independent-audit"
+    trigger: "event.type == 'analyst.findings'"
+    action: "invoke_agent"
+    target: "@reviewer"
+    payload:
+      task: "verify_findings"
+      strict_mode: true
+
+  # Rule 2: Both agents must reach mathematical consensus
+  - id: "rule-dual-agent-consensus"
+    condition: "analyst.net_revenue == reviewer.net_revenue"
+    on_failure: "block_proposal"
+
+  # Rule 3: No external action without human sign-off
+  - id: "rule-human-in-the-loop"
+    trigger: "event.type == 'campaign.proposal'"
+    enforce: "require_approval"
+    approver: "@manager"
+
+  # Rule 4: Cryptographic decision ledger
+  - id: "rule-tamper-evident-audit"
+    on_event: "*"
+    action: "append_sha256_audit_trail"
+
+  # Rule 5: Database security sandbox
+  - id: "rule-read-only-sandbox"
+    enforce: "disallow_sql_mutation_for_agents"</code></pre>
+    </section>
+
+    <section>
+        <h2>6. Code Implementation: Consensus & Approval Gate</h2>
+        <p>
+            The Python orchestration engine coordinates the multi-turn exchange:
+        </p>
+
+<pre><code>from src.workflow import RevenueDesk
+
+# 1. Initialize Switch Room workflow
+desk = RevenueDesk()
+
+# 2. Human Manager asks inquiry
+context = desk.ask("Why did repeat purchases drop in the West region last month?")
+
+# 3. Analyst Agent queries primary orders table
+print("Analyst Findings:", context.analyst_findings)
+# Returns: 5 enterprise accounts with zero repeat orders
+
+# 4. Reviewer Agent independently queries secondary refunds table
+print("Reviewer Audit:", context.reviewer_audit)
+# Returns: Detected $20,430 duplicate refund glitch on orders #1, #2, #3
+
+# 5. Consensus check validates mathematical reconciliation
+if desk.check_consensus(context):
+    print("✅ Consensus Sealed: Net Revenue reconciled to $3,820.00")
+
+# 6. Human Manager Approval Gate (mutations are blocked until authorized)
+desk.approve(context, campaign_id="CAMP-2026-WEST", modified_discount=15)
+print("🚀 Authorized action executed and committed to SHA-256 ledger.")</code></pre>
+    </section>
+
+    <section>
+        <h2>7. What I Learned Building with Switch</h2>
+        <ol>
+            <li><strong>Separation of Concerns Prevents Hallucination:</strong> Asking an LLM to check its own work fails due to confirmation bias. Spinning up two distinct agents with separate system prompts and independent query generation eliminates false positives.</li>
+            <li><strong>Explicit Task Tracking Stops Context Rot:</strong> Switch Tasks (<code>TASK-101</code> through <code>TASK-105</code>) provide a shared state machine so agents remain aligned across complex multi-step workflows.</li>
+            <li><strong>Cryptographic Decision Logs Build Enterprise Trust:</strong> Recording SHA-256 hashes of every query, audit finding, and human sign-off provides the compliance paper trail that enterprise leaders demand.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>8. Conclusion</h2>
+        <p>
+            Autonomous AI agents need guardrails. Switch makes it possible to build multi-agent teams where agents verify each other's calculations and defer to human authority before taking action. Revenue Desk proves that multi-agent systems can be reliable, auditable, and production-ready for mission-critical enterprise operations.
+        </p>
+    </section>
+
+    <footer class="article-footer">
+        <span>© 2026 Revenue Desk • Built by Shubham Vernekar</span>
+        <span>Flip the Switch Hackathon Entry • Best Blog Submission</span>
+    </footer>
+
+</body>
+</html>
+
