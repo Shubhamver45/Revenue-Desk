@@ -302,7 +302,7 @@ export default function App() {
                 </div>
             )}
 
-            <main className="workspace" style={{ padding: '20px 24px', maxWidth: 1440, margin: '0 auto', width: '100%' }}>
+            <main className="workspace">
                 {/* VIEW 1: OVERVIEW */}
                 {activeView === 'overview' && (
                     <OverviewView 
@@ -334,7 +334,7 @@ export default function App() {
 
                 {/* VIEW 3: SWITCH ROOM */}
                 {activeView === 'room' && (
-                    <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr 280px', gap: 16, height: 'calc(100vh - 100px)' }}>
+                    <div className="room-view-layout">
                         {/* Left Pane: Room Details & Participants */}
                         <div className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 14 }}>
                             <div>
