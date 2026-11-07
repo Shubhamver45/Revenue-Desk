@@ -438,10 +438,10 @@ class RevenueDesk:
             self.current.approval_record = record
             self.current.completed_at = datetime.now()
 
-            # Persist to database
+            # Persist rejection to database with SHA-256 signature
             run_write(
-                "INSERT INTO decision_log (decision, made_by, context) VALUES (?, ?, ?)",
-                (f"REJECTED: Proposal #{prop_id}", authorized_by, f"Investigation #{inv_id}: {notes}"),
+                "INSERT INTO decision_log (decision, made_by, context, signature_hash, user_role) VALUES (?, ?, ?, ?, ?)",
+                (f"REJECTED: Proposal #{prop_id}", authorized_by, f"Investigation #{inv_id}: {notes}", record.signature_hash, user_role),
             )
 
             switch_engine.update_task(
@@ -475,6 +475,12 @@ class RevenueDesk:
             notes=notes,
         )
         self.current.approval_record = record
+
+        # Persist approval to decision ledger with SHA-256 signature
+        run_write(
+            "INSERT INTO decision_log (decision, made_by, context, signature_hash, user_role) VALUES (?, ?, ?, ?, ?)",
+            (f"APPROVED: Proposal #{prop_id} with {discount:.0f}% discount", authorized_by, f"Investigation #{inv_id}: Campaign authorized at {discount:.0f}% discount", record.signature_hash, user_role),
+        )
 
         self._post(
             sender_id="@manager:switch.local",

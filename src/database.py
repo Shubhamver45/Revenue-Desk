@@ -50,16 +50,29 @@ def init_database(db_path: str | None = None) -> None:
     db_path = db_path or get_db_path()
     os.makedirs(os.path.dirname(db_path) or ".", exist_ok=True)
 
-    if os.path.exists(db_path):
+    if not os.path.exists(db_path):
+        print(f"[DB] Initialising database at {db_path} ...")
+        conn = sqlite3.connect(db_path)
+        with open(SEED_SQL_PATH, "r") as f:
+            conn.executescript(f.read())
+        conn.close()
+        print(f"[DB] Seed data loaded successfully.")
+    else:
         print(f"[DB] Database already exists at {db_path}")
-        return
 
-    print(f"[DB] Initialising database at {db_path} ...")
-    conn = sqlite3.connect(db_path)
-    with open(SEED_SQL_PATH, "r") as f:
-        conn.executescript(f.read())
-    conn.close()
-    print(f"[DB] Seed data loaded successfully.")
+    # Ensure decision_log has signature_hash and user_role columns
+    try:
+        with sqlite3.connect(db_path) as conn:
+            cur = conn.cursor()
+            cur.execute("PRAGMA table_info(decision_log)")
+            cols = [c[1] for c in cur.fetchall()]
+            if "signature_hash" not in cols:
+                cur.execute("ALTER TABLE decision_log ADD COLUMN signature_hash TEXT")
+            if "user_role" not in cols:
+                cur.execute("ALTER TABLE decision_log ADD COLUMN user_role TEXT DEFAULT 'manager'")
+            conn.commit()
+    except Exception:
+        pass
 
 
 @contextmanager
