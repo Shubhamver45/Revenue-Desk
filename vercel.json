@@ -7,7 +7,11 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/"
+      "destination": "/api/index.py?__route=$1"
+    },
+    {
+      "source": "/api",
+      "destination": "/api/index.py?__route=state"
     },
     {
       "source": "/blog",
@@ -23,6 +27,22 @@
     },
     {
       "source": "/dashboard",
+      "destination": "/dist/index.html"
+    },
+    {
+      "source": "/investigations",
+      "destination": "/dist/index.html"
+    },
+    {
+      "source": "/room",
+      "destination": "/dist/index.html"
+    },
+    {
+      "source": "/approvals",
+      "destination": "/dist/index.html"
+    },
+    {
+      "source": "/audit",
       "destination": "/dist/index.html"
     },
     {

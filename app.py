@@ -91,7 +91,7 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
                 "template_yaml": yaml_content,
                 "room_yaml": room_content
             })
-        elif path == "/api/state":
+        elif path in ("/api", "/api/", "/api/state"):
             self.send_json(self.get_room_state())
         elif path == "/api/switch/room":
             self.send_json(switch_engine.get_room_state())
