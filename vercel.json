@@ -1,4 +1,5 @@
 {
+  "outputDirectory": "dist",
   "functions": {
     "api/**/*.py": {
       "includeFiles": "{dist/**,src/**,seed/**,switch/**}"
@@ -15,43 +16,27 @@
     },
     {
       "source": "/blog",
-      "destination": "/dist/blog.html"
+      "destination": "/blog.html"
     },
     {
       "source": "/blog.html",
-      "destination": "/dist/blog.html"
+      "destination": "/blog.html"
     },
     {
       "source": "/landing",
-      "destination": "/dist/landing.html"
+      "destination": "/landing.html"
     },
     {
-      "source": "/dashboard",
-      "destination": "/dist/index.html"
-    },
-    {
-      "source": "/investigations",
-      "destination": "/dist/index.html"
-    },
-    {
-      "source": "/room",
-      "destination": "/dist/index.html"
-    },
-    {
-      "source": "/approvals",
-      "destination": "/dist/index.html"
-    },
-    {
-      "source": "/audit",
-      "destination": "/dist/index.html"
+      "source": "/landing.html",
+      "destination": "/landing.html"
     },
     {
       "source": "/assets/(.*)",
-      "destination": "/dist/assets/$1"
+      "destination": "/assets/$1"
     },
     {
-      "source": "/",
-      "destination": "/dist/index.html"
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }

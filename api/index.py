@@ -44,16 +44,16 @@ class handler(SwitchAppHandler):
             if val:
                 p = urllib.parse.urlparse(val).path
                 clean_p = p.rstrip("/")
-                if clean_p and clean_p != "/api" and not clean_p.endswith(".py"):
+                if clean_p and not clean_p.endswith(".py"):
                     return clean_p, orig_parsed.query
 
         # 3. Check self.path directly
         clean_path = orig_parsed.path.rstrip("/")
-        if clean_path.startswith("/api/") and not clean_path.endswith(".py"):
+        if clean_path and not clean_path.endswith(".py"):
             return clean_path, orig_parsed.query
 
-        # Default to /api/state
-        return "/api/state", orig_parsed.query
+        # Default to root UI "/"
+        return "/", orig_parsed.query
 
     def do_GET(self) -> None:
         real_path, query = self.get_request_path()

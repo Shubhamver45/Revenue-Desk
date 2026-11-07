@@ -50,7 +50,8 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
         path = parsed.path
 
         clean_p = path.rstrip("/")
-        if path in ("/", "/index.html", "/dashboard", "/src/ui/index.html", "/dist/index.html") or clean_p in ("", "/dashboard"):
+        view_routes = ("", "/dashboard", "/investigations", "/room", "/approvals", "/audit")
+        if path in ("/", "/index.html", "/dashboard", "/investigations", "/room", "/approvals", "/audit", "/src/ui/index.html", "/dist/index.html") or clean_p in view_routes:
             self.serve_ui("index.html")
         elif path in ("/landing", "/landing.html", "/login", "/src/ui/landing.html", "/dist/landing.html") or clean_p in ("/landing", "/login"):
             self.serve_ui("landing.html")
