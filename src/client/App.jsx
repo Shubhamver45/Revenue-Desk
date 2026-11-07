@@ -10,8 +10,32 @@ import RoomSpecModal from './components/RoomSpecModal';
 import AuditMemoModal from './components/AuditMemoModal';
 
 export default function App() {
-    // ── Application State ──
-    const [activeView, setActiveView] = useState('overview');
+    // ── Application State with URL Sync ──
+    const getInitialView = () => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            const viewParam = params.get('view');
+            if (viewParam && ['overview', 'investigations', 'room', 'approvals', 'audit'].includes(viewParam)) {
+                return viewParam;
+            }
+            const hash = window.location.hash.replace('#', '');
+            if (hash && ['overview', 'investigations', 'room', 'approvals', 'audit'].includes(hash)) {
+                return hash;
+            }
+        }
+        return 'overview';
+    };
+
+    const [activeView, setActiveView] = useState(getInitialView);
+
+    const handleViewChange = (newView) => {
+        setActiveView(newView);
+        if (typeof window !== 'undefined' && window.history?.pushState) {
+            const url = new URL(window.location);
+            url.searchParams.set('view', newView);
+            window.history.pushState({}, '', url);
+        }
+    };
     const [switchConnected, setSwitchConnected] = useState(true);
     const [metrics, setMetrics] = useState(null);
     const [investigationData, setInvestigationData] = useState(null);
@@ -95,7 +119,7 @@ export default function App() {
 
     // ── Launch Benchmark Scenario ──
     const handleLaunchScenario = async (scenarioId) => {
-        setActiveView('investigations');
+        handleViewChange('investigations');
         setIsRunning(true);
         try {
             const res = await fetch('/api/scenarios/run', {
@@ -249,7 +273,7 @@ export default function App() {
         <>
             <Navbar 
                 activeView={activeView}
-                onViewChange={setActiveView}
+                onViewChange={handleViewChange}
                 switchConnected={switchConnected}
                 onToggleSwitch={handleToggleSwitch}
                 pendingApprovalsCount={pendingApprovalsCount}
@@ -283,8 +307,11 @@ export default function App() {
                 {activeView === 'overview' && (
                     <OverviewView 
                         metrics={metrics}
+                        investigationData={investigationData}
+                        tasks={tasks}
+                        decisions={decisions}
                         onLaunchScenario={handleLaunchScenario}
-                        onNavigate={setActiveView}
+                        onNavigate={handleViewChange}
                         comparisonMode={comparisonMode}
                         onToggleMode={setComparisonMode}
                         switchConnected={switchConnected}
@@ -301,7 +328,7 @@ export default function App() {
                         switchConnected={switchConnected}
                         onAuthorize={handleAuthorize}
                         onReject={handleReject}
-                        onOpenAudit={() => setActiveView('audit')}
+                        onOpenAudit={() => handleViewChange('audit')}
                     />
                 )}
 
@@ -367,7 +394,7 @@ export default function App() {
                                 onQuickInquiry={handleRunCustomInquiry}
                                 hasPendingApproval={pendingApprovalsCount > 0}
                                 onAuthorize={() => handleAuthorize(15, 'manager')}
-                                onOpenGateView={() => setActiveView('approvals')}
+                                onOpenGateView={() => handleViewChange('approvals')}
                             />
                         </div>
 
@@ -396,7 +423,7 @@ export default function App() {
                                 <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
                                     {decisions.length} cryptographic decisions recorded in current session.
                                 </div>
-                                <button className="btn-ghost" style={{ marginTop: 8, fontSize: 11, width: '100%', justifyContent: 'center' }} onClick={() => setActiveView('audit')}>
+                                <button className="btn-ghost" style={{ marginTop: 8, fontSize: 11, width: '100%', justifyContent: 'center' }} onClick={() => handleViewChange('audit')}>
                                     Open Full Audit Ledger &rarr;
                                 </button>
                             </div>
@@ -411,7 +438,7 @@ export default function App() {
                         onAuthorize={handleAuthorize}
                         onReject={handleReject}
                         switchConnected={switchConnected}
-                        onOpenAudit={() => setActiveView('audit')}
+                        onOpenAudit={() => handleViewChange('audit')}
                     />
                 )}
 

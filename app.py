@@ -35,6 +35,10 @@ def get_or_create_desk() -> RevenueDesk:
     if desk is None:
         init_database()
         desk = RevenueDesk()
+        try:
+            desk.ask("Why did repeat purchases drop in the West region last month?")
+        except Exception as e:
+            logger.warning(f"Initial inquiry bootstrap note: {e}")
     return desk
 
 
@@ -170,7 +174,11 @@ class SwitchAppHandler(SimpleHTTPRequestHandler):
             desk = None
             init_database()
             desk = RevenueDesk()
-            self.send_json({"status": "ok", "message": "Room state reset."})
+            try:
+                desk.ask("Why did repeat purchases drop in the West region last month?")
+            except Exception as e:
+                logger.warning(f"Reset inquiry bootstrap note: {e}")
+            self.send_json({"status": "ok", "message": "Room state reset to clean baseline."})
         else:
             self.send_error(404, f"Endpoint not found: path={path}, self_path={self.path}")
 

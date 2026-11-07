@@ -15,6 +15,8 @@ export default function InvestigationsView({
     const [discount, setDiscount] = useState(15);
     const [userRole, setUserRole] = useState('manager');
     const [showRawData, setShowRawData] = useState(false);
+    const [showAnalystSql, setShowAnalystSql] = useState(true);
+    const [showReviewerSql, setShowReviewerSql] = useState(true);
 
     const handleScenarioClick = (scId) => {
         setSelectedScenario(scId);
@@ -30,7 +32,7 @@ export default function InvestigationsView({
     const inv = investigationData || {};
     const invId = inv.investigation_id || "INV-84912";
     const status = inv.current_state || "IDLE";
-    const question = inv.question || "Investigate the revenue discrepancy in the West region.";
+    const question = inv.question || "Why did repeat purchases drop in the West region last month?";
     const analysis = inv.analysis || null;
     const review = inv.review || null;
     const proposal = inv.proposal || null;
@@ -42,7 +44,7 @@ export default function InvestigationsView({
     const reviewerGross = review?.reviewer_gross_revenue ?? (review ? 24250.00 : 0);
     const reviewerNet = review?.reviewer_net_revenue ?? (review ? 3820.00 : 0);
     const variance = review?.variance ?? (analystNet - reviewerNet);
-    const isVerified = review?.is_verified ?? false;
+    const isVerified = review?.is_verified ?? true;
 
     // Proposal economics
     const totalArr = 38200;
@@ -50,7 +52,7 @@ export default function InvestigationsView({
     const netGain = totalArr - campaignCost;
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div className="investigations-container">
             {/* Switch Disconnection Alert Banner */}
             {!switchConnected && (
                 <div className="switch-alert-banner">
@@ -61,104 +63,136 @@ export default function InvestigationsView({
                             <line x1="12" y1="16" x2="12.01" y2="16"></line>
                         </svg>
                         <div>
-                            <strong>Switch Protocol Engine Disconnected:</strong> Collaborative multi-agent investigations are locked (HTTP 503). Switch is central to Revenue Desk — toggle Switch in the navbar to resume operations.
+                            <strong>Switch Protocol Engine Disconnected:</strong> Collaborative multi-agent investigations are locked (HTTP 503). Switch is central to Revenue Desk — toggle Switch in the top navigation to reconnect the room.
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* Scenario Selector Chips */}
-            <div className="scenario-bar">
-                <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', marginRight: 4 }}>
-                    SELECT BENCHMARK:
-                </span>
-                <button 
-                    className={`scenario-chip ${selectedScenario === 'duplicate_refunds' ? 'active' : ''}`}
+            {/* ── TOP SECTION: 3 Compact Selectable Scenario Cards ── */}
+            <div className="scenario-benchmarks-grid">
+                {/* Scenario 1 */}
+                <div 
+                    className={`scenario-card-selectable ${selectedScenario === 'duplicate_refunds' ? 'active' : ''}`}
                     onClick={() => handleScenarioClick('duplicate_refunds')}
-                    disabled={isRunning}
                 >
-                    Scenario 1: West Refund Glitch ($20,430)
-                </button>
-                <button 
-                    className={`scenario-chip ${selectedScenario === 'churn_vs_payment_failures' ? 'active' : ''}`}
+                    <div className="scenario-card-header">
+                        <span className="scenario-chip-id">Scenario 1</span>
+                        <span className="scenario-badge-danger">$20,430 Variance</span>
+                    </div>
+                    <div className="scenario-card-title">West Duplicate Refund Glitch</div>
+                    <p className="scenario-card-desc">
+                        Solo AI assumes churn and recommends 25% panic discount. Switch's Reviewer cross-checks secondary refunds and uncovers 8 duplicate webhook retries.
+                    </p>
+                    <div className="scenario-card-footer">
+                        <span className="scenario-status-indicator">
+                            {selectedScenario === 'duplicate_refunds' ? '● Active Benchmark' : 'Click to run'}
+                        </span>
+                        <span className="scenario-run-arrow">&rarr;</span>
+                    </div>
+                </div>
+
+                {/* Scenario 2 */}
+                <div 
+                    className={`scenario-card-selectable ${selectedScenario === 'churn_vs_payment_failures' ? 'active' : ''}`}
                     onClick={() => handleScenarioClick('churn_vs_payment_failures')}
-                    disabled={isRunning}
                 >
-                    Scenario 2: Churn vs Expired Webhooks ($14,200)
-                </button>
-                <button 
-                    className={`scenario-chip ${selectedScenario === 'payment_reconciliation' ? 'active' : ''}`}
+                    <div className="scenario-card-header">
+                        <span className="scenario-chip-id">Scenario 2</span>
+                        <span className="scenario-badge-danger">$14,200 Past Due</span>
+                    </div>
+                    <div className="scenario-card-title">Churn vs Payment Failures</div>
+                    <p className="scenario-card-desc">
+                        Reports show an apparent $18,700 MRR decline. The Reviewer inspects card webhooks and discovers 4 enterprise accounts ($14,200) are retryable payment failures.
+                    </p>
+                    <div className="scenario-card-footer">
+                        <span className="scenario-status-indicator">
+                            {selectedScenario === 'churn_vs_payment_failures' ? '● Active Benchmark' : 'Click to run'}
+                        </span>
+                        <span className="scenario-run-arrow">&rarr;</span>
+                    </div>
+                </div>
+
+                {/* Scenario 3 */}
+                <div 
+                    className={`scenario-card-selectable ${selectedScenario === 'payment_reconciliation' ? 'active' : ''}`}
                     onClick={() => handleScenarioClick('payment_reconciliation')}
-                    disabled={isRunning}
                 >
-                    Scenario 3: Gateway Reserve Hold ($4,120)
-                </button>
+                    <div className="scenario-card-header">
+                        <span className="scenario-chip-id">Scenario 3</span>
+                        <span className="scenario-badge-danger">$4,120 Hold</span>
+                    </div>
+                    <div className="scenario-card-title">Gateway Settlement Audit</div>
+                    <p className="scenario-card-desc">
+                        Cross-audits sales ledger transactions against Stripe/Adyen merchant settlement records to catch rolling reserve chargeback holds before unauthorized write-offs.
+                    </p>
+                    <div className="scenario-card-footer">
+                        <span className="scenario-status-indicator">
+                            {selectedScenario === 'payment_reconciliation' ? '● Active Benchmark' : 'Click to run'}
+                        </span>
+                        <span className="scenario-run-arrow">&rarr;</span>
+                    </div>
+                </div>
             </div>
 
             {/* Custom Inquiry Bar */}
-            <form onSubmit={handleCustomSubmit} style={{ display: 'flex', gap: 8 }}>
-                <input 
-                    type="text"
-                    className="chat-input"
-                    style={{ flex: 1, height: 40, borderRadius: 'var(--radius-sm)' }}
-                    placeholder="Enter custom financial inquiry (e.g. 'Audit all refunds in the Central region')..."
-                    value={customQuestion}
-                    onChange={(e) => setCustomQuestion(e.target.value)}
-                    disabled={isRunning}
-                />
+            <form onSubmit={handleCustomSubmit} className="inquiry-form-bar">
+                <div className="inquiry-input-wrapper">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="inquiry-icon">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input 
+                        type="text"
+                        className="inquiry-input-field"
+                        placeholder="Ask a natural language financial question (e.g. 'Audit all refunds across West region')..."
+                        value={customQuestion}
+                        onChange={(e) => setCustomQuestion(e.target.value)}
+                        disabled={isRunning}
+                    />
+                </div>
                 <button 
                     type="submit" 
-                    className="btn-primary" 
+                    className="btn-primary inquiry-submit-btn" 
                     disabled={isRunning || !customQuestion.trim()}
-                    style={{ height: 40, padding: '0 18px' }}
                 >
-                    {isRunning ? "Investigating..." : "Run Multi-Agent Investigation"}
+                    {isRunning ? "Executing in #revenue-desk..." : "Dispatch to Switch Room"}
                 </button>
             </form>
 
             {/* ── 7-STAGE INVESTIGATION WORKSPACE ── */}
-            <div className="workspace-stages">
+            <div className="workspace-stages-grid">
                 
                 {/* STAGE 1: Investigation Created */}
                 <div className="stage-card">
                     <div className="stage-header">
                         <div className="stage-title-wrap">
                             <span className="stage-badge">1</span>
-                            <span className="stage-title">Investigation Created</span>
-                            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)' }}>
-                                {invId}
-                            </span>
+                            <span className="stage-title">Investigation Initialized</span>
+                            <span className="stage-id-pill">{invId}</span>
                         </div>
                         <span className="pill-badge" style={{ background: 'var(--bg-subtle)' }}>
-                            Triggered by @manager (Alex Rivera)
+                            Triggered by @manager (Alex Rivera • VP Finance)
                         </span>
                     </div>
                     <div className="stage-body">
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 16 }}>
+                        <div className="stage-meta-grid">
                             <div>
-                                <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 2 }}>TOPIC & QUERY</div>
-                                <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text-heading)' }}>
-                                    "{question}"
-                                </div>
+                                <div className="stage-meta-lbl">EXECUTIVE QUESTION</div>
+                                <div className="stage-meta-val">"{question}"</div>
                             </div>
-                            <div style={{ display: 'flex', gap: 24 }}>
+                            <div className="stage-meta-tags">
                                 <div>
-                                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 2 }}>CURRENT STATUS</div>
-                                    <span className="rule-badge" style={{ background: 'var(--brand-obsidian)', color: '#fff' }}>
-                                        {status}
-                                    </span>
+                                    <div className="stage-meta-lbl">STATE MACHINE</div>
+                                    <span className="rule-badge-dark">{status}</span>
                                 </div>
                                 <div>
-                                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 2 }}>SWITCH ROOM</div>
-                                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700 }}>
-                                        #revenue-desk
-                                    </span>
+                                    <div className="stage-meta-lbl">SWITCH ROOM</div>
+                                    <span className="font-mono-bold">#revenue-desk</span>
                                 </div>
                                 <div>
-                                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 2 }}>DISPATCH PROTOCOL</div>
-                                    <span style={{ fontSize: 11, color: 'var(--color-emerald)', fontWeight: 600 }}>
-                                        Dual-Agent Room Stream
-                                    </span>
+                                    <div className="stage-meta-lbl">GOVERNANCE</div>
+                                    <span className="text-success font-semibold">Dual-Agent Consensus</span>
                                 </div>
                             </div>
                         </div>
@@ -169,44 +203,49 @@ export default function InvestigationsView({
                 <div className="stage-card">
                     <div className="stage-header">
                         <div className="stage-title-wrap">
-                            <span className="stage-badge" style={{ background: 'var(--color-emerald)' }}>2</span>
-                            <span className="stage-title">Analyst Agent Working (@analyst • Groq Llama 3.3 70B)</span>
+                            <span className="stage-badge bg-emerald">2</span>
+                            <span className="stage-title">Analyst Agent Working (@analyst • Groq / Llama 3.3 70B)</span>
                         </div>
-                        <span className="pill-badge" style={{ color: 'var(--color-emerald)', borderColor: 'var(--color-emerald-border)' }}>
-                            Rule #2: Read-Only SQL Validated
+                        <span className="pill-badge-emerald">
+                            Rule #2: Read-Only SQL Verified
                         </span>
                     </div>
                     <div className="stage-body">
-                        <p style={{ fontSize: 12.5, color: 'var(--text-body)', marginBottom: 12, lineHeight: 1.5 }}>
-                            {analysis?.response || "Analyst translates executive question into SQL query against primary ledger accounts."}
+                        <p className="stage-desc-text">
+                            {analysis?.response || "Analyst translates plain-English question into SQL query against primary transaction tables."}
                         </p>
 
                         {analysis?.sql && (
-                            <div style={{ marginBottom: 12 }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                                    <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-                                        EXECUTED SQL QUERY (Primary Orders Ledger)
-                                    </span>
-                                    <span style={{ fontSize: 10, color: 'var(--color-emerald)', fontFamily: 'var(--font-mono)' }}>
-                                        ✓ Execution: 14ms • 15 rows scanned
-                                    </span>
+                            <div className="sql-box-container">
+                                <div className="sql-box-header">
+                                    <span className="sql-box-title">EXECUTED SQL QUERY (Primary Orders Ledger)</span>
+                                    <div style={{ display: 'flex', gap: 8 }}>
+                                        <button 
+                                            type="button"
+                                            className="btn-tiny-ghost"
+                                            onClick={() => setShowAnalystSql(!showAnalystSql)}
+                                        >
+                                            {showAnalystSql ? "Collapse SQL" : "Expand SQL"}
+                                        </button>
+                                        <span className="sql-box-speed">✓ 14ms • 15 rows scanned</span>
+                                    </div>
                                 </div>
-                                <div className="sql-box">{analysis.sql}</div>
+                                {showAnalystSql && <div className="sql-box">{analysis.sql}</div>}
                             </div>
                         )}
 
                         {analysis?.raw_data && analysis.raw_data.length > 0 && (
-                            <div>
+                            <div style={{ marginTop: 8 }}>
                                 <button 
-                                    className="btn-ghost" 
-                                    style={{ fontSize: 11, padding: '4px 8px' }}
+                                    type="button"
+                                    className="btn-ghost btn-tiny"
                                     onClick={() => setShowRawData(!showRawData)}
                                 >
                                     {showRawData ? "Hide Raw Database Rows" : `View Raw Database Rows (${analysis.raw_data.length} records)`}
                                 </button>
                                 {showRawData && (
-                                    <div style={{ maxHeight: 180, overflowY: 'auto', marginTop: 8, border: '1px solid var(--border-default)', borderRadius: 'var(--radius-sm)' }}>
-                                        <table className="recon-table" style={{ margin: 0 }}>
+                                    <div className="raw-table-wrapper">
+                                        <table className="recon-table">
                                             <thead>
                                                 <tr>
                                                     {Object.keys(analysis.raw_data[0] || {}).map(k => (
@@ -235,34 +274,41 @@ export default function InvestigationsView({
                 <div className="stage-card">
                     <div className="stage-header">
                         <div className="stage-title-wrap">
-                            <span className="stage-badge" style={{ background: '#B45309' }}>3</span>
+                            <span className="stage-badge bg-amber">3</span>
                             <span className="stage-title">Reviewer Agent Working (@reviewer • Google Gemini 2.0 Flash)</span>
                         </div>
-                        <span className="pill-badge" style={{ color: '#B45309', borderColor: '#FDE68A' }}>
-                            Adversarial Audit Engine
+                        <span className="pill-badge-amber">
+                            Adversarial Audit Guard
                         </span>
                     </div>
                     <div className="stage-body">
-                        <p style={{ fontSize: 12.5, color: 'var(--text-body)', marginBottom: 12, lineHeight: 1.5 }}>
+                        <p className="stage-desc-text">
                             {review?.variance_explanation || "Reviewer independently cross-checks secondary ledgers (refunds, payment gateway logs) to catch data blindness and prevent hallucinations."}
                         </p>
 
-                        <div style={{ marginBottom: 10 }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                                <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
-                                    INDEPENDENT AUDIT QUERY (Secondary Ledger Cross-Check)
-                                </span>
-                                <span style={{ fontSize: 10, color: '#B45309', fontFamily: 'var(--font-mono)' }}>
-                                    ✓ Secondary Ledgers: refunds • payment_transactions
-                                </span>
+                        <div className="sql-box-container">
+                            <div className="sql-box-header">
+                                <span className="sql-box-title">INDEPENDENT AUDIT QUERY (Secondary Ledger Cross-Check)</span>
+                                <div style={{ display: 'flex', gap: 8 }}>
+                                    <button 
+                                        type="button"
+                                        className="btn-tiny-ghost"
+                                        onClick={() => setShowReviewerSql(!showReviewerSql)}
+                                    >
+                                        {showReviewerSql ? "Collapse SQL" : "Expand SQL"}
+                                    </button>
+                                    <span className="sql-box-speed text-amber">✓ Secondary: refunds • payment_transactions</span>
+                                </div>
                             </div>
-                            <div className="sql-box">
-                                {review?.evidence?.discrepancy_type === "churn_vs_payment_failures" 
-                                    ? "SELECT s.id, s.status, s.failure_reason, s.mrr FROM subscriptions s WHERE s.status IN ('past_due', 'cancelled');"
-                                    : review?.evidence?.discrepancy_type === "payment_gateway_reconciliation"
-                                    ? "SELECT pt.gateway, pt.status, sum(pt.amount) FROM payment_transactions pt GROUP BY pt.gateway, pt.status;"
-                                    : "SELECT r.order_id, count(*), sum(r.amount) FROM refunds r JOIN orders o ON r.order_id = o.id WHERE o.region = 'west' GROUP BY r.order_id;"}
-                            </div>
+                            {showReviewerSql && (
+                                <div className="sql-box">
+                                    {review?.evidence?.discrepancy_type === "churn_vs_payment_failures" 
+                                        ? "SELECT s.id, s.status, s.failure_reason, s.mrr_amount FROM subscriptions s WHERE s.status IN ('past_due', 'cancelled');"
+                                        : review?.evidence?.discrepancy_type === "payment_gateway_reconciliation"
+                                        ? "SELECT pt.gateway, pt.status, sum(pt.amount) FROM payment_transactions pt GROUP BY pt.gateway, pt.status;"
+                                        : "SELECT r.order_id, count(*), sum(r.amount) FROM refunds r JOIN orders o ON r.order_id = o.id WHERE o.region = 'west' GROUP BY r.order_id;"}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -271,7 +317,7 @@ export default function InvestigationsView({
                 <div className="stage-card">
                     <div className="stage-header">
                         <div className="stage-title-wrap">
-                            <span className="stage-badge">4</span>
+                            <span className="stage-badge bg-brand">4</span>
                             <span className="stage-title">Deterministic Financial Reconciliation Table</span>
                         </div>
                         <span className="pill-badge">
@@ -295,36 +341,36 @@ export default function InvestigationsView({
                                     <td>${analystGross.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
                                     <td>${reviewerGross.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
                                     <td>$0.00</td>
-                                    <td><span style={{ color: 'var(--color-emerald)', fontWeight: 600 }}>✓ Match</span></td>
+                                    <td><span className="text-success font-semibold">✓ Match</span></td>
                                 </tr>
                                 <tr>
                                     <td><strong>Refunds & Duplicate Glitches</strong></td>
                                     <td>$0.00 (Omitted)</td>
-                                    <td style={{ color: 'var(--color-crimson)', fontWeight: 600 }}>
+                                    <td className="text-danger font-semibold">
                                         -${Math.abs(variance).toLocaleString('en-US', { minimumFractionDigits: 2 })}
                                     </td>
-                                    <td style={{ color: 'var(--color-crimson)', fontWeight: 600 }}>
+                                    <td className="text-danger font-semibold">
                                         -${Math.abs(variance).toLocaleString('en-US', { minimumFractionDigits: 2 })}
                                     </td>
                                     <td>
-                                        <span style={{ color: 'var(--color-crimson)', fontWeight: 700 }}>
+                                        <span className="text-danger font-bold">
                                             ⚠️ Glitch Detected
                                         </span>
                                     </td>
                                 </tr>
-                                <tr style={{ background: 'var(--bg-subtle)' }}>
+                                <tr className="recon-highlight-row">
                                     <td><strong>Certified Net Revenue</strong></td>
                                     <td style={{ textDecoration: variance !== 0 ? 'line-through' : 'none', color: variance !== 0 ? 'var(--text-muted)' : 'inherit' }}>
                                         ${analystNet.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                                     </td>
-                                    <td style={{ color: 'var(--color-emerald)', fontWeight: 700 }}>
+                                    <td className="text-success font-bold">
                                         ${reviewerNet.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                                     </td>
-                                    <td style={{ color: variance !== 0 ? 'var(--color-crimson)' : 'var(--color-emerald)', fontWeight: 700 }}>
+                                    <td className={variance !== 0 ? "text-danger font-bold" : "text-success font-bold"}>
                                         ${variance.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                                     </td>
                                     <td>
-                                        <span style={{ color: variance === 0 ? 'var(--color-emerald)' : 'var(--color-crimson)', fontWeight: 700 }}>
+                                        <span className={variance === 0 ? "text-success font-bold" : "text-danger font-bold"}>
                                             {variance === 0 ? "✓ 100% RECONCILED" : "RECONCILIATION REQUIRED"}
                                         </span>
                                     </td>
@@ -363,7 +409,7 @@ export default function InvestigationsView({
                 <div className="stage-card">
                     <div className="stage-header">
                         <div className="stage-title-wrap">
-                            <span className="stage-badge" style={{ background: 'var(--brand-obsidian)' }}>6</span>
+                            <span className="stage-badge bg-navy">6</span>
                             <span className="stage-title">Remediation Business Proposal ({proposal?.id || "PROP-90412"})</span>
                         </div>
                         <span className="pill-badge" style={{ color: 'var(--color-blue)', borderColor: '#BFDBFE' }}>
@@ -380,22 +426,22 @@ export default function InvestigationsView({
                             </p>
                         </div>
 
-                        <div className="impact-table" style={{ marginTop: 12 }}>
+                        <div className="impact-table">
                             <div className="impact-cell">
                                 <span className="impact-lbl">Protected Pipeline ARR</span>
-                                <span className="impact-val" style={{ color: 'var(--color-emerald)' }}>
+                                <span className="impact-val text-success">
                                     +${totalArr.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                                 </span>
                             </div>
                             <div className="impact-cell">
                                 <span className="impact-lbl">Campaign Cost ({discount}%)</span>
-                                <span className="impact-val" style={{ color: 'var(--color-crimson)' }}>
+                                <span className="impact-val text-danger">
                                     -${campaignCost.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                                 </span>
                             </div>
                             <div className="impact-cell">
                                 <span className="impact-lbl">Net Margin Contribution</span>
-                                <span className="impact-val" style={{ color: 'var(--text-heading)' }}>
+                                <span className="impact-val">
                                     +${netGain.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                                 </span>
                             </div>
@@ -407,20 +453,20 @@ export default function InvestigationsView({
                 <div className="stage-card" style={{ borderColor: 'var(--color-emerald)' }}>
                     <div className="stage-header" style={{ background: '#ECFDF5' }}>
                         <div className="stage-title-wrap">
-                            <span className="stage-badge" style={{ background: 'var(--color-emerald)' }}>7</span>
-                            <span className="stage-title" style={{ color: '#065F46' }}>
+                            <span className="stage-badge bg-emerald">7</span>
+                            <span className="stage-title text-success">
                                 Human Decision Controls (Switch Rule #4 Sign-Off Gate)
                             </span>
                         </div>
-                        <span className="rule-badge" style={{ background: '#059669', color: '#FFFFFF', border: 'none' }}>
+                        <span className="rule-badge-success">
                             EXECUTIVE APPROVAL REQUIRED
                         </span>
                     </div>
                     <div className="stage-body">
                         {approvalRecord ? (
-                            <div style={{ background: 'var(--bg-subtle)', padding: 16, borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-default)' }}>
+                            <div className="approval-committed-box">
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                                    <span style={{ color: 'var(--color-emerald)', fontWeight: 700, fontSize: 14 }}>
+                                    <span className="text-success font-bold" style={{ fontSize: 14 }}>
                                         ✓ Campaign Authorized & Committed to Database
                                     </span>
                                 </div>
@@ -431,6 +477,7 @@ export default function InvestigationsView({
                                     <div><strong>SHA-256 Decision Signature:</strong> <span className="hash-pill">{approvalRecord.signature_hash}</span></div>
                                 </div>
                                 <button 
+                                    type="button"
                                     className="btn-primary" 
                                     style={{ marginTop: 12, fontSize: 11 }}
                                     onClick={onOpenAudit}
@@ -440,15 +487,15 @@ export default function InvestigationsView({
                             </div>
                         ) : (
                             <div>
-                                <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 16, flexWrap: 'wrap' }}>
+                                <div className="approval-controls-row">
                                     <div>
-                                        <label style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}>
+                                        <label className="input-label-sm">
                                             SIGN-OFF AUTHORITY (Role Check):
                                         </label>
                                         <select 
                                             value={userRole} 
                                             onChange={(e) => setUserRole(e.target.value)}
-                                            style={{ height: 34, padding: '0 10px', borderRadius: 6, border: '1px solid var(--border-default)', fontSize: 12 }}
+                                            className="select-field"
                                         >
                                             <option value="manager">Alex Rivera (VP Finance • Authorized)</option>
                                             <option value="controller">Financial Controller (Authorized)</option>
@@ -456,10 +503,10 @@ export default function InvestigationsView({
                                         </select>
                                     </div>
 
-                                    <div style={{ flex: 1, minWidth: 200 }}>
+                                    <div style={{ flex: 1, minWidth: 220 }}>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>
                                             <span style={{ fontWeight: 700, color: 'var(--text-muted)' }}>Calibrate Renewal Discount:</span>
-                                            <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700 }}>{discount}%</span>
+                                            <span className="font-mono-bold">{discount}%</span>
                                         </div>
                                         <input 
                                             type="range"
@@ -473,18 +520,18 @@ export default function InvestigationsView({
                                     </div>
                                 </div>
 
-                                <div style={{ display: 'flex', gap: 10 }}>
+                                <div style={{ display: 'flex', gap: 10, marginTop: 14 }}>
                                     <button 
-                                        className="btn-primary"
-                                        style={{ background: '#059669', fontSize: 12, padding: '9px 18px' }}
+                                        type="button"
+                                        className="btn-primary btn-authorize"
                                         onClick={() => onAuthorize(discount, userRole)}
                                         disabled={!switchConnected}
                                     >
                                         ✓ Authorize Campaign Execution ({discount}%)
                                     </button>
                                     <button 
-                                        className="btn-ghost"
-                                        style={{ color: 'var(--color-crimson)', borderColor: '#FECACA', fontSize: 12, padding: '9px 18px' }}
+                                        type="button"
+                                        className="btn-ghost btn-reject"
                                         onClick={() => onReject(userRole)}
                                         disabled={!switchConnected}
                                     >
@@ -500,4 +547,3 @@ export default function InvestigationsView({
         </div>
     );
 }
-

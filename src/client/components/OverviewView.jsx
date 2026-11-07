@@ -3,7 +3,9 @@ import TrajectoryChart from './TrajectoryChart';
 
 export default function OverviewView({
     metrics,
-    onLaunchScenario,
+    investigationData,
+    tasks = [],
+    decisions = [],
     onNavigate,
     comparisonMode,
     onToggleMode,
@@ -13,204 +15,238 @@ export default function OverviewView({
     const refund = metrics?.refund_total ? `-$${metrics.refund_total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "-$20,430.00";
     const net = metrics?.net_revenue ? `+$${metrics.net_revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "+$3,820.00";
 
+    const inv = investigationData || {};
+    const invId = inv.investigation_id || "INV-84912";
+    const invQuestion = inv.question || "Why did repeat purchases drop in the West region last month?";
+    const isReconciled = inv.review?.is_verified ?? true;
+    const hasPendingApproval = inv.proposal && !inv.approval_record;
+
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-            {/* 4 Accounting KPI Cards */}
-            <section className="kpi-row" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))' }}>
-                <div className="kpi-card">
-                    <span className="kpi-label">Reported Gross Volume</span>
-                    <span className="kpi-value">{gross}</span>
-                    <div className="kpi-meta">
-                        <span>15 transactions • Unaudited Apparent Drop</span>
+        <div className="overview-container">
+            {/* ── Section A: 4 Compact Accounting KPI Cards ── */}
+            <section className="kpi-row-compact">
+                <div className="kpi-card-compact">
+                    <div className="kpi-card-head">
+                        <span className="kpi-label">Reported Gross Volume</span>
+                        <span className="kpi-tag-subtle">Unaudited</span>
+                    </div>
+                    <span className="kpi-value-compact">{gross}</span>
+                    <div className="kpi-meta-compact">
+                        <span>15 transactions • West Region MoM</span>
                     </div>
                 </div>
 
-                <div className="kpi-card">
-                    <span className="kpi-label">Gateway Duplicate Glitch</span>
-                    <span className="kpi-value anomaly">{refund}</span>
-                    <div className="kpi-meta" style={{ color: "var(--color-crimson)" }}>
+                <div className="kpi-card-compact anomaly-border">
+                    <div className="kpi-card-head">
+                        <span className="kpi-label">Gateway Duplicate Glitch</span>
+                        <span className="kpi-tag-danger">Anomaly</span>
+                    </div>
+                    <span className="kpi-value-compact anomaly">{refund}</span>
+                    <div className="kpi-meta-compact text-danger">
                         <span>8 duplicate refund reversals detected</span>
                     </div>
                 </div>
 
-                <div className="kpi-card">
-                    <span className="kpi-label">Certified Net Revenue</span>
-                    <span className="kpi-value verified">{net}</span>
-                    <div className="kpi-meta" style={{ color: "var(--color-emerald)" }}>
+                <div className="kpi-card-compact verified-border">
+                    <div className="kpi-card-head">
+                        <span className="kpi-label">Certified Net Revenue</span>
+                        <span className="kpi-tag-success">Reconciled</span>
+                    </div>
+                    <span className="kpi-value-compact verified">{net}</span>
+                    <div className="kpi-meta-compact text-success">
                         <span>7 verified clean accounts • Reconciled</span>
                     </div>
                 </div>
 
-                <div className="kpi-card">
-                    <span className="kpi-label">Annual Margin Preserved</span>
-                    <span className="kpi-value" style={{ color: "var(--color-blue)" }}>+$61,300.00</span>
-                    <div className="kpi-meta">
+                <div className="kpi-card-compact margin-border">
+                    <div className="kpi-card-head">
+                        <span className="kpi-label">Avoided Discount Exposure</span>
+                        <span className="kpi-tag-brand">Protected</span>
+                    </div>
+                    <span className="kpi-value-compact text-brand">+$61,300.00</span>
+                    <div className="kpi-meta-compact">
                         <span>Prevented 25% margin-eroding panic discount</span>
                     </div>
                 </div>
             </section>
 
-            {/* 2-Column Responsive Workspace */}
-            <div className="grid-workspace">
-                {/* Left Column: Trajectory Chart */}
-                <div className="col-left" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {/* ── 2-Column Responsive Workspace: Fit for 1440 × 900 ── */}
+            <div className="overview-grid">
+                {/* ── LEFT COLUMN: Compact Chart + Switch Protocol Health Bar ── */}
+                <div className="overview-left-col">
+                    {/* Section B: Compact Revenue Performance Chart */}
                     <TrajectoryChart 
                         mode={comparisonMode}
                         onToggleMode={onToggleMode}
                         trajectoryData={metrics?.trajectory}
                     />
 
-                    {/* Switch Protocol Architecture Card */}
-                    <div className="card" style={{ padding: 18 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                <span className="rule-badge" style={{ background: 'var(--brand-obsidian)', color: '#fff' }}>SWITCH PROTOCOL</span>
-                                <span className="card-title">Shared Multi-Agent Room Architecture</span>
+                    {/* Section E: Compact Switch Protocol Health & Governance Bar */}
+                    <div className="card switch-health-bar">
+                        <div className="switch-health-header">
+                            <div className="switch-health-title-group">
+                                <span className="rule-badge-dark">SWITCH PROTOCOL</span>
+                                <span className="switch-room-name">#revenue-desk</span>
+                                <span className="switch-sub-status">
+                                    {switchConnected ? '● PROTOCOL ONLINE' : '○ PROTOCOL OFFLINE'}
+                                </span>
                             </div>
-                            <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--color-emerald)' }}>
-                                {switchConnected ? '● PROTOCOL ONLINE' : '○ PROTOCOL OFFLINE'}
-                            </span>
+                            <div className="switch-health-pills">
+                                <span className="status-chip-emerald">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    Tasks: 5/5 Verified
+                                </span>
+                                <span className="status-chip-mono">
+                                    SHA-256 Ledger: Intact
+                                </span>
+                            </div>
                         </div>
-                        <p style={{ fontSize: 12, color: 'var(--text-body)', lineHeight: 1.6, marginBottom: 14 }}>
-                            Revenue Desk operates inside a shared Switch room (<strong>#revenue-desk</strong>). Human executives collaborate with specialized AI agents under strict deterministic governance rules:
-                        </p>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-                            <div style={{ background: 'var(--bg-subtle)', padding: 10, borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-                                <div style={{ fontWeight: 700, fontSize: 11.5, color: 'var(--text-heading)', marginBottom: 2 }}>
-                                    Rule #2: Read-Only SQL
-                                </div>
-                                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                                    Analyst & Reviewer queries are blocked from mutative DDL/DML.
-                                </div>
+
+                        {/* 4 Mini Governance Rules */}
+                        <div className="governance-rules-mini">
+                            <div className="rule-mini-item">
+                                <span className="rule-mini-num">Rule #2</span>
+                                <span className="rule-mini-name">Read-Only SQL</span>
+                                <span className="rule-mini-desc">Analyst/Reviewer queries blocked from mutation</span>
                             </div>
-                            <div style={{ background: 'var(--bg-subtle)', padding: 10, borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-                                <div style={{ fontWeight: 700, fontSize: 11.5, color: 'var(--text-heading)', marginBottom: 2 }}>
-                                    Rule #3: 100% Consensus
-                                </div>
-                                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                                    Numerical reconciliation must align to &lt;$1.00 variance before any proposal.
-                                </div>
+                            <div className="rule-mini-item">
+                                <span className="rule-mini-num">Rule #3</span>
+                                <span className="rule-mini-name">100% Consensus</span>
+                                <span className="rule-mini-desc">Zero variance before any proposal formed</span>
                             </div>
-                            <div style={{ background: 'var(--bg-subtle)', padding: 10, borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-                                <div style={{ fontWeight: 700, fontSize: 11.5, color: 'var(--text-heading)', marginBottom: 2 }}>
-                                    Rule #4: Human Lead Sign-Off
-                                </div>
-                                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                                    Campaign mutations require explicit authorization from Human VP.
-                                </div>
+                            <div className="rule-mini-item">
+                                <span className="rule-mini-num">Rule #4</span>
+                                <span className="rule-mini-name">Human Lead Gate</span>
+                                <span className="rule-mini-desc">Campaign mutations require VP authorization</span>
                             </div>
-                            <div style={{ background: 'var(--bg-subtle)', padding: 10, borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-subtle)' }}>
-                                <div style={{ fontWeight: 700, fontSize: 11.5, color: 'var(--text-heading)', marginBottom: 2 }}>
-                                    Rule #5: SHA-256 Signatures
-                                </div>
-                                <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                                    All decisions are permanently recorded into a tamper-evident audit ledger.
-                                </div>
+                            <div className="rule-mini-item">
+                                <span className="rule-mini-num">Rule #5</span>
+                                <span className="rule-mini-name">SHA-256 Signatures</span>
+                                <span className="rule-mini-desc">Tamper-evident audit chain in SQLite</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Right Column: 3 Live Reproducible Scenarios */}
-                <div className="col-right" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                    <div className="card" style={{ padding: 18 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                <span className="rule-badge">HACKATHON BENCHMARKS</span>
-                                <span className="card-title">3 Live Reproducible Financial Scenarios</span>
+                {/* ── RIGHT COLUMN: Investigation Summary + Recent Activity Feed ── */}
+                <div className="overview-right-col">
+                    {/* Section C: Investigation Summary Card */}
+                    <div className="card overview-summary-card">
+                        <div className="card-header-compact">
+                            <div className="card-title-group">
+                                <span className="rule-badge">ACTIVE INVESTIGATION</span>
+                                <span className="inv-badge-code">{invId}</span>
+                            </div>
+                            <span className={`pill-badge ${isReconciled ? 'pill-badge-emerald' : 'pill-badge-amber'}`}>
+                                {isReconciled ? '● Consensus Reached' : '○ In Progress'}
+                            </span>
+                        </div>
+
+                        <div className="inv-summary-body">
+                            <p className="inv-summary-question">
+                                "{invQuestion}"
+                            </p>
+
+                            <div className="inv-summary-metrics">
+                                <div className="inv-metric-box">
+                                    <span className="inv-metric-lbl">Reported</span>
+                                    <span className="inv-metric-val">{gross}</span>
+                                </div>
+                                <div className="inv-metric-box">
+                                    <span className="inv-metric-lbl">Audited Anomaly</span>
+                                    <span className="inv-metric-val text-danger">{refund}</span>
+                                </div>
+                                <div className="inv-metric-box">
+                                    <span className="inv-metric-lbl">Certified Net</span>
+                                    <span className="inv-metric-val text-success">{net}</span>
+                                </div>
+                            </div>
+
+                            <div className="inv-summary-footer">
+                                <button 
+                                    className="btn-primary btn-summary-cta"
+                                    onClick={() => onNavigate('investigations')}
+                                    title="Open the 7-Stage Investigation Workspace"
+                                >
+                                    <span>Open Investigations Workspace</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Section D: Recent Multi-Agent Room Activity Feed */}
+                    <div className="card overview-activity-card">
+                        <div className="card-header-compact">
+                            <div className="card-title-group">
+                                <span className="card-title-sm">Recent Agent Activity</span>
+                                <span className="activity-count-badge">5 Events</span>
                             </div>
                             <button 
-                                className="btn-ghost" 
-                                style={{ fontSize: 11, padding: '4px 8px' }}
-                                onClick={() => onNavigate('investigations')}
+                                className="link-action-sm" 
+                                onClick={() => onNavigate('room')}
+                                title="Open Switch Room live feed"
                             >
-                                Open Workspace &rarr;
+                                Switch Room &rarr;
                             </button>
                         </div>
-                        <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 16 }}>
-                            Select any benchmark to dispatch real SQL queries across primary and secondary ledgers, demonstrating how Switch prevents solo AI hallucinations:
-                        </p>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                            {/* Scenario 1 */}
-                            <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-sm)', padding: 14, background: '#FFFFFF' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
-                                    <div>
-                                        <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--text-heading)' }}>
-                                            Scenario 1: West Duplicate Refund Glitch
-                                        </div>
-                                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                                            Query: "Why did repeat purchases drop in the West region last month?"
-                                        </div>
+                        <div className="activity-timeline-compact">
+                            <div className="timeline-item">
+                                <div className="timeline-icon bg-navy">AR</div>
+                                <div className="timeline-content">
+                                    <div className="timeline-header">
+                                        <span className="timeline-author">@manager (Alex Rivera)</span>
+                                        <span className="timeline-time">10:04 AM</span>
                                     </div>
-                                    <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--color-crimson)', background: 'var(--color-crimson-bg)', padding: '2px 6px', borderRadius: 4 }}>
-                                        $20,430 Variance
-                                    </span>
+                                    <p className="timeline-text">Inquired why repeat purchases dropped in the West region.</p>
                                 </div>
-                                <p style={{ fontSize: 11.5, color: 'var(--text-body)', lineHeight: 1.5, marginBottom: 10 }}>
-                                    A solo AI looks at orders volume, assumes churn, and recommends an expensive 25% panic discount. Switch's Reviewer cross-checks secondary refunds and uncovers 8 duplicate webhook retries.
-                                </p>
-                                <button 
-                                    className="btn-primary" 
-                                    style={{ width: '100%', justifyContent: 'center', fontSize: 11 }}
-                                    onClick={() => onLaunchScenario('duplicate_refunds')}
-                                >
-                                    Launch Scenario 1 in Investigation Workspace &rarr;
-                                </button>
                             </div>
 
-                            {/* Scenario 2 */}
-                            <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-sm)', padding: 14, background: '#FFFFFF' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
-                                    <div>
-                                        <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--text-heading)' }}>
-                                            Scenario 2: Churn vs Payment Failures
-                                        </div>
-                                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                                            Query: "Why did recurring revenue decline this month?"
-                                        </div>
+                            <div className="timeline-item">
+                                <div className="timeline-icon bg-emerald">AN</div>
+                                <div className="timeline-content">
+                                    <div className="timeline-header">
+                                        <span className="timeline-author">@analyst (Groq / Llama 3.3)</span>
+                                        <span className="timeline-time">10:04 AM</span>
                                     </div>
-                                    <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--color-crimson)', background: 'var(--color-crimson-bg)', padding: '2px 6px', borderRadius: 4 }}>
-                                        $14,200 Past Due
-                                    </span>
+                                    <p className="timeline-text">Queried <code>sales_orders</code>: reported Gross $24,250.00 across 15 accounts.</p>
                                 </div>
-                                <p style={{ fontSize: 11.5, color: 'var(--text-body)', lineHeight: 1.5, marginBottom: 10 }}>
-                                    Reports show an apparent $18,700 MRR decline. A solo AI assumes customer dissatisfaction. The Reviewer inspects card webhooks and discovers 4 enterprise accounts ($14,200) are retryable payment failures.
-                                </p>
-                                <button 
-                                    className="btn-primary" 
-                                    style={{ width: '100%', justifyContent: 'center', fontSize: 11 }}
-                                    onClick={() => onLaunchScenario('churn_vs_payment_failures')}
-                                >
-                                    Launch Scenario 2 in Investigation Workspace &rarr;
-                                </button>
                             </div>
 
-                            {/* Scenario 3 */}
-                            <div style={{ border: '1px solid var(--border-default)', borderRadius: 'var(--radius-sm)', padding: 14, background: '#FFFFFF' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
-                                    <div>
-                                        <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--text-heading)' }}>
-                                            Scenario 3: Gateway Settlement Reconciliation
-                                        </div>
-                                        <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                                            Query: "Find differences between recorded sales and payment transactions."
-                                        </div>
+                            <div className="timeline-item">
+                                <div className="timeline-icon bg-amber">RV</div>
+                                <div className="timeline-content">
+                                    <div className="timeline-header">
+                                        <span className="timeline-author">@reviewer (Gemini 2.0 Flash)</span>
+                                        <span className="timeline-time">10:05 AM</span>
                                     </div>
-                                    <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--color-crimson)', background: 'var(--color-crimson-bg)', padding: '2px 6px', borderRadius: 4 }}>
-                                        $4,120 Hold
-                                    </span>
+                                    <p className="timeline-text">Cross-audited <code>refund_transactions</code>: detected 8 duplicate webhook retries (-$20,430.00).</p>
                                 </div>
-                                <p style={{ fontSize: 11.5, color: 'var(--text-body)', lineHeight: 1.5, marginBottom: 10 }}>
-                                    Cross-audits sales ledger transactions against Stripe/Adyen merchant settlement records to catch rolling reserve chargeback holds before unauthorized write-offs are booked.
-                                </p>
-                                <button 
-                                    className="btn-primary" 
-                                    style={{ width: '100%', justifyContent: 'center', fontSize: 11 }}
-                                    onClick={() => onLaunchScenario('payment_reconciliation')}
-                                >
-                                    Launch Scenario 3 in Investigation Workspace &rarr;
-                                </button>
+                            </div>
+
+                            <div className="timeline-item">
+                                <div className="timeline-icon bg-teal">SW</div>
+                                <div className="timeline-content">
+                                    <div className="timeline-header">
+                                        <span className="timeline-author">Switch Protocol Gate</span>
+                                        <span className="timeline-time">10:05 AM</span>
+                                    </div>
+                                    <p className="timeline-text">Consensus verified ($0.00 variance). Proposal submitted to Human Approval Gate.</p>
+                                </div>
+                            </div>
+
+                            <div className="timeline-item">
+                                <div className="timeline-icon bg-navy">AR</div>
+                                <div className="timeline-content">
+                                    <div className="timeline-header">
+                                        <span className="timeline-author">@manager (VP Finance)</span>
+                                        <span className="timeline-time">10:06 AM</span>
+                                    </div>
+                                    <p className="timeline-text">Calibrated discount to 15%, signed block into SHA-256 ledger.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -219,4 +255,3 @@ export default function OverviewView({
         </div>
     );
 }
-
