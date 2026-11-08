@@ -20,7 +20,8 @@ export default function OverviewView({
     const inv = investigationData || {};
     const invId = inv.investigation_id || "INV-84912";
     const invQuestion = inv.question || "Why did repeat purchases drop in the West region last month?";
-    const isReconciled = inv.review?.is_verified ?? true;
+    const hasPendingApproval = Boolean(inv.proposal && !inv.approval_record);
+    const isReconciled = Boolean(inv.review?.is_verified && !hasPendingApproval);
 
     // Use live messages from room if available, otherwise fallback to standard audited baseline events
     const timelineEvents = (messages && messages.length > 0) ? messages.slice(-5) : [
@@ -187,64 +188,7 @@ export default function OverviewView({
                         </div>
                     </div>
 
-                    {/* Section E: 3 Live Reproducible Financial Benchmarks */}
-                    <div className="card overview-benchmarks-card">
-                        <div className="card-header-compact">
-                            <div className="card-title-group">
-                                <span className="card-title-sm">Live Reproducible Benchmarks</span>
-                                <span className="activity-count-badge">3 Scenarios</span>
-                            </div>
-                            <span className="status-chip-mono" style={{ fontSize: '9.5px' }}>SQLite Seeded</span>
-                        </div>
-                        <div className="quick-scenarios-list">
-                            <div 
-                                className={`quick-scenario-item ${invQuestion.includes('West') ? 'active' : ''}`}
-                                onClick={() => onLaunchScenario ? onLaunchScenario('duplicate_refunds') : onNavigate('investigations')}
-                                title="Run Scenario 1: West Duplicate Refund Glitch"
-                            >
-                                <div className="scenario-item-left">
-                                    <span className="scenario-dot dot-danger"></span>
-                                    <div style={{ minWidth: 0 }}>
-                                        <div className="scenario-item-title">1. West Duplicate Refund Glitch</div>
-                                        <div className="scenario-item-sub">8 duplicate refund webhooks • Prevents 25% panic discount</div>
-                                    </div>
-                                </div>
-                                <span className="scenario-pill pill-danger">-$20,430</span>
-                            </div>
-
-                            <div 
-                                className={`quick-scenario-item ${invQuestion.includes('recurring') || invQuestion.includes('decline') ? 'active' : ''}`}
-                                onClick={() => onLaunchScenario ? onLaunchScenario('churn_vs_failures') : onNavigate('investigations')}
-                                title="Run Scenario 2: Churn vs Payment Failures"
-                            >
-                                <div className="scenario-item-left">
-                                    <span className="scenario-dot dot-amber"></span>
-                                    <div style={{ minWidth: 0 }}>
-                                        <div className="scenario-item-title">2. Churn vs Payment Failures</div>
-                                        <div className="scenario-item-sub">4 expired card retries misattributed to customer churn</div>
-                                    </div>
-                                </div>
-                                <span className="scenario-pill pill-amber">$14,200</span>
-                            </div>
-
-                            <div 
-                                className={`quick-scenario-item ${invQuestion.includes('settlement') || invQuestion.includes('differences') ? 'active' : ''}`}
-                                onClick={() => onLaunchScenario ? onLaunchScenario('payment_reconciliation') : onNavigate('investigations')}
-                                title="Run Scenario 3: Gateway Settlement Reconciliation"
-                            >
-                                <div className="scenario-item-left">
-                                    <span className="scenario-dot dot-brand"></span>
-                                    <div style={{ minWidth: 0 }}>
-                                        <div className="scenario-item-title">3. Gateway Settlement Reconciliation</div>
-                                        <div className="scenario-item-sub">Catches rolling reserve chargeback holds before write-off</div>
-                                    </div>
-                                </div>
-                                <span className="scenario-pill pill-brand">$4,120</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Section F: Full-Height Recent Multi-Agent Room Activity Feed */}
+                    {/* Section D: Recent Multi-Agent Room Activity Feed */}
                     <div className="card overview-activity-card">
                         <div className="card-header-compact">
                             <div className="card-title-group">

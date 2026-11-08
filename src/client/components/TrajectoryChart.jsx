@@ -217,7 +217,7 @@ export default function TrajectoryChart({ mode, onToggleMode, trajectoryData }) 
                 </div>
 
                 <div className="segment-toggle-compact">
-                    <button 
+                    <button
                         className={`segment-btn ${mode === 'with' ? 'active' : ''}`}
                         onClick={() => onToggleMode('with')}
                         title="Show Switch dual-agent verified reconciliation"
@@ -225,7 +225,7 @@ export default function TrajectoryChart({ mode, onToggleMode, trajectoryData }) 
                         <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-emerald)' }}></span>
                         With Switch AI
                     </button>
-                    <button 
+                    <button
                         className={`segment-btn ${mode === 'without' ? 'active' : ''}`}
                         onClick={() => onToggleMode('without')}
                         title="Show solo AI hallucination resulting in margin erosion"
@@ -236,8 +236,8 @@ export default function TrajectoryChart({ mode, onToggleMode, trajectoryData }) 
                 </div>
             </div>
 
-            <div 
-                className="canvas-wrap-compact" 
+            <div
+                className="canvas-wrap-compact"
                 id="canvasAreaContainer"
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
@@ -247,8 +247,8 @@ export default function TrajectoryChart({ mode, onToggleMode, trajectoryData }) 
 
                 {/* Floating Interactive Tooltip */}
                 {tooltip && (
-                    <div 
-                        className="chart-tooltip" 
+                    <div
+                        className="chart-tooltip"
                         style={{
                             left: Math.min(Math.max(tooltip.x - 70, 10), (containerRef.current?.clientWidth || 300) - 160),
                             top: 10
